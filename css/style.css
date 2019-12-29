@@ -1,0 +1,82 @@
+html {
+    font-family: "Rubik", sans-serif;;
+}
+
+/* Login section */
+.login-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+}
+
+.login-container {
+    background-color: #fff;
+    height: 90vh;
+    width: 70vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.login-img {
+    width: 100%;
+    background-image: url('../img/wp1.jpg');    
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.login-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form > form {
+    text-align: center;
+}
+
+.title-1 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+}
+
+
+/* Dashborad section */
+.dashboard {
+    font-size: 0.875rem;
+    background-color: #edf1f5;
+}
+
+.menu-container {
+    /* position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99; */
+    height: 100vh;    
+    /* overflow: hidden; */    
+    background-color: #2b2f3a;
+    box-shadow: 2px 0 32px rgba(0,0,0,.05);
+}
+
+.nav-wrapper {
+    background-color: #2b2f3a;    
+}
+
+.logo-container {
+    height: 10%;
+    background-color: red;
+}
+
+.sidenav-container {
+    background-color: royalblue;
+    height: 80%;
+}
+
+.sidenav-container li {
+    background-color: red;
+    margin: .5em;
+    padding: .5rem;
+}
