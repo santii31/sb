@@ -7,7 +7,7 @@
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
                             <h2>
-                                Reserva de carpa
+                                Nueva Reserva de carpa
                             </h2>
                         </div>
                         <div class="divider mb-divider"></div>

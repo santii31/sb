@@ -34,30 +34,51 @@
         <div class="col s12 m4 l2 menu-container">
             <div class="sidenav-container">
                 <ul>
+
                     <li>
                         <a href="<?= FRONT_ROOT ?>user/adminPath" class="valign-wrapper">
                             <i class="material-icons left">dashboard</i>
                             Dashboard
                         </a>
                     </li>
-                    <li>
-                        <a href="<?= FRONT_ROOT ?>beachTent/addReservePath" class="valign-wrapper">
-                            <i class="material-icons left">add_circle</i>
-                            Reserva de Carpa
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= FRONT_ROOT ?>parking/parkingPath" class="valign-wrapper">
-                            <i class="material-icons left">directions_car</i>
-                            Estacionamiento
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= FRONT_ROOT ?>parking/addParkingPath" class="valign-wrapper">
-                            <i class="material-icons left">add_circle_outline</i>
-                            Reserva de Estacionamiento
-                        </a>
-                    </li>
+
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">beach_access</i>Carpas</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>beachTent/addReservePath" class="valign-wrapper">
+                                            <i class="material-icons left">add_circle</i>
+                                            Añadir reserva
+                                        </a>
+                                    </li>                                           
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>  
+
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">directions_car</i>Estacionamiento</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>parking/addParkingPath" class="valign-wrapper">
+                                            <i class="material-icons left">add_circle_outline</i>
+                                            Añadir reserva
+                                        </a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>parking/showParkingPath" class="valign-wrapper">
+                                            <i class="material-icons left">map</i>
+                                            Ver mapa de reservas
+                                        </a>
+                                    </li>                                                                              
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>                                                      
 
                     <li>
                         <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
@@ -65,6 +86,7 @@
                             Stock
                         </a>
                     </li>
+
                     <ul class="collapsible">
                         <li>
                             <div class="collapsible-header"><i class="material-icons">content_paste</i>Proveedores</div>
@@ -73,7 +95,7 @@
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>provider/addProviderPath" class="valign-wrapper">
                                             <i class="material-icons left">person_add</i>
-                                            Agregar proveedor
+                                            Añadir proveedor
                                         </a>
                                     </li>
                                     <li>
@@ -100,7 +122,7 @@
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>user/addAdminPath" class="valign-wrapper">
                                             <i class="material-icons left">person_add</i>
-                                            Agregar administrador
+                                            Añadir administrador
                                         </a>
                                     </li>
                                     <li>

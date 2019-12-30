@@ -8,52 +8,95 @@
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
-                <div class="row">
-                <table class="responsive-table">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Telefono</th>
-                        <th>Email</th>
-                        <th>Direccion</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
+                <div class="row">    
+                    <table class="responsive-table">
+                        <thead>                            
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Telefono</th>
+                                <th>Email</th>
+                                <th>Direccion</th>
+                                <th>Mas informacion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                                               
+                        <tbody>
+                            <tr>
+                                <td>Alvin</td>
+                                <td>Alvin</td>
+                                <td>Eclair</td>
+                                <td>$0.87</td>
+                                <td>Alvin</td>
+                                <td>Eclair</td>
+                                <td>
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">
+                                                <i class="material-icons left">arrow_forward</i>Ver mas
+                                            </div>
+                                            <div class="collapsible-body">
+                                                <ul>
+                                                    <li>• Numero de CUIL: 123124</li>
+                                                    <li>• Razon social: rs x</li>
+                                                    <li>• Tipo de facturacion: A</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>                                      
+                                </td>                                
+                                <td class="actions">
+                                    <a class="waves-effect waves-light btn-small">
+                                        <i class="material-icons left">delete_forever</i>
+                                        Deshabilitar
+                                    </a>
+                                    <a class="waves-effect waves-light btn-small">
+                                        <i class="material-icons left">build</i>
+                                        Modificar
+                                    </a>                                                                                            
+                                </td>
 
-                    <tbody>
-                    <tr>
-                        <td>Alvin</td>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                        <td>$0.87</td>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                        <td>
-                            <a class="waves-effect waves-light btn-small"><i class="material-icons left">cloud</i>button</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Alan</td>
-                        <td>Jellybean</td>
-                        <td>$3.76</td>
-                        <td>Alvin</td>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                        <td>$0.87</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan</td>
-                        <td>Lollipop</td>
-                        <td>$7.00</td>
-                        <td>Alvin</td>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                        <td>$0.87</td>
-                    </tr>
-                    </tbody>
-                </table>
+                            </tr>
+                            <tr>
+                                <td>Alvin</td>
+                                <td>Alvin</td>
+                                <td>Eclair</td>
+                                <td>$0.87</td>
+                                <td>Alvin</td>
+                                <td>Eclair</td>
+                                <td>
+                                    <ul class="collapsible">
+                                        <li>
+                                            <div class="collapsible-header">
+                                                <i class="material-icons left">arrow_forward</i>Ver mas
+                                            </div>
+                                            <div class="collapsible-body">
+                                                <ul>
+                                                    <li>• Numero de CUIL: 123124</li>
+                                                    <li>• Razon social: rs x</li>
+                                                    <li>• Tipo de facturacion: A</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>                                      
+                                </td>                                
+                                <td class="actions">
+                                    <a class="waves-effect waves-light btn-small">
+                                        <i class="material-icons left">delete_forever</i>
+                                        Deshabilitar
+                                    </a>
+                                    <a class="waves-effect waves-light btn-small">
+                                        <i class="material-icons left">build</i>
+                                        Modificar
+                                    </a>                                                                                            
+                                </td>
+
+                            </tr>                                
+                        </tbody>
+                    </table>                                          
+
                 </div>
             </div>
 

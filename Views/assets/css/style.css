@@ -84,10 +84,25 @@ a:hover {
 
 .menu-container {
     position: fixed;
-    height: 100vh;            
+    height: 100vh;
+    min-height: 100vh;            
     background-color: #22252e;    
     box-shadow: 2px 0 32px rgba(0,0,0,.05);
     color: #fff;
+    overflow-y: scroll;
+}
+
+.menu-container::-webkit-scrollbar {
+    width: 7px;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+    background-color: rgba(106, 86, 165, .5);
+}
+
+.menu-container::-webkit-scrollbar-track {
+    background-color: #fff;
+    color: #6a56a5;
 }
 
 .nav-wrapper {
@@ -101,10 +116,23 @@ a:hover {
     letter-spacing: .1rem;     
 }
 
+.dropdown-content {
+    margin: 1rem !important;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+    font-size: 16px;
+    color: #6a56a5;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;    
+}
+
 .sidenav-container li:hover {
     background-color: rgba(0, 0, 0, .1);
 }
 
+/* Sidenav */
 .sidenav-container li {    
     margin: .5em;
     border-radius: 5px;
@@ -148,7 +176,23 @@ a:hover {
     padding: 1rem;
 }
 
+/* Table */
 .table-container {    
-    padding: 0 2rem 0 2rem;
+    padding: 0 2rem 0 2rem;    
+    max-width: 90%;
+}
+
+.table-container .actions > a {
+    margin-right: 1rem;
+}
+
+/* Form */
+label.active {
+    color: #6a56a5 !important;
+}
+
+input:focus {
+    border-bottom: 1px solid #6a56a5 !important;
+    box-shadow: 0 1px 0 0 #6a56a5 !important;
 }
 

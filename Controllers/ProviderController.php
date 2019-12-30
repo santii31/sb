@@ -12,7 +12,7 @@
             //         $roleController = new RoleController();
             //         $roles = $roleController->getAllRoles();
             //         if ($roles) {
-                        $title = "Dashboard";
+                        $title = "Añadir proveedor";
                         require_once(VIEWS_PATH . "head.php");
                         require_once(VIEWS_PATH . "sidenav.php");
                         require_once(VIEWS_PATH . "add-provider.php");

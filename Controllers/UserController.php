@@ -142,7 +142,7 @@
             //         $roleController = new RoleController();
             //         $roles = $roleController->getAllRoles();
             //         if ($roles) {
-                        $title = "Dashboard";
+                        $title = "Añadir administrador";
                         require_once(VIEWS_PATH . "head.php");
                         require_once(VIEWS_PATH . "sidenav.php");
                         require_once(VIEWS_PATH . "add-admin.php");
