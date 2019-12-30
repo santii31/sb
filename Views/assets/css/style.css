@@ -1,7 +1,7 @@
 html {
     font-family: "Rubik", sans-serif;
     overflow-x: hidden;
-    background-color: #22252e;;
+    /* background-color: #22252e; */
 }
 
 /* Login section */
@@ -41,8 +41,7 @@ html {
 .title-1 {
     font-size: 1.3rem;
     font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: .2rem;
+    text-transform: uppercase;    
 }
 
 .subtitle i {
@@ -54,6 +53,12 @@ html {
     font-size: 2rem;    
 }
 
+.logo-brand {
+    width: 30%;
+    border-radius: 5px;
+}
+
+
 /* Dashboard section */
 a {
     color: #fff;
@@ -61,15 +66,15 @@ a {
 }
 
 a:hover {
-    color: #6a56a5;
+    color: #6a56a5;    
 }
 
 .btn {
-    background-color: #6a56a5;
+    background-color: #6a56a5;    
 }
 
 .btn:hover {
-    background-color: #473e64;
+    background-color: #473e64;    
 }
 
 .dashboard {
@@ -78,6 +83,7 @@ a:hover {
 }
 
 .menu-container {
+    position: fixed;
     height: 100vh;            
     background-color: #22252e;    
     box-shadow: 2px 0 32px rgba(0,0,0,.05);
@@ -90,9 +96,9 @@ a:hover {
 
 .brand-logo {    
     margin-left: 1rem;
-    font-size: 1.8rem !important;        
+    font-size: 1.3rem !important;        
     text-transform: uppercase;
-    letter-spacing: .1rem; 
+    letter-spacing: .1rem;     
 }
 
 .sidenav-container li:hover {
@@ -106,47 +112,43 @@ a:hover {
 }
 
 .sidenav-container .active {
-    color: #6a56a5;
+    color: #6a56a5;    
 }
 
 .main-content {    
     margin-top: 2rem;    
+    position: relative;    
+    left: 25%;
 }
 
 .form-test {    
-    margin-left: 5rem !important;
+    /* margin-left: 5rem !important; */
+    padding: 0 2rem 0 2rem !important;
 }
 
 .mb-divider {
     margin-bottom: 2rem;
 }
 
-/*  */
+.collapsible {
+    border: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin: 0;
+}
 
-  /* label color */
-  .input-field label {
-    color: #000;
-  }
-  /* label focus color */
-  .input-field input[type=text]:focus + label {
-    color: #000;
-  }
-  /* label underline focus color */
-  .input-field input[type=text]:focus {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
-  }
-  /* valid color */
-  .input-field input[type=text].valid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
-  }
-  /* invalid color */
-  .input-field input[type=text].invalid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
-  }
-  /* icon prefix focus color */
-  .input-field .prefix.active {
-    color: #000;
-  }
+.collapsible-header {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.collapsible-body {
+    border: none;
+    padding: 1rem;
+}
+
+.table-container {    
+    padding: 0 2rem 0 2rem;
+}
+

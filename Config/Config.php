@@ -6,7 +6,8 @@
     define("FRONT_ROOT", "/SouthBeach/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
-    define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
+	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
+	define("IMG_PATH", FRONT_ROOT . VIEWS_PATH . "assets/img/");	
 
 	//DB
 	define("DB_HOST", "localhost");

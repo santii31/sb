@@ -19,7 +19,8 @@
             // $this->userDAO = new UserDAO();
         }
 
-/* 		public function add($role, $firstName, $lastName, $dni, $mail, $password) {
+/* 	
+    	public function add($role, $firstName, $lastName, $dni, $mail, $password) {
 			$user = new User();
             $user->setFirstName($firstName);
             $user->setLastName($lastName);
@@ -61,69 +62,27 @@
         }
  */
 
-/*          
-
-
-                
-
-		public function addAdmin($alert = "", $success = "") {
-			if (isset($_SESSION["loggedUser"])) {
-                $admin = $_SESSION["loggedUser"];
-                if ($admin->getRole() == 1) {
-                    $roleController = new RoleController();
-                    $roles = $roleController->getAllRoles();
-                    if ($roles) {
-                        require_once(VIEWS_PATH . "admin-head.php");
-                        require_once(VIEWS_PATH . "admin-header.php");
-                        require_once(VIEWS_PATH . "admin-user-add.php");
-                    } else {
-                        return $this->adminPath();
-                    }
-                } else {
-                    return $this->userPath();
-                }
-			}
-			else {
-				return $this->userPath();
-			}
-		}
-
-		public function adminAdd($role, $firstName, $lastName, $dni, $mail, $password) { 
-            if ($this->isFormRegisterNotEmpty($firstName, $lastName, $dni, $mail, $password) && $this->validateMailForm($mail)) {
-                $userTemp = new User();
-                $userTemp->setMail($mail);
-                if ($this->userDAO->getByMail($userTemp) == null) {
-                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    if ($this->add($role, $firstName, $lastName, $dni, $mail, $passwordHash)) {
-                        return $this->listUserPath(null, USER_ADDED);
-                    } else {
-                        return $this->listUserPath(DB_ERROR, null);
-                    }
-                }
-                return $this->listUserPath(REGISTER_ERROR, null);
-            }
-            return $this->addUser(EMPTY_FIELDS, null);
-		} */
-
-        /* public function listUserPath($alert = "", $success = "") {
-            if (isset($_SESSION["loggedUser"])) {
-                $admin = $_SESSION["loggedUser"];
-                if ($admin->getRole() == 1) {
-                    $users = $this->userDAO->getAll();
-                    if ($users) {
-                        require_once(VIEWS_PATH . "admin-head.php");
-                        require_once(VIEWS_PATH . "admin-header.php");
-                        require_once(VIEWS_PATH . "admin-user-list.php");
-                    } else {
-                        return $this->adminPath();
-                    }
-                } else {
-                    return $this->userPath();
-                }
-            } else {
-                return $this->userPath();
-            }
-        } */
+        public function listAdminPath($alert = "", $success = "") {
+            // if (isset($_SESSION["loggedUser"])) {
+            //     $admin = $_SESSION["loggedUser"];
+            //     if ($admin->getRole() == 1) {
+            //         $users = $this->userDAO->getAll();
+            //         if ($users) {
+                        $title = "Administradores";
+                        require_once(VIEWS_PATH . "head.php");
+                        require_once(VIEWS_PATH . "sidenav.php");
+                        require_once(VIEWS_PATH . "list-admins.php");
+                        require_once(VIEWS_PATH . "footer.php");
+            //         } else {
+            //             return $this->adminPath();
+            //         }
+            //     } else {
+            //         return $this->userPath();
+            //     }
+            // } else {
+            //     return $this->userPath();
+            // }
+        } 
 
         public function validateLogin($mail, $password) {
             if ($this->isFormLoginNotEmpty($mail, $password) && $this->validateMailForm($mail)) {
@@ -167,6 +126,7 @@
 				    require_once(VIEWS_PATH . "head.php");
 				    require_once(VIEWS_PATH . "sidenav.php");
                     require_once(VIEWS_PATH . "dashboard.php");
+                    require_once(VIEWS_PATH . "footer.php");
             //     } else {
             //         return $this->userPath();
             //     }
@@ -174,6 +134,47 @@
             //     return $this->userPath();
             // }
         }
+
+		public function addAdminPath($alert = "", $success = "") {
+			// if (isset($_SESSION["loggedUser"])) {
+            //     $admin = $_SESSION["loggedUser"];
+            //     if ($admin->getRole() == 1) {
+            //         $roleController = new RoleController();
+            //         $roles = $roleController->getAllRoles();
+            //         if ($roles) {
+                        $title = "Dashboard";
+                        require_once(VIEWS_PATH . "head.php");
+                        require_once(VIEWS_PATH . "sidenav.php");
+                        require_once(VIEWS_PATH . "add-admin.php");
+                        require_once(VIEWS_PATH . "footer.php");
+            //         } else {
+            //             return $this->adminPath();
+            //         }
+            //     } else {
+            //         return $this->userPath();
+            //     }
+			// }
+			// else {
+			// 	return $this->userPath();
+			// }
+		}
+
+/* 		public function adminAdd($role, $firstName, $lastName, $dni, $mail, $password) { 
+            if ($this->isFormRegisterNotEmpty($firstName, $lastName, $dni, $mail, $password) && $this->validateMailForm($mail)) {
+                $userTemp = new User();
+                $userTemp->setMail($mail);
+                if ($this->userDAO->getByMail($userTemp) == null) {
+                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                    if ($this->add($role, $firstName, $lastName, $dni, $mail, $passwordHash)) {
+                        return $this->listUserPath(null, USER_ADDED);
+                    } else {
+                        return $this->listUserPath(DB_ERROR, null);
+                    }
+                }
+                return $this->listUserPath(REGISTER_ERROR, null);
+            }
+            return $this->addUser(EMPTY_FIELDS, null);
+		}  */       
 
         public function userPath() {
 			$homeController = new HomeController();

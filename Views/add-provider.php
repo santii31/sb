@@ -7,11 +7,10 @@
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
                             <h2>
-                                Reserva de carpa
+                                Añadir proveedor
                             </h2>
                         </div>
-                        <div class="divider mb-divider"></div>
-
+                        <div class="divider mb-divider"></div>                        
                         <div class="row">
                             <div class="input-field col s6">
                                 <input id="name" type="text" class="validate" required>
@@ -25,15 +24,15 @@
                         <div class="row">
                             <div class="input-field col s4">
                                 <input id="estadia" type="text" class="validate" required>
-                                <label for="estadia">Estadia</label>
+                                <label for="estadia">Telefono</label>
                             </div>
                             <div class="input-field col s4">
                                 <input id="cofres" type="text" class="validate" required>
-                                <label for="cofres">Cofres</label>
+                                <label for="cofres">Email</label>
                             </div>    
                             <div class="input-field col s4">
                                 <input id="servicio_ad" type="text" class="validate">
-                                <label for="servicio_ad">Servicio adicional</label>
+                                <label for="servicio_ad">DNI</label>
                             </div>                                                       
                         </div>                        
                         <div class="row">
@@ -43,40 +42,23 @@
                             </div>
                             <div class="input-field col s4">
                                 <input id="ciudad" type="text" class="validate" required>
-                                <label for="ciudad">Ciudad</label>
+                                <label for="ciudad">Numero de CUIL</label>
                             </div>
                             <div class="input-field col s4">
                                 <input id="cp" type="number" class="validate" required>
-                                <label for="cp">CP</label>
+                                <label for="cp">Razon social</label>
                             </div>                                                        
                         </div>
                         <div class="row">
                             <div class="input-field col s8">
                                 <input id="email" type="email" class="validate" required>
-                                <label for="email">Email</label>
+                                <label for="email">Tipo de factura</label>
                             </div>
                             <div class="input-field col s4">
                                 <input id="tel1" type="number" class="validate" required>
                                 <label for="tel1">Telefono</label>
                             </div>                            
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="grupof" type="text" class="validate" required>
-                                <label for="grupof">Grupo familiar</label>
-                            </div>                            
-                        </div>
-                        <div class="divider mb-divider"></div>
-                        <div class="row">
-                            <div class="input-field col s8">
-                                <input id="domicilioEsta" type="text" class="validate">
-                                <label for="domicilioEsta">Domicilio de estadia</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="tel2" type="number" class="validate">
-                                <label for="tel2">Telefono de estadia</label>
-                            </div>                                  
-                        </div>                        
+                        </div>                                               
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Registrar

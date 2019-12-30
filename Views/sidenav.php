@@ -2,31 +2,29 @@
 
     <!-- Navbar -->
     <section>
-        <ul id="dropdown1" class="dropdown-content">
-
-            <li><a href="#!">one</a></li>
-            <li><a href="#!">two</a></li>
-            <li class="divider"></li>
-            <li><a href="#!">three</a></li>
-
-        </ul>
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">
-                    <i class="material-icons">beach_access</i>
-                    South Beach
-                </a>
-                <ul class="right hide-on-med-and-down">
-                    <!-- Dropdown Trigger -->
-                    <li>
-                        <a class="dropdown-trigger" href="#!" data-target="dropdown1">
-                            user@user.com
-                            <i class="material-icons right">arrow_drop_down</i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <div class="navbar-fixed">
+            <ul id="dropdown1" class="dropdown-content">
+                <li>
+                    <a href="<?= FRONT_ROOT ?>">Desconectarse</a>
+                </li>
+            </ul>        
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="<?= FRONT_ROOT ?>user/adminPath" class="brand-logo">
+                        <i class="material-icons">beach_access</i>
+                        South Beach
+                    </a>
+                    <ul class="right hide-on-med-and-down">                    
+                        <li>
+                            <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                                user@user.com
+                                <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </section>
 
 	<!-- Page Layout here -->
@@ -37,48 +35,84 @@
             <div class="sidenav-container">
                 <ul>
                     <li>
-                        <a href="#" class="valign-wrapper">
+                        <a href="<?= FRONT_ROOT ?>user/adminPath" class="valign-wrapper">
                             <i class="material-icons left">dashboard</i>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="valign-wrapper">
+                        <a href="<?= FRONT_ROOT ?>beachTent/addReservePath" class="valign-wrapper">
                             <i class="material-icons left">add_circle</i>
                             Reserva de Carpa
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="valign-wrapper">
+                        <a href="<?= FRONT_ROOT ?>parking/parkingPath" class="valign-wrapper">
                             <i class="material-icons left">directions_car</i>
                             Estacionamiento
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="valign-wrapper">
+                        <a href="<?= FRONT_ROOT ?>parking/addParkingPath" class="valign-wrapper">
                             <i class="material-icons left">add_circle_outline</i>
                             Reserva de Estacionamiento
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="valign-wrapper">
+                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
                             <i class="material-icons left">insert_chart</i>
                             Stock
                         </a>
                     </li>
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">content_paste</i>Proveedores</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>provider/addProviderPath" class="valign-wrapper">
+                                            <i class="material-icons left">person_add</i>
+                                            Agregar proveedor
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath" class="valign-wrapper">
+                                            <i class="material-icons left">format_list_numbered</i>
+                                            Listar/Modificar proveedores
+                                        </a>
+                                    </li>                                
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>
                     <li>
-                        <a href="#" class="valign-wrapper">
+                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
                             <i class="material-icons left">attach_money</i>
                             Contabilidad
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="valign-wrapper">
-                            <i class="material-icons left">person_add</i>
-                            Agregar administrador
-                        </a>
-                    </li>
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">person_pin</i>Administradores</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>user/addAdminPath" class="valign-wrapper">
+                                            <i class="material-icons left">person_add</i>
+                                            Agregar administrador
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>user/listAdminPath" class="valign-wrapper">
+                                            <i class="material-icons left">format_list_numbered</i>
+                                            Listar/Modificar administradores
+                                        </a>
+                                    </li>                                
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>                                       
                 </ul>
             </div>
         </div>
