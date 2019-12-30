@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bienvenido</title>
+    <title><?= $title ?></title>
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap" rel="stylesheet">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="<?= CSS_PATH ?>materialize.min.css"  media="screen,projection"/>
     <!--Import custom style-->
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="<?= CSS_PATH ?>style.css">
 </head>
 <body>
         
     <section class="login-section">
-        <div class="login-container z-depth-2">
+        <div class="login-container z-depth-2">            
             <div class="login-img"></div>
             <div class="login-form">
-                <form action="" method="post">
+                <form action="<?= FRONT_ROOT ?>user/login" method="post">
                     <div class="row">
                         <div class="input-field col s12">                            
                             <h3 class="title-1">Ingrese sus datos</h3>
@@ -46,6 +46,6 @@
         </div>
     </section>
     
-    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script type="text/javascript" src="<?= JS_PATH ?>materialize.min.js"></script>
 </body>
 </html>
