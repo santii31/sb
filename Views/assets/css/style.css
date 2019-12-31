@@ -77,6 +77,15 @@ a:hover {
     background-color: #473e64;    
 }
 
+.btn-danger {
+    background-color: #c62828;
+}
+
+.btn-danger:hover {
+    background-color: #f44336;
+    color: #fff;
+}
+
 .dashboard {
     font-size: 0.875rem;
     background-color: #edf1f5;
@@ -196,3 +205,22 @@ input:focus {
     box-shadow: 0 1px 0 0 #6a56a5 !important;
 }
 
+/* Search */
+.search-container {     
+    margin-bottom: 3rem;
+    box-shadow: none;
+    border-bottom: 1px solid #473e64;
+}
+
+.input-field input[type="search"]:focus:not(.browser-default) {
+    background-color: #edf1f5;
+}
+
+.s-color {
+    background-color: #edf1f5;
+    color: black;
+}
+
+.s-color .label-icon > i {
+    color: #000;
+}

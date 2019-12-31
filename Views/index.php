@@ -40,7 +40,7 @@
                     </div>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
                         Conectarse
-                        <i class="material-icons right">send</i>
+                        <i class="material-icons right">vpn_key</i>
                     </button>
                 </form>
             </div>

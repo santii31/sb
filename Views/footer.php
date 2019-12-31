@@ -7,6 +7,10 @@
             $('.collapsible').collapsible();
         });
 
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+        
     </script>
 </body>
 

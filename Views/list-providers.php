@@ -8,8 +8,18 @@
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
+                <nav class="search-container">                
+                    <div class="nav-wrapper s-color">                    
+                        <div class="input-field">
+                            <input id="search" type="search">
+                            <label class="label-icon" for="search">
+                                <i class="material-icons" >search</i>
+                            </label>                            
+                        </div>                    
+                    </div>
+                </nav>                 
                 <div class="row">    
-                    <table class="responsive-table">
+                    <table class="responsive-table" id="table-filter">
                         <thead>                            
                             <tr>
                                 <th>Id</th>
@@ -48,7 +58,7 @@
                                     </ul>                                      
                                 </td>                                
                                 <td class="actions">
-                                    <a class="waves-effect waves-light btn-small">
+                                    <a class="waves-effect waves-light btn-small btn-danger">
                                         <i class="material-icons left">delete_forever</i>
                                         Deshabilitar
                                     </a>
@@ -61,7 +71,7 @@
                             </tr>
                             <tr>
                                 <td>Alvin</td>
-                                <td>Alvin</td>
+                                <td>Pepe</td>
                                 <td>Eclair</td>
                                 <td>$0.87</td>
                                 <td>Alvin</td>
@@ -83,7 +93,7 @@
                                     </ul>                                      
                                 </td>                                
                                 <td class="actions">
-                                    <a class="waves-effect waves-light btn-small">
+                                    <a class="waves-effect waves-light btn-small btn-danger">
                                         <i class="material-icons left">delete_forever</i>
                                         Deshabilitar
                                     </a>
@@ -103,3 +113,28 @@
         </div>
     </div>
 </div>
+<script>
+
+	let outerInput = document.getElementById('search');
+
+    outerInput.addEventListener('keyup', function() {
+        let innerInput, filter, table, tr, td, i, txtValue;
+        innerInput = document.getElementById('search');
+        filter = innerInput.value.toUpperCase();
+        table = document.getElementById('table-filter');
+        tr = table.getElementsByTagName('tr');
+        
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            }
+        }
+    });
+
+</script>
