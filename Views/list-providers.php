@@ -11,7 +11,7 @@
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
-                            <input id="search" type="search">
+                            <input id="search" type="search" placeholder="Filtrar por nombre...">
                             <label class="label-icon" for="search">
                                 <i class="material-icons" >search</i>
                             </label>                            

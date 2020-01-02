@@ -10,7 +10,7 @@
             </ul>        
             <nav>
                 <div class="nav-wrapper">
-                    <a href="<?= FRONT_ROOT ?>user/adminPath" class="brand-logo">
+                    <a href="<?= FRONT_ROOT ?>admin/dashboard" class="brand-logo">
                         <i class="material-icons">beach_access</i>
                         South Beach
                     </a>
@@ -29,14 +29,13 @@
 
 	<!-- Page Layout here -->
 	<div class="row">
-
         <!-- Links -->
         <div class="col s12 m4 l2 menu-container">
             <div class="sidenav-container">
                 <ul>
 
                     <li>
-                        <a href="<?= FRONT_ROOT ?>user/adminPath" class="valign-wrapper">
+                        <a href="<?= FRONT_ROOT ?>admin/dashboard" class="valign-wrapper">
                             <i class="material-icons left">dashboard</i>
                             Dashboard
                         </a>
@@ -80,12 +79,27 @@
                         </li>                    
                     </ul>                                                      
 
-                    <li>
-                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
-                            <i class="material-icons left">insert_chart</i>
-                            Stock
-                        </a>
-                    </li>
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">insert_chart</i>Stock</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
+                                            <i class="material-icons left">person_add</i>
+                                            Añadir producto
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
+                                            <i class="material-icons left">format_list_numbered</i>
+                                            Listar/Modificar productos
+                                        </a>
+                                    </li>                                
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>                    
 
                     <ul class="collapsible">
                         <li>
@@ -108,25 +122,49 @@
                             </div>
                         </li>                    
                     </ul>
+
                     <li>
                         <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
                             <i class="material-icons left">attach_money</i>
                             Contabilidad
                         </a>
                     </li>
+
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">directions_walk</i>Clientes</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
+                                            <i class="material-icons left">person_add</i>
+                                            Añadir cliente potencial
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper">
+                                            <i class="material-icons left">format_list_numbered</i>
+                                            Listar clientes potenciales
+                                        </a>
+                                    </li>                                
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>  
+
                     <ul class="collapsible">
                         <li>
                             <div class="collapsible-header"><i class="material-icons">person_pin</i>Administradores</div>
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>user/addAdminPath" class="valign-wrapper">
+                                        <a href="<?= FRONT_ROOT ?>admin/addAdminPath" class="valign-wrapper">
                                             <i class="material-icons left">person_add</i>
                                             Añadir administrador
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>user/listAdminPath" class="valign-wrapper">
+                                        <a href="<?= FRONT_ROOT ?>admin/listAdminPath" class="valign-wrapper">
                                             <i class="material-icons left">format_list_numbered</i>
                                             Listar/Modificar administradores
                                         </a>
@@ -135,6 +173,7 @@
                             </div>
                         </li>                    
                     </ul>                                       
-                </ul>
+
+                </ul>                
             </div>
         </div>

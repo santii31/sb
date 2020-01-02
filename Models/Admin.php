@@ -9,7 +9,8 @@
         private $lastname;
         private $email;
         private $dni;
-        private $password;        
+        private $password;     
+        private $is_active;
 
         public function getId() {
             return $this->id;

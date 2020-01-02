@@ -16,7 +16,7 @@
 	define("DB_PASS", "");
 
 	//ERR MSGS
-	define("DB_ERROR", "An error has ocurred. Try later!");	
+	define("DB_ERROR", "Un error ha ocurrido. Intente mas tarde!");	
 
 	define("SHOW_ADDED", "Show added with success.");
 	define("SHOW_DISABLE", "Show disable with success.");
@@ -25,19 +25,15 @@
 	define("SHOW_CHECK_DAY", "The show must be at least one day anticipation.");
 	define("SHOW_EXIST", "This show has already been registered.");	
 	
-	define("USER_ADDED", "User added with success.");
-	define("USER_DISABLE", "User disable with success.");
-	define("USER_ENABLE", "User enable with success.");
-	define("ACCOUNT_DISABLE", "Your account is disabled at the moment. Contact the admin.");
-	define("ELIMINATE_YOURSELF", "You can't disable yourself.");
+	define("ADMIN_ADDED", "Administrador añadido con éxito .");
+	define("ADMIN_DISABLE", "Administrador deshabilitado con éxito.");
+	define("ADMIN_ENABLE", "Administrador habilitado con éxito.");
+	define("ACCOUNT_DISABLE", "Esta cuenta se encuentra deshabilitada por el momento. Contacte con los administradores.");
+	define("DISABLE_YOURSELF", "No puedes deshabilitarte a ti mismo.");
 
-	define("LOGIN_NEEDED", "Please! Login to continue.");
-	define("LOGIN_ERROR", "You have entered an invalid e-mail or password. Try again!");	
-	define("REGISTER_ERROR", "This email address has already been registered.");
-	define("EMPTY_FIELDS", "Complete all the fields correctly to continue.");
-
-	define("IMAGE_UPLOAD", "Image upload with success.");
-	define("IMAGE_UPLOAD_ERROR", "An error has ocurred. The image can't upload.");
-	define("IMAGE_TYPE_ERROR", "The file does not correspond to an image");
+	define("LOGIN_NEEDED", "Inicie sesion para continuar.");
+	define("LOGIN_ERROR", "El email ingresado o la contraseña son incorrectos. Intente nuevamente.");	
+	define("REGISTER_ERROR", "Este email ya se encuentra registrado.");
+	define("EMPTY_FIELDS", "Complete todos los campos correctamente para continuar.");	
 
 ?>

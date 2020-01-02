@@ -23,41 +23,37 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s4">
-                                <input id="estadia" type="text" class="validate" required>
-                                <label for="estadia">Telefono</label>
+                                <input id="tel" type="number" class="validate" required>
+                                <label for="tel">Telefono</label>
                             </div>
                             <div class="input-field col s4">
-                                <input id="cofres" type="text" class="validate" required>
-                                <label for="cofres">Email</label>
+                                <input id="email" type="email" class="validate" required>
+                                <label for="email">Email</label>
                             </div>    
                             <div class="input-field col s4">
-                                <input id="servicio_ad" type="text" class="validate">
-                                <label for="servicio_ad">DNI</label>
+                                <input id="dni" type="number" class="validate">
+                                <label for="dni">DNI</label>
                             </div>                                                       
                         </div>                        
                         <div class="row">
                             <div class="input-field col s4">
-                                <input id="domicilio" type="text" class="validate" required>
-                                <label for="domicilio">Domicilio</label>
+                                <input id="factura" type="text" class="validate" required>
+                                <label for="factura">Tipo de factura</label>
+                            </div>   
+                            <div class="input-field col s4">
+                                <input id="cuil" type="number" class="validate" required>
+                                <label for="cuil">Numero de CUIL</label>
                             </div>
                             <div class="input-field col s4">
-                                <input id="ciudad" type="text" class="validate" required>
-                                <label for="ciudad">Numero de CUIL</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="cp" type="number" class="validate" required>
-                                <label for="cp">Razon social</label>
+                                <input id="rs" type="text" class="validate" required>
+                                <label for="rs">Razon social</label>
                             </div>                                                        
                         </div>
                         <div class="row">
-                            <div class="input-field col s8">
-                                <input id="email" type="email" class="validate" required>
-                                <label for="email">Tipo de factura</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="tel1" type="number" class="validate" required>
-                                <label for="tel1">Telefono</label>
-                            </div>                            
+                            <div class="input-field col s12">
+                                <input id="domicilio" type="text" class="validate" required>
+                                <label for="domicilio">Domicilio</label>
+                            </div>                                                    
                         </div>                                               
                         <div class="row">
                             <div class="col s12 center-align">

@@ -195,6 +195,10 @@ a:hover {
     margin-right: 1rem;
 }
 
+.subtitle > .left {    
+    margin: 0;
+}
+
 /* Form */
 label.active {
     color: #6a56a5 !important;
@@ -216,9 +220,12 @@ input:focus {
     background-color: #edf1f5;
 }
 
+nav .input-field label.active i {
+    color: #000;
+}
+
 .s-color {
-    background-color: #edf1f5;
-    color: black;
+    background-color: #edf1f5;    
 }
 
 .s-color .label-icon > i {

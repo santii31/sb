@@ -29,7 +29,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <input id="dni" type="number" class="validate" required>
-                                <label for="cofrednis">DNI</label>
+                                <label for="dni">DNI</label>
                             </div>                                                         
                         </div>                        
                         <div class="row">

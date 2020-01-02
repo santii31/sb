@@ -11,7 +11,7 @@
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
-                            <input id="search" type="search">
+                            <input id="search" type="search" placeholder="Filtrar por nombre...">
                             <label class="label-icon" for="search">
                                 <i class="material-icons" >search</i>
                             </label>                            
@@ -87,6 +87,21 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="pagination center-align">
+                            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                            <li class="active"><a href="#!">1</a></li>
+                            <li class="waves-effect"><a href="#!">2</a></li>
+                            <li class="waves-effect"><a href="#!">3</a></li>
+                            <li class="waves-effect"><a href="#!">4</a></li>
+                            <li class="waves-effect"><a href="#!">5</a></li>
+                            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
 
         </div>

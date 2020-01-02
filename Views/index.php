@@ -26,18 +26,21 @@
                             <h3 class="title-1">Ingrese sus datos</h3>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="input-field col s12">                            
                             <input id="email" type="email" class="validate" required>
                             <label for="email">Email</label>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="password" type="password" class="validate" required>
                             <label for="password">Contraseña</label>
                         </div>
                     </div>
+
                     <button class="btn waves-effect waves-light" type="submit" name="action">
                         Conectarse
                         <i class="material-icons right">vpn_key</i>
