@@ -27,12 +27,12 @@
 			}
         }         
         
-    	private function add($name, $lastName, $dni, $eemail, $password) {
+    	private function add($name, $lastName, $email, $dni, $password) {
 			$admin = new Admin();
             $admin->setName($name);
             $admin->setLastName($lastName);
-            $admin->setDni($dni);
             $admin->setEmail($email);
+            $admin->setDni($dni);
             $admin->setPassword($password);			
             if ($this->adminDAO->add($admin)) {
                 return $admin;
@@ -46,21 +46,21 @@
             (averiguar como hacerlo)
         */
         
-        public function register($name, $lastName, $dni, $email, $password) {
-			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) && $this->validateEmailForm($email)) {
+        public function register($name, $lastName, $email, $dni, $password) {
+			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) && $this->validateEmailForm($email)) {     
                 $adminTemp = new admin();
                 $adminTemp->setEmail($email);
-				if ($this->adminDAO->getByEmail($adminTemp) == null) {
+				if ($this->adminDAO->getByEmail($adminTemp) == null) {                    
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
                     $admin = $this->add($name, $lastName, $dni, $email, $passwordHash);
-                    if ($admin) {                        
-                        return $this->addAdminPath('EXITO');
-                    } else {
+                    if ($admin) {                                                
+                        return $this->addAdminPath(ADMIN_ADDED);
+                    } else {                        
                         return $this->addAdminPath(DB_ERROR);        
                     }
-                }
+                }                
                 return $this->addAdminPath(REGISTER_ERROR);
-            }
+            }            
             return $this->addAdminPath(EMPTY_FIELDS);
 		}
 
@@ -70,16 +70,16 @@
             }
             return true;
         }
-
+        
         private function validateEmailForm($email) {
-            return (filter_var($email, FILTER_VALIDATE_Eemail)) ? true : false;
+            return (filter_var($email, FILTER_VALIDATE_EMAIL));
         } 
 
         public function login($email, $password) {
             if ($this->isFormLoginNotEmpty($email, $password) && $this->validateEmailForm($email)) {
                 $adminTemp = new admin();
                 $adminTemp->setEmail($email);
-                $admin = $this->adminDAO->getByemail($adminTemp);
+                $admin = $this->adminDAO->getByEmail($adminTemp);                        
                 if (($admin != null) && (password_verify($password, $admin->getPassword()))) {
                     if ($admin->getIsActive()) {
                         $_SESSION["loggedAdmin"] = $admin;                        
@@ -115,7 +115,7 @@
         public function listAdminPath($alert = "", $success = "") {
             if ($admin = $this->isLogged()) {      
                 $title = "Administradores";
-                // traer admins
+                $admins = $this->adminDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-admins.php");
@@ -124,6 +124,25 @@
                 return $this->userPath();
             }           
         } 
+
+        public function updatePath($id_user) {
+            if ($admin = $this->isLogged()) {      
+                $title = "Actualizar informacion";       
+                $admTemp = new Admin();
+                $admTemp->setId($id_user);
+                $adm = $this->adminDAO->getById($admTemp);
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "update-admin.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->userPath();
+            }           
+        }        
+
+        public function update() {
+
+        }
 
         public function userPath() {
 			$this->homeController = new HomeController();
@@ -144,26 +163,34 @@
 			return $this->userPath();
         }        
                 
-        public function enable($email) {
-			$admin = new admin();
-			$admin->setEmail($email);
-			if ($this->adminDAO->enableByEmail($admin)) {
-				return $this->listAdminPath(null, ADMIN_ENABLE);
-			} else {
-				return $this->listAdminPath(DB_ERROR, null);
-			}
+        public function enable($id) {
+            if ($admin = $this->isLogged()) {
+                $admin = new admin();
+                $admin->setId($id);
+                if ($this->adminDAO->enableById($admin)) {
+                    return $this->listAdminPath(null, ADMIN_ENABLE);
+                } else {
+                    return $this->listAdminPath(DB_ERROR, null);
+                }
+            } else {
+                return $this->userPath();
+            }
         }       
 
-        public function disable($dni) {		
-            $admin = $_SESSION["loggedadmin"];
-            if ($admin->getEmail() == $email) {
-                return $this->listAdminPath(DISABLE_YOURSELF, null);
+        public function disable($id) {		
+            if ($admin = $this->isLogged()) {
+                $admin = $_SESSION["loggedAdmin"];
+                if ($admin->getId() == $id) {                
+                    return $this->listAdminPath(DISABLE_YOURSELF, null);
+                } else {
+                    $admin = new admin();
+                    $admin->setId($id);           
+                    $this->adminDAO->disableById($admin);
+                    return $this->listAdminPath(null, ADMIN_DISABLE);
+                }
             } else {
-                $admin = new admin();
-                $admin->setEmail($email);             
-                $this->adminDAO->disableByEmail($admin);
-                return $this->listAdminPath(null, ADMIN_DISABLE);
-            }
+                return $this->userPath();
+            }                
 		}
 
     }

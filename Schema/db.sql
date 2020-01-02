@@ -24,18 +24,17 @@ CREATE PROCEDURE admin_add (
                                 IN dni VARCHAR(255),
                                 IN email VARCHAR(255),
                                 IN password VARCHAR(255)
-                                IN is_active BOOLEAN)
+                            )
 BEGIN
 	INSERT INTO admin (
 			admin.name,
 			admin.lastname,
 			admin.dni,
 			admin.email,
-			admin.password,
-			admin.is_active
+			admin.password			
 	)
     VALUES
-        (name,lastname,dni,email,password,is_active);
+        (name, lastname, dni, email, password);
 END$$
 
 DROP procedure IF EXISTS `admin_getById`;
@@ -45,6 +44,13 @@ BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`id` = id;
 END$$
 
+DROP procedure IF EXISTS `admin_getByEmail`;
+DELIMITER $$
+CREATE PROCEDURE admin_getByEmail (IN email INT)
+BEGIN
+	SELECT * FROM `admin` WHERE `admin`.`email` = email;
+END$$
+
 DROP procedure IF EXISTS `admin_getAll`;
 DELIMITER $$
 CREATE PROCEDURE admin_getAll ()
@@ -52,7 +58,19 @@ BEGIN
 	SELECT * FROM `admin` ORDER BY name ASC;
 END$$
 
+DROP procedure IF EXISTS `admin_disableById`;
+DELIMITER $$
+CREATE PROCEDURE admin_disableById (IN id INT)
+BEGIN
+	UPDATE `admin` SET `admin`.`is_active` = false WHERE `admin`.`id` = id;
+END$$
 
+DROP procedure IF EXISTS `admin_enableById`;
+DELIMITER $$
+CREATE PROCEDURE admin_enableById (IN id INT)
+BEGIN
+    UPDATE `admin` SET `admin`.`is_active` = true WHERE `admin`.`id` = id;	
+END$$
 
 
 ----------------------------- CLIENT -----------------------------

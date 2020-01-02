@@ -1,11 +1,10 @@
 <body class="dashboard">
-
     <!-- Navbar -->
     <section>
         <div class="navbar-fixed">
             <ul id="dropdown1" class="dropdown-content">
                 <li>
-                    <a href="<?= FRONT_ROOT ?>">Desconectarse</a>
+                    <a href="<?= FRONT_ROOT ?>admin/logout">Desconectarse</a>
                 </li>
             </ul>        
             <nav>
@@ -17,7 +16,7 @@
                     <ul class="right hide-on-med-and-down">                    
                         <li>
                             <a class="dropdown-trigger" href="#!" data-target="dropdown1">
-                                user@user.com
+                                <?= $admin->getEmail(); ?>
                                 <i class="material-icons right">arrow_drop_down</i>
                             </a>
                         </li>

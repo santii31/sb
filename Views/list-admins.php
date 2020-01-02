@@ -8,6 +8,29 @@
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
+
+                <?php if ($success != null): ?>
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card-panel green lighten-4">
+                            <i class="material-icons left">check</i>                            
+                            <span class="card-text card-success"> <?= $success; ?> </span>
+                        </div>        
+                    </div>                    
+                </div>    
+                <?php endif; ?>        
+
+                <?php if ($alert != null): ?>
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card-panel red lighten-4">
+                            <i class="material-icons left">error</i>
+                            <span class="card-text card-alert"> <?= $alert; ?> </span>                            
+                        </div>        
+                    </div>                    
+                </div>                
+                <?php endif; ?>
+
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
@@ -23,7 +46,7 @@
                     <table class="responsive-table" id="table-filter">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>#</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Email</th>
@@ -33,75 +56,48 @@
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td>Alvin</td>
-                            <td>Eclair</td>
-                            <td>$0.87</td>
-                            <td>Alvin</td>
-                            <td>Eclair</td>
-                            <td class="actions">
-                                <a class="waves-effect waves-light btn-small btn-danger">
-                                    <i class="material-icons left">delete_forever</i>
-                                    Deshabilitar
-                                </a>
-                                <a class="waves-effect waves-light btn-small">
-                                    <i class="material-icons left">build</i>
-                                    Modificar
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Alan</td>
-                            <td>Jellybean</td>
-                            <td>$3.76</td>
-                            <td>Alvin</td>
-                            <td>Eclair</td>
-                            <td class="actions">
-                                <a class="waves-effect waves-light btn-small btn-danger">
-                                    <i class="material-icons left">delete_forever</i>
-                                    Deshabilitar
-                                </a>
-                                <a class="waves-effect waves-light btn-small">
-                                    <i class="material-icons left">build</i>
-                                    Modificar
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jonathan</td>
-                            <td>Lollipop</td>
-                            <td>$7.00</td>
-                            <td>Alvin</td>
-                            <td>Eclair</td>
-                            <td class="actions">
-                                <a class="waves-effect waves-light btn-small btn-danger">
-                                    <i class="material-icons left">delete_forever</i>
-                                    Deshabilitar
-                                </a>
-                                <a class="waves-effect waves-light btn-small">
-                                    <i class="material-icons left">build</i>
-                                    Modificar
-                                </a>
-                            </td>
-                        </tr>
+                            <?php foreach ($admins as $admin): ?>
+                                <tr>
+                                    <td> <?= $admin->getId(); ?> </td>
+                                    <td> <?= $admin->getName(); ?> </td>
+                                    <td> <?= $admin->getLastName(); ?> </td>
+                                    <td> <?= $admin->getEmail(); ?> </td>
+                                    <td> <?= $admin->getDni(); ?> </td>
+                                    <td class="actions">
+
+                                        <!-- <div>
+                                            <form action="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" method="post">
+                                                <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
+                                                <button type="submit" class="waves-effect waves-light btn-small btn-danger">
+                                                    <i class="material-icons left">delete_forever</i>
+                                                    Deshabilitar
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <div>
+                                            <form action="<?= FRONT_ROOT ?>admin/updatePath/<?= $admin->getId(); ?>" method="post">
+                                                <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
+                                                <button type="submit" class="waves-effect waves-light btn-small">
+                                                    <i class="material-icons left">build</i>
+                                                    Modificar
+                                                </button>
+                                            </form>
+                                        </div> -->
+                                        <a href="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                            <i class="material-icons left">delete_forever</i>
+                                            Deshabilitar
+                                        </a>
+                                        <a href="<?= FRONT_ROOT ?>admin/updatePath/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons left">build</i>
+                                            Modificar
+                                        </a>
+                                    </td>                    
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <ul class="pagination center-align">
-                            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                            <li class="active"><a href="#!">1</a></li>
-                            <li class="waves-effect"><a href="#!">2</a></li>
-                            <li class="waves-effect"><a href="#!">3</a></li>
-                            <li class="waves-effect"><a href="#!">4</a></li>
-                            <li class="waves-effect"><a href="#!">5</a></li>
-                            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                        </ul>
-                    </div>
-                </div>
-
             </div>
 
         </div>
@@ -132,4 +128,3 @@
     });
 
 </script>
-    

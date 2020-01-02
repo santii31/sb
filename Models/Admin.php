@@ -65,15 +65,13 @@
             return $this;
         }       
 
-
-        // public function getIsActive() {
-        //     return $this->is_active;
-        // }
-
-        // public function setIsActive($is_active) {
-        //     $this->is_active = $is_active;
-        //     return $this;
-        // }
+        public function getIsActive() {
+            return $this->is_active;
+        }
+        public function setIsActive($is_active) {
+            $this->is_active = $is_active;
+            return $this;
+        }
 
     }
 

@@ -33,24 +33,48 @@
 				return false;
 			}			
         }
-						
-		public function getByMail(Admin $admin) {
-			try {
-				// $adminTemp = null;
-				$query = "CALL admin_getByMail(?)";
-				$parameters["mail"] = $admin->getEmail();
+					
+		public function getById(Admin $admin) {
+			try {				
+				$userTemp = null;
+				$query = "CALL admin_getById(?)";
+				$parameters["id"] = $admin->getId();
 				$this->connection = Connection::GetInstance();
-				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);						
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-					$admin = new Admin();
-					$admin->setName($row["name"]);
-					$admin->setLastName($row["last_name"]);
-					$admin->setMail($row["mail"]);
-					$admin->setDni($row["dni"]);
-					$admin->setPassword($row["password"]);				
-					$admin->setIsActive($row["is_active"]);
+					$userTemp = new Admin();
+					$userTemp->setId($row["id"]);
+					$userTemp->setName($row["name"]);
+					$userTemp->setLastName($row["lastname"]);
+					$userTemp->setEmail($row["email"]);
+					$userTemp->setDni($row["dni"]);
+					$userTemp->setPassword($row["password"]);				
+					$userTemp->setIsActive($row["is_active"]);
 				}
-				return $admin;
+				return $userTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function getByEmail(Admin $admin) {
+			try {				
+				$userTemp = null;
+				$query = "CALL admin_getByEmail(?)";
+				$parameters["email"] = $admin->getEmail();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$userTemp = new Admin();
+					$userTemp->setId($row["id"]);
+					$userTemp->setName($row["name"]);
+					$userTemp->setLastName($row["lastname"]);
+					$userTemp->setEmail($row["email"]);
+					$userTemp->setDni($row["dni"]);
+					$userTemp->setPassword($row["password"]);				
+					$userTemp->setIsActive($row["is_active"]);
+				}
+				return $userTemp;
 			} catch (Exception $e) {
 				return false;
 			}
@@ -63,9 +87,10 @@
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
 					$admin = new Admin();
+					$admin->setId($row["id"]);
 					$admin->setName($row["name"]);
-					$admin->setLastName($row["last_name"]);
-					$admin->setMail($row["mail"]);
+					$admin->setLastName($row["lastname"]);
+					$admin->setEmail($row["email"]);
 					$admin->setDni($row["dni"]);
 					$admin->setPassword($row["password"]);				
 					$admin->setIsActive($row["is_active"]);
@@ -77,10 +102,10 @@
 			}
 		}		
 				
-		public function enableByEmail(Admin $admin) {
+		public function enableById(Admin $admin) {
 			try {
-				$query = "CALL admin_enableByEmail(?)";
-				$parameters ["email"] = $admin->getEmail();
+				$query = "CALL admin_enableById(?)";
+				$parameters["id"] = $admin->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -90,10 +115,10 @@
 			}
 		}
 
-		public function disableByEmail(Admin $admin) {
+		public function disableById(Admin $admin) {
 			try {
-				$query = "CALL admin_disableByEmail(?)";
-				$parameters ["email"] = $admin->getEmail();
+				$query = "CALL admin_disableById(?)";
+				$parameters["id"] = $admin->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;

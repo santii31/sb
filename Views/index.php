@@ -19,7 +19,7 @@
         <div class="login-container z-depth-2">            
             <div class="login-img"></div>
             <div class="login-form">
-                <form action="<?= FRONT_ROOT ?>user/login" method="post">
+                <form action="<?= FRONT_ROOT ?>admin/login" method="post">
                     <div class="row">
                         <div class="input-field col s12">    
                             <img src="<?= IMG_PATH ?>logo.png" alt="Logo" class="logo-brand">                        
@@ -29,14 +29,14 @@
 
                     <div class="row">
                         <div class="input-field col s12">                            
-                            <input id="email" type="email" class="validate" required>
+                            <input id="email" type="email" name="email" class="validate" required>
                             <label for="email">Email</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="password" type="password" class="validate" required>
+                            <input id="password" type="password" name="password" class="validate" required>
                             <label for="password">Contraseña</label>
                         </div>
                     </div>

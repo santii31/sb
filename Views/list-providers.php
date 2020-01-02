@@ -8,6 +8,29 @@
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
+
+                <?php if ($success != null): ?>
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card-panel green lighten-4">
+                            <i class="material-icons left">check</i>                            
+                            <span class="card-text card-success"> <?= $success; ?> </span>
+                        </div>        
+                    </div>                    
+                </div>    
+                <?php endif; ?>        
+
+                <?php if ($alert != null): ?>
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card-panel red lighten-4">
+                            <i class="material-icons left">error</i>
+                            <span class="card-text card-alert"> <?= $alert; ?> </span>                            
+                        </div>        
+                    </div>                    
+                </div>                
+                <?php endif; ?>
+
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
@@ -22,7 +45,7 @@
                     <table class="responsive-table" id="table-filter">
                         <thead>                            
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Telefono</th>
