@@ -85,14 +85,23 @@
         }
 
 
-        // public function getIsActive() {
-        //     return $this->is_active;
-        // }
+        public function getIsActive() {
+            return $this->is_active;
+        }
 
-        // public function setIsActive($is_active) {
-        //     $this->is_active = $is_active;
-        //     return $this;
-        // }
+        public function setIsActive($is_active) {
+            $this->is_active = $is_active;
+            return $this;
+        }
+
+        public function getIsPotencial() {
+            return $this->is_potencial;
+        }
+
+        public function setIsPotential($is_potential) {
+            $this->is_potential = $is_potential;
+            return $this;
+        }
 
     }
 

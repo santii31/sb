@@ -3,6 +3,7 @@
     namespace Models;
 
     use Models\Client as Client;
+    use Models\Admin as Admin;
 
     class Reservation {
 
@@ -11,6 +12,8 @@
         private $date_end;
         private $price;    
         private $client;    
+        private $admin;
+        
 
         public function getId() {
             return $this->id;
@@ -56,6 +59,15 @@
             return $this;
         }
         
+        public function getAdmin() {
+            return $this->admin;
+        }
+
+        public function setAdmin(Admin $admin) {
+            $this->admin = $admin;
+            return $this;
+        }
+
         // public function getIsActive() {
         //     return $this->is_active;
         // }

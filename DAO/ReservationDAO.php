@@ -3,35 +3,48 @@
     namespace DAO;
 
 	use \Exception as Exception;
-    use Models\BeachTent as BeachTent;	
+    use Models\Reservation as Reservation;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
-    class BeachTentDAO {
+    class ReservationDAO {
 
 		private $connection;
-		private $beachTentList = array();
-		private $tableName = "beach_tent";		
+		private $reservationList = array();
+		private $tableName = "admin";		
 
 		public function __construct() {
 
 		}
 
-        
+        public function add(Reservation $reservation) {								
+			try {					
+				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?)";
+				$parameters["date_start"] = $reservation->getDateStart();
+				$parameters["date_end"] = $reservation->getDateEnd();
+				$parameters["total_price"] = $reservation->getPrice();
+				$parameters["FK_id_client"] = $reservation->getClient()->getId();
+                $parameters["FK_id_admin"] = $reservation->getAdmin()->getId();
+                $parameters["is_active"] = $reservation->getIsActive();
+				$this->connection = Connection::getInstance();
+				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
+				return true;
+			}
+			catch (Exception $e) {
+				return false;
+			}			
+        }
 					
-		public function getById(BeachTent $beachTent) {
+		public function getById(Reservation $reservation) {
 			try {				
-				$beachTentTemp = null;
-				$query = "CALL tent_getById(?)";
-				$parameters["id"] = $beachTent->getId();
+				$reservationTemp = null;
+				$query = "CALL reservation_getById(?)";
+				$parameters["id"] = $reservation->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-					$beachTentTemp = new BeachTent();
-                    $beachTentTemp->setId($row["id"]);
-                    $beachTentTemp->setNumber($row["number"]);
-                    $beachTentTemp->setPrice($row["price"]);
-                    $beachTentTemp->setId($row["id"]);
+					$reservationTemp = new Reservation();
+					$reservationTemp->setId($row["id"]);
 					$reservationTemp->setDateStart($row["date_start"]);
                     $reservationTemp->setDateEnd($row["date_end"]);
                     $reservationTemp->setPrice($row["total_price"]);

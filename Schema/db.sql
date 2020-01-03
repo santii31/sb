@@ -120,11 +120,32 @@ BEGIN
 	SELECT * FROM `client` WHERE `client`.`id` = id;
 END$$
 
+DROP procedure IF EXISTS `client_getByEmail`;
+DELIMITER $$
+CREATE PROCEDURE client_getByEmail (IN email INT)
+BEGIN
+	SELECT * FROM `client` WHERE `client`.`email` = email;
+END$$
+
 DROP procedure IF EXISTS `client_getAll`;
 DELIMITER $$
 CREATE PROCEDURE client_getAll ()
 BEGIN
 	SELECT * FROM `client` ORDER BY name ASC;
+END$$
+
+DROP procedure IF EXISTS `admin_disableById`;
+DELIMITER $$
+CREATE PROCEDURE admin_disableById (IN id INT)
+BEGIN
+	UPDATE `admin` SET `admin`.`is_active` = false WHERE `admin`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `admin_enableById`;
+DELIMITER $$
+CREATE PROCEDURE admin_enableById (IN id INT)
+BEGIN
+    UPDATE `admin` SET `admin`.`is_active` = true WHERE `admin`.`id` = id;	
 END$$
 
 ----------------------------- RESERVATION -----------------------------
@@ -168,14 +189,76 @@ DROP procedure IF EXISTS `reservation_getById`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getById (IN id INT)
 BEGIN
-	SELECT * FROM `reservation` WHERE `reservation`.`id` = id;
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `reservation`
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    WHERE `reservation`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `reservation_getAll`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getAll ()
 BEGIN
-	SELECT * FROM `reservation` ORDER BY date_start ASC;
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+           FROM `reservation`
+           INNER JOIN client ON client.id = reservation.FK_id_client
+           INNER JOIN admin ON admin.id = reservation.FK_id_admin
+           ORDER BY date_start ASC;
+END$$
+
+DROP procedure IF EXISTS `reservation_disableById`;
+DELIMITER $$
+CREATE PROCEDURE reservation_disableById (IN id INT)
+BEGIN
+	UPDATE `reservation` SET `reservation`.`is_active` = false WHERE `reservation`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `reservation_enableById`;
+DELIMITER $$
+CREATE PROCEDURE reservation_enableById (IN id INT)
+BEGIN
+    UPDATE `reservation` SET `reservation`.`is_active` = true WHERE `reservation`.`id` = id;	
 END$$
 ----------------------------- BEACH-TENT -----------------------------
 
@@ -193,14 +276,106 @@ DROP procedure IF EXISTS `tent_getById`;
 DELIMITER $$
 CREATE PROCEDURE tent_getById (IN id INT)
 BEGIN
-	SELECT * FROM `beach_tent` WHERE `beach_tent`.`id` = id;
+	SELECT beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.is_active AS tent_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `beach_tent` 
+    INNER JOIN reservation ON reservation.id = beach_tent.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    WHERE `beach_tent`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `tent_getByNumber`;
+DELIMITER $$
+CREATE PROCEDURE tent_getByNumber (IN number INT)
+BEGIN
+	SELECT beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.is_active AS tent_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `beach_tent` 
+    INNER JOIN reservation ON reservation.id = beach_tent.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    WHERE `beach_tent`.`number` = number;
 END$$
 
 DROP procedure IF EXISTS `tent_getAll`;
 DELIMITER $$
 CREATE PROCEDURE tent_getAll ()
 BEGIN
-	SELECT * FROM `beach_tent` ORDER BY number ASC;
+	SELECT beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.is_active AS tent_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `beach_tent` 
+    INNER JOIN reservation ON reservation.id = beach_tent.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    ORDER BY number ASC;
+    
 END$$
 ----------------------------- PARKING -----------------------------
 
@@ -221,14 +396,73 @@ DROP procedure IF EXISTS `parking_getById`;
 DELIMITER $$
 CREATE PROCEDURE parking_getById (IN id INT)
 BEGIN
-	SELECT * FROM `parking` WHERE `parking`.`id` = id;
+	SELECT parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `parking`
+    INNER JOIN reservation ON reservation.id = parking.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    WHERE `parking`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `parking_getAll`;
 DELIMITER $$
 CREATE PROCEDURE parking_getAll ()
 BEGIN
-	SELECT * FROM `parking` ORDER BY number ASC;
+	SELECT parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `parking` 
+    INNER JOIN reservation ON reservation.id = parking.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    ORDER BY number ASC;
+    
 END$$
 ----------------------------- PROVIDER -----------------------------
 
@@ -318,7 +552,7 @@ BEGIN
             product.price,
             product.FK_id_provider,
             product.FK_id_category,
-            product is_active
+            product.is_active
 	)
     VALUES
         (name,price,FK_id_provider,FK_id_category,is_active);
@@ -329,14 +563,46 @@ DROP procedure IF EXISTS `product_getById`;
 DELIMITER $$
 CREATE PROCEDURE product_getById (IN id INT)
 BEGIN
-	SELECT * FROM `product` WHERE `product`.`id` = id;
+	SELECT  product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.is_active AS product_isActive,
+            provider.id AS provider_id,
+            provider.name AS provider_name,
+            provider.lastname,
+            provider.tel,
+            provider.email,
+            provider.dni,
+            provider.address,
+            provider.cuil,
+            provider.social_reason,
+            provider.is_active
+    FROM `product` 
+    INNER JOIN provider provider ON provider.id = product.FK_id_provider
+    WHERE `product`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `product_getAll`;
 DELIMITER $$
 CREATE PROCEDURE product_getAll ()
 BEGIN
-	SELECT * FROM `product` ORDER BY price ASC;
+	SELECT  product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.is_active AS product_isActive,
+            provider.id AS provider_id,
+            provider.name AS provider_name,
+            provider.lastname,
+            provider.tel,
+            provider.email,
+            provider.dni,
+            provider.address,
+            provider.cuil,
+            provider.social_reason,
+            provider.is_active
+    FROM `product` 
+    INNER JOIN provider provider ON provider.id = product.FK_id_provider
+    ORDER BY price ASC;
 END$$
 ----------------------------- CATEGORY -----------------------------
 
@@ -360,14 +626,72 @@ DROP procedure IF EXISTS `service_getById`;
 DELIMITER $$
 CREATE PROCEDURE service_getById (IN id INT)
 BEGIN
-	SELECT * FROM `service` WHERE `service`.`id` = id;
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `additional_service` 
+    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    WHERE `service`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `service_getAll`;
 DELIMITER $$
 CREATE PROCEDURE service_getAll ()
 BEGIN
-	SELECT * FROM `service` ORDER BY price ASC;
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `additional_service` 
+    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    ORDER BY price ASC;
 END$$
 
 ---------------------------- CHEST ---------------------------
@@ -383,19 +707,84 @@ CREATE TABLE chest (
 );
 
 
-
 DROP procedure IF EXISTS `chest_getById`;
 DELIMITER $$
 CREATE PROCEDURE chest_getById (IN id INT)
 BEGIN
-	SELECT * FROM `chest` WHERE `chest`.`id` = id;
+	SELECT chest.id AS chest_id,
+           chest.chest_number AS chest_number,
+           chest.price AS chest_price,
+           chest.is_active AS chest_isActive,
+           additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive 
+    FROM `chest` 
+    INNER JOIN reservation ON reservation.id = chest.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    WHERE `chest`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `chest_getAll`;
 DELIMITER $$
 CREATE PROCEDURE chest_getAll ()
 BEGIN
-	SELECT * FROM `chest` ORDER BY price ASC;
+	SELECT chest.id AS chest_id,
+           chest.chest_number AS chest_number,
+           chest.price AS chest_price,
+           chest.is_active AS chest_isActive,
+           additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive
+    FROM `chest`
+    INNER JOIN reservation ON reservation.id = chest.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    ORDER BY price ASC;
 END$$
 
 ---------------------------- UMBRELLA ---------------------------
@@ -416,12 +805,78 @@ DROP procedure IF EXISTS `umbrella_getById`;
 DELIMITER $$
 CREATE PROCEDURE umbrella_getById (IN id INT)
 BEGIN
-	SELECT * FROM `umbrella` WHERE `umbrella`.`id` = id;
+	SELECT umbrella.id AS umbrella_id,
+           umbrella.umbrella_number AS umbrella_number,
+           umbrella.price AS umbrella_price,
+           umbrella.is_active AS umbrella_isActive,
+           additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive  
+    FROM `umbrella` 
+    INNER JOIN reservation ON reservation.id = umbrella.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    WHERE `umbrella`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `umbrella_getAll`;
 DELIMITER $$
 CREATE PROCEDURE umbrella_getAll ()
 BEGIN
-	SELECT * FROM `umbrella` ORDER BY price ASC;
+	SELECT umbrella.id AS umbrella_id,
+           umbrella.umbrella_number AS umbrella_number,
+           umbrella.price AS umbrella_price,
+           umbrella.is_active AS umbrella_isActive,
+           additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive 
+    FROM `umbrella` 
+    INNER JOIN reservation ON reservation.id = umbrella.FK_id_reservation
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    ORDER BY price ASC;
 END$$
