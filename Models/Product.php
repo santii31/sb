@@ -2,14 +2,14 @@
 
     namespace Models;
 
-    use Models\Provider as Provider;
+    use Models\Category as Category;
 
     class Product {
 
         private $id;  
         private $name;
         private $price;
-        private $provider;
+        private $category;
 
         public function getId() {
             return $this->id;
@@ -35,23 +35,16 @@
             $this->price = $price;            
         }
         
-        public function getProvider() {
+        public function getCategory() {
             return $this->provider;
         }
 
-        public function setProvider(Provider $provider) {
-            $this->provider = $provider;            
+        public function setCategory(Category $category) {
+            $this->category = $category;            
         }
         
 
-        // public function getIsActive() {
-        //     return $this->is_active;
-        // }
-
-        // public function setIsActive($is_active) {
-        //     $this->is_active = $is_active;
-        //     return $this;
-        // }
+        
 
     }
 

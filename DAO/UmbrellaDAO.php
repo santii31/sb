@@ -3,7 +3,7 @@
     namespace DAO;
 
     use \Exception as Exception;
-    use Models\Chest as Chest;
+    use Models\Umbrella as Umbrella;
     use Models\AdditionalService as AdditionalService;
     use Models\Reservation as Reservation;
     use Models\Admin as Admin;
@@ -13,11 +13,11 @@
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
-    class ChestDAO {
+    class UmbrellaDAO {
 
 		private $connection;
-		private $chestList = array();
-		private $tableName = "chest";		
+		private $umbrellaList = array();
+		private $tableName = "umbrella";		
 
 		public function __construct() {
 
@@ -25,18 +25,18 @@
 
         
 					
-		public function getById(Chest $chest) {
+		public function getById(Umbrella $umbrella) {
 			try {				
-				$chestTemp = null;
-				$query = "CALL chest_getById(?)";
-				$parameters["id"] = $chest->getId();
+				$umbrellaTemp = null;
+				$query = "CALL umbrella_getById(?)";
+				$parameters["id"] = $umbrella->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-					$chestTemp = new Chest();
-                    $chestTemp->setId($row["chest_id"]);
-                    $chestTemp->setChestNumber($row["chest_number"]);
-                    $chestTemp->setPrice($row["chest_price"]);
+					$umbrellaTemp = new Umbrella();
+                    $umbrellaTemp->setId($row["umbrella_id"]);
+                    $umbrellaTemp->setChestNumber($row["umbrella_number"]);
+                    $umbrellaTemp->setPrice($row["umbrella_price"]);
                     
                     $additionalService = new AdditionalService();
                     $additionalService->setId($row["service_id"]);
@@ -86,9 +86,9 @@
                     $reservation->setParking($parking);
                     
                     $additionalService->setReservation($reservation);
-                    $chestTemp->setAdditionalService($additionalService);
+                    $umbrellaTemp->setAdditionalService($additionalService);
 				}
-				return $chestTemp;
+				return $umbrellaTemp;
 			} catch (Exception $e) {
 				return false;
 			}
@@ -97,14 +97,14 @@
 		
 		public function getAll() {
 			try {
-				$query = "CALL chest_getAll()";
+				$query = "CALL umbrella_getAll()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
-					$chest = new Chest();
-                    $chest->setId($row["chest_id"]);
-                    $chest->setChestNumber($row["chest_number"]);
-                    $chest->setPrice($row["chest_price"]);
+					$umbrellaTemp = new Umbrella();
+                    $umbrellaTemp->setId($row["umbrella_id"]);
+                    $umbrellaTemp->setChestNumber($row["umbrella_number"]);
+                    $umbrellaTemp->setPrice($row["umbrella_price"]);
                     
                     $additionalService = new AdditionalService();
                     $additionalService->setId($row["service_id"]);
@@ -154,10 +154,10 @@
                     $reservation->setParking($parking);
                     
                     $additionalService->setReservation($reservation);
-                    $chest->setAdditionalService($additionalService);
-					array_push($this->chestList, $chest);
+                    $umbrellaTemp->setAdditionalService($additionalService);
+					array_push($this->umbrellaList, $umbrella);
 				}
-				return $this->chestList;	
+				return $this->umbrellaList;	
 			} catch (Exception $e) {
 				return false;
 			}

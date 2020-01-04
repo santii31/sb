@@ -11,7 +11,7 @@
 
 		private $connection;
 		private $reservationList = array();
-		private $tableName = "admin";		
+		private $tableName = "reservation";		
 
 		public function __construct() {
 
@@ -24,7 +24,9 @@
 				$parameters["date_end"] = $reservation->getDateEnd();
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["FK_id_client"] = $reservation->getClient()->getId();
-                $parameters["FK_id_admin"] = $reservation->getAdmin()->getId();
+				$parameters["FK_id_admin"] = $reservation->getAdmin()->getId();
+				$parameters["FK_id_tent"] = $reservation->getBeachTent()->getId();
+				$parameters["FK_id_parking"] = $reservation->getParking()->getId();
                 $parameters["is_active"] = $reservation->getIsActive();
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -44,13 +46,48 @@
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
 					$reservationTemp = new Reservation();
-					$reservationTemp->setId($row["id"]);
-					$reservationTemp->setDateStart($row["date_start"]);
-                    $reservationTemp->setDateEnd($row["date_end"]);
-                    $reservationTemp->setPrice($row["total_price"]);
-                    $reservationTemp->setClient($row["FK_id_client"]);
-                    $reservationTemp->setAdmin($row["FK_id_client"]);
-					$reservationTemp->setIsActive($row["is_active"]);
+					$reservationTemp->setId($row["reservation_id"]);
+					$reservationTemp->setDateStart($row["reservation_dateStart"]);
+                    $reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+                    $reservationTemp->setPrice($row["reservation_totalPrice"]);
+					$reservationTemp->setIsActive($row["reservation_isActive"]);
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setIsPotential($row["client_isPotential"]);
+					$client->setIsActive($row["client_isActive"]);
+					$reservationTemp->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+					$admin->setDni($row["admin_dni"]);
+					$admin->setEmail($row["admin_email"]);
+					$admin->setPassword($row["admin_password"]);
+					$admin->setIsActive($row["admin_isActive"]);
+					$reservationTemp->setAdmin($admin);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+					$beachTent->setIsActive($row["tent_isActive"]);
+					$reservationTemp->setBeachTent($beachTent);
+
+					$parking = new Parking();
+					$parking->setId($row["parking_id"]);
+					$parking->setNumber($row["parking_number"]);
+					$parking->setPrice($row["parking_price"]);
+					$parking->setIsActive($row["parking_isActive"]);
+					$reservationTemp->setParking($parking);
+
+
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
@@ -65,14 +102,47 @@
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
-                    $reservation = new Reservation();
-					$reservation->setId($row["id"]);
-					$reservation->setDateStart($row["date_start"]);
-                    $reservation->setDateEnd($row["date_end"]);
-                    $reservation->setPrice($row["total_price"]);
-                    $reservation->setClient($row["FK_id_client"]);
-                    $reservation->setAdmin($row["FK_id_client"]);
-                    $reservation->setIsActive($row["is_active"]);
+                    $reservationTemp = new Reservation();
+					$reservationTemp->setId($row["reservation_id"]);
+					$reservationTemp->setDateStart($row["reservation_dateStart"]);
+                    $reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+                    $reservationTemp->setPrice($row["reservation_totalPrice"]);
+					$reservationTemp->setIsActive($row["reservation_isActive"]);
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setIsPotential($row["client_isPotential"]);
+					$client->setIsActive($row["client_isActive"]);
+					$reservationTemp->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+					$admin->setDni($row["admin_dni"]);
+					$admin->setEmail($row["admin_email"]);
+					$admin->setPassword($row["admin_password"]);
+					$admin->setIsActive($row["admin_isActive"]);
+					$reservationTemp->setAdmin($admin);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+					$beachTent->setIsActive($row["tent_isActive"]);
+					$reservationTemp->setBeachTent($beachTent);
+
+					$parking = new Parking();
+					$parking->setId($row["parking_id"]);
+					$parking->setNumber($row["parking_number"]);
+					$parking->setPrice($row["parking_price"]);
+					$parking->setIsActive($row["parking_isActive"]);
+					$reservationTemp->setParking($parking);
                     
 					array_push($this->reservationList, $reservation);
 				}

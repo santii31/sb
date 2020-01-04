@@ -2,7 +2,6 @@
 
     namespace Models;
     
-    use Models\Schedule as Schedule;
 
     class Provider {
 
@@ -16,7 +15,7 @@
         private $cuil_number;
         private $social_reason;
         private $billing;
-        private $schedule;
+        private $is_active;
         
 
         public function getId() {
@@ -116,24 +115,16 @@
             $this->billing = $billing;
             return $this;
         }  
+ 
 
-        public function getSchedule() {
-            return $this->schedule;
+        public function getIsActive() {
+            return $this->is_active;
         }
 
-        public function setSchedule(Schedule $schedule) {
-            $this->schedule = $schedule;
+        public function setIsActive($is_active) {
+            $this->is_active = $is_active;
             return $this;
-        } 
-
-        // public function getIsActive() {
-        //     return $this->is_active;
-        // }
-
-        // public function setIsActive($is_active) {
-        //     $this->is_active = $is_active;
-        //     return $this;
-        // }
+        }
 
     }
 

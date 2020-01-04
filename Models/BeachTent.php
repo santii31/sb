@@ -37,23 +37,16 @@
             return $this;
         }
 
-        public function getReservation() {
-            return $this->reservation;
+        
+        
+        public function getIsActive() {
+            return $this->is_active;
         }
 
-        public function setReservation(Reservation $reservation) {
-            $this->reservation = $reservation;
+        public function setIsActive($is_active) {
+            $this->is_active = $is_active;
             return $this;
         }
-        
-        // public function getIsActive() {
-        //     return $this->is_active;
-        // }
-
-        // public function setIsActive($is_active) {
-        //     $this->is_active = $is_active;
-        //     return $this;
-        // }
 
     }
 

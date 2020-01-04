@@ -46,7 +46,7 @@ END$$
 
 DROP procedure IF EXISTS `admin_getByEmail`;
 DELIMITER $$
-CREATE PROCEDURE admin_getByEmail (IN email INT)
+CREATE PROCEDURE admin_getByEmail (IN email VARCHAR(255))
 BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`email` = email;
 END$$
@@ -122,7 +122,7 @@ END$$
 
 DROP procedure IF EXISTS `client_getByEmail`;
 DELIMITER $$
-CREATE PROCEDURE client_getByEmail (IN email INT)
+CREATE PROCEDURE client_getByEmail (IN email VARCHAR(255))
 BEGIN
 	SELECT * FROM `client` WHERE `client`.`email` = email;
 END$$
@@ -157,9 +157,13 @@ CREATE TABLE reservation (
     `total_price` INT NOT NULL,
     `FK_id_client` INT NOT NULL,
     `FK_id_admin` INT NOT NULL,
+    'FK_id_tent' INT NOT NULL,
+    'FK_id_parking' INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
     CONSTRAINT `FK_id_client_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),
-    CONSTRAINT `FK_id_admin_reservation` FOREIGN KEY (`FK_id_admin`) REFERENCES `admin` (`id`)
+    CONSTRAINT `FK_id_admin_reservation` FOREIGN KEY (`FK_id_admin`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_id_tent_reservation` FOREIGN KEY (`FK_id_tent`) REFERENCES `beach_tent` (`id`),
+    CONSTRAINT 'FK_id_parking' FOREIGN KEY('FK_id_parking') REFERENCES 'parking' ('id')
 );
 
 DROP procedure IF EXISTS `reservation_add`;
@@ -170,6 +174,8 @@ CREATE PROCEDURE reservation_add (
                                 IN total_price int,
                                 IN FK_id_client INT,
                                 IN FK_id_admin int,
+                                IN FK_id_tent int,
+                                IN FK_id_parking int,
                                 IN is_active BOOLEAN)
 BEGIN
 	INSERT INTO reservation (
@@ -178,10 +184,12 @@ BEGIN
             reservation.total_price,
             reservation.FK_id_client,
             reservation.FK_id_admin,
+            reservation.FK_id_tent,
+            reservation.FK_id_parking,
             reservation.is_active
 	)
     VALUES
-        (date_start,date_end,total_price,FK_id_client,FK_id_admin,is_active);
+        (date_start,date_end,total_price,FK_id_client,FK_id_admin, FK_id_tent, FK_id_parking, is_active);
 END$$
 
 
@@ -200,7 +208,7 @@ BEGIN
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_city,
+           client.address AS client_address,
            client.is_potential AS client_isPotential,
 		   client.is_active AS client_isActive
            admin.id AS admin_id,
@@ -209,10 +217,21 @@ BEGIN
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
+           admin.is_active AS admin_isActive,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
+
     FROM `reservation`
     INNER JOIN client ON client.id = reservation.FK_id_client
     INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
     WHERE `reservation`.`id` = id;
 END$$
 
@@ -241,10 +260,21 @@ BEGIN
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
            admin.is_active AS admin_isActive
-           FROM `reservation`
-           INNER JOIN client ON client.id = reservation.FK_id_client
-           INNER JOIN admin ON admin.id = reservation.FK_id_admin
-           ORDER BY date_start ASC;
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
+
+    FROM `reservation`
+    INNER JOIN client ON client.id = reservation.FK_id_client
+    INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    ORDER BY date_start ASC;
 END$$
 
 DROP procedure IF EXISTS `reservation_disableById`;
@@ -264,10 +294,8 @@ END$$
 
 CREATE TABLE beach_tent (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`number` INT NOT NULL UNIQUE,    
-    `FK_id_reservation` INT NULL,
-    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
-    CONSTRAINT `FK_id_reservation_beach` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`)
+	`number` INT NOT NULL UNIQUE,
+    'price' INT NOT NULL
 );
 
 
@@ -276,105 +304,21 @@ DROP procedure IF EXISTS `tent_getById`;
 DELIMITER $$
 CREATE PROCEDURE tent_getById (IN id INT)
 BEGIN
-	SELECT beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.is_active AS tent_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
-    FROM `beach_tent` 
-    INNER JOIN reservation ON reservation.id = beach_tent.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    WHERE `beach_tent`.`id` = id;
+	SELECT * FROM `beach_tent` WHERE `beach_tent`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `tent_getByNumber`;
 DELIMITER $$
 CREATE PROCEDURE tent_getByNumber (IN number INT)
 BEGIN
-	SELECT beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.is_active AS tent_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
-    FROM `beach_tent` 
-    INNER JOIN reservation ON reservation.id = beach_tent.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    WHERE `beach_tent`.`number` = number;
+	SELECT * FROM `beach_tent` WHERE `beach_tent`.`number` = number;
 END$$
 
 DROP procedure IF EXISTS `tent_getAll`;
 DELIMITER $$
 CREATE PROCEDURE tent_getAll ()
 BEGIN
-	SELECT beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.is_active AS tent_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
-    FROM `beach_tent` 
-    INNER JOIN reservation ON reservation.id = beach_tent.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    ORDER BY number ASC;
+	SELECT * FROM `beach_tent` ORDER BY number ASC;
     
 END$$
 ----------------------------- PARKING -----------------------------
@@ -382,12 +326,8 @@ END$$
 CREATE TABLE parking (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`number` INT NOT NULL UNIQUE,    
-    
-    `price` INT NULL,   -- verificar si el estacionamiento tiene un precio
+    `price` INT NULL   -- verificar si el estacionamiento tiene un precio
 
-    `FK_id_reservation` INT NULL,
-    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
-    CONSTRAINT `FK_id_reservation_parking` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`)
 );
 
 
@@ -396,72 +336,21 @@ DROP procedure IF EXISTS `parking_getById`;
 DELIMITER $$
 CREATE PROCEDURE parking_getById (IN id INT)
 BEGIN
-	SELECT parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
-    FROM `parking`
-    INNER JOIN reservation ON reservation.id = parking.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    WHERE `parking`.`id` = id;
+	SELECT * FROM `parking` WHERE `parking`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `parking_getByNumber`;
+DELIMITER $$
+CREATE PROCEDURE parking_getByNumber (IN number INT)
+BEGIN
+	SELECT * FROM `parking` WHERE `parking`.`number` = number;
 END$$
 
 DROP procedure IF EXISTS `parking_getAll`;
 DELIMITER $$
 CREATE PROCEDURE parking_getAll ()
 BEGIN
-	SELECT parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
-    FROM `parking` 
-    INNER JOIN reservation ON reservation.id = parking.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    ORDER BY number ASC;
+	SELECT * FROM `parking` ORDER BY number ASC;
     
 END$$
 ----------------------------- PROVIDER -----------------------------
@@ -476,7 +365,7 @@ CREATE TABLE provider (
     `address` VARCHAR(255) NOT NULL,
     `cuil` INT NOT NULL,
     `social_reason` VARCHAR(255) NOT NULL,
-    `billing` VARCHAR(255) NOT NULL,    -- TIPO DE FACTURACION - VERIFICAR
+    `type_billing` VARCHAR(255) NOT NULL,    -- TIPO DE FACTURACION - VERIFICAR
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE 
 );
 
@@ -492,6 +381,7 @@ CREATE PROCEDURE provider_add (
                                 IN address VARCHAR(255),
                                 IN cuil int,
                                 IN social_reason VARCHAR(255),
+                                IN type_billing VARCHAR(255),
                                 IN is_active BOOLEAN)
 BEGIN
 	INSERT INTO provider (
@@ -503,10 +393,11 @@ BEGIN
             provider.address,
             provider.cuil,
             provider.social_reason,
+            provider.type_billing,
             provider.is_active
 	)
     VALUES
-        (name,lastname,tel,email,dni,address,cuil,social_reason,is_active);
+        (name,lastname,tel,email,dni,address,cuil,social_reason, type_billing,is_active);
 END$$
 
 
@@ -524,16 +415,43 @@ BEGIN
 	SELECT * FROM `provider` ORDER BY lastname ASC;
 END$$
 
+----------------------------- CATEGORY -----------------------------
+
+CREATE TABLE category (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255) NOT NULL 
+);
+
+DROP procedure IF EXISTS `category_getById`;
+DELIMITER $$
+CREATE PROCEDURE category_getById (IN id INT)
+BEGIN
+	SELECT * FROM `category` WHERE `category`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `category_getByName`;
+DELIMITER $$
+CREATE PROCEDURE category_getByName (IN Name VARCHAR(255))
+BEGIN
+	SELECT * FROM `category` WHERE `category`.`name` = name;
+END$$
+
+DROP procedure IF EXISTS `category_getAll`;
+DELIMITER $$
+CREATE PROCEDURE category_getAll ()
+BEGIN
+	SELECT * FROM `category` ORDER BY name ASC;
+END$$
+
 ----------------------------- PRODUCT -----------------------------
 
 CREATE TABLE product (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
     `price` INT NOT NULL,
-    `FK_id_provider` INT NOT NULL,
     'FK_id_category' INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
-    CONSTRAINT `FK_id_provider_product` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`)
 );
 
@@ -543,19 +461,17 @@ DELIMITER $$
 CREATE PROCEDURE product_add (
                                 IN name VARCHAR(255),
                                 IN price int,
-                                IN FK_id_provider int,
                                 IN FK_id_category int,
                                 IN is_active BOOLEAN)
 BEGIN
 	INSERT INTO product (
 			product.name,
             product.price,
-            product.FK_id_provider,
             product.FK_id_category,
             product.is_active
 	)
     VALUES
-        (name,price,FK_id_provider,FK_id_category,is_active);
+        (name,price,FK_id_category,is_active);
 END$$
 
 
@@ -567,19 +483,28 @@ BEGIN
             product.name AS product_name,
             product.price AS product_price,
             product.is_active AS product_isActive,
-            provider.id AS provider_id,
-            provider.name AS provider_name,
-            provider.lastname,
-            provider.tel,
-            provider.email,
-            provider.dni,
-            provider.address,
-            provider.cuil,
-            provider.social_reason,
-            provider.is_active
+            category.id AS category_id,
+            category.name AS category_name,
+            category.description AS category_description
     FROM `product` 
-    INNER JOIN provider provider ON provider.id = product.FK_id_provider
+    INNER JOIN category ON category.id = product.FK_id_category
     WHERE `product`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `product_getByName`;
+DELIMITER $$
+CREATE PROCEDURE product_getByName (IN name VARCHAR(255))
+BEGIN
+	SELECT  product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.is_active AS product_isActive,
+            category.id AS category_id,
+            category.name AS category_name,
+            category.description AS category_description
+    FROM `product` 
+    INNER JOIN category ON category.id = product.FK_id_category
+    WHERE `product`.`name` = name;
 END$$
 
 DROP procedure IF EXISTS `product_getAll`;
@@ -590,36 +515,132 @@ BEGIN
             product.name AS product_name,
             product.price AS product_price,
             product.is_active AS product_isActive,
-            provider.id AS provider_id,
-            provider.name AS provider_name,
-            provider.lastname,
-            provider.tel,
-            provider.email,
-            provider.dni,
-            provider.address,
-            provider.cuil,
-            provider.social_reason,
-            provider.is_active
+            category.id AS category_id,
+            category.name AS category_name,
+            category.description AS category_description
     FROM `product` 
-    INNER JOIN provider provider ON provider.id = product.FK_id_provider
+    INNER JOIN category ON category.id = product.FK_id_category
     ORDER BY price ASC;
 END$$
------------------------------ CATEGORY -----------------------------
+
+------------------------- PROVIDERXPRODUCT ---------------------
+
+CREATE TABLE providerxproduct (
+	`FK_id_provider` int NOT NULL,
+    `FK_id_product` int NOT NULL,
+	`quantity` int NOT NULL,
+    `total` float NOT NULL,
+    'discount' float NOT NULL,
+    `transaction_date` DATE NOT NULL, 
+    CONSTRAINT `FK_id_provider_providerxproduct` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
+    CONSTRAINT `FK_id_product_providerxproduct` FOREIGN KEY (`FK_id_product`) REFERENCES `product` (`id`)
+);
+
+DROP procedure IF EXISTS `providerxproduct_add`;
+DELIMITER $$
+CREATE PROCEDURE providerxproduct_add (
+								IN FK_id_provider INT,
+								IN FK_id_product INT,
+                                IN quantity INT,
+                                IN total float,
+                                IN discount float,
+                                IN transaction_date DATE
+							 )
+BEGIN
+	INSERT INTO providerxproduct (
+			providerxproduct.FK_id_provider,
+            providerxproduct.FK_id_product,
+            providerxproduct.quantity,
+            providerxproduct.total,
+            providerxproduct.discount,
+            providerxproduct.transaction_date
+	)
+    VALUES
+        (FK_id_provider,FK_id_product,quantity,total,discount,transaction_date);
+END$$
+
+DROP procedure IF EXISTS `providerxproduct_getProductByProvider`;					    
+DELIMITER $$
+CREATE PROCEDURE providerxproduct_getProductByProvider (IN id_provider INT)
+BEGIN
+	SELECT 	product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.is_active AS product_isActive,
+            category.id AS category_id,
+            category.name AS category_name,
+            category.description AS category_description
+	FROM providerxproduct
+	INNER JOIN product ON product.id = providerxproduct.FK_id_product
+	INNER JOIN category ON category.id = product.FK_id_category
+	WHERE (providerxproduct.FK_id_provider = id_provider)
+	GROUP BY product.id;
+END$$
+
+DROP procedure IF EXISTS `providerxproduct_getProviderByProduct`;					    
+DELIMITER $$
+CREATE PROCEDURE providerxproduct_getProviderByProduct (IN id_product INT)
+BEGIN
+	SELECT 	provider.id AS provider_id,
+            provider.name AS provider_name,
+            provider.lastname AS provider_lastName,
+            provider.tel AS provider_tel,
+            provider.email AS provider_email,
+            provider.dni AS provider_dni,
+            provider.address AS provider_address,
+            provider.cuil AS provider_cuil,
+            provider.social_reason AS provider_socialReason,
+            provider.type_billing AS provider_typeBilling,
+            provider.is_active AS provider_isActive
+	FROM providerxproduct
+	INNER JOIN provider ON provider.id = providerxproduct.FK_id_provider, 
+	WHERE (providerxproduct.FK_id_product = id_product)
+	GROUP BY provider.id;
+END$$
+
+DROP procedure IF EXISTS `providerxproduct_getAll`;					    
+DELIMITER $$
+CREATE PROCEDURE providerxproduct_getAll ()
+BEGIN
+	SELECT 	provider.id AS provider_id,
+            provider.name AS provider_name,
+            provider.lastname AS provider_lastName,
+            provider.tel AS provider_tel,
+            provider.email AS provider_email,
+            provider.dni AS provider_dni,
+            provider.address AS provider_address,
+            provider.cuil AS provider_cuil,
+            provider.social_reason AS provider_socialReason,
+            provider.type_billing AS provider_typeBilling,
+            provider.is_active AS provider_isActive
+
+            product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.is_active AS product_isActive,
+            category.id AS category_id,
+            category.name AS category_name,
+            category.description AS category_description
 
 
+	FROM providerxproduct
+	INNER JOIN provider ON provider.id = providerxproduct.FK_id_provider
+    INNER JOIN product ON product.id = providerxproduct.FK_id_product 
+	INNER JOIN category ON category.id = product.FK_id_category
+	WHERE (providerxproduct.FK_id_product = id_product)
+	GROUP BY provider.id;
+END$$
 
 ------------------------- ADDITIONAL SERVICE ---------------------
 
 CREATE TABLE additional_service (
     'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     'description' VARCHAR(255) NOT NULL,
-    'price' int NOT NULL,
+    'total' int NOT NULL,
     'FK_id_reservation' int NOT NULL,
-    'is_active' BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT 'FK_id_reservation_service' FOREIGN KEY ('FK_id_reservation') REFERENCES 'reservation' ('id')
 
 );
-
 
 
 DROP procedure IF EXISTS `service_getById`;
@@ -628,8 +649,7 @@ CREATE PROCEDURE service_getById (IN id INT)
 BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
+           additional_service.total AS service_total,
            reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
@@ -650,11 +670,21 @@ BEGIN
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
+           admin.is_active AS admin_isActive,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
     FROM `additional_service` 
     INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
     INNER JOIN client ON client.id = reservation.FK_id_client
     INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
     WHERE `service`.`id` = id;
 END$$
 
@@ -664,8 +694,7 @@ CREATE PROCEDURE service_getAll ()
 BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
+           additional_service.total AS service_total,
            reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
@@ -686,11 +715,21 @@ BEGIN
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
+           admin.is_active AS admin_isActive,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
     FROM `additional_service` 
     INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
     INNER JOIN client ON client.id = reservation.FK_id_client
     INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
     ORDER BY price ASC;
 END$$
 
@@ -701,7 +740,6 @@ CREATE TABLE chest (
     'chest_number' int NOT NULL UNIQUE,
     'price' int NOT NULL,
     'FK_id_service' int NOT NULL,
-    'is_active' BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT 'FK_id_service_chest' FOREIGN KEY ('FK_id_service') REFERENCES 'additional_service'('id')
 
 );
@@ -714,11 +752,9 @@ BEGIN
 	SELECT chest.id AS chest_id,
            chest.chest_number AS chest_number,
            chest.price AS chest_price,
-           chest.is_active AS chest_isActive,
            additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
+           additional_service.total AS service_total,
            reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
@@ -739,11 +775,22 @@ BEGIN
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive 
+           admin.is_active AS admin_isActive,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive 
     FROM `chest` 
-    INNER JOIN reservation ON reservation.id = chest.FK_id_reservation
+    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
+    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
     INNER JOIN client ON client.id = reservation.FK_id_client
     INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
     WHERE `chest`.`id` = id;
 END$$
 
@@ -751,14 +798,9 @@ DROP procedure IF EXISTS `chest_getAll`;
 DELIMITER $$
 CREATE PROCEDURE chest_getAll ()
 BEGIN
-	SELECT chest.id AS chest_id,
-           chest.chest_number AS chest_number,
-           chest.price AS chest_price,
-           chest.is_active AS chest_isActive,
-           additional_service.id AS service_id,
+	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
+           additional_service.total AS service_total,
            reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
@@ -779,11 +821,22 @@ BEGIN
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
+           admin.is_active AS admin_isActive,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
     FROM `chest`
-    INNER JOIN reservation ON reservation.id = chest.FK_id_reservation
+    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
+    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
     INNER JOIN client ON client.id = reservation.FK_id_client
     INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
     ORDER BY price ASC;
 END$$
 
@@ -794,7 +847,6 @@ CREATE TABLE umbrella (
     'umbrella_number' int NOT NULL UNIQUE,
     'price' int NOT NULL,
     'FK_id_service' int NOT NULL,
-    'is_active' BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT 'FK_id_service_umbrella' FOREIGN KEY ('FK_id_service') REFERENCES 'additional_service'('id')
 
 );
@@ -808,7 +860,6 @@ BEGIN
 	SELECT umbrella.id AS umbrella_id,
            umbrella.umbrella_number AS umbrella_number,
            umbrella.price AS umbrella_price,
-           umbrella.is_active AS umbrella_isActive,
            additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.price AS service_price,
@@ -833,11 +884,23 @@ BEGIN
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive  
+           admin.is_active AS admin_isActive
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
+             
     FROM `umbrella` 
-    INNER JOIN reservation ON reservation.id = umbrella.FK_id_reservation
+    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
+    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
     INNER JOIN client ON client.id = reservation.FK_id_client
     INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
     WHERE `umbrella`.`id` = id;
 END$$
 
@@ -848,7 +911,6 @@ BEGIN
 	SELECT umbrella.id AS umbrella_id,
            umbrella.umbrella_number AS umbrella_number,
            umbrella.price AS umbrella_price,
-           umbrella.is_active AS umbrella_isActive,
            additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.price AS service_price,
@@ -873,10 +935,22 @@ BEGIN
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive 
+           admin.is_active AS admin_isActive
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
+
     FROM `umbrella` 
-    INNER JOIN reservation ON reservation.id = umbrella.FK_id_reservation
+    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
+    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
     INNER JOIN client ON client.id = reservation.FK_id_client
     INNER JOIN admin ON admin.id = reservation.FK_id_admin
+    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
+    INNER JOIN parking ON parking.id = reservation.FK_id_parking
     ORDER BY price ASC;
 END$$

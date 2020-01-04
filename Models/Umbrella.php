@@ -4,10 +4,10 @@
     
     use Models\AdditionalService as AdditionalService;
 
-    class Chest {
+    class Umbrella {
 
         private $id;
-        private $chest_number;
+        private $umbrella_number;
         private $price;
         private $additionalService;
 
@@ -21,12 +21,12 @@
             $this->id = $id;            
         }
 
-        public function getChestNumber() {
-            return $this->chest_number;
+        public function getUmbrellaNumber() {
+            return $this->umbrella_number;
         }
 
-        public function setChestNumber($chest_number) {
-            $this->chest_number = $chest_number;
+        public function setUmbrellaNumber($umbrella_number) {
+            $this->umbrella_number = $umbrella_number;
             return $this;
         }
         

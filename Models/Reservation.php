@@ -13,6 +13,8 @@
         private $price;    
         private $client;    
         private $admin;
+        private $beachTent;
+        private $parking;
         
 
         public function getId() {
@@ -68,14 +70,32 @@
             return $this;
         }
 
-        // public function getIsActive() {
-        //     return $this->is_active;
-        // }
+        public function getBeachTent() {
+            return $this->beachTent;
+        }
 
-        // public function setIsActive($is_active) {
-        //     $this->is_active = $is_active;
-        //     return $this;
-        // }
+        public function setBeachTent(BeachTent $beachTent) {
+            $this->beachTent = $beachTent;
+            return $this;
+        }
+
+        public function getParking() {
+            return $this->parking;
+        }
+
+        public function setParking(Parking $parking) {
+            $this->parking = $parking;
+            return $this;
+        }
+
+        public function getIsActive() {
+            return $this->is_active;
+        }
+
+        public function setIsActive($is_active) {
+            $this->is_active = $is_active;
+            return $this;
+        }
 
     }
 

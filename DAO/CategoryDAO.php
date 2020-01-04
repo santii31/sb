@@ -3,15 +3,15 @@
     namespace DAO;
 
 	use \Exception as Exception;
-    use Models\Parking as Parking;	
+    use Models\Category as Category;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
-    class BeachTentDAO {
+    class CategoryDAO {
 
 		private $connection;
-		private $parkingList = array();
-		private $tableName = "parking";		
+		private $categoryList = array();
+		private $tableName = "category";		
 
 		public function __construct() {
 
@@ -19,58 +19,58 @@
 
         
 					
-		public function getById(Parking $parking) {
+		public function getById(Category $category) {
 			try {				
-				$parking = null;
-				$query = "CALL parking_getById(?)";
-				$parameters["id"] = $parking->getId();
+				$categoryTemp = null;
+				$query = "CALL category_getById(?)";
+				$parameters["id"] = $category->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-					$parkingTemp = new Parking();
-                    $parkingTemp->setId($row["id"]);
-					$parkingTemp->setNumber($row["number"]);
-					$parkingTent->setPrice($row["price"]);
+					$categoryTemp = new Category();
+                    $categoryTemp->setId($row["id"]);
+                    $categoryTemp->setName($row["name"]);
+                    $categoryTemp->setDescription($row["description"]);
 				}
-				return $parkingTemp;
+				return $categoryTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+        }
+        
+        public function getByName(Category $category) {
+			try {				
+				$categoryTemp = null;
+				$query = "CALL category_getByName(?)";
+				$parameters["name"] = $category->getName();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$categoryTemp = new Category();
+                    $categoryTemp->setId($row["id"]);
+                    $categoryTemp->setName($row["name"]);
+                    $categoryTemp->setDescription($row["description"]);
+				}
+				return $categoryTemp;
 			} catch (Exception $e) {
 				return false;
 			}
 		}
 
-		public function getByNumber(Parking $parking) {
-			try {				
-				$parkingTemp = null;
-				$query = "CALL parking_getByNumber(?)";
-				$parameters["number"] = $parking->getNumber();
-				$this->connection = Connection::GetInstance();
-				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
-				foreach ($results as $row) {
-					$parkingTemp = new Parking();
-                    $parkingTemp->setId($row["id"]);
-					$parkingTemp->setNumber($row["number"]);
-					$parkingTemp->setPrice($row["price"]);
-				}
-				return $parkingTemp;
-			} catch (Exception $e) {
-				return false;
-			}
-		}
 
 		public function getAll() {
 			try {
-				$query = "CALL parking_getAll()";
+				$query = "CALL category_getAll()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
-                    $parking = new Parking();
-                    $parking->setId($row["id"]);
-					$parking->setNumber($row["number"]);
-					$parking->setPrice($row["price"]);
-                    
-					array_push($this->parkingList, $parkingTent);
+                    $categoryTemp = new Category();
+                    $categoryTemp->setId($row["id"]);
+                    $categoryTemp->setName($row["name"]);
+                    $categoryTemp->setDescription($row["description"]);
+					array_push($this->categoryList, $category);
 				}
-				return $this->parkingList;	
+				return $this->categoryList;	
 			} catch (Exception $e) {
 				return false;
 			}
