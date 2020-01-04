@@ -3,6 +3,30 @@
 			<div class="main-content">			
 				<div class="map-container">
         
+					<!-- Box's colors -->
+					<div class="beach-map-colors">
+						<div class="beach-color">
+							<div class="box-color yellow"></div>
+							<span>Temporada</span>
+						</div>
+						<div class="beach-color">
+							<div class="box-color green"></div>
+							<span>Diario</span>
+						</div>
+						<div class="beach-color">
+							<div class="box-color fuchsia"></div>
+							<span>Enero</span>
+						</div>
+						<div class="beach-color">
+							<div class="box-color orange"></div>
+							<span>Fin de semana/Feriados</span>
+						</div>
+						<div class="beach-color">
+							<div class="box-color blue"></div>
+							<span>Periodo</span>
+						</div>
+					</div>                
+
                     <div class="parking-map">
 
                         <div class="left">
@@ -32,8 +56,26 @@
 
                             <!-- Center upper -->
                             <div class="center-upper">
-                                <div class="center-upper-left">
-                                    <div class="item">21</div>
+                                <div class="center-upper-left">                                    
+                                    
+                                <!-- Modal Trigger -->
+										<a class="modal-trigger" href="#modal1">
+											<div class="item">
+												<span>150</span>		
+											</div>      
+										</a>
+
+										<!-- Modal Structure -->
+										<div id="modal1" class="modal modal-fixed-footer">
+											<div class="modal-content">
+												<h4>Carpa nº 150</h4>
+												<p>A bunch of text</p>
+											</div>
+											<div class="modal-footer">
+												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+											</div>
+										</div>
+                                                                        
                                     <div class="item">21</div>
                                     <div class="item">21</div>
                                     <div class="item">21</div>

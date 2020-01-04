@@ -16,7 +16,7 @@
 
         public function parkingMap() {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Estacionamiento";       
+                $title = "Plano de cocheras";       
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "parking.php");

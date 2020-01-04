@@ -83,7 +83,7 @@ CREATE TABLE client (
     `tel` INT NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     `address` VARCHAR(255) NOT NULL,
-    'stay_address' VARCHAR(255) NOT NULL,
+    `stay_address` VARCHAR(255) NOT NULL,
     `is_potential` BOOLEAN NOT NULL DEFAULT FALSE,    
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE    
 );
@@ -93,7 +93,7 @@ DELIMITER $$
 CREATE PROCEDURE client_add (
                                 IN name VARCHAR(255),
                                 IN lastname VARCHAR(255),
-                                IN email VARCHAR(255) NOT NULL UNIQUE,
+                                IN email VARCHAR(255),
                                 IN tel INT,
                                 IN city VARCHAR(255),
                                 IN address VARCHAR(255),
@@ -154,19 +154,19 @@ END$$
 ----------------------------- RESERVATION -----------------------------
 
 CREATE TABLE reservation (
-	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`date_start` DATE NOT NULL,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `date_start` DATE NOT NULL,
     `date_end` DATE NOT NULL,
     `total_price` INT NOT NULL,
     `FK_id_client` INT NOT NULL,
     `FK_id_admin` INT NOT NULL,
-    'FK_id_tent' INT NOT NULL,
-    'FK_id_parking' INT NOT NULL,
+    `FK_id_tent` INT NOT NULL,
+    `FK_id_parking` INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
     CONSTRAINT `FK_id_client_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),
     CONSTRAINT `FK_id_admin_reservation` FOREIGN KEY (`FK_id_admin`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_id_tent_reservation` FOREIGN KEY (`FK_id_tent`) REFERENCES `beach_tent` (`id`),
-    CONSTRAINT 'FK_id_parking' FOREIGN KEY('FK_id_parking') REFERENCES 'parking' ('id')
+    CONSTRAINT `FK_id_parking` FOREIGN KEY(`FK_id_parking`) REFERENCES `parking` (`id`)
 );
 
 DROP procedure IF EXISTS `reservation_add`;
@@ -213,7 +213,7 @@ BEGIN
            client.city AS client_city,
            client.address AS client_address,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -255,14 +255,14 @@ BEGIN
            client.city AS client_city,
            client.address AS client_city,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
+           admin.is_active AS admin_isActive,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price,
@@ -293,12 +293,14 @@ CREATE PROCEDURE reservation_enableById (IN id INT)
 BEGIN
     UPDATE `reservation` SET `reservation`.`is_active` = true WHERE `reservation`.`id` = id;	
 END$$
+
+
 ----------------------------- BEACH-TENT -----------------------------
 
 CREATE TABLE beach_tent (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`number` INT NOT NULL UNIQUE,
-    'price' INT NOT NULL
+    `price` INT NOT NULL
 );
 
 
@@ -324,6 +326,8 @@ BEGIN
 	SELECT * FROM `beach_tent` ORDER BY number ASC;
     
 END$$
+
+
 ----------------------------- PARKING -----------------------------
 
 CREATE TABLE parking (
@@ -356,6 +360,8 @@ BEGIN
 	SELECT * FROM `parking` ORDER BY number ASC;
     
 END$$
+
+
 ----------------------------- PROVIDER -----------------------------
 
 CREATE TABLE provider (
@@ -377,15 +383,15 @@ DROP procedure IF EXISTS `provider_add`;
 DELIMITER $$
 CREATE PROCEDURE provider_add (
                                 IN name VARCHAR(255),
-                                IN lastname(255),
+                                IN lastname VARCHAR(255),
                                 IN tel int,
                                 IN email VARCHAR(255),
                                 IN dni int,
                                 IN address VARCHAR(255),
                                 IN cuil int,
                                 IN social_reason VARCHAR(255),
-                                IN type_billing VARCHAR(255),
-                                IN is_active BOOLEAN)
+                                IN type_billing VARCHAR(255)
+                                )
 BEGIN
 	INSERT INTO provider (
             provider.name,
@@ -396,11 +402,10 @@ BEGIN
             provider.address,
             provider.cuil,
             provider.social_reason,
-            provider.type_billing,
-            provider.is_active
+            provider.type_billing
 	)
     VALUES
-        (name,lastname,tel,email,dni,address,cuil,social_reason, type_billing,is_active);
+        (name,lastname,tel,email,dni,address,cuil,social_reason, type_billing);
 END$$
 
 
@@ -453,7 +458,7 @@ CREATE TABLE product (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
     `price` INT NOT NULL,
-    'FK_id_category' INT NOT NULL,
+    `FK_id_category` INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
     CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`)
 );
@@ -464,17 +469,16 @@ DELIMITER $$
 CREATE PROCEDURE product_add (
                                 IN name VARCHAR(255),
                                 IN price int,
-                                IN FK_id_category int,
-                                IN is_active BOOLEAN)
+                                IN FK_id_category int
+                                )
 BEGIN
 	INSERT INTO product (
 			product.name,
             product.price,
-            product.FK_id_category,
-            product.is_active
+            product.FK_id_category            
 	)
     VALUES
-        (name,price,FK_id_category,is_active);
+        (name,price,FK_id_category);
 END$$
 
 
@@ -533,7 +537,7 @@ CREATE TABLE providerxproduct (
     `FK_id_product` int NOT NULL,
 	`quantity` int NOT NULL,
     `total` float NOT NULL,
-    'discount' float NOT NULL,
+    `discount` float NOT NULL,
     `transaction_date` DATE NOT NULL, 
     CONSTRAINT `FK_id_provider_providerxproduct` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_id_product_providerxproduct` FOREIGN KEY (`FK_id_product`) REFERENCES `product` (`id`)
@@ -596,7 +600,7 @@ BEGIN
             provider.type_billing AS provider_typeBilling,
             provider.is_active AS provider_isActive
 	FROM providerxproduct
-	INNER JOIN provider ON providerxproduct.FK_id_provider = provider.id, 
+	INNER JOIN provider ON providerxproduct.FK_id_provider = provider.id 
 	WHERE (providerxproduct.FK_id_product = id_product)
 	GROUP BY provider.id;
 END$$
@@ -615,8 +619,7 @@ BEGIN
             provider.cuil AS provider_cuil,
             provider.social_reason AS provider_socialReason,
             provider.type_billing AS provider_typeBilling,
-            provider.is_active AS provider_isActive
-
+            provider.is_active AS provider_isActive,
             product.id AS product_id,
             product.name AS product_name,
             product.price AS product_price,
@@ -637,12 +640,11 @@ END$$
 ------------------------- ADDITIONAL SERVICE ---------------------
 
 CREATE TABLE additional_service (
-    'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    'description' VARCHAR(255) NOT NULL,
-    'total' int NOT NULL,
-    'FK_id_reservation' int NOT NULL,
-    CONSTRAINT 'FK_id_reservation_service' FOREIGN KEY ('FK_id_reservation') REFERENCES 'reservation' ('id')
-
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `description` VARCHAR(255) NOT NULL,
+    `total` int NOT NULL,
+    `FK_id_reservation` int NOT NULL,
+    CONSTRAINT `FK_id_reservation_service` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`)
 );
 
 
@@ -666,7 +668,7 @@ BEGIN
            client.city AS client_city,
            client.address AS client_city,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -711,7 +713,7 @@ BEGIN
            client.city AS client_city,
            client.address AS client_city,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -739,11 +741,11 @@ END$$
 ---------------------------- CHEST ---------------------------
 
 CREATE TABLE chest (
-    'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    'chest_number' int NOT NULL UNIQUE,
-    'price' int NOT NULL,
-    'FK_id_service' int NOT NULL,
-    CONSTRAINT 'FK_id_service_chest' FOREIGN KEY ('FK_id_service') REFERENCES 'additional_service'('id')
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `chest_number` int NOT NULL UNIQUE,
+    `price` int NOT NULL,
+    `FK_id_service` int NOT NULL,
+    CONSTRAINT `FK_id_service_chest` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`)
 
 );
 
@@ -771,7 +773,7 @@ BEGIN
            client.city AS client_city,
            client.address AS client_city,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -817,7 +819,7 @@ BEGIN
            client.city AS client_city,
            client.address AS client_city,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -846,11 +848,11 @@ END$$
 ---------------------------- UMBRELLA ---------------------------
 
 CREATE TABLE umbrella (
-    'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    'umbrella_number' int NOT NULL UNIQUE,
-    'price' int NOT NULL,
-    'FK_id_service' int NOT NULL,
-    CONSTRAINT 'FK_id_service_umbrella' FOREIGN KEY ('FK_id_service') REFERENCES 'additional_service'('id')
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `umbrella_number` int NOT NULL UNIQUE,
+    `price` int NOT NULL,
+    `FK_id_service` int NOT NULL,
+    CONSTRAINT `FK_id_service_umbrella` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`)
 
 );
 
@@ -880,14 +882,14 @@ BEGIN
            client.city AS client_city,
            client.address AS client_city,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
+           admin.is_active AS admin_isActive,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price,
@@ -931,14 +933,14 @@ BEGIN
            client.city AS client_city,
            client.address AS client_city,
            client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive
+		   client.is_active AS client_isActive,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive
+           admin.is_active AS admin_isActive,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price,

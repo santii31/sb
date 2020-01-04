@@ -445,25 +445,32 @@ nav .input-field label.active i {
     margin: 3.4rem 0 0 0;
 }
 
-
 /* Parking map */
-.parking-map {    
-    display: grid;
-    /* gap: 3rem; */
+.parking-map {            
+    background-color: #dbd1b4;
+    border-radius: 10px;
+    display: grid;    
     grid-template-columns: 1fr 2fr 1fr;    
     margin: 0 8rem 0 0;    
     padding: 1.5rem;
 }
 
-.parking-map .item {
-    background-color: red;
+.parking-map .item {    
+    background-color: #ffcdd2;
+    background-color: #fff;
+    color: #d50000;
     height: 2rem;
-    width: 2.5em;
+    width: 2.6em;
     border: 1px solid #2b2f3a;
     margin: .05rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.parking-map .item:hover {
+    background-color: #e0e0e0;
 }
 
 .parking-map > .left,
@@ -482,7 +489,7 @@ nav .input-field label.active i {
     padding-top: 5rem;
 }
 
-.center-upper {
+.center-upper {    
     display: grid;
     grid-template-columns: 1fr 1fr;      
 }
