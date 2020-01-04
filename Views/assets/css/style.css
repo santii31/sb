@@ -197,6 +197,10 @@ a:hover {
     padding: 1rem;
 }
 
+.background {
+    background-color: #2b2f3a;
+}
+
 /* Table */
 .table-container {    
     padding: 0 2rem 0 2rem;    
@@ -243,3 +247,294 @@ nav .input-field label.active i {
 .s-color .label-icon > i {
     color: #000;
 }
+
+/* BEACH MAP COLORS */
+.beach-map-colors {
+    font-size: 1.1rem;
+    width: 80%;    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+.beach-color {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+}
+
+.box-color {
+    height: 10px;
+    width: 10px;    
+    border: 1px solid #2b2f3a;
+    border-radius: 5px;
+    margin-right: .3rem;
+}
+
+.fuchsia {
+    background-color: fuchsia;
+}
+
+.green {
+    background-color: seagreen;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.blue {
+    background-color: dodgerblue;
+}
+
+/* Beach map container */
+.beach-map {    
+    display: grid;
+    grid-template-columns: 5fr 1fr;        
+}
+
+.beach-map-container {                
+    background-color: #dbd1b4;    
+    border-left: 2.5em solid #8E8171;   
+    border-right: 5em solid #006699;     
+}
+
+.tents-sea-container {    
+    background-color: #dbd1b4;    
+    margin: 3rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;    
+}
+
+.tent-sea {    
+    font-size: 1rem;    
+    height: 2rem;
+    width: 3.5rem;
+    margin: .2rem;    
+    -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parasol {     
+    background-color: #dbd1b4;             
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; 
+    margin: 3rem 0 0 0;   
+}
+
+.parasol-item {    
+    width: 50px;
+    height: 40px;
+    background-color: white;
+    -webkit-clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+    clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parasol-item .tent-sea {
+    background-color: transparent;
+}
+
+.beach-hall {         
+   display: grid;
+   grid-template-columns: 8fr 1fr 1fr;   
+}
+
+.hall-name {    
+    padding: .5rem;    
+    background-color: #8E8171;      
+    color: #fff;
+    text-shadow: 1px 1px 4px #22252e;
+    font-size: 1.5rem;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-align: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.beach-tents {        
+    display: grid;    
+    padding: 4rem 0 2.5rem 2.5rem;
+    grid-template-columns: repeat(15, 1fr);    
+    align-items: center;    
+    justify-content: center;    
+    background-color: #dbd1b4;    
+}
+
+.tent {
+    font-size: 1rem;    
+    height: 3rem;
+    margin: .2rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    cursor: pointer;
+    -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 75%, 50% 100%, 0% 75%, 0 0);
+    clip-path: polygon(50% 0%, 100% 0, 100% 75%, 50% 100%, 0% 75%, 0 0);
+}
+
+.tent-container > a,
+.parasol-item > a,
+.tents-sea-container a {
+    color: #2b2f3a;
+}
+
+.tent-inverse {
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 50% 100%, 0 100%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 50% 100%, 0 100%, 0% 25%);    
+}
+
+.tent:hover,
+.parasol-item:hover,
+.tent-sea:hover {
+    background-color: #edf1f5;
+}
+
+/* Extra tents */
+.extra-beach-tents {    
+    display: grid;
+    grid-template-columns: 8fr 1fr 1fr; 
+}
+
+.extra-beach-tents > .beach-tents {    
+    padding: 0 0 0 2.5rem;        
+    display: inline;    
+    padding-top: 2rem;
+}
+
+.extra-beach-tents .tent-container {
+    display: grid;        
+    grid-template-columns: repeat(15, 1fr);    
+    align-items: center;    
+    justify-content: center;           
+}
+
+.extra-beach-tents > .tents-sea-container {    
+    margin: 0;
+    justify-content: flex-start;
+}
+
+.tent-special-container {    
+    position: relative;
+    top: -24%;
+}
+
+.tent-special-container a {
+    color: #2b2f3a;
+}
+
+.last-hall .tents-sea-container {    
+    justify-content: flex-start;    
+    margin: 3.4rem 0 0 0;
+}
+
+
+/* Parking map */
+.parking-map {    
+    display: grid;
+    /* gap: 3rem; */
+    grid-template-columns: 1fr 2fr 1fr;    
+    margin: 0 8rem 0 0;    
+    padding: 1.5rem;
+}
+
+.parking-map .item {
+    background-color: red;
+    height: 2rem;
+    width: 2.5em;
+    border: 1px solid #2b2f3a;
+    margin: .05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parking-map > .left,
+.parking-map > .right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.parking-map > .left {
+    padding-top: 3rem;
+}
+
+.parking-map > .right {
+    padding-top: 5rem;
+}
+
+.center-upper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;      
+}
+
+.center-upper > .center-upper-left,
+.center-upper > .center-upper-right {
+    display: flex;
+    align-items: center;    
+}
+
+.center-upper > .center-upper-right {
+    justify-content: flex-end;
+}
+
+.center-first {    
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    margin-bottom: 4rem;
+    padding-top: 5rem;
+}
+
+.center-first > .upper,
+.center-first > .lower {
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+}
+
+.center-middle-single {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.center-middle-double {
+    margin-bottom: 4rem;
+}
+
+.center-middle-double > .upper,
+.center-middle-double > .last {    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-lower {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+

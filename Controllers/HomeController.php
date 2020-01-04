@@ -2,11 +2,23 @@
 
     namespace Controllers;    
 
+    use Controllers\AdminController as AdminController;
+
     class HomeController {
 
-        public function Index() {            
-            $title = 'Bienvenido!';			
-            require_once(VIEWS_PATH . "index.php");                         
+        private $adminController;
+
+        public function __construct() {        
+            $this->adminController = new AdminController();
+        }
+
+        public function Index($alert = "") {        
+            if (!$this->adminController->isLogged()) {    
+                $title = 'Bienvenido!';			
+                require_once(VIEWS_PATH . "index.php");                         
+            } else {
+                return $this->adminController->dashboard();
+            }
         }
         
     }

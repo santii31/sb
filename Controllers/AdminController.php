@@ -144,9 +144,9 @@
 
         }
 
-        public function userPath() {
+        public function userPath($alert = "") {
 			$this->homeController = new HomeController();
-			return $this->homeController->Index();
+			return $this->homeController->Index($alert);
         }        
 
         public function isLogged() {
