@@ -83,6 +83,7 @@ CREATE TABLE client (
     `tel` INT NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     `address` VARCHAR(255) NOT NULL,
+    'stay_address' VARCHAR(255) NOT NULL,
     `is_potential` BOOLEAN NOT NULL DEFAULT FALSE,    
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE    
 );
@@ -96,6 +97,7 @@ CREATE PROCEDURE client_add (
                                 IN tel INT,
                                 IN city VARCHAR(255),
                                 IN address VARCHAR(255),
+                                IN stay_address VARCHAR(255),
                                 IN is_potential BOOLEAN,
                                 IN is_active BOOLEAN)
 BEGIN
@@ -106,11 +108,12 @@ BEGIN
             client.tel,
             client.city,
             client.address,
+            client.stay_address,
             client.is_potential,
 			client.is_active
 	)
     VALUES
-        (name,lastname,email,tel,city,address,is_potential,is_active);
+        (name,lastname,email,tel,city,address,stay_address,is_potential,is_active);
 END$$
 
 DROP procedure IF EXISTS `client_getById`;
@@ -228,10 +231,10 @@ BEGIN
            parking.is_active AS parking_isActive
 
     FROM `reservation`
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `reservation`.`id` = id;
 END$$
 
@@ -270,10 +273,10 @@ BEGIN
            parking.is_active AS parking_isActive
 
     FROM `reservation`
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY date_start ASC;
 END$$
 
@@ -487,7 +490,7 @@ BEGIN
             category.name AS category_name,
             category.description AS category_description
     FROM `product` 
-    INNER JOIN category ON category.id = product.FK_id_category
+    INNER JOIN category ON product.FK_id_category = category.id
     WHERE `product`.`id` = id;
 END$$
 
@@ -503,7 +506,7 @@ BEGIN
             category.name AS category_name,
             category.description AS category_description
     FROM `product` 
-    INNER JOIN category ON category.id = product.FK_id_category
+    INNER JOIN category ON product.FK_id_category = category.id
     WHERE `product`.`name` = name;
 END$$
 
@@ -519,7 +522,7 @@ BEGIN
             category.name AS category_name,
             category.description AS category_description
     FROM `product` 
-    INNER JOIN category ON category.id = product.FK_id_category
+    INNER JOIN category ON product.FK_id_category = category.id
     ORDER BY price ASC;
 END$$
 
@@ -571,8 +574,8 @@ BEGIN
             category.name AS category_name,
             category.description AS category_description
 	FROM providerxproduct
-	INNER JOIN product ON product.id = providerxproduct.FK_id_product
-	INNER JOIN category ON category.id = product.FK_id_category
+	INNER JOIN product ON providerxproduct.FK_id_product = product.id
+	INNER JOIN category ON product.FK_id_category = category.id
 	WHERE (providerxproduct.FK_id_provider = id_provider)
 	GROUP BY product.id;
 END$$
@@ -593,7 +596,7 @@ BEGIN
             provider.type_billing AS provider_typeBilling,
             provider.is_active AS provider_isActive
 	FROM providerxproduct
-	INNER JOIN provider ON provider.id = providerxproduct.FK_id_provider, 
+	INNER JOIN provider ON providerxproduct.FK_id_provider = provider.id, 
 	WHERE (providerxproduct.FK_id_product = id_product)
 	GROUP BY provider.id;
 END$$
@@ -624,9 +627,9 @@ BEGIN
 
 
 	FROM providerxproduct
-	INNER JOIN provider ON provider.id = providerxproduct.FK_id_provider
-    INNER JOIN product ON product.id = providerxproduct.FK_id_product 
-	INNER JOIN category ON category.id = product.FK_id_category
+	INNER JOIN provider ON providerxproduct.FK_id_provider = provider.id
+    INNER JOIN product ON providerxproduct.FK_id_product = product.id 
+	INNER JOIN category ON product.FK_id_category = category.id
 	WHERE (providerxproduct.FK_id_product = id_product)
 	GROUP BY provider.id;
 END$$
@@ -680,11 +683,11 @@ BEGIN
            parking.price AS parking_price,
            parking.is_active AS parking_isActive
     FROM `additional_service` 
-    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `service`.`id` = id;
 END$$
 
@@ -725,11 +728,11 @@ BEGIN
            parking.price AS parking_price,
            parking.is_active AS parking_isActive
     FROM `additional_service` 
-    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY price ASC;
 END$$
 
@@ -785,12 +788,12 @@ BEGIN
            parking.price AS parking_price,
            parking.is_active AS parking_isActive 
     FROM `chest` 
-    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
-    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN additional_service ON chest.FK_id_service = additional_service.id
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `chest`.`id` = id;
 END$$
 
@@ -831,12 +834,12 @@ BEGIN
            parking.price AS parking_price,
            parking.is_active AS parking_isActive
     FROM `chest`
-    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
-    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN additional_service ON chest.FK_id_service = additional_service.id
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY price ASC;
 END$$
 
@@ -895,12 +898,12 @@ BEGIN
            parking.is_active AS parking_isActive
              
     FROM `umbrella` 
-    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
-    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN additional_service ON umbrella.FK_id_service = additional_service.id
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `umbrella`.`id` = id;
 END$$
 
@@ -946,11 +949,11 @@ BEGIN
            parking.is_active AS parking_isActive
 
     FROM `umbrella` 
-    INNER JOIN additional_service ON additional_service.id = chest.FK_id_service
-    INNER JOIN reservation ON reservation.id = additional_service.FK_id_reservation
-    INNER JOIN client ON client.id = reservation.FK_id_client
-    INNER JOIN admin ON admin.id = reservation.FK_id_admin
-    INNER JOIN beach_tent ON beach_tent.id = reservation.FK_id_tent
-    INNER JOIN parking ON parking.id = reservation.FK_id_parking
+    INNER JOIN additional_service ON umbrella.FK_id_service = additional_service.id
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY price ASC;
 END$$

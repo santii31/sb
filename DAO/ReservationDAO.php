@@ -3,7 +3,11 @@
     namespace DAO;
 
 	use \Exception as Exception;
-    use Models\Reservation as Reservation;	
+	use Models\Reservation as Reservation;	
+	use Models\Client as Client;
+	use Models\Admin as Admin;
+	use Models\BeachTent as BeachTent;
+	use Models\Parking as Parking;
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 

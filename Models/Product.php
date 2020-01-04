@@ -10,6 +10,7 @@
         private $name;
         private $price;
         private $category;
+        private $isActive;
 
         public function getId() {
             return $this->id;
@@ -43,7 +44,13 @@
             $this->category = $category;            
         }
         
+        public function getIsActive() {
+            return $this->isActive;
+        }
 
+        public function setIsActive($isActive) {
+            $this->isActive = $isActive;            
+        }
         
 
     }

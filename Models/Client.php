@@ -12,6 +12,8 @@
         private $city;
         private $address;        
         private $stayAddress;   //Domicilio de estadia (Temporal)
+        private $isPotential;
+        private $isActive;
 
         public function getId() {
             return $this->id;

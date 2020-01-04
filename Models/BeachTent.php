@@ -2,14 +2,12 @@
 
     namespace Models;
 
-    use Models\Reservation as Reservation;
 
     class BeachTent {
 
         private $id;
         private $number;
-        private $price;
-        private $reservation;        
+        private $price;       
 
         public function getId() {
             return $this->id;
@@ -39,14 +37,7 @@
 
         
         
-        public function getIsActive() {
-            return $this->is_active;
-        }
-
-        public function setIsActive($is_active) {
-            $this->is_active = $is_active;
-            return $this;
-        }
+        
 
     }
 
