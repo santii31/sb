@@ -13,12 +13,21 @@
         }
 
         public function Index($alert = "") {        
-            if (!$this->adminController->isLogged()) {    
+            if (!$this->ValidateLoggedAdmin()) {    
                 $title = 'Bienvenido!';			
                 require_once(VIEWS_PATH . "index.php");                         
             } else {
-                return $this->adminController->dashboard();
+                header("Location: ". FRONT_ROOT ."admin/dashboard");
             }
+        }
+
+        private function ValidateLoggedAdmin(){
+            $loggedAdmin = false;
+
+            if(isset($_SESSION["loggedAdmin"]))
+                $loggedAdmin = true;
+
+            return $loggedAdmin;
         }
         
     }
