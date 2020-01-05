@@ -62,15 +62,6 @@
             return $this;
         }
 
-        public function getPhone() {
-            return $this->phone;
-        }
-
-        public function setPhone($phone) {
-            $this->phone = $phone;
-            return $this;
-        }
-
         public function getDni() {
             return $this->dni;
         }
@@ -85,7 +76,7 @@
         }
 
         public function setAddress($address) {
-            $this->addres = $address;
+            $this->address = $address;
             return $this;
         }
 

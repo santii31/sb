@@ -3,8 +3,8 @@
     namespace Config;
     
     define("ROOT", dirname(__DIR__) . "/");
+	define("FRONT_ROOT", "/SouthBeach/");	//no borrar - yo uso este
 	// define("FRONT_ROOT", "http://localhost/sb/");
-	define("FRONT_ROOT", "http://localhost/sb/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
@@ -29,12 +29,12 @@
 	define("ADMIN_ADDED", "Administrador añadido con éxito .");
 	define("ADMIN_DISABLE", "Administrador deshabilitado con éxito.");
 	define("ADMIN_ENABLE", "Administrador habilitado con éxito.");
-	define("ACCOUNT_DISABLE", "Esta cuenta se encuentra deshabilitada por el momento. Contacte con los administradores.");
+	define("ACCOUNT_DISABLE", "Esta cuenta se encuentra deshabilitada. Contacte con los administradores.");
 	define("DISABLE_YOURSELF", "No puedes deshabilitarte a ti mismo.");
 
 	define("LOGIN_NEEDED", "Inicie sesion para continuar.");
-	define("LOGIN_ERROR", "El email ingresado o la contraseña son incorrectos. Intente nuevamente.");	
+	define("LOGIN_ERROR", "El email ingresado o la contraseña son incorrectos.");	
 	define("REGISTER_ERROR", "Este email ya se encuentra registrado.");
-	define("EMPTY_FIELDS", "Complete todos los campos correctamente para continuar.");	
+	define("EMPTY_FIELDS", "Complete los campos correctamente para continuar.");	
 
 ?>

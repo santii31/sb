@@ -19,23 +19,23 @@
 
         public function add(Provider $provider) {								
 			try {					
-				$query = "CALL provider_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$query = "CALL provider_add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				$parameters["name"] = $provider->getName();
 				$parameters["lastname"] = $provider->getLastName();
 				$parameters["tel"] = $provider->getPhone();
 				$parameters["email"] = $provider->getEmail();
                 $parameters["dni"] = $provider->getDni();
-                $parameters["address"] = $address->getAddress();
+                $parameters["address"] = $provider->getAddress();
                 $parameters["cuil"] = $provider->getCuilNumber();
                 $parameters["social_reason"] = $provider->getSocialReason();
-                $parameters["type_billing"] = $provider->getBilling();
-                $parameters["is_active"] = $provider->getIsActive();
+                $parameters["type_billing"] = $provider->getBilling();                
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
 			}
 			catch (Exception $e) {
-				return false;
+				// return false;
+				echo $e;
 			}			
         }
 					
@@ -66,6 +66,32 @@
 			}
 		}
 
+		public function getByDni(Provider $provider) {
+			try {				
+				$providerTemp = null;
+				$query = "CALL provider_getByDni(?)";
+				$parameters["dni"] = $provider->getDni();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$providerTemp = new Provider();
+					$providerTemp->setId($row["id"]);
+					$providerTemp->setName($row["name"]);
+					$providerTemp->setLastName($row["lastname"]);
+                    $providerTemp->setPhone($row["tel"]);
+                    $providerTemp->setEmail($row["email"]);
+					$providerTemp->setDni($row["dni"]);				
+                    $providerTemp->setAddress($row["address"]);
+                    $providerTemp->setCuilNumber($row["cuil"]);
+                    $providerTemp->setSocialReason($row["social_reason"]);
+                    $providerTemp->setBilling($row["type_billing"]);
+                    $providerTemp->setIsActive($row["is_active"]);
+				}
+				return $providerTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
 
         public function getByEmail(Provider $provider) {
 			try {				
@@ -113,7 +139,7 @@
                     $providerTemp->setSocialReason($row["social_reason"]);
                     $providerTemp->setBilling($row["type_billing"]);
                     $providerTemp->setIsActive($row["is_active"]);
-					array_push($this->providerList, $provider);
+					array_push($this->providerList, $providerTemp);
 				}
 				return $this->providerList;	
 			} catch (Exception $e) {

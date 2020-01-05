@@ -236,21 +236,28 @@
                         </li>                    
                     </ul>                                                      
 
+                    <li>
+                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                            <i class="material-icons left">attach_money</i>
+                            Contabilidad
+                        </a>
+                    </li>
+
                     <ul class="collapsible">
                         <li>
                             <div class="collapsible-header"><i class="material-icons">insert_chart</i>Stock</div>
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">person_add</i>
+                                        <a href="<?= FRONT_ROOT ?>product/addProductPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">add_circle_outline</i>
                                             Añadir producto
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>stock/listStockPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
-                                            Listar/Modificar productos
+                                            Listar/Modificar stock
                                         </a>
                                     </li>                                
                                 </ul>
@@ -280,12 +287,27 @@
                         </li>                    
                     </ul>
 
-                    <li>
-                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                            <i class="material-icons left">attach_money</i>
-                            Contabilidad
-                        </a>
-                    </li>
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">room_service</i>Servicio adicional</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>additionalService/addServicePath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">add_circle</i>
+                                            Añadir servicio
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>additionalService/listServicetPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">format_list_numbered</i>
+                                            Listar/Modificar servicios
+                                        </a>
+                                    </li>                                
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>                    
 
                     <ul class="collapsible">
                         <li>
@@ -293,13 +315,13 @@
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>client/addClientPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">person_add</i>
                                             Añadir cliente potencial
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>client/listClientPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
                                             Listar clientes potenciales
                                         </a>
@@ -308,6 +330,28 @@
                             </div>
                         </li>                    
                     </ul>  
+
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">group</i>Personal</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>client/addClientPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">person_add</i>
+                                            Añadir personal
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>client/listClientPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">format_list_numbered</i>
+                                            Listar/Modificar personal
+                                        </a>
+                                    </li>                                
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>                     
 
                     <ul class="collapsible">
                         <li>

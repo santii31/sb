@@ -16,6 +16,7 @@ html {
 .login-container {
     background-color: #fff;
     height: 90vh;
+    min-height: 90vh;
     width: 70vw;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -32,6 +33,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .login-form > form {
@@ -56,6 +58,16 @@ html {
 .logo-brand {
     width: 30%;
     border-radius: 5px;
+}
+
+.error-container {    
+    background-color: #d50000;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.error-container h3 {
+    font-size: .6rem;
 }
 
 
@@ -543,5 +555,8 @@ nav .input-field label.active i {
     justify-content: flex-end;
 }
 
-
+/* List paths */
+.collapsible-body > ul {    
+    text-align: left;
+}
 

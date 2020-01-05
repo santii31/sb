@@ -4,7 +4,7 @@
                 <div class="subtitle">
                     <i class="material-icons left">chevron_right</i>
                     <h2>
-                        Proveedores
+                        <?= $title ?>
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
@@ -42,7 +42,7 @@
                     </div>
                 </nav>                 
                 <div class="row">    
-                    <table class="responsive-table" id="table-filter">
+                    <table class="responsive-table centered" id="table-filter">
                         <thead>                            
                             <tr>
                                 <th>#</th>
@@ -57,13 +57,14 @@
                         </thead>
                                                
                         <tbody>
+                            <?php foreach ($providers as $provider): ?>
                             <tr>
-                                <td>Alvin</td>
-                                <td>Alvin</td>
-                                <td>Eclair</td>
-                                <td>$0.87</td>
-                                <td>Alvin</td>
-                                <td>Eclair</td>
+                                <td> <?= $provider->getId(); ?> </td>
+                                <td> <?= $provider->getName(); ?> </td>
+                                <td> <?= $provider->getLastName(); ?> </td>
+                                <td> <?= $provider->getPhone(); ?> </td>
+                                <td> <?= $provider->getEmail(); ?> </td>
+                                <td> <?= $provider->getAddress(); ?> </td>
                                 <td>
                                     <ul class="collapsible">
                                         <li>
@@ -72,9 +73,10 @@
                                             </div>
                                             <div class="collapsible-body">
                                                 <ul>
-                                                    <li>• Numero de CUIL: 123124</li>
-                                                    <li>• Razon social: rs x</li>
-                                                    <li>• Tipo de facturacion: A</li>
+                                                    <li>• DNI:  <?= $provider->getDni(); ?> </li>
+                                                    <li>• Numero de CUIL:  <?= $provider->getCuilNumber(); ?> </li>
+                                                    <li>• Razon social:  <?= $provider->getSocialReason(); ?> </li>
+                                                    <li>• Tipo de facturacion:  <?= $provider->getBilling(); ?> </li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -92,41 +94,7 @@
                                 </td>
 
                             </tr>
-                            <tr>
-                                <td>Alvin</td>
-                                <td>Pepe</td>
-                                <td>Eclair</td>
-                                <td>$0.87</td>
-                                <td>Alvin</td>
-                                <td>Eclair</td>
-                                <td>
-                                    <ul class="collapsible">
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <i class="material-icons left">arrow_forward</i>Ver mas
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <ul>
-                                                    <li>• Numero de CUIL: 123124</li>
-                                                    <li>• Razon social: rs x</li>
-                                                    <li>• Tipo de facturacion: A</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>                                      
-                                </td>                                
-                                <td class="actions">
-                                    <a class="waves-effect waves-light btn-small btn-danger">
-                                        <i class="material-icons left">delete_forever</i>
-                                        Deshabilitar
-                                    </a>
-                                    <a class="waves-effect waves-light btn-small">
-                                        <i class="material-icons left">build</i>
-                                        Modificar
-                                    </a>                                                                                            
-                                </td>
-
-                            </tr>                                
+                            <?php endforeach; ?>         
                         </tbody>
                     </table>                                          
 

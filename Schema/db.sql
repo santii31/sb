@@ -416,6 +416,13 @@ BEGIN
 	SELECT * FROM `provider` WHERE `provider`.`id` = id;
 END$$
 
+DROP procedure IF EXISTS `provider_getByDni`;
+DELIMITER $$
+CREATE PROCEDURE provider_getByDni (IN dni INT)
+BEGIN
+	SELECT * FROM `provider` WHERE `provider`.`dni` = dni;
+END$$
+
 DROP procedure IF EXISTS `provider_getAll`;
 DELIMITER $$
 CREATE PROCEDURE provider_getAll ()
@@ -642,10 +649,26 @@ END$$
 CREATE TABLE additional_service (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `description` VARCHAR(255) NOT NULL,
-    `total` int NOT NULL,
-    `FK_id_reservation` int NOT NULL,
-    CONSTRAINT `FK_id_reservation_service` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`)
+    `total` int NOT NULL
+    -- `FK_id_reservation` int NOT NULL,
+    -- CONSTRAINT `FK_id_reservation_service` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`)
 );
+
+
+DROP procedure IF EXISTS `service_add`;
+DELIMITER $$
+CREATE PROCEDURE service_add (
+                                IN description VARCHAR(255),                                
+                                IN total int
+                             )
+BEGIN
+	INSERT INTO additional_service (
+			additional_service.description,
+            additional_service.total                   
+	)
+    VALUES
+        (description, total);
+END$$
 
 
 DROP procedure IF EXISTS `service_getById`;
@@ -695,47 +718,59 @@ END$$
 
 DROP procedure IF EXISTS `service_getAll`;
 DELIMITER $$
-CREATE PROCEDURE service_getAll ()
+CREATE PROCEDURE service_getAll()
 BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.total AS service_total,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
-    FROM `additional_service` 
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
-    ORDER BY price ASC;
+           additional_service.total AS service_total
+        --    reservation.id AS reservation_id,
+        --    reservation.date_start AS reservation_dateStart,
+        --    reservation.date_end AS reservation_dateEnd,
+        --    reservation.total_price AS reservation_totalPrice,
+        --    reservation.is_active AS reservation_isActive,
+        --    client.id AS client_id,
+        --    client.name AS client_name,
+		--    client.lastname AS client_lastName,
+		--    client.email AS client_email,
+        --    client.tel AS client_tel,
+        --    client.city AS client_city,
+        --    client.address AS client_city,
+        --    client.is_potential AS client_isPotential,
+		--    client.is_active AS client_isActive,
+        --    admin.id AS admin_id,
+        --    admin.name AS admin_name,
+		--    admin.lastname AS admin_lastName,
+		--    admin.dni AS admin_dni,
+		--    admin.email AS admin_email,
+		--    admin.password AS admin_password,
+        --    admin.is_active AS admin_isActive,
+        --    beach_tent.id AS tent_id,
+        --    beach_tent.number AS tent_number,
+        --    beach_tent.price AS tent_price,
+        --    beach_tent AS tent_isActive,
+        --    parking.id AS parking_id,
+        --    parking.number AS parking_number,
+        --    parking.price AS parking_price,
+        --    parking.is_active AS parking_isActive
+    FROM `additional_service` ;
+    -- INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    -- INNER JOIN client ON reservation.FK_id_client = client.id
+    -- INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    -- INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    -- INNER JOIN parking ON reservation.FK_id_parking = parking.id
+    -- ORDER BY price ASC;
+END$$
+
+DROP procedure IF EXISTS `service_getByDescription`;
+DELIMITER $$
+CREATE PROCEDURE service_getByDescription (IN description VARCHAR(255))
+BEGIN
+	SELECT  
+        additional_service.id AS service_id,
+        additional_service.description AS service_description,
+        additional_service.total AS service_total        
+    FROM `addiotional_service`     
+    WHERE `addiotional_service`.`description` = description;
 END$$
 
 ---------------------------- CHEST ---------------------------

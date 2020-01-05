@@ -48,20 +48,28 @@
         
         public function register($name, $lastName, $email, $dni, $password) {
 			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) && $this->validateEmailForm($email)) {     
-                $adminTemp = new admin();
+                $adminTemp = new Admin();
                 $adminTemp->setEmail($email);
+
+                $aux = $this->adminDAO->getByEmail($adminTemp);
+
+                echo '<pre>';
+                var_dump($adminTemp);
+                var_dump($aux);
+                echo '</pre>';
+
 				if ($this->adminDAO->getByEmail($adminTemp) == null) {                    
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
                     $admin = $this->add($name, $lastName, $dni, $email, $passwordHash);
                     if ($admin) {                                                
-                        return $this->addAdminPath(ADMIN_ADDED);
+                        return $this->addAdminPath(null, ADMIN_ADDED);
                     } else {                        
-                        return $this->addAdminPath(DB_ERROR);        
+                        return $this->addAdminPath(DB_ERROR, null);        
                     }
                 }                
-                return $this->addAdminPath(REGISTER_ERROR);
+                return $this->addAdminPath(REGISTER_ERROR, null);
             }            
-            return $this->addAdminPath(EMPTY_FIELDS);
+            return $this->addAdminPath(EMPTY_FIELDS, null);
 		}
 
         private function isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) {

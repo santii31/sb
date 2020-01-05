@@ -4,7 +4,7 @@
                 <div class="subtitle">
                     <i class="material-icons left">chevron_right</i>
                     <h2>
-                        Administradores
+                        <?= $title ?>
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
@@ -34,7 +34,7 @@
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
-                            <input id="search" type="search" placeholder="Filtrar por nombre...">
+                            <input id="search" type="search" placeholder="Filtrar por descripcion...">
                             <label class="label-icon" for="search">
                                 <i class="material-icons" >search</i>
                             </label>                            
@@ -47,48 +47,24 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>DNI</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                            <?php foreach ($admins as $admin): ?>
+                            <?php foreach ($services as $service): ?>
                                 <tr>
-                                    <td> <?= $admin->getId(); ?> </td>
-                                    <td> <?= $admin->getName(); ?> </td>
-                                    <td> <?= $admin->getLastName(); ?> </td>
-                                    <td> <?= $admin->getEmail(); ?> </td>
-                                    <td> <?= $admin->getDni(); ?> </td>
+                                    <td> <?= $service->getId(); ?> </td>
+                                    <td> <?= $service->getDescription(); ?> </td>
+                                    <td> $ <?= $service->getPrice(); ?> </td>
                                     <td class="actions">
-
-                                        <!-- <div>
-                                            <form action="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" method="post">
-                                                <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
-                                                <button type="submit" class="waves-effect waves-light btn-small btn-danger">
-                                                    <i class="material-icons left">delete_forever</i>
-                                                    Deshabilitar
-                                                </button>
-                                            </form>
-                                        </div>
-
-                                        <div>
-                                            <form action="<?= FRONT_ROOT ?>admin/updatePath/<?= $admin->getId(); ?>" method="post">
-                                                <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
-                                                <button type="submit" class="waves-effect waves-light btn-small">
-                                                    <i class="material-icons left">build</i>
-                                                    Modificar
-                                                </button>
-                                            </form>
-                                        </div> -->
-                                        <a href="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                        <a href="<?= FRONT_ROOT ?>" class="waves-effect waves-light btn-small btn-danger">
                                             <i class="material-icons left">delete_forever</i>
                                             Deshabilitar
                                         </a>
-                                        <a href="<?= FRONT_ROOT ?>admin/updatePath/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small">
+                                        <a href="<?= FRONT_ROOT ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left">build</i>
                                             Modificar
                                         </a>

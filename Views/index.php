@@ -20,7 +20,18 @@
             
             <div class="login-img hide-on-small-only"></div>
             
-            <div class="login-form">
+            <div class="login-form">                
+
+                <?php if ($alert != null): ?>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card-panel red lighten-4">
+                            <i class="material-icons left">error</i>
+                            <span class="card-text card-alert"> <?= $alert; ?> </span>                            
+                        </div>        
+                    </div>                    
+                </div>                
+                <?php endif; ?> 
 
                 <form action="<?= FRONT_ROOT ?>admin/login" method="post">            
 
@@ -30,17 +41,6 @@
                             <h3 class="title-1">Ingrese sus datos</h3>
                         </div>
                     </div>
-
-                    <?php if ($alert != null): ?>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="card-panel red lighten-4">
-                                <i class="material-icons left">error</i>
-                                <span class="card-text card-alert"> <?= $alert; ?> </span>                            
-                            </div>        
-                        </div>                    
-                    </div>                
-                    <?php endif; ?>
 
                     <div class="row">
                         <div class="input-field col s12">                            
