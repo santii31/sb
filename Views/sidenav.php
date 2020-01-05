@@ -27,6 +27,7 @@
         </nav>
     </div>                
     
+    <!-- ARREGLAR - DESACTUALIZADO - BARRA MOVIL -->
     <!-- Links mobile/table -->
     <ul id="slide-out" class="sidenav">
         <li>
@@ -337,13 +338,13 @@
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>client/addClientPath" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>staff/addStaffPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">person_add</i>
                                             Añadir personal
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>client/listClientPath" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>staff/listStaffPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
                                             Listar/Modificar personal
                                         </a>

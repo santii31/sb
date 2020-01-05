@@ -8,9 +8,7 @@ class Parking {
     private $id;
     private $number;
     private $price;
-    
-
-
+       
     public function getId() {
         return $this->id;
     }

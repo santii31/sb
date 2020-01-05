@@ -29,39 +29,28 @@
         
     	private function add($name, $lastName, $email, $dni, $password) {
 			$admin = new Admin();
-            $admin->setName($name);
-            $admin->setLastName($lastName);
-            $admin->setEmail($email);
+            $admin->setName( strtolower($name) );
+            $admin->setLastName( strtolower($lastName) );
+            $admin->setEmail($email);  
             $admin->setDni($dni);
-            $admin->setPassword($password);			
+            $admin->setPassword($password);		
+
             if ($this->adminDAO->add($admin)) {
                 return $admin;
             } else {
                 return false;
             }
         }
-
-        /* 
-            Sanitizar campos, para evitar que vengan con scripts o algo perjudicial
-            (averiguar como hacerlo)
-        */
-        
+  
         public function register($name, $lastName, $email, $dni, $password) {
 			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) && $this->validateEmailForm($email)) {     
                 $adminTemp = new Admin();
                 $adminTemp->setEmail($email);
 
-                $aux = $this->adminDAO->getByEmail($adminTemp);
-
-                echo '<pre>';
-                var_dump($adminTemp);
-                var_dump($aux);
-                echo '</pre>';
-
 				if ($this->adminDAO->getByEmail($adminTemp) == null) {                    
-                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $admin = $this->add($name, $lastName, $dni, $email, $passwordHash);
-                    if ($admin) {                                                
+                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);                    
+                    // arreglar - si ingresa un dni ya existente, no agrega en la DB [porque el campo DNI es UNIQUE], pero muestra mensaje exitoso
+                    if ($this->add($name, $lastName, $dni, $email, $passwordHash)) {                                                
                         return $this->addAdminPath(null, ADMIN_ADDED);
                     } else {                        
                         return $this->addAdminPath(DB_ERROR, null);        
@@ -73,8 +62,12 @@
 		}
 
         private function isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) {
-            if (empty($name) || empty($lastName) || empty($dni) || empty($email) || empty($password)) {
-                return false;
+            if (empty($name) || 
+                empty($lastName) || 
+                empty($dni) || 
+                empty($email) || 
+                empty($password)) {
+                    return false;
             }
             return true;
         }
@@ -85,9 +78,9 @@
 
         public function login($email, $password) {
             if ($this->isFormLoginNotEmpty($email, $password) && $this->validateEmailForm($email)) {
-                $adminTemp = new admin();
+                $adminTemp = new Admin();
                 $adminTemp->setEmail($email);
-                $admin = $this->adminDAO->getByEmail($adminTemp);                        
+                $admin = $this->adminDAO->getByEmail($adminTemp);                                                      
                 if (($admin != null) && (password_verify($password, $admin->getPassword()))) {
                     if ($admin->getIsActive()) {
                         $_SESSION["loggedAdmin"] = $admin;                        
@@ -173,7 +166,7 @@
                 
         public function enable($id) {
             if ($admin = $this->isLogged()) {
-                $admin = new admin();
+                $admin = new Admin();
                 $admin->setId($id);
                 if ($this->adminDAO->enableById($admin)) {
                     return $this->listAdminPath(null, ADMIN_ENABLE);

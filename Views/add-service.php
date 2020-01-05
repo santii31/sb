@@ -37,11 +37,11 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <input id="name" type="text" name="description" class="validate" required>
-                                <label for="name">Description</label>
+                                <label for="name">Descripcion</label>
                             </div>
                             <div class="input-field col s6">
                                 <input id="last_name" type="number" name="price" class="validate" required>
-                                <label for="last_name">Price</label>
+                                <label for="last_name">Precio</label>
                             </div>                         
                         </div>                        
                         <div class="row">

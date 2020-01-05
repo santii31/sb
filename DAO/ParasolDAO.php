@@ -3,7 +3,7 @@
     namespace DAO;
 
     use \Exception as Exception;
-    use Models\Umbrella as Umbrella;
+    use Models\Parasol as Parasol;
     use Models\AdditionalService as AdditionalService;
     use Models\Reservation as Reservation;
     use Models\Admin as Admin;
@@ -13,30 +13,29 @@
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
-    class UmbrellaDAO {
+    class ParasolDAO {
 
 		private $connection;
-		private $umbrellaList = array();
-		private $tableName = "umbrella";		
+		private $parasolList = array();
+		private $tableName = "parasol";		
 
 		public function __construct() {
 
 		}
-
-        
+		
 					
-		public function getById(Umbrella $umbrella) {
+		public function getById(Parasol $parasol) {
 			try {				
-				$umbrellaTemp = null;
-				$query = "CALL umbrella_getById(?)";
-				$parameters["id"] = $umbrella->getId();
+				$parasolTemp = null;
+				$query = "CALL parasol_getById(?)";
+				$parameters["id"] = $parasol->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-					$umbrellaTemp = new Umbrella();
-                    $umbrellaTemp->setId($row["umbrella_id"]);
-                    $umbrellaTemp->setChestNumber($row["umbrella_number"]);
-                    $umbrellaTemp->setPrice($row["umbrella_price"]);
+					$parasolTemp = new Parasol();
+                    $parasolTemp->setId($row["parasol_id"]);
+                    $parasolTemp->setChestNumber($row["parasol_number"]);
+                    $parasolTemp->setPrice($row["parasol_price"]);
                     
                     $additionalService = new AdditionalService();
                     $additionalService->setId($row["service_id"]);
@@ -49,6 +48,7 @@
                     $reservation->setDateEnd($row["reservation_dateEnd"]);
                     $reservation->setPrice($row["reservation_totalPrice"]);
 					$reservation->setIsActive($row["reservation_isActive"]);
+
 					$client = new Client();
 					$client->setId($row["client_id"]);
 					$client->setName($row["client_name"]);
@@ -86,9 +86,9 @@
                     $reservation->setParking($parking);
                     
                     $additionalService->setReservation($reservation);
-                    $umbrellaTemp->setAdditionalService($additionalService);
+                    $parasolTemp->setAdditionalService($additionalService);
 				}
-				return $umbrellaTemp;
+				return $parasolTemp;
 			} catch (Exception $e) {
 				return false;
 			}
@@ -97,14 +97,14 @@
 		
 		public function getAll() {
 			try {
-				$query = "CALL umbrella_getAll()";
+				$query = "CALL parasol_getAll()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
-					$umbrellaTemp = new Umbrella();
-                    $umbrellaTemp->setId($row["umbrella_id"]);
-                    $umbrellaTemp->setChestNumber($row["umbrella_number"]);
-                    $umbrellaTemp->setPrice($row["umbrella_price"]);
+					$parasolTemp = new Parasol();
+                    $parasolTemp->setId($row["parasol_id"]);
+                    $parasolTemp->setChestNumber($row["parasol_number"]);
+                    $parasolTemp->setPrice($row["parasol_price"]);
                     
                     $additionalService = new AdditionalService();
                     $additionalService->setId($row["service_id"]);
@@ -117,6 +117,7 @@
                     $reservation->setDateEnd($row["reservation_dateEnd"]);
                     $reservation->setPrice($row["reservation_totalPrice"]);
 					$reservation->setIsActive($row["reservation_isActive"]);
+
 					$client = new Client();
 					$client->setId($row["client_id"]);
 					$client->setName($row["client_name"]);
@@ -154,10 +155,10 @@
                     $reservation->setParking($parking);
                     
                     $additionalService->setReservation($reservation);
-                    $umbrellaTemp->setAdditionalService($additionalService);
-					array_push($this->umbrellaList, $umbrella);
+                    $parasolTemp->setAdditionalService($additionalService);
+					array_push($this->parasolList, $parasol);
 				}
-				return $this->umbrellaList;	
+				return $this->parasolList;	
 			} catch (Exception $e) {
 				return false;
 			}

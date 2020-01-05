@@ -30,8 +30,7 @@
 				$parameters["FK_id_client"] = $reservation->getClient()->getId();
 				$parameters["FK_id_admin"] = $reservation->getAdmin()->getId();
 				$parameters["FK_id_tent"] = $reservation->getBeachTent()->getId();
-				$parameters["FK_id_parking"] = $reservation->getParking()->getId();
-                $parameters["is_active"] = $reservation->getIsActive();
+				$parameters["FK_id_parking"] = $reservation->getParking()->getId();                
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;

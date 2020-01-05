@@ -20,11 +20,10 @@
 
         public function add(Product $product) {								
 			try {					
-				$query = "CALL product_add(?, ?, ?, ?)";
+				$query = "CALL product_add(?, ?, ?)";
 				$parameters["name"] = $product->getName();
 				$parameters["price"] = $product->getprice();
-				$parameters["FK_id_category"] = $product->getCategory()->getId();
-				$parameters["is_active"] = $product->getIsActive();
+				$parameters["FK_id_category"] = $product->getCategory()->getId();				
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;

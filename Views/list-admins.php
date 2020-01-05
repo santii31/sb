@@ -4,7 +4,7 @@
                 <div class="subtitle">
                     <i class="material-icons left">chevron_right</i>
                     <h2>
-                        Administradores
+                        <?= $title ?>
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
@@ -64,7 +64,6 @@
                                     <td> <?= $admin->getEmail(); ?> </td>
                                     <td> <?= $admin->getDni(); ?> </td>
                                     <td class="actions">
-
                                         <!-- <div>
                                             <form action="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" method="post">
                                                 <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
@@ -74,7 +73,6 @@
                                                 </button>
                                             </form>
                                         </div>
-
                                         <div>
                                             <form action="<?= FRONT_ROOT ?>admin/updatePath/<?= $admin->getId(); ?>" method="post">
                                                 <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
@@ -84,14 +82,24 @@
                                                 </button>
                                             </form>
                                         </div> -->
-                                        <a href="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
-                                            <i class="material-icons left">delete_forever</i>
-                                            Deshabilitar
-                                        </a>
+
+                                        <?php if ($admin->getIsActive()): ?>
+                                            <a href="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                                <i class="material-icons left">delete_forever</i>
+                                                Deshabilitar
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="<?= FRONT_ROOT ?>admin/enable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                                <i class="material-icons left">delete_forever</i>
+                                                Habilitar
+                                            </a>
+                                        <?php endif; ?>
+
                                         <a href="<?= FRONT_ROOT ?>admin/updatePath/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left">build</i>
                                             Modificar
                                         </a>
+
                                     </td>                    
                                 </tr>
                             <?php endforeach; ?>

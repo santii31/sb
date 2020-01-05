@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-01-2020 a las 18:53:24
+-- Tiempo de generación: 06-01-2020 a las 00:01:38
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -50,7 +50,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getAll` ()  BEGIN
 	SELECT * FROM `admin` ORDER BY name ASC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getByEmail` (IN `email` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getByEmail` (IN `email` VARCHAR(255))  BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`email` = email;
 END$$
 
@@ -185,6 +185,102 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `client` WHERE `client`.`id` = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getAll` ()  BEGIN
+	SELECT parasol.id AS parasol_id,
+           parasol.parasol_number AS parasol_number,
+           parasol.price AS parasol_price,
+           additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
+
+    FROM `parasol` 
+    INNER JOIN additional_service ON parasol.FK_id_service = additional_service.id
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
+    ORDER BY price ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getById` (IN `id` INT)  BEGIN
+	SELECT parasol.id AS parasol_id,
+           parasol.parasol_number AS parasol_number,
+           parasol.price AS parasol_price,
+           additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.price AS service_price,
+           additional_service.is_active AS service_isActive,
+           reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_isActive,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_city,
+           client.is_potential AS client_isPotential,
+		   client.is_active AS client_isActive,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           admin.is_active AS admin_isActive,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price,
+           beach_tent AS tent_isActive,
+           parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price,
+           parking.is_active AS parking_isActive
+             
+    FROM `parasol` 
+    INNER JOIN additional_service ON parasol.FK_id_service = additional_service.id
+    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN parking ON reservation.FK_id_parking = parking.id
+    WHERE `parasol`.`id` = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parking_getAll` ()  BEGIN
@@ -344,6 +440,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getAll` ()  BEGIN
 	SELECT * FROM `provider` ORDER BY lastname ASC;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getByDni` (IN `dni` INT)  BEGIN
+	SELECT * FROM `provider` WHERE `provider`.`dni` = dni;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `provider` WHERE `provider`.`id` = id;
 END$$
@@ -449,46 +549,64 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getById` (IN `id` INT) 
     WHERE `reservation`.`id` = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `service_add` (IN `description` VARCHAR(255), IN `total` INT)  BEGIN
+	INSERT INTO additional_service (
+			additional_service.description,
+            additional_service.total                   
+	)
+    VALUES
+        (description, total);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `service_getAll` ()  BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.total AS service_total,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
-    FROM `additional_service` 
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
-    ORDER BY price ASC;
+           additional_service.total AS service_total
+        --    reservation.id AS reservation_id,
+        --    reservation.date_start AS reservation_dateStart,
+        --    reservation.date_end AS reservation_dateEnd,
+        --    reservation.total_price AS reservation_totalPrice,
+        --    reservation.is_active AS reservation_isActive,
+        --    client.id AS client_id,
+        --    client.name AS client_name,
+		--    client.lastname AS client_lastName,
+		--    client.email AS client_email,
+        --    client.tel AS client_tel,
+        --    client.city AS client_city,
+        --    client.address AS client_city,
+        --    client.is_potential AS client_isPotential,
+		--    client.is_active AS client_isActive,
+        --    admin.id AS admin_id,
+        --    admin.name AS admin_name,
+		--    admin.lastname AS admin_lastName,
+		--    admin.dni AS admin_dni,
+		--    admin.email AS admin_email,
+		--    admin.password AS admin_password,
+        --    admin.is_active AS admin_isActive,
+        --    beach_tent.id AS tent_id,
+        --    beach_tent.number AS tent_number,
+        --    beach_tent.price AS tent_price,
+        --    beach_tent AS tent_isActive,
+        --    parking.id AS parking_id,
+        --    parking.number AS parking_number,
+        --    parking.price AS parking_price,
+        --    parking.is_active AS parking_isActive
+    FROM `additional_service` ;
+    -- INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    -- INNER JOIN client ON reservation.FK_id_client = client.id
+    -- INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    -- INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    -- INNER JOIN parking ON reservation.FK_id_parking = parking.id
+    -- ORDER BY price ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `service_getByDescription` (IN `description` VARCHAR(255))  BEGIN
+	SELECT  
+        additional_service.id AS service_id,
+        additional_service.description AS service_description,
+        additional_service.total AS service_total        
+    FROM `additional_service`     
+    WHERE `additional_service`.`description` = description;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `service_getById` (IN `id` INT)  BEGIN
@@ -546,102 +664,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getByNumber` (IN `number` INT)
 	SELECT * FROM `beach_tent` WHERE `beach_tent`.`number` = number;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `umbrella_getAll` ()  BEGIN
-	SELECT umbrella.id AS umbrella_id,
-           umbrella.umbrella_number AS umbrella_number,
-           umbrella.price AS umbrella_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
-
-    FROM `umbrella` 
-    INNER JOIN additional_service ON umbrella.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
-    ORDER BY price ASC;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `umbrella_getById` (IN `id` INT)  BEGIN
-	SELECT umbrella.id AS umbrella_id,
-           umbrella.umbrella_number AS umbrella_number,
-           umbrella.price AS umbrella_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
-             
-    FROM `umbrella` 
-    INNER JOIN additional_service ON umbrella.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
-    WHERE `umbrella`.`id` = id;
-END$$
-
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -653,9 +675,15 @@ DELIMITER ;
 CREATE TABLE `additional_service` (
   `id` int(11) NOT NULL,
   `description` varchar(255) COLLATE utf8_bin NOT NULL,
-  `total` int(11) NOT NULL,
-  `FK_id_reservation` int(11) NOT NULL
+  `total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `additional_service`
+--
+
+INSERT INTO `additional_service` (`id`, `description`, `total`) VALUES
+(1, 'Cofres', 500);
 
 -- --------------------------------------------------------
 
@@ -678,7 +706,11 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `lastname`, `dni`, `email`, `password`, `is_active`) VALUES
-(2, 'Admin', 'Admin', 404040, 'admin@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1);
+(2, 'Admin', 'Admin', 404040, 'admin@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1),
+(3, 'a', 'a', 12, 'mail@admin.com', '$2y$10$RWch4ZOwKex16A3FXioaxu8JTMmKfD2eZyVCYwRjIbRpzipftRTfa', 0),
+(4, 'x', 'x', 123124, 'x@mail.com', '$2y$10$a1ABt8bz8gzHFcrl..0.n.68nqxwdn54czKMgqxEi/xyRGkItpggS', 1),
+(8, 'pepe', 'pepe', 123, 'pepe@mail.com', '$2y$10$ljAwhEvY3tkSYJSNWrchg.6QJXKRv0nBs1gEigkDa1Y5vEjYdTvlG', 0),
+(54, 'asd', 'dasd', 11111, 'asdasda@mail.com', '$2y$10$snzEjB1DAVaKemMQ/EHh/usA3iwsG1PPazIZTTQgmGUwIbSYJc0gO', 0);
 
 -- --------------------------------------------------------
 
@@ -739,6 +771,19 @@ CREATE TABLE `client` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `parasol`
+--
+
+CREATE TABLE `parasol` (
+  `id` int(11) NOT NULL,
+  `parasol_number` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `FK_id_service` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `parking`
 --
 
@@ -780,9 +825,17 @@ CREATE TABLE `provider` (
   `address` varchar(255) COLLATE utf8_bin NOT NULL,
   `cuil` int(11) NOT NULL,
   `social_reason` varchar(255) COLLATE utf8_bin NOT NULL,
-  `billing` varchar(255) COLLATE utf8_bin NOT NULL,
+  `type_billing` varchar(255) COLLATE utf8_bin NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `provider`
+--
+
+INSERT INTO `provider` (`id`, `name`, `lastname`, `tel`, `email`, `dni`, `address`, `cuil`, `social_reason`, `type_billing`, `is_active`) VALUES
+(1, 'pepe', 'pepe1', 123, 'pepe_prove@mail.com', 131313, 'calle x', 1313, 'x', 'a', 1),
+(2, 'jose', 'joseee', 13123, 'jose1@mail.com', 131315, 'calle 12312', 12, 'x', 'b', 1);
 
 -- --------------------------------------------------------
 
@@ -817,19 +870,6 @@ CREATE TABLE `reservation` (
   `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `umbrella`
---
-
-CREATE TABLE `umbrella` (
-  `id` int(11) NOT NULL,
-  `umbrella_number` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `FK_id_service` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 --
 -- Índices para tablas volcadas
 --
@@ -838,8 +878,7 @@ CREATE TABLE `umbrella` (
 -- Indices de la tabla `additional_service`
 --
 ALTER TABLE `additional_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_id_reservation_service` (`FK_id_reservation`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `admin`
@@ -877,6 +916,14 @@ ALTER TABLE `chest`
 ALTER TABLE `client`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indices de la tabla `parasol`
+--
+ALTER TABLE `parasol`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `parasol_number` (`parasol_number`),
+  ADD KEY `FK_id_service_parasol` (`FK_id_service`);
 
 --
 -- Indices de la tabla `parking`
@@ -919,14 +966,6 @@ ALTER TABLE `reservation`
   ADD KEY `FK_id_parking` (`FK_id_parking`);
 
 --
--- Indices de la tabla `umbrella`
---
-ALTER TABLE `umbrella`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `umbrella_number` (`umbrella_number`),
-  ADD KEY `FK_id_service_umbrella` (`FK_id_service`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -934,13 +973,13 @@ ALTER TABLE `umbrella`
 -- AUTO_INCREMENT de la tabla `additional_service`
 --
 ALTER TABLE `additional_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `beach_tent`
@@ -967,6 +1006,12 @@ ALTER TABLE `client`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `parasol`
+--
+ALTER TABLE `parasol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `parking`
 --
 ALTER TABLE `parking`
@@ -982,7 +1027,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT de la tabla `provider`
 --
 ALTER TABLE `provider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `reservation`
@@ -991,20 +1036,8 @@ ALTER TABLE `reservation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `umbrella`
---
-ALTER TABLE `umbrella`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `additional_service`
---
-ALTER TABLE `additional_service`
-  ADD CONSTRAINT `FK_id_reservation_service` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`);
 
 --
 -- Filtros para la tabla `beach_tent`
@@ -1017,6 +1050,12 @@ ALTER TABLE `beach_tent`
 --
 ALTER TABLE `chest`
   ADD CONSTRAINT `FK_id_service_chest` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
+
+--
+-- Filtros para la tabla `parasol`
+--
+ALTER TABLE `parasol`
+  ADD CONSTRAINT `FK_id_service_parasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
 -- Filtros para la tabla `parking`
@@ -1045,12 +1084,6 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `FK_id_client_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),
   ADD CONSTRAINT `FK_id_parking` FOREIGN KEY (`FK_id_parking`) REFERENCES `parking` (`id`),
   ADD CONSTRAINT `FK_id_tent_reservation` FOREIGN KEY (`FK_id_tent`) REFERENCES `beach_tent` (`id`);
-
---
--- Filtros para la tabla `umbrella`
---
-ALTER TABLE `umbrella`
-  ADD CONSTRAINT `FK_id_service_umbrella` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

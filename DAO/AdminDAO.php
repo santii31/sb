@@ -3,6 +3,9 @@
     namespace DAO;
 
 	use \Exception as Exception;
+	
+	use \PDOException as PDOException;
+
     use Models\Admin as Admin;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
@@ -28,10 +31,15 @@
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
-			}
+			}						
+			// catch (PDOException $e) {
+			// 	// echo $e;
+			// 	// var_dump( $e->getCode() );	// En caso de que ingrese un dni ya existente
+			// 	return $e->getCode();
+			// }
 			catch (Exception $e) {
 				return false;
-			}			
+			}	
         }
 					
 		public function getById(Admin $admin) {

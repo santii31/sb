@@ -16,7 +16,6 @@
         private $beachTent;
         private $parking;
         
-
         public function getId() {
             return $this->id;
         }
