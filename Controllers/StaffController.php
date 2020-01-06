@@ -63,7 +63,7 @@
                 empty($dni) || 
                 empty($address) || 
                 empty($phone) || 
-                empty($shirt_size)) || 
+                empty($shirt_size) || 
                 empty($pant_size)) {
                     return false;
             }
