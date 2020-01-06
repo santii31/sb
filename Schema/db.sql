@@ -53,6 +53,13 @@ BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`id` = id;
 END$$
 
+DROP procedure IF EXISTS `admin_getByDni`;
+DELIMITER $$
+CREATE PROCEDURE admin_getByDni (IN dni INT)
+BEGIN
+	SELECT * FROM `admin` WHERE `admin`.`dni` = dni;
+END$$
+
 DROP procedure IF EXISTS `admin_getByEmail`;
 DELIMITER $$
 CREATE PROCEDURE admin_getByEmail (IN email VARCHAR(255))
@@ -473,6 +480,16 @@ BEGIN
     SELECT `provider`.`id` FROM `provider` WHERE `provider`.`email` = email AND `provider`.`id` != id;	
 END$$
 
+DROP procedure IF EXISTS `provider_checkDni`;
+DELIMITER $$
+CREATE PROCEDURE provider_checkDni (
+                                        IN dni INT,
+                                        IN id INT
+                                    )
+BEGIN
+    SELECT `provider`.`id` FROM `provider` WHERE `provider`.`dni` = dni AND `provider`.`id` != id;	
+END$$
+
 DROP procedure IF EXISTS `provider_update`;
 DELIMITER $$
 CREATE PROCEDURE provider_update (
@@ -810,11 +827,13 @@ BEGIN
     WHERE `addiotional_service`.`description` = description;
 END$$
 
+
+
 ---------------------------- RESERVATIONXSERVICE ---------------------------
 
-CREATE TABLE 'reservationxservice' (
-    'FK_id_reservation' int NOT NULL,
-    'FK_id_service' int NOT NULL,
+CREATE TABLE `reservationxservice` (
+    `FK_id_reservation` int NOT NULL,
+    `FK_id_service` int NOT NULL,
     CONSTRAINT `FK_id_reservation_reservationxservice` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`),
     CONSTRAINT `FK_id_service_reservationxservice` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`),
 );
@@ -1202,20 +1221,19 @@ END$$
 
 ---------------------------- STAFF ---------------------------
 
-CREATE TABLE 'staff' (
+CREATE TABLE staff (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    'name' VARCHAR(255) NOT NULL,
-    'lastName' VARCHAR(255) NOT NULL,
-    'position' VARCHAR(255) NOT NULL,
-    'date_start' DATE NOT NULL,
-    'date_end' DATE NOT NULL,
-    'dni' int NOT NULL,
-    'address' VARCHAR(255) NOT NULL,
-    'tel' int NOT NULL,
-    'shirt_size' FLOAT NOT NULL,
-    'pant_size' FLOAT NOT NULL,
-    'is_active' BOOLEAN NOT NULL DEFAULT TRUE
-
+    `name` VARCHAR(255) NOT NULL,
+    `lastname` VARCHAR(255) NOT NULL,
+    `position` VARCHAR(255) NOT NULL,
+    `date_start` DATE NOT NULL,
+    `date_end` DATE NOT NULL,
+    `dni` int NOT NULL,
+    `address` VARCHAR(255) NOT NULL,
+    `tel` int NOT NULL,
+    `shirt_size` FLOAT NOT NULL,
+    `pant_size` FLOAT NOT NULL,
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 DROP procedure IF EXISTS `staff_add`;
@@ -1230,24 +1248,23 @@ CREATE PROCEDURE staff_add (
                                 IN address VARCHAR(255),
                                 IN tel INT,
                                 IN shirt_size FLOAT,
-                                IN pant_size FLOAT,
-                                IN is_active BOOLEAN
+                                IN pant_size FLOAT   
+                            )                             
 BEGIN
 	INSERT INTO staff (
 			staff.name,
 			staff.lastname,
 			staff.position,
             staff.date_start,
-            staff.date_start,
+            staff.date_end,
             staff.dni,
             staff.address,
             staff.tel,
             staff.shirt_size,
-			staff.pant_size,
-            staff.is_active
+			staff.pant_size
 	)
     VALUES
-        (name,lastname,position,date_start,date_end,dni,address,tel,shirt_size,pant_size,is_active);
+        (name,lastname, position, date_start, date_end, dni, address, tel, shirt_size, pant_size);
 END$$
 
 DROP procedure IF EXISTS `staff_getById`;
@@ -1266,7 +1283,7 @@ END$$
 
 DROP procedure IF EXISTS `staff_getAll`;
 DELIMITER $$
-CREATE PROCEDURE employee_getAll ()
+CREATE PROCEDURE staff_getAll ()
 BEGIN
 	SELECT * FROM `staff` ORDER BY name ASC;
 END$$
@@ -1283,4 +1300,46 @@ DELIMITER $$
 CREATE PROCEDURE staff_enableById (IN id INT)
 BEGIN
     UPDATE `staff` SET `staff`.`is_active` = true WHERE `staff`.`id` = id;	
+END$$
+
+DROP procedure IF EXISTS `staff_checkDni`;
+DELIMITER $$
+CREATE PROCEDURE staff_checkDni (
+                                        IN dni INT,
+                                        IN id INT
+                                    )
+BEGIN
+    SELECT `staff`.`id` FROM `staff` WHERE `staff`.`dni` = dni AND `staff`.`id` != id;	
+END$$
+
+DROP procedure IF EXISTS `staff_update`;
+DELIMITER $$
+CREATE PROCEDURE staff_update (
+                                    IN name VARCHAR(255),
+                                    IN lastname VARCHAR(255),
+                                    IN position VARCHAR(255),
+                                    IN date_start DATE,
+                                    IN date_end DATE,
+                                    IN dni int,
+                                    IN address VARCHAR(255),
+                                    IN tel INT,
+                                    IN shirt_size FLOAT,
+                                    IN pant_size FLOAT, 
+                                    IN id int
+                                )
+BEGIN
+    UPDATE `staff` 
+    SET 
+        `staff`.`name` = name, 
+        `staff`.`lastname` = lastname,
+        `staff`.`position` = position,
+        `staff`.`date_start` = date_start,
+        `staff`.`date_end` = date_end,
+        `staff`.`dni` = dni,
+        `staff`.`address` = address,
+        `staff`.`tel` = tel,
+        `staff`.`shirt_size` = shirt_size,
+        `staff`.`pant_size` = pant_size
+    WHERE 
+        `staff`.`id` = id;	
 END$$

@@ -102,7 +102,7 @@
                     return $this->listProviderPath(DB_ERROR, null);
                 }
             } else {
-                return $this->userPath();
+                return $this->adminController->userPath();
             }
         }       
 
@@ -116,7 +116,7 @@
                     return $this->listProviderPath(DB_ERROR, null);
                 }              
             } else {
-                return $this->userPath();
+                return $this->adminController->userPath();
             }                
         }
 
@@ -136,33 +136,39 @@
         }        
 
         public function update($id, $name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
-            
-            // validar email?
-			if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {     
+                        
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) 
+                && $this->adminController->validateEmailForm($email)) {     
                 
                 $providerTemp = new Provider();
                 $providerTemp->setId($id);                
                 $providerTemp->setEmail($email);
 
 				if ($this->providerDAO->checkEmail($providerTemp) == null) {                                                                     
+                    
+                    $providerTemp->setDni($dni);
 
-                    $provider = new Provider();
-                    $provider->setId($id);
-                    $provider->setName( strtolower($name) );
-                    $provider->setLastName( strtolower($lastName) );
-                    $provider->setPhone($phone);
-                    $provider->setEmail($email);
-                    $provider->setDni($dni);
-                    $provider->setBilling( strtolower($billing) );
-                    $provider->setCuilNumber($cuil_number);
-                    $provider->setSocialReason( strtolower($social_reason) );
-                    $provider->setAddress( strtolower($address) );   
+                    if ($this->providerDAO->checkDni($providerTemp) == null) { 
 
-                    if ($this->providerDAO->update($provider)) {                                                
-                        return $this->listProviderPath(null, PROVIDER_UPDATE);
-                    } else {                        
-                        return $this->listProviderPath(DB_ERROR, null);        
+                        $provider = new Provider();
+                        $provider->setId($id);
+                        $provider->setName( strtolower($name) );
+                        $provider->setLastName( strtolower($lastName) );
+                        $provider->setPhone($phone);
+                        $provider->setEmail($email);
+                        $provider->setDni($dni);
+                        $provider->setBilling( strtolower($billing) );
+                        $provider->setCuilNumber($cuil_number);
+                        $provider->setSocialReason( strtolower($social_reason) );
+                        $provider->setAddress( strtolower($address) );   
+
+                        if ($this->providerDAO->update($provider)) {                                                
+                            return $this->listProviderPath(null, PROVIDER_UPDATE);
+                        } else {                        
+                            return $this->listProviderPath(DB_ERROR, null);        
+                        }
                     }
+                    return $this->updatePath($id, DNI_ERROR);
                 }                
                 return $this->updatePath($id, REGISTER_ERROR);
             }            

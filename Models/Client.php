@@ -13,7 +13,7 @@
         private $address;        
         private $stayAddress;   //Domicilio de estadia (Temporal)
         private $isPotential;
-        private $isActive;
+        private $is_active;
 
         public function getId() {
             return $this->id;

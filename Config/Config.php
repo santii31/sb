@@ -24,12 +24,13 @@
 	define("REGISTER_ERROR", "El email ingresado ya se encuentra registrado.");
 	define("EMPTY_FIELDS", "Complete los campos correctamente para continuar.");
 	
+	define("DNI_ERROR", "El DNI ingresado ya se encuentra registrado.");
+	
 	define("ADMIN_ADDED", "Administrador añadido con éxito .");
-	define("ADMIN_DNI", "El DNI ingresado ya se encuentra registrado.");
 	define("ADMIN_DISABLE", "Administrador deshabilitado con éxito.");
 	define("ADMIN_ENABLE", "Administrador habilitado con éxito.");
 	define("ADMIN_UPDATE", "Administrador modificado con éxito.");
-	define("ACCOUNT_DISABLE", "Cuenta deshabilitada. Contacte con los administradores.");
+	define("ACCOUNT_DISABLE", "Cuenta deshabilitada.");
 	define("DISABLE_YOURSELF", "No puedes deshabilitarte a ti mismo.");
 
 	define("SERVICE_ADDED", "Servicio adicional añadido con éxito.");

@@ -37,7 +37,9 @@
         }
 
         public function addStaff($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size)) {
+           
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, 
+                                                $address, $phone, $shirt_size, $pant_size)) {
 
                 $staffTemp = new Staff();
                 $staffTemp->setDni($dni);                
@@ -50,11 +52,13 @@
                     }
                 }                
                 return $this->addStaffPath(STAFF_ERROR, null);
-            }            
+            }                 
             return $this->addStaffPath(EMPTY_FIELDS, null);            
         }
 
-        private function isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
+        private function isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, 
+                                                $address, $phone, $shirt_size, $pant_size) {
+
             if (empty($name) || 
                 empty($lastName) || 
                 empty($position) || 
@@ -85,7 +89,7 @@
         public function listStaffPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Empleados";
-                // $staffs = $this->staffDAO->getAll();
+                $staffs = $this->staffDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-staff.php");
@@ -94,6 +98,84 @@
                 return $this->adminController->userPath();
             }
         } 
+
+        public function enable($id) {
+            if ($admin = $this->adminController->isLogged()) {
+                $staff = new Staff();
+                $staff->setId($id);
+                if ($this->staffDAO->enableById($staff)) {
+                    return $this->listStaffPath(null, STAFF_ENABLE);
+                } else {
+                    return $this->listStaffPath(DB_ERROR, null);
+                }
+            } else {
+                return $this->adminController->userPath();
+            }
+        }       
+
+        public function disable($id) {		
+            if ($admin = $this->adminController->isLogged()) {
+                $staff = new Staff();
+                $staff->setId($id);
+                if ($this->staffDAO->disableById($staff)) {
+                    return $this->listStaffPath(null, STAFF_DISABLE);
+                } else {
+                    return $this->listStaffPath(DB_ERROR, null);
+                }              
+            } else {
+                return $this->adminController->userPath();
+            }                
+        }
+
+        public function updatePath($id_staff, $alert = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Modificar informacion";       
+                $staffTemp = new Staff();
+                $staffTemp->setId($id_staff);                
+                $staff = $this->staffDAO->getById($staffTemp);                    
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "update-staff.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->adminController->userPath();
+            }           
+        }        
+
+        public function update($id, $name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {      
+            
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, 
+                                                $address, $phone, $shirt_size, $pant_size)) {     
+                
+                $staffTemp = new Staff();
+                $staffTemp->setId($id);                
+                $staffTemp->setDni($dni);
+
+				if ($this->staffDAO->checkDni($staffTemp) == null) {                                                                             
+                    
+                    $staff = new Staff();
+                    $staff->setId($id);  
+                    $staff->setName( strtolower($name) );
+                    $staff->setLastName( strtolower($lastName) );
+                    $staff->setPosition($position);
+                    $staff->setDateStart($date_start);
+                    $staff->setDateEnd($date_end);
+                    $staff->setDni($dni);
+                    $staff->setAddress( strtolower($address) );
+                    $staff->setPhone($phone);
+                    $staff->setShirtSize($shirt_size);
+                    $staff->setPantSize($pant_size);   
+
+                    if ($this->staffDAO->update($staff)) {                                                
+                        return $this->listStaffPath(null, STAFF_UPDATE);
+                    } else {                        
+                        return $this->listStaffPath(DB_ERROR, null);        
+                    }
+                }                
+                return $this->updatePath($id, DNI_ERROR);
+            }            
+            return $this->updatePath($id ,EMPTY_FIELDS);
+        }        
 
     }
     

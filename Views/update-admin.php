@@ -11,8 +11,7 @@
                             </h2>
                         </div>
                         <div class="divider mb-divider"></div>
-
-                        <!--   
+                          
                         <?php if ($alert != null): ?>
                         <div class="row">
                             <div class="col s6">
@@ -22,7 +21,9 @@
                                 </div>        
                             </div>                    
                         </div>                
-                        <?php endif; ?> -->
+                        <?php endif; ?>
+
+                        <input id="id" type="hidden" name="id" value="<?= $adm->getId(); ?>">
 
                         <div class="row">
                             <div class="input-field col s6">

@@ -15,7 +15,7 @@
         private $phone;   
         private $shirt_size;
         private $pant_size;
-        private $isActive;
+        private $is_active;
 
         public function getId() {
             return $this->id;
@@ -93,7 +93,7 @@
         }
 
         public function setAddress($address) {
-            $this->addres = $address;
+            $this->address = $address;
             return $this;
         }
 

@@ -32,13 +32,9 @@
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
 			}						
-			// catch (PDOException $e) {
-			// 	// echo $e;
-			// 	// var_dump( $e->getCode() );	// En caso de que ingrese un dni ya existente
-			// 	return $e->getCode();
-			// }
 			catch (Exception $e) {
 				return false;
+				// echo $e;
 			}	
         }
 					
@@ -64,6 +60,29 @@
 				return false;
 			}
 		}
+
+		public function getByDni(Admin $admin) {
+			try {				
+				$userTemp = null;
+				$query = "CALL admin_getByDni(?)";
+				$parameters["dni"] = $admin->getDni();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$userTemp = new Admin();
+					$userTemp->setId($row["id"]);
+					$userTemp->setName($row["name"]);
+					$userTemp->setLastName($row["lastname"]);
+					$userTemp->setEmail($row["email"]);
+					$userTemp->setDni($row["dni"]);
+					$userTemp->setPassword($row["password"]);				
+					$userTemp->setIsActive($row["is_active"]);
+				}
+				return $userTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+		}		
 
 		public function getByEmail(Admin $admin) {
 			try {				

@@ -116,6 +116,11 @@
 			}
 		}						
 
+		// 
+		public function checkDescription(AdditionalService $additionalService) {
+
+		}
+
 		public function update(AdditionalService $additionalService) {
 			try {								
 				$query = "CALL service_update(?, ?, ?)";		

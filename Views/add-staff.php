@@ -1,8 +1,8 @@
-<!-- Main content  -->
-<div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>admin/register" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>staff/addStaff" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -36,53 +36,53 @@
 
                         <div class="row">
                             <div class="input-field col s4">
-                                <input id="name" type="text" name="" class="validate" required>
-                                <label for="name">Cargo</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="last_name" type="text" name="" class="validate" required>
-                                <label for="last_name">Fecha de inicio</label>
-                            </div>                         
-                            <div class="input-field col s4">
-                                <input id="email" type="email" name="" class="validate" required>
-                                <label for="email">Fecha de finalizacion</label>
-                            </div>                                                       
-                        </div> 
-
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input id="dni" type="number" name="" class="validate" required>
-                                <label for="dni">Nombre</label>
+                                <input id="name" type="text" name="name" class="validate" required>
+                                <label for="name">Nombre</label>
                             </div>  
-                            <div class="input-field col s6">
-                                <input id="contraseña" type="password" name="" class="validate" required>
-                                <label for="contraseña">Apellido</label>
-                            </div>                                                             
+                            <div class="input-field col s4">
+                                <input id="lastname" type="text" name="lastname" class="validate" required>
+                                <label for="lastname">Apellido</label>
+                            </div>                                        
+                            <div class="input-field col s4">
+                                <input id="position" type="text" name="position" class="validate" required>
+                                <label for="position">Cargo</label>
+                            </div>                                                 
                         </div>   
 
                         <div class="row">
+                            <div class="input-field col s6">
+                                <input id="date_start" type="date" name="date_start" class="validate" required>
+                                <label for="date_start">Fecha de inicio</label>
+                            </div>                         
+                            <div class="input-field col s6">
+                                <input id="date_end" type="date" name="date_end" class="validate" required>
+                                <label for="date_end">Fecha de fin</label>
+                            </div>                                                       
+                        </div>                         
+
+                        <div class="row">
                             <div class="input-field col s4">
-                                <input id="contraseña" type="password" name="" class="validate" required>
-                                <label for="contraseña">DNI</label>
+                                <input id="dni" type="number" name="dni" class="validate" required>
+                                <label for="dni">DNI</label>
                             </div>               
                             <div class="input-field col s4">
-                                <input id="contraseña" type="password" name="" class="validate" required>
-                                <label for="contraseña">Direccion</label>
+                                <input id="address" type="text" name="address" class="validate" required>
+                                <label for="address">Direccion</label>
                             </div>    
                             <div class="input-field col s4">
-                                <input id="contraseña" type="password" name="" class="validate" required>
-                                <label for="contraseña">Telefono</label>
+                                <input id="phone" type="number" name="phone" class="validate" required>
+                                <label for="phone">Telefono</label>
                             </div>  
                         </div>      
                                  
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="contraseña" type="password" name="" class="validate" required>
-                                <label for="contraseña">Talla de pantalon</label>
+                                <input id="shirt_size" type="text" name="shirt_size" class="validate" required>
+                                <label for="shirt_size">Talla de pantalon</label>
                             </div>    
                             <div class="input-field col s6">
-                                <input id="contraseña" type="password" name="" class="validate" required>
-                                <label for="contraseña">Talla de remera</label>
+                                <input id="pant_size" type="text" name="pant_size" class="validate" required>
+                                <label for="pant_size">Talla de remera</label>
                             </div>                                                           
                         </div>      
                                                                                                

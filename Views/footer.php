@@ -6,10 +6,6 @@
         $(document).ready(function(){
             $('.collapsible').collapsible();
         });
-
-        // $(document).ready(function(){
-        //     $('.tooltipped').tooltip();
-        // });
         
         $(document).ready(function(){
             $('.sidenav').sidenav();

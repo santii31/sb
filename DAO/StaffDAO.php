@@ -18,8 +18,8 @@ class StaffDAO {
     }
 
     public function add(Staff $staff) {								
-        try {					
-            $query = "CALL staff_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {					            
+            $query = "CALL staff_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $parameters["name"] = $staff->getName();
             $parameters["lastname"] = $staff->getLastName();
             $parameters["position"] = $staff->getPosition();
@@ -29,14 +29,14 @@ class StaffDAO {
             $parameters["address"] = $staff->getAddress();
             $parameters["tel"] = $staff->getPhone();
             $parameters["shirt_size"] = $staff->getShirtSize();
-            $parameters["pant_size"] = $staff->getPantSize();
-            $parameters["is_active"] = $staff->getIsActive();
+            $parameters["pant_size"] = $staff->getPantSize();            
             $this->connection = Connection::getInstance();
             $this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
             return true;
         }
         catch (Exception $e) {
             return false;
+            // echo $e;
         }			
     }
                 
@@ -57,7 +57,7 @@ class StaffDAO {
                 $staffTemp->setDateEnd($row["date_end"]);
                 $staffTemp->setDni($row["dni"]);
                 $staffTemp->setAddress($row["address"]);
-                $staffTemp->setPhone($row["phone"]);
+                $staffTemp->setPhone($row["tel"]);
                 $staffTemp->setShirtSize($row["shirt_size"]);
                 $staffTemp->setPantSize($row["pant_size"]);
                 $staffTemp->setIsActive($row["is_active"]);
@@ -67,7 +67,6 @@ class StaffDAO {
             return false;
         }
     }
-
 
     public function getByDni(Staff $staff) {
         try {				
@@ -86,7 +85,7 @@ class StaffDAO {
                 $staffTemp->setDateEnd($row["date_end"]);
                 $staffTemp->setDni($row["dni"]);
                 $staffTemp->setAddress($row["address"]);
-                $staffTemp->setPhone($row["phone"]);
+                $staffTemp->setPhone($row["tel"]);
                 $staffTemp->setShirtSize($row["shirt_size"]);
                 $staffTemp->setPantSize($row["pant_size"]);
                 $staffTemp->setIsActive($row["is_active"]);
@@ -96,7 +95,6 @@ class StaffDAO {
             return false;
         }
     }
-
     
     public function getAll() {
         try {
@@ -113,7 +111,7 @@ class StaffDAO {
                 $staff->setDateEnd($row["date_end"]);
                 $staff->setDni($row["dni"]);
                 $staff->setAddress($row["address"]);
-                $staff->setPhone($row["phone"]);
+                $staff->setPhone($row["tel"]);
                 $staff->setShirtSize($row["shirt_size"]);
                 $staff->setPantSize($row["pant_size"]);
                 $staff->setIsActive($row["is_active"]);
@@ -150,35 +148,41 @@ class StaffDAO {
             return false;
         }
     }		
-
-    /*
-    public function updateUser(User $user) {
-        try {								
-            $query = "UPDATE " . $this->tableName . " AS user 
-                                                      INNER JOIN profile_users AS p_user ON user.FK_dni =  p_user.dni
-                                                     SET
-                                                         user.mail = :mail,
-                                                         user.password = :password,
-                                                         p_user.dni = :dni,
-                                                         p_user.first_name = :firstname,
-                                                         p_user.last_name = :lastname
-                                                      WHERE 
-                                                         p_user.dni = :dni";					
-            
-            $parameters["mail"] = $user->getMail();
-            $parameters["password"] = $user->getPassword();
-            $parameters["dni"] = $user->getDni();
-            $parameters["firstname"] = $user->getFirstName();
-            $parameters["lastname"] = $user->getLastName();				
-
+    
+    public function checkDni(Staff $staff) {
+        try {
+            $query = "CALL staff_checkDni(?, ?)";
+            $parameters["dni"] = $staff->getDni();
+            $parameters["id"] = $staff->getId();
             $this->connection = Connection::GetInstance();
-            $this->connection->ExecuteNonQuery($query, $parameters);								
-            return true;
-        } catch (Exception $e) {
+            return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+        }
+        catch (Exception $e) {
             return false;
         }
     }
-    */
+    
+    public function update(Staff $staff) {
+        try {								
+            $query = "CALL staff_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; //11
+            $parameters["name"] = $staff->getName();
+            $parameters["lastname"] = $staff->getLastName();
+            $parameters["position"] = $staff->getPosition();
+            $parameters["date_start"] = $staff->getDateStart();
+            $parameters["date_end"] = $staff->getDateEnd();
+            $parameters["dni"] = $staff->getDni();
+            $parameters["address"] = $staff->getAddress();
+            $parameters["tel"] = $staff->getPhone();
+            $parameters["shirt_size"] = $staff->getShirtSize();
+            $parameters["pant_size"] = $staff->getPantSize(); 
+            $parameters["id"] = $staff->getId(); 	
+            $this->connection = Connection::GetInstance();
+            return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
+        } catch (Exception $e) {
+            return false;
+            // echo $e;
+        }
+    }
 
 }
 

@@ -48,13 +48,16 @@
                 $adminTemp->setEmail($email);
 
 				if ($this->adminDAO->getByEmail($adminTemp) == null) {                    
-                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);                    
-                    // arreglar - si ingresa un dni ya existente, no agrega en la DB [porque el campo DNI es UNIQUE], pero muestra mensaje exitoso
-                    if ($this->add($name, $lastName, $dni, $email, $passwordHash)) {                                                
-                        return $this->addAdminPath(null, ADMIN_ADDED);
-                    } else {                        
-                        return $this->addAdminPath(DB_ERROR, null);        
+                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);                                                        
+                    $adminTemp->setDni($dni);
+                    if ($this->adminDAO->getByDni($adminTemp) == null) {                        
+                        if ($this->add($name, $lastName, $dni, $email, $passwordHash)) {                                                
+                            return $this->addAdminPath(null, ADMIN_ADDED);
+                        } else {                        
+                            return $this->addAdminPath(DB_ERROR, null);        
+                        }
                     }
+                    return $this->addAdminPath(DNI_ERROR, null);
                 }                
                 return $this->addAdminPath(REGISTER_ERROR, null);
             }            
@@ -126,7 +129,7 @@
             }           
         } 
 
-        public function updatePath($id_user) {
+        public function updatePath($id_user, $alert = "") {
             if ($admin = $this->isLogged()) {      
                 $title = "Modificar informacion";       
                 $admTemp = new Admin();
@@ -144,9 +147,8 @@
             }           
         }        
 
-
-        
-        public function update($name, $lastName, $dni, $email, $password) {
+        // arreglar
+        public function update($id, $name, $lastName, $dni, $email, $password) {
 			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) && $this->validateEmailForm($email)) {     
                 
                 $adminTemp = new Admin();
@@ -160,9 +162,9 @@
                         return $this->listAdminPath(DB_ERROR, null);        
                     }
                 }                
-                return $this->listAdminPath(REGISTER_ERROR, null);
+                return $this->updatePath($id, REGISTER_ERROR);
             }            
-            return $this->listAdminPath(EMPTY_FIELDS, null);
+            return $this->updatePath($id, EMPTY_FIELDS);
         }
 
 

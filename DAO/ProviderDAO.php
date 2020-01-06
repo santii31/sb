@@ -184,6 +184,19 @@
 				return false;
 			}
 		}
+
+		public function checkDni(Provider $provider) {
+			try {
+				$query = "CALL provider_checkDni(?, ?)";
+				$parameters["dni"] = $provider->getDni();
+				$parameters["id"] = $provider->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+			}
+		}		
 		
 		public function update(Provider $provider) {
 			try {								

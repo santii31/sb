@@ -128,7 +128,7 @@
                 $serviceTemp->setDescription( strtolower($description) );                
                 
                 // comprobar la descripcion, igual que proveedores con email (checkEmail)
-				if ($this->additionalServiceDAO->getByDescription($serviceTemp) == null) {                                         
+				if ($this->additionalServiceDAO->checkDescription($serviceTemp) == null) {                                         
                     
                     $additionalService = new AdditionalService();
                     $additionalService->setDescription( strtolower($description) );
