@@ -3,7 +3,7 @@
     namespace Config;
     
     define("ROOT", dirname(__DIR__) . "/");
-	define("FRONT_ROOT", "/SouthBeach/");	//no borrar - yo uso este
+	define("FRONT_ROOT", "http://localhost/sb/");	//no borrar - yo uso este
 	// define("FRONT_ROOT", "http://localhost/sb/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");

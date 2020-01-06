@@ -2,7 +2,7 @@
 
     namespace Models;
     
-    class Cliente {
+    class Client {
 
         private $id;
         private $name;
