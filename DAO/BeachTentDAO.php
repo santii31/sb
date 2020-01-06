@@ -17,7 +17,9 @@
 
 		}
 
-        
+        public function add() {
+			
+		}
 					
 		public function getById(BeachTent $beachTent) {
 			try {				

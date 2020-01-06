@@ -17,7 +17,6 @@
         private $billing;
         private $is_active;
         
-
         public function getId() {
             return $this->id;
         }

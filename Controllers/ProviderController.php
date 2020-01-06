@@ -12,21 +12,21 @@
         private $adminController;
 
         public function __construct() {
-            $this->providerDAO = new providerDAO();
+            $this->providerDAO = new ProviderDAO();
             $this->adminController = new AdminController();
         }     
         
         private function add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
             $provider = new Provider();            
-            $provider->setName($name);
-            $provider->setLastName($lastName);
+            $provider->setName( strtolower($name) );
+            $provider->setLastName( strtolower($lastName) );
             $provider->setPhone($phone);
             $provider->setEmail($email);
             $provider->setDni($dni);
-            $provider->setBilling($billing);
+            $provider->setBilling( strtolower($billing) );
             $provider->setCuilNumber($cuil_number);
-            $provider->setSocialReason($social_reason);
-            $provider->setAddress($address);         
+            $provider->setSocialReason( strtolower($social_reason) );
+            $provider->setAddress( strtolower($address) );         
             
             if ($this->providerDAO->add($provider)) {
                 return true;
@@ -40,9 +40,8 @@
                 $providerTemp = new Provider();
                 $providerTemp->setDni($dni);                
                 
-				if ($this->providerDAO->getByDni($providerTemp) == null) {                                        
-                    $provider = $this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address);
-                    if ($provider) {                                                
+				if ($this->providerDAO->getByDni($providerTemp) == null) {                                                            
+                    if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {            
                         return $this->addProviderPath(null, PROVIDER_ADDED);
                     } else {                        
                         return $this->addProviderPath(DB_ERROR, null);        
@@ -63,7 +62,7 @@
                 empty($cuil_number) || 
                 empty($social_reason) || 
                 empty($address)) {
-                return false;
+                    return false;
             }
             return true;
         }         

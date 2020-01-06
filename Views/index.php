@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="input-field col s12">    
                             <img src="<?= IMG_PATH ?>logo.png" alt="Logo" class="logo-brand">                        
-                            <h3 class="title-1">Ingrese sus datos</h3>
+                            <!-- <h3 class="title-1">Ingrese sus datos</h3> -->
                         </div>
                     </div>
 

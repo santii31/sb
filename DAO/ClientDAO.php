@@ -26,8 +26,7 @@
 				$parameters["tel"] = $client->getPhone();
                 $parameters["city"] = $client->getCity();
 				$parameters["address"] = $client->getAddress();
-				$parameters["stay_address"] = $client->getStayAddress();
-                $parameters["is_active"] = $client->getIsActive();
+				$parameters["stay_address"] = $client->getStayAddress();                
                 $parameters["is_potential"] = $client->getIsPotential();
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -90,7 +89,6 @@
 				return false;
 			}
 		}
-
 		
 		public function getAll() {
 			try {
@@ -106,7 +104,7 @@
 					$client->setPhone($row["tel"]);
 					$client->setCity($row["city"]);				
 					$client->setAddress($row["address"]);
-					$userTemp->setStayAddress($row["stay_address"]);
+					$client->setStayAddress($row["stay_address"]);
                     $client->setIsActive($row["is_active"]);
                     $client->setIsPotential($row["is_potential"]);
 					array_push($this->clientList, $client);

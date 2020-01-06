@@ -15,16 +15,15 @@
             $this->adminController = new AdminController();
         }
 
-        private function add($id, $name, $price, $category, $isActive) {
+        private function add($id, $name, $price, $category) {
             $product = new Product();
             $product->setId($id);
-            $product->setName($name);
+            $product->setName( strtolower($name) );
             $product->setPrice($price);
-            $product->setCategory($category);
-            $product->setIsActive($isActive);
+            $product->setCategory($category);            
             			
             if ($this->productDAO->add($product)) {
-                return $product;
+                return true;
             } else {
                 return false;
             }

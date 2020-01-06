@@ -4,14 +4,12 @@
     
     use Models\AdditionalService as AdditionalService;
 
-    class Umbrella {
+    class Parasol {
 
         private $id;
-        private $umbrella_number;
+        private $parasol_number;
         private $price;
         private $additionalService;
-
-
 
         public function getId() {
             return $this->id;
@@ -21,12 +19,12 @@
             $this->id = $id;            
         }
 
-        public function getUmbrellaNumber() {
-            return $this->umbrella_number;
+        public function getParasolNumber() {
+            return $this->parasol_number;
         }
 
-        public function setUmbrellaNumber($umbrella_number) {
-            $this->umbrella_number = $umbrella_number;
+        public function setParasolNumber($parasol_number) {
+            $this->parasol_number = $parasol_number;
             return $this;
         }
         

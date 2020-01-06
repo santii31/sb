@@ -2,7 +2,7 @@
 
     namespace Models;
     
-    class Employee {
+    class Staff {
 
         private $id;
         private $name;
@@ -122,9 +122,7 @@
         public function setIsActive($is_active) {
             $this->is_active = $is_active;
             return $this;
-        }
-
-        
+        }        
 
     }
 

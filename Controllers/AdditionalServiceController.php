@@ -17,9 +17,8 @@
         }
 
         private function add($description, $price) {
-
             $additionalService = new AdditionalService();
-            $additionalService->setDescription($description);
+            $additionalService->setDescription( strtolower($description) );
             $additionalService->setPrice($price);            
 
             if ($this->additionalServiceDAO->add($additionalService)) {
@@ -30,14 +29,13 @@
         }
 
         public function addService($description, $price) {
-            if ($this->isFormRegisterNotEmpty($description, $price)) {
+            if ($this->isFormRegisterNotEmpty($description, $price)) {   
+                                                                             
                 $serviceTemp = new AdditionalService();
-                $serviceTemp->setDescription($description);                
-
-                // arreglar ? - agrega dos servicios iguales
-				if ($this->additionalServiceDAO->getByDescription($serviceTemp) == null) {                                        
-                    $service = $this->add($description, $price);
-                    if ($service) {                                                
+                $serviceTemp->setDescription( strtolower($description) );                
+                
+				if ($this->additionalServiceDAO->getByDescription($serviceTemp) == null) {                                                       
+                    if ($this->add($description, $price)) {                                                
                         return $this->addServicePath(null, SERVICE_ADDED);
                     } else {                        
                         return $this->addServicePath(DB_ERROR, null);        

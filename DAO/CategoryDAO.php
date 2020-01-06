@@ -17,7 +17,10 @@
 
 		}
 
-        
+
+		public function add() {
+
+		}        
 					
 		public function getById(Category $category) {
 			try {				

@@ -11,8 +11,6 @@
         private $price;
         private $additionalService;
 
-
-
         public function getId() {
             return $this->id;
         }
