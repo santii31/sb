@@ -4,7 +4,7 @@
 
     use Models\Staff as Staff;
     use Controllers\AdminController as AdminController;  
-    // use DAO\StaffDAO as StaffDAO;
+    use DAO\StaffDAO as StaffDAO;
 
     class StaffController {
 
@@ -12,21 +12,22 @@
         private $adminController;
 
         public function __construct() {
-            // $this->staffDAO = new StaffDAO();
+            $this->staffDAO = new StaffDAO();
             $this->adminController = new AdminController();
         }     
         
-        private function add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+        private function add($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
             $staff = new Staff();            
             $staff->setName( strtolower($name) );
             $staff->setLastName( strtolower($lastName) );
-            $staff->setPhone($phone);
-            $staff->setEmail($email);
+            $staff->setPosition($position);
+            $staff->setDateStart($date_start);
+            $staff->setDateEnd($date_end);
             $staff->setDni($dni);
-            $staff->setBilling( strtolower($billing) );
-            $staff->setCuilNumber($cuil_number);
-            $staff->setSocialReason( strtolower($social_reason) );
-            $staff->setAddress( strtolower($address) );         
+            $staff->setAddress( strtolower($address) );
+            $staff->setPhone($phone);
+            $staff->setShirtSize($shirt_size);
+            $staff->setPantSize($pant_size);                        
             
             if ($this->staffDAO->add($staff)) {
                 return true;
@@ -35,13 +36,14 @@
             }
         }
 
-        public function addStaff($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {
+        public function addStaff($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size)) {
+
                 $staffTemp = new Staff();
                 $staffTemp->setDni($dni);                
                 
 				if ($this->staffDAO->getByDni($staffTemp) == null) {                                                            
-                    if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {        
+                    if ($this->add($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size)) {      
                         return $this->addStaffPath(null, STAFF_ADDED);
                     } else {                        
                         return $this->addStaffPath(DB_ERROR, null);        
@@ -52,16 +54,17 @@
             return $this->addStaffPath(EMPTY_FIELDS, null);            
         }
 
-        private function isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+        private function isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
             if (empty($name) || 
                 empty($lastName) || 
-                empty($phone) || 
-                empty($email) || 
+                empty($position) || 
+                empty($date_start) || 
+                empty($date_end) || 
                 empty($dni) || 
-                empty($billing) || 
-                empty($cuil_number) || 
-                empty($social_reason) || 
-                empty($address)) {
+                empty($address) || 
+                empty($phone) || 
+                empty($shirt_size)) || 
+                empty($pant_size)) {
                     return false;
             }
             return true;

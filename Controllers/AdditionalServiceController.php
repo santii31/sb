@@ -127,6 +127,7 @@
                 $serviceTemp = new AdditionalService();
                 $serviceTemp->setDescription( strtolower($description) );                
                 
+                // comprobar la descripcion, igual que proveedores con email (checkEmail)
 				if ($this->additionalServiceDAO->getByDescription($serviceTemp) == null) {                                         
                     
                     $additionalService = new AdditionalService();
@@ -139,7 +140,7 @@
                         return $this->listServicePath(DB_ERROR, null);        
                     }
                 }                
-                return $this->updatePath($id, REGISTER_ERROR);
+                return $this->updatePath($id, "descripcion utilizada");
             }            
             return $this->updatePath($id, EMPTY_FIELDS);
         }        

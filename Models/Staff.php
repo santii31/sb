@@ -7,10 +7,15 @@
         private $id;
         private $name;
         private $lastname;
-        private $email;
+        private $position;
+        private $date_start;
+        private $date_end;
         private $dni;
-        private $password;     
-        private $is_active;
+        private $address;
+        private $phone;   
+        private $shirt_size;
+        private $pant_size;
+        private $isActive;
 
         public function getId() {
             return $this->id;
@@ -38,12 +43,30 @@
             return $this;
         }
 
-        public function getEmail() {
-            return $this->email;
+        public function getPosition() {
+            return $this->position;
         }
 
-        public function setEmail($email) {
-            $this->email = $email;
+        public function setPosition($position) {
+            $this->position = $position;
+            return $this;
+        }
+
+        public function getDateStart() {
+            return $this->date_start;
+        }
+
+        public function setDateStart($date_start) {
+            $this->date_start = $date_start;
+            return $this;
+        }
+
+        public function getDateEnd() {
+            return $this->date_end;
+        }
+
+        public function setDateEnd($date_end) {
+            $this->date_end = $date_end;
             return $this;
         }
 
@@ -56,22 +79,50 @@
             return $this;
         }
 
-        public function getPassword() {
-            return $this->password;
+        public function getPhone() {
+            return $this->phone;
         }
 
-        public function setPassword($password) {
-            $this->password = $password;
+        public function setPhone($phone) {
+            $this->phone = $phone;
             return $this;
-        }       
+        }
+
+        public function getAddress() {
+            return $this->address;
+        }
+
+        public function setAddress($address) {
+            $this->addres = $address;
+            return $this;
+        }
+
+        public function getShirtSize() {
+            return $this->shirt_size;
+        }
+
+        public function setShirtSize($shirt_size) {
+            $this->shirt_size = $shirt_size;
+            return $this;
+        }
+
+        public function getPantSize() {
+            return $this->pant_size;
+        }
+
+        public function setPantSize($pant_size) {
+            $this->pant_size = $pant_size;
+            return $this;
+        }
 
         public function getIsActive() {
             return $this->is_active;
         }
+
         public function setIsActive($is_active) {
             $this->is_active = $is_active;
             return $this;
-        }
+        }        
 
     }
 
