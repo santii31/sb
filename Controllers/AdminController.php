@@ -128,10 +128,13 @@
 
         public function updatePath($id_user) {
             if ($admin = $this->isLogged()) {      
-                $title = "Actualizar informacion";       
+                $title = "Modificar informacion";       
                 $admTemp = new Admin();
                 $admTemp->setId($id_user);
+                
                 $adm = $this->adminDAO->getById($admTemp);
+                // ver como hacer con la contraseña encriptada
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "update-admin.php");
@@ -141,9 +144,28 @@
             }           
         }        
 
-        public function update() {
 
+        
+        public function update($name, $lastName, $dni, $email, $password) {
+			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) && $this->validateEmailForm($email)) {     
+                
+                $adminTemp = new Admin();
+                $adminTemp->setEmail($email);
+
+				if ($this->adminDAO->getByEmail($adminTemp) == null) {                    
+                    // $passwordHash = password_hash($password, PASSWORD_DEFAULT);                                        
+                    if ($this->update($name, $lastName, $dni, $email, $passwordHash)) {                                                
+                        return $this->listAdminPath(null, ADMIN_UPDATE);
+                    } else {                        
+                        return $this->listAdminPath(DB_ERROR, null);        
+                    }
+                }                
+                return $this->listAdminPath(REGISTER_ERROR, null);
+            }            
+            return $this->listAdminPath(EMPTY_FIELDS, null);
         }
+
+
 
         public function userPath($alert = "") {
 			$this->homeController = new HomeController();
@@ -184,10 +206,13 @@
                 if ($admin->getId() == $id) {                
                     return $this->listAdminPath(DISABLE_YOURSELF, null);
                 } else {
-                    $admin = new admin();
+                    $admin = new Admin();
                     $admin->setId($id);           
-                    $this->adminDAO->disableById($admin);
-                    return $this->listAdminPath(null, ADMIN_DISABLE);
+                    if ($this->adminDAO->disableById($admin)) {
+                        return $this->listAdminPath(null, ADMIN_DISABLE);
+                    } else {
+                        return $this->listAdminPath(DB_ERROR, null);
+                    }                     
                 }
             } else {
                 return $this->userPath();

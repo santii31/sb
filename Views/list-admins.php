@@ -89,7 +89,7 @@
                                                 Deshabilitar
                                             </a>
                                         <?php else: ?>
-                                            <a href="<?= FRONT_ROOT ?>admin/enable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                            <a href="<?= FRONT_ROOT ?>admin/enable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
                                                 <i class="material-icons left">delete_forever</i>
                                                 Habilitar
                                             </a>

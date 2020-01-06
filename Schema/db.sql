@@ -107,8 +107,8 @@ CREATE PROCEDURE client_add (
                                 IN city VARCHAR(255),
                                 IN address VARCHAR(255),
                                 IN stay_address VARCHAR(255),
-                                IN is_potential BOOLEAN,
-                                IN is_active BOOLEAN)
+                                IN is_potential BOOLEAN
+                            )
 BEGIN
 	INSERT INTO client (
 			client.name,
@@ -118,11 +118,10 @@ BEGIN
             client.city,
             client.address,
             client.stay_address,
-            client.is_potential,
-			client.is_active
+            client.is_potential			
 	)
     VALUES
-        (name,lastname,email,tel,city,address,stay_address,is_potential,is_active);
+        (name,lastname,email,tel,city,address,stay_address,is_potential);
 END$$
 
 DROP procedure IF EXISTS `client_getById`;
@@ -188,8 +187,8 @@ CREATE PROCEDURE reservation_add (
                                 IN FK_id_client INT,
                                 IN FK_id_admin int,
                                 IN FK_id_tent int,
-                                IN FK_id_parking int,
-                                IN is_active BOOLEAN)
+                                IN FK_id_parking int
+                            )
 BEGIN
 	INSERT INTO reservation (
 			reservation.date_start,
@@ -198,13 +197,11 @@ BEGIN
             reservation.FK_id_client,
             reservation.FK_id_admin,
             reservation.FK_id_tent,
-            reservation.FK_id_parking,
-            reservation.is_active
+            reservation.FK_id_parking            
 	)
     VALUES
-        (date_start,date_end,total_price,FK_id_client,FK_id_admin, FK_id_tent, FK_id_parking, is_active);
+        (date_start,date_end,total_price,FK_id_client,FK_id_admin, FK_id_tent, FK_id_parking);
 END$$
-
 
 DROP procedure IF EXISTS `reservation_getById`;
 DELIMITER $$
@@ -313,7 +310,20 @@ CREATE TABLE beach_tent (
     `price` INT NOT NULL
 );
 
-
+DROP procedure IF EXISTS `beach_tent_add`;
+DELIMITER $$
+CREATE PROCEDURE beach_tent_add (
+                                IN number INT
+                                IN price int                                
+                            )
+BEGIN
+	INSERT INTO beach_tent (
+			beach_tent.number,
+            beach_tent.price          
+	)
+    VALUES
+        (number, price);
+END$$
 
 DROP procedure IF EXISTS `tent_getById`;
 DELIMITER $$
@@ -383,7 +393,7 @@ CREATE TABLE provider (
     `address` VARCHAR(255) NOT NULL,
     `cuil` INT NOT NULL,
     `social_reason` VARCHAR(255) NOT NULL,
-    `type_billing` VARCHAR(255) NOT NULL,    -- TIPO DE FACTURACION - VERIFICAR
+    `type_billing` VARCHAR(255) NOT NULL,    
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE 
 );
 
@@ -439,6 +449,60 @@ BEGIN
 	SELECT * FROM `provider` ORDER BY lastname ASC;
 END$$
 
+DROP procedure IF EXISTS `provider_disableById`;
+DELIMITER $$
+CREATE PROCEDURE provider_disableById (IN id INT)
+BEGIN
+	UPDATE `provider` SET `provider`.`is_active` = false WHERE `provider`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `provider_enableById`;
+DELIMITER $$
+CREATE PROCEDURE provider_enableById (IN id INT)
+BEGIN
+    UPDATE `provider` SET `provider`.`is_active` = true WHERE `provider`.`id` = id;	
+END$$
+
+DROP procedure IF EXISTS `provider_checkEmail`;
+DELIMITER $$
+CREATE PROCEDURE provider_checkEmail (
+                                        IN email VARCHAR(255),
+                                        IN id INT
+                                    )
+BEGIN
+    SELECT `provider`.`id` FROM `provider` WHERE `provider`.`email` = email AND `provider`.`id` != id;	
+END$$
+
+DROP procedure IF EXISTS `provider_update`;
+DELIMITER $$
+CREATE PROCEDURE provider_update (
+                                    IN name VARCHAR(255),
+                                    IN lastname VARCHAR(255),
+                                    IN tel int,
+                                    IN email VARCHAR(255),
+                                    IN dni int,
+                                    IN address VARCHAR(255),
+                                    IN cuil int,
+                                    IN social_reason VARCHAR(255),
+                                    IN type_billing VARCHAR(255),
+                                    IN id int
+                                )
+BEGIN
+    UPDATE `provider` 
+    SET 
+        `provider`.`name` = name, 
+        `provider`.`lastname` = lastname,
+        `provider`.`tel` = tel,
+        `provider`.`email` = email,
+        `provider`.`dni` = dni,
+        `provider`.`address` = address,
+        `provider`.`cuil` = cuil,
+        `provider`.`social_reason` = social_reason,
+        `provider`.`type_billing` = type_billing    
+    WHERE 
+        `provider`.`id` = id;	
+END$$
+
 
 ----------------------------- CATEGORY -----------------------------
 
@@ -447,6 +511,21 @@ CREATE TABLE category (
 	`name` VARCHAR(255) NOT NULL,
     `description` VARCHAR(255) NOT NULL 
 );
+
+DROP procedure IF EXISTS `category_add`;
+DELIMITER $$
+CREATE PROCEDURE category_add (
+                                IN name VARCHAR(255),
+                                IN description VARCHAR(255)
+                                )
+BEGIN
+	INSERT INTO category (
+			category.name,
+            category.description
+	)
+    VALUES
+        (name, description);
+END$$
 
 DROP procedure IF EXISTS `category_getById`;
 DELIMITER $$
@@ -548,8 +627,22 @@ BEGIN
     ORDER BY price ASC;
 END$$
 
+DROP procedure IF EXISTS `product_disableById`;
+DELIMITER $$
+CREATE PROCEDURE product_disableById (IN id INT)
+BEGIN
+	UPDATE `product` SET `product`.`is_active` = false WHERE `product`.`id` = id;
+END$$
 
-------------------------- PROVIDERXPRODUCT ---------------------
+DROP procedure IF EXISTS `product_enableById`;
+DELIMITER $$
+CREATE PROCEDURE product_enableById (IN id INT)
+BEGIN
+    UPDATE `product` SET `product`.`is_active` = true WHERE `product`.`id` = id;	
+END$$
+
+
+------------------------- PROVIDER_X_PRODUCT ---------------------
 
 CREATE TABLE providerxproduct (
 	`FK_id_provider` int NOT NULL,
@@ -662,9 +755,8 @@ END$$
 CREATE TABLE additional_service (
     `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `description` VARCHAR(255) NOT NULL,
-    `total` int NOT NULL
-    -- `FK_id_reservation` int NOT NULL,
-    -- CONSTRAINT `FK_id_reservation_service` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`)
+    `total` int NOT NULL,
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE    
 );
 
 
@@ -688,45 +780,46 @@ DROP procedure IF EXISTS `service_getById`;
 DELIMITER $$
 CREATE PROCEDURE service_getById (IN id INT)
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.total AS service_total,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
+    SELECT additional_service.id AS service_id,
+        additional_service.description AS service_description,
+        additional_service.total AS service_total,
+        additional_service.is_active AS service_is_active
+        --    reservation.id AS reservation_id,
+        --    reservation.date_start AS reservation_dateStart,
+        --    reservation.date_end AS reservation_dateEnd,
+        --    reservation.total_price AS reservation_totalPrice,
+        --    reservation.is_active AS reservation_isActive,
+        --    client.id AS client_id,
+        --    client.name AS client_name,
+        --    client.lastname AS client_lastName,
+        --    client.email AS client_email,
+        --    client.tel AS client_tel,
+        --    client.city AS client_city,
+        --    client.address AS client_city,
+        --    client.is_potential AS client_isPotential,
+        --    client.is_active AS client_isActive,
+        --    admin.id AS admin_id,
+        --    admin.name AS admin_name,
+        --    admin.lastname AS admin_lastName,
+        --    admin.dni AS admin_dni,
+        --    admin.email AS admin_email,
+        --    admin.password AS admin_password,
+        --    admin.is_active AS admin_isActive,
+        --    beach_tent.id AS tent_id,
+        --    beach_tent.number AS tent_number,
+        --    beach_tent.price AS tent_price,
+        --    beach_tent AS tent_isActive,
+        --    parking.id AS parking_id,
+        --    parking.number AS parking_number,
+        --    parking.price AS parking_price,
+        --    parking.is_active AS parking_isActive
     FROM `additional_service` 
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
-    WHERE `service`.`id` = id;
+    -- INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
+    -- INNER JOIN client ON reservation.FK_id_client = client.id
+    -- INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    -- INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    -- INNER JOIN parking ON reservation.FK_id_parking = parking.id
+    WHERE `additional_service`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `service_getAll`;
@@ -735,7 +828,8 @@ CREATE PROCEDURE service_getAll()
 BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.total AS service_total
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
         --    reservation.id AS reservation_id,
         --    reservation.date_start AS reservation_dateStart,
         --    reservation.date_end AS reservation_dateEnd,
@@ -781,9 +875,40 @@ BEGIN
 	SELECT  
         additional_service.id AS service_id,
         additional_service.description AS service_description,
-        additional_service.total AS service_total        
+        additional_service.total AS service_total,
+        additional_service.is_active AS service_is_active       
     FROM `additional_service`     
     WHERE `additional_service`.`description` = description;
+END$$
+
+DROP procedure IF EXISTS `service_disableById`;
+DELIMITER $$
+CREATE PROCEDURE service_disableById (IN id INT)
+BEGIN
+	UPDATE `additional_service` SET `additional_service`.`is_active` = false WHERE `additional_service`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `service_enableById`;
+DELIMITER $$
+CREATE PROCEDURE service_enableById (IN id INT)
+BEGIN
+    UPDATE `additional_service` SET `additional_service`.`is_active` = true WHERE `additional_service`.`id` = id;	
+END$$
+
+DROP procedure IF EXISTS `service_update`;
+DELIMITER $$
+CREATE PROCEDURE service_update (
+                                    IN description VARCHAR(255),
+                                    IN total int,
+                                    IN id int
+                                )
+BEGIN
+    UPDATE `additional_service` 
+    SET 
+        `additional_service`.`description` = description, 
+        `additional_service`.`total` = total
+    WHERE 
+        `additional_service`.`id` = id;	
 END$$
 
 

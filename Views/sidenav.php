@@ -300,7 +300,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>additionalService/listServicetPath" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>additionalService/listServicePath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
                                             Listar/Modificar servicios
                                         </a>

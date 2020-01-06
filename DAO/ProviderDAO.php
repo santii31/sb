@@ -170,36 +170,41 @@
 			catch (Exception $e) {
 				return false;
 			}
-		}		
-
-		/*
-		public function updateUser(User $user) {
-			try {								
-				$query = "UPDATE " . $this->tableName . " AS user 
-														  INNER JOIN profile_users AS p_user ON user.FK_dni =  p_user.dni
-														 SET
-															 user.mail = :mail,
-															 user.password = :password,
-															 p_user.dni = :dni,
-															 p_user.first_name = :firstname,
-															 p_user.last_name = :lastname
- 														 WHERE 
-															 p_user.dni = :dni";					
+		}	
 				
-				$parameters["mail"] = $user->getMail();
-				$parameters["password"] = $user->getPassword();
-				$parameters["dni"] = $user->getDni();
-				$parameters["firstname"] = $user->getFirstName();
-				$parameters["lastname"] = $user->getLastName();				
-
+		public function checkEmail(Provider $provider) {
+			try {
+				$query = "CALL provider_checkEmail(?, ?)";
+				$parameters["email"] = $provider->getEmail();
+				$parameters["id"] = $provider->getId();
 				$this->connection = Connection::GetInstance();
-				$this->connection->ExecuteNonQuery($query, $parameters);								
-				return true;
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+			}
+		}
+		
+		public function update(Provider $provider) {
+			try {								
+				$query = "CALL provider_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
+				$parameters["name"] = $provider->getName();
+				$parameters["lastname"] = $provider->getLastName();
+				$parameters["tel"] = $provider->getPhone();
+				$parameters["email"] = $provider->getEmail();
+                $parameters["dni"] = $provider->getDni();
+                $parameters["address"] = $provider->getAddress();
+                $parameters["cuil"] = $provider->getCuilNumber();
+                $parameters["social_reason"] = $provider->getSocialReason();
+				$parameters["type_billing"] = $provider->getBilling(); 			
+				$parameters["id"] = $provider->getId(); 	
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
 				return false;
 			}
 		}
-		*/
+		
 
     }
 

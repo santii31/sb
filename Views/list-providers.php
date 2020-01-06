@@ -83,11 +83,20 @@
                                     </ul>                                      
                                 </td>                                
                                 <td class="actions">
-                                    <a class="waves-effect waves-light btn-small btn-danger">
-                                        <i class="material-icons left">delete_forever</i>
-                                        Deshabilitar
-                                    </a>
-                                    <a class="waves-effect waves-light btn-small">
+
+                                    <?php if ($provider->getIsActive()): ?>
+                                        <a href="<?= FRONT_ROOT ?>provider/disable/<?= $provider->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                            <i class="material-icons left">delete_forever</i>
+                                            Deshabilitar
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="<?= FRONT_ROOT ?>provider/enable/<?= $provider->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                            <i class="material-icons left">delete_forever</i>
+                                            Habilitar
+                                        </a>
+                                    <?php endif; ?>
+
+                                    <a href="<?= FRONT_ROOT ?>provider/updatePath/<?= $provider->getId(); ?>" class="waves-effect waves-light btn-small">
                                         <i class="material-icons left">build</i>
                                         Modificar
                                     </a>                                                                                            

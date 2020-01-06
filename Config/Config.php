@@ -21,7 +21,7 @@
 
 	define("LOGIN_NEEDED", "Inicie sesión para continuar.");
 	define("LOGIN_ERROR", "El email ingresado o la contraseña son incorrectos.");	
-	define("REGISTER_ERROR", "Este email ya se encuentra registrado.");
+	define("REGISTER_ERROR", "El email ingresado ya se encuentra registrado.");
 	define("EMPTY_FIELDS", "Complete los campos correctamente para continuar.");
 	
 	define("ADMIN_ADDED", "Administrador añadido con éxito .");

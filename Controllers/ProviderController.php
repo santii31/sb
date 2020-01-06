@@ -92,6 +92,83 @@
             }
         } 
 
+        public function enable($id) {
+            if ($admin = $this->adminController->isLogged()) {
+                $provider = new Provider();
+                $provider->setId($id);
+                if ($this->providerDAO->enableById($provider)) {
+                    return $this->listProviderPath(null, PROVIDER_ENABLE);
+                } else {
+                    return $this->listProviderPath(DB_ERROR, null);
+                }
+            } else {
+                return $this->userPath();
+            }
+        }       
+
+        public function disable($id) {		
+            if ($admin = $this->adminController->isLogged()) {
+                $provider = new Provider();
+                $provider->setId($id);
+                if ($this->providerDAO->disableById($provider)) {
+                    return $this->listProviderPath(null, PROVIDER_DISABLE);
+                } else {
+                    return $this->listProviderPath(DB_ERROR, null);
+                }              
+            } else {
+                return $this->userPath();
+            }                
+        }
+
+        public function updatePath($id_provider, $alert = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Modificar informacion";       
+                $providerTemp = new Provider();
+                $providerTemp->setId($id_provider);                
+                $provider = $this->providerDAO->getById($providerTemp);                    
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "update-provider.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->adminController->userPath();
+            }           
+        }        
+
+        public function update($id, $name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+            
+            // validar email?
+			if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {     
+                
+                $providerTemp = new Provider();
+                $providerTemp->setId($id);                
+                $providerTemp->setEmail($email);
+
+				if ($this->providerDAO->checkEmail($providerTemp) == null) {                                                                     
+
+                    $provider = new Provider();
+                    $provider->setId($id);
+                    $provider->setName( strtolower($name) );
+                    $provider->setLastName( strtolower($lastName) );
+                    $provider->setPhone($phone);
+                    $provider->setEmail($email);
+                    $provider->setDni($dni);
+                    $provider->setBilling( strtolower($billing) );
+                    $provider->setCuilNumber($cuil_number);
+                    $provider->setSocialReason( strtolower($social_reason) );
+                    $provider->setAddress( strtolower($address) );   
+
+                    if ($this->providerDAO->update($provider)) {                                                
+                        return $this->listProviderPath(null, PROVIDER_UPDATE);
+                    } else {                        
+                        return $this->listProviderPath(DB_ERROR, null);        
+                    }
+                }                
+                return $this->updatePath($id, REGISTER_ERROR);
+            }            
+            return $this->updatePath($id ,EMPTY_FIELDS);
+        }         
+                
     }
     
 ?>

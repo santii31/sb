@@ -1,15 +1,13 @@
 <?php
 
     namespace Models;
-    
-    use Models\Reservation as Reservation;
 
     class AdditionalService {
 
         private $id;
         private $description;        
-        private $price;
-        private $reservation;
+        private $total;        
+        private $is_active;
 
         public function getId() {
             return $this->id;
@@ -27,31 +25,22 @@
             $this->description = $description;            
         }
 
-        public function getPrice() {
-            return $this->price;
+        public function getTotal() {
+            return $this->total;
         }
 
-        public function setPrice($price) {
-            $this->price = $price;            
+        public function setTotal($total) {
+            $this->total = $total;            
         }        
 
-        public function getReservation() {
-            return $this->reservation;
+        public function getIsActive() {
+            return $this->is_active;
         }
 
-        public function setReservation(Reservation $reservation) {
-            $this->reservation = $reservation;
+        public function setIsActive($is_active) {
+            $this->is_active = $is_active;
             return $this;
-        }       
-
-        // public function getIsActive() {
-        //     return $this->is_active;
-        // }
-
-        // public function setIsActive($is_active) {
-        //     $this->is_active = $is_active;
-        //     return $this;
-        // }
+        }
 
     }
 

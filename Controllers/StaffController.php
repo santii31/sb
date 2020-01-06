@@ -35,21 +35,21 @@
             }
         }
 
-        public function addstaff($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+        public function addStaff($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
             if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {
                 $staffTemp = new Staff();
                 $staffTemp->setDni($dni);                
                 
 				if ($this->staffDAO->getByDni($staffTemp) == null) {                                                            
                     if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {        
-                        return $this->addstaffPath(null, staff_ADDED);
+                        return $this->addStaffPath(null, STAFF_ADDED);
                     } else {                        
-                        return $this->addstaffPath(DB_ERROR, null);        
+                        return $this->addStaffPath(DB_ERROR, null);        
                     }
                 }                
-                return $this->addstaffPath(staff_ERROR, null);
+                return $this->addStaffPath(STAFF_ERROR, null);
             }            
-            return $this->addstaffPath(EMPTY_FIELDS, null);            
+            return $this->addStaffPath(EMPTY_FIELDS, null);            
         }
 
         private function isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {

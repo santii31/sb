@@ -35,31 +35,57 @@
                         <?php endif; ?>
 
                         <div class="row">
-                            <div class="input-field col s6">
-                                <input id="name" type="text" name="name" class="validate" required>
-                                <label for="name">Nombre</label>
+                            <div class="input-field col s4">
+                                <input id="name" type="text" name="" class="validate" required>
+                                <label for="name">Cargo</label>
                             </div>
-                            <div class="input-field col s6">
-                                <input id="last_name" type="text" name="lastname" class="validate" required>
-                                <label for="last_name">Apellido</label>
+                            <div class="input-field col s4">
+                                <input id="last_name" type="text" name="" class="validate" required>
+                                <label for="last_name">Fecha de inicio</label>
                             </div>                         
-                        </div>
+                            <div class="input-field col s4">
+                                <input id="email" type="email" name="" class="validate" required>
+                                <label for="email">Fecha de finalizacion</label>
+                            </div>                                                       
+                        </div> 
+
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="email" type="email" name="email" class="validate" required>
-                                <label for="email">Email</label>
-                            </div>
+                                <input id="dni" type="number" name="" class="validate" required>
+                                <label for="dni">Nombre</label>
+                            </div>  
                             <div class="input-field col s6">
-                                <input id="dni" type="number" name="dni" class="validate" required>
-                                <label for="dni">DNI</label>
-                            </div>                                                         
-                        </div>                        
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="contraseña" type="password" name="password" class="validate" required>
-                                <label for="contraseña">Contraseña</label>
+                                <input id="contraseña" type="password" name="" class="validate" required>
+                                <label for="contraseña">Apellido</label>
                             </div>                                                             
-                        </div>                     
+                        </div>   
+
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <input id="contraseña" type="password" name="" class="validate" required>
+                                <label for="contraseña">DNI</label>
+                            </div>               
+                            <div class="input-field col s4">
+                                <input id="contraseña" type="password" name="" class="validate" required>
+                                <label for="contraseña">Direccion</label>
+                            </div>    
+                            <div class="input-field col s4">
+                                <input id="contraseña" type="password" name="" class="validate" required>
+                                <label for="contraseña">Telefono</label>
+                            </div>  
+                        </div>      
+                                 
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="contraseña" type="password" name="" class="validate" required>
+                                <label for="contraseña">Talla de pantalon</label>
+                            </div>    
+                            <div class="input-field col s6">
+                                <input id="contraseña" type="password" name="" class="validate" required>
+                                <label for="contraseña">Talla de remera</label>
+                            </div>                                                           
+                        </div>      
+                                                                                               
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Registrar

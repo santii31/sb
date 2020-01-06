@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>additionalService/addService" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>additionalService/update" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -10,19 +10,9 @@
                                 <?= $title ?>
                             </h2>
                         </div>
-                        <div class="divider mb-divider"></div>
-
-                        <?php if ($success != null): ?>
-                        <div class="row">
-                            <div class="col s6">
-                                <div class="card-panel green lighten-4">
-                                    <i class="material-icons left">check</i>                            
-                                    <span class="card-text card-success"> <?= $success; ?> </span>
-                                </div>        
-                            </div>                    
-                        </div>    
-                        <?php endif; ?>        
-
+                        <div class="divider mb-divider"></div>      
+                        
+                        
                         <?php if ($alert != null): ?>
                         <div class="row">
                             <div class="col s6">
@@ -34,19 +24,21 @@
                         </div>                
                         <?php endif; ?>
 
+                        <input id="id" type="hidden" name="id" value="<?= $srv->getId(); ?>">
+
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="name" type="text" name="description" class="validate" required>
+                                <input id="name" type="text" name="description" value="<?= $srv->getDescription(); ?>" class="validate" required>
                                 <label for="name">Descripcion</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="last_name" type="number" name="price" class="validate" required>
+                                <input id="last_name" type="number" name="price" value="<?= $srv->getTotal(); ?>" class="validate" required>
                                 <label for="last_name">Precio</label>
                             </div>                         
                         </div>                        
                         <div class="row">
                             <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Registrar
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Modificar
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>
@@ -56,4 +48,4 @@
             </div>
         </div>
     </div>
-</div>    
+</div>      

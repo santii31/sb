@@ -58,13 +58,22 @@
                                 <tr>
                                     <td> <?= $service->getId(); ?> </td>
                                     <td> <?= $service->getDescription(); ?> </td>
-                                    <td> $ <?= $service->getPrice(); ?> </td>
+                                    <td> $ <?= $service->getTotal(); ?> </td>
                                     <td class="actions">
-                                        <a href="<?= FRONT_ROOT ?>" class="waves-effect waves-light btn-small btn-danger">
-                                            <i class="material-icons left">delete_forever</i>
-                                            Deshabilitar
-                                        </a>
-                                        <a href="<?= FRONT_ROOT ?>" class="waves-effect waves-light btn-small">
+
+                                        <?php if ($service->getIsActive()): ?>
+                                            <a href="<?= FRONT_ROOT ?>additionalService/disable/<?= $service->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                                <i class="material-icons left">delete_forever</i>
+                                                Deshabilitar
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="<?= FRONT_ROOT ?>additionalService/enable/<?= $service->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                                <i class="material-icons left">delete_forever</i>
+                                                Habilitar
+                                            </a>
+                                        <?php endif; ?>
+
+                                        <a href="<?= FRONT_ROOT ?>additionalService/updatePath/<?= $service->getId(); ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left">build</i>
                                             Modificar
                                         </a>
