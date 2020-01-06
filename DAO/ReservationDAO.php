@@ -17,9 +17,7 @@
 		private $reservationList = array();
 		private $tableName = "reservation";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add(Reservation $reservation) {								
 			try {					

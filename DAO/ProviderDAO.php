@@ -13,9 +13,7 @@
 		private $providerList = array();
 		private $tableName = "provider";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add(Provider $provider) {								
 			try {					

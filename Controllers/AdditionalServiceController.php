@@ -111,7 +111,7 @@
                 $title = "Modificar informacion";       
                 $service = new AdditionalService();
                 $service->setId($id_service);                
-                $srv = $this->additionalServiceDAO->getById($service);                    
+                $srv = $this->additionalServiceDAO->getById($service);    
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "update-service.php");
@@ -125,12 +125,12 @@
 			if ($this->isFormRegisterNotEmpty($total, $description)) {                     
                                                                              
                 $serviceTemp = new AdditionalService();
+                $serviceTemp->setId($id);                
                 $serviceTemp->setDescription( strtolower($description) );                
-                
-                // comprobar la descripcion, igual que proveedores con email (checkEmail)
-				if ($this->additionalServiceDAO->checkDescription($serviceTemp) == null) {                                         
-                    
+
+				if ($this->additionalServiceDAO->checkDescription($serviceTemp) == null) {                                                       
                     $additionalService = new AdditionalService();
+                    $additionalService->setId($id);                
                     $additionalService->setDescription( strtolower($description) );
                     $additionalService->setTotal($total); 
 
@@ -140,7 +140,7 @@
                         return $this->listServicePath(DB_ERROR, null);        
                     }
                 }                
-                return $this->updatePath($id, "descripcion utilizada");
+                return $this->updatePath($id, SERVICE_ERROR);
             }            
             return $this->updatePath($id, EMPTY_FIELDS);
         }        

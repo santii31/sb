@@ -13,9 +13,7 @@
 		private $beachTentList = array();
 		private $tableName = "beach_tent";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add() {
 			

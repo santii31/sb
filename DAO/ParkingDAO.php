@@ -13,9 +13,7 @@
 		private $parkingList = array();
 		private $tableName = "parking";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         
 					

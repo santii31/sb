@@ -3,8 +3,8 @@
     namespace Config;
     
     define("ROOT", dirname(__DIR__) . "/");
-	// define("FRONT_ROOT", "/SouthBeach/");	
-	define("FRONT_ROOT", "http://localhost/sb/");
+	define("FRONT_ROOT", "/SouthBeach/");	
+	// define("FRONT_ROOT", "http://localhost/sb/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
@@ -34,7 +34,7 @@
 	define("DISABLE_YOURSELF", "No puedes deshabilitarte a ti mismo.");
 
 	define("SERVICE_ADDED", "Servicio adicional añadido con éxito.");
-	define("SERVICE_ERROR", "El servicio adicional ya se encuentra registrado.");
+	define("SERVICE_ERROR", "El servicio adicional ya se encuentra registrado.");	
 	define("SERVICE_DISABLE", "Servicio adicional deshabilitado con éxito.");
 	define("SERVICE_ENABLE", "Servicio adicional habilitado con éxito.");
 	define("SERVICE_UPDATE", "Servicio adicional modificado con éxito.");

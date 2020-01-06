@@ -13,9 +13,7 @@ class StaffDAO {
     private $staffList = array();
     private $tableName = "staff";		
 
-    public function __construct() {
-
-    }
+    public function __construct() { }
 
     public function add(Staff $staff) {								
         try {					            

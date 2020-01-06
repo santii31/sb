@@ -13,9 +13,7 @@
 		private $clientList = array();
 		private $tableName = "client";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add(Client $client) {								
 			try {					

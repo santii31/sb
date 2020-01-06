@@ -13,9 +13,7 @@
 		private $categoryList = array();
 		private $tableName = "category";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
 
 		public function add() {

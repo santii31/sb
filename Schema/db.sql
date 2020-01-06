@@ -800,9 +800,9 @@ BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.total AS service_total,
-           additional_service.is_active AS service_isActive 
+           additional_service.is_active AS service_is_active 
            
-    FROM `additional_service` WHERE `service`.`id` = id;
+    FROM `additional_service` WHERE `additional_service`.`id` = id;
 END$$
 
 DROP procedure IF EXISTS `service_getAll`;
@@ -812,7 +812,7 @@ BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.total AS service_total,
-           additional_service.is_active AS service_isActive
+           additional_service.is_active AS service_is_active
         
     FROM `additional_service` ;
 END$$
@@ -825,23 +825,33 @@ BEGIN
         additional_service.id AS service_id,
         additional_service.description AS service_description,
         additional_service.total AS service_total,
-        additional_service.is_active AS service_isActive        
-    FROM `addiotional_service`     
-    WHERE `addiotional_service`.`description` = description;
+        additional_service.is_active AS service_is_active        
+    FROM `additional_service`     
+    WHERE `additional_service`.`description` = description;
 END$$
 
 DROP procedure IF EXISTS `service_enableById`;
 DELIMITER $$
 CREATE PROCEDURE service_enableById (IN id INT)
 BEGIN
-    UPDATE `service` SET `service`.`is_active` = true WHERE `service`.`id` = id;	
+    UPDATE `additional_service` SET `additional_service`.`is_active` = true WHERE `additional_service`.`id` = id;	
 END$$
 
 DROP procedure IF EXISTS `service_disableById`;
 DELIMITER $$
 CREATE PROCEDURE service_disableById (IN id INT)
 BEGIN
-    UPDATE `service` SET `service`.`is_active` = false WHERE `service`.`id` = id;	
+    UPDATE `additional_service` SET `additional_service`.`is_active` = false WHERE `additional_service`.`id` = id;	
+END$$
+
+DROP procedure IF EXISTS `service_checkDescription`;
+DELIMITER $$
+CREATE PROCEDURE service_checkDescription (
+                                        IN description VARCHAR(255),
+                                        IN id INT
+                                    )
+BEGIN
+    SELECT `additional_service`.`id` FROM `additional_service` WHERE `additional_service`.`description` = description AND `additional_service`.`id` != id;	
 END$$
 
 DROP procedure IF EXISTS `service_update`;

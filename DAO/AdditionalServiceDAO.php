@@ -26,7 +26,8 @@
 				return true;
 			}
 			catch (Exception $e) {
-				throw $e;
+				// throw $e;
+				return false;
 			}
 		}        				
 
@@ -47,6 +48,7 @@
 				return $additionalServiceTemp;
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}
 
@@ -80,7 +82,7 @@
                     $additionalService->setId($row["service_id"]);
                     $additionalService->setDescription($row["service_description"]);
 					$additionalService->setTotal($row["service_total"]);
-					$additionalService->setIsActive($row["service_isActive"]);
+					$additionalService->setIsActive($row["service_is_active"]);
 
 					array_push($this->additionalServiceList, $additionalService);
 				}
@@ -116,9 +118,18 @@
 			}
 		}						
 
-		// 
 		public function checkDescription(AdditionalService $additionalService) {
-
+			try {
+				$query = "CALL service_checkDescription(?, ?)";
+				$parameters["description"] = $additionalService->getDescription();
+				$parameters["id"] = $additionalService->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
 		}
 
 		public function update(AdditionalService $additionalService) {
@@ -131,8 +142,8 @@
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
 
 			} catch (Exception $e) {
-				// return false;				
-				echo $e;
+				return false;				
+				// echo $e;
 			}
 		}
 

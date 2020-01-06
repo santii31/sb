@@ -14,9 +14,7 @@
 		private $productList = array();
 		private $tableName = "product";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add(Product $product) {								
 			try {					

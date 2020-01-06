@@ -20,9 +20,7 @@
         private $serviceList = array();
 		private $tableName = "reservationxservice";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add(ReservationxService $reservationxservice) {								
 			try {					
@@ -91,10 +89,10 @@
                     
                     array_push($reservationList, $reservation);
 				}
+				return $reservationList;
 			} catch (Exception $e) {
 				return false;
             }
-            return $reservationList;
 		}
 
         public function getServiceByReservation($id) {
@@ -111,17 +109,11 @@
                     
                     array_push($serviceList, $additionalService);
 				}
+				return $serviceList;
 			} catch (Exception $e) {
 				return false;
             }
-            return $serviceList;
 		}
-
-
-		
-				
-				
-				
 
 		/*
 		public function updateUser(User $user) {

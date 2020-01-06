@@ -19,9 +19,7 @@
 		private $parasolList = array();
 		private $tableName = "parasol";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 		
 					
 		public function getById(Parasol $parasol) {

@@ -16,9 +16,7 @@
 		private $providerxProductList = array();
 		private $tableName = "providerxproduct";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add(ProviderxProduct $providerxproduct) {								
 			try {					

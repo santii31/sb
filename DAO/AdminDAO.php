@@ -16,9 +16,7 @@
 		private $adminList = array();
 		private $tableName = "admin";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         public function add(Admin $admin) {								
 			try {					

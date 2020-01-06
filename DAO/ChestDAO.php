@@ -19,9 +19,7 @@
 		private $chestList = array();
 		private $tableName = "chest";		
 
-		public function __construct() {
-
-		}
+		public function __construct() { }
 
         
 					
