@@ -80,7 +80,7 @@
                     $additionalService->setId($row["service_id"]);
                     $additionalService->setDescription($row["service_description"]);
 					$additionalService->setTotal($row["service_total"]);
-					$additionalService->setIsActive($row["service_is_active"]);
+					$additionalService->setIsActive($row["service_isActive"]);
 
 					array_push($this->additionalServiceList, $additionalService);
 				}

@@ -783,6 +783,7 @@ BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.total AS service_total,
+           additional_service.is_active AS service_isActive 
            
     FROM `additional_service` WHERE `service`.`id` = id;
 END$$
@@ -793,7 +794,8 @@ CREATE PROCEDURE service_getAll()
 BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
-           additional_service.total AS service_total
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_isActive
         
     FROM `additional_service` ;
 END$$
@@ -805,9 +807,41 @@ BEGIN
 	SELECT  
         additional_service.id AS service_id,
         additional_service.description AS service_description,
-        additional_service.total AS service_total        
+        additional_service.total AS service_total,
+        additional_service.is_active AS service_isActive        
     FROM `addiotional_service`     
     WHERE `addiotional_service`.`description` = description;
+END$$
+
+DROP procedure IF EXISTS `service_enableById`;
+DELIMITER $$
+CREATE PROCEDURE service_enableById (IN id INT)
+BEGIN
+    UPDATE `service` SET `service`.`is_active` = true WHERE `service`.`id` = id;	
+END$$
+
+DROP procedure IF EXISTS `service_disableById`;
+DELIMITER $$
+CREATE PROCEDURE service_disableById (IN id INT)
+BEGIN
+    UPDATE `service` SET `service`.`is_active` = false WHERE `service`.`id` = id;	
+END$$
+
+DROP procedure IF EXISTS `service_update`;
+DELIMITER $$
+CREATE PROCEDURE service_update (
+                                    IN description VARCHAR(255),
+                                    IN total int,
+                                    IN id int
+                                )
+BEGIN
+    UPDATE `additional_service` 
+    SET 
+        `additional_service`.`description` = description,
+        `additional_service`.`total` = total,
+        `additional_service`.`id` = id    
+    WHERE 
+        `additional_service`.`id` = id;	
 END$$
 
 ---------------------------- RESERVATIONXSERVICE ---------------------------
