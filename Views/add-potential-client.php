@@ -1,5 +1,5 @@
-<!-- Main content  -->
-<div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
                     <form class="col s10 form-test">

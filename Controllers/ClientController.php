@@ -146,7 +146,7 @@
                 $title = "Añadir cliente";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "add-client.php");
+                require_once(VIEWS_PATH . "add-potential-client.php");
                 require_once(VIEWS_PATH . "footer.php");                
 			} else {
 				return $this->adminController->userPath();

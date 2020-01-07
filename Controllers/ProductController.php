@@ -21,11 +21,13 @@
         private function add($id, $name, $price, $quantity, $category) {
 
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+            $quantity_s = filter_var($quantity, FILTER_SANITIZE_NUMBER_INT);
 
             $product = new Product();
             $product->setId($id);
             $product->setName( strtolower($name_s) );
             $product->setPrice($price);
+            $product->setQuantity($quantity_s);
             $product->setCategory($category);            
             			
             if ($this->productDAO->add($product)) {
@@ -119,7 +121,6 @@
             }                
         }
 
-
         public function updateProductPath($id_client, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
                 $title = "Modificar informacion";       
@@ -145,14 +146,14 @@
 
 				if ($this->productDAO->checkName($name) == null) {                                                                           
                     
-                    $name_s = filter_var($name, FILTER_SANITIZE_STRING);
-                    
+                    $name_s = filter_var($name, FILTER_SANITIZE_STRING);                    
+                    $quantity_s = filter_var($quantity, FILTER_SANITIZE_NUMBER_INT);
         
                     $product = new Product();        
                     $product->setId($id);    
-                    $product->setName($name_s);
+                    $product->setName( strtolower($name_s) );
                     $product->setPrice($price);
-                    $product->setQuantity($quantity);
+                    $product->setQuantity($quantity_s);
                     $product->setCategory($category);
                     
                     if ($this->productDAO->update($product)) {                                                
@@ -165,8 +166,6 @@
             }            
             return $this->updateProductPath($id ,EMPTY_FIELDS);
         }
-
-
 
     }
     

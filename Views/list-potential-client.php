@@ -1,5 +1,5 @@
-<!-- Main content  -->
-<div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content table-container">
                 <div class="subtitle">
                     <i class="material-icons left">chevron_right</i>
@@ -61,9 +61,9 @@
                                 <td> <?= $client->getId(); ?> </td>
                                 <td> <?= ucfirst( $client->getName() ); ?> </td>
                                 <td> <?= ucfirst( $client->getLastName() ); ?> </td>
-                                <td> <?= ucfirst( $provider->getAddress() ); ?> </td>
-                                <td> <?= ucfirst( $provider->getCity() ); ?> </td>
-                                <td> <?= $provider->getEmail(); ?> </td>
+                                <td> <?= ucfirst( $client->getAddress() ); ?> </td>
+                                <td> <?= ucfirst( $client->getCity() ); ?> </td>
+                                <td> <?= $client->getEmail(); ?> </td>
                                 <td> <?= $client->getPhone(); ?> </td>
                                 
                                 <td>
@@ -74,10 +74,10 @@
                                             </div>
                                             <div class="collapsible-body">
                                                 <ul>
-                                                    <li>• DNI:  <?= $provider->getDni(); ?> </li>
-                                                    <li>• Número de CUIL:  <?= $provider->getCuilNumber(); ?> </li>
-                                                    <li>• Razón social:  <?= ucfirst( $provider->getSocialReason() ); ?> </li>
-                                                    <li>• Tipo de facturacion:  <?= ucfirst( $provider->getBilling() ); ?> </li>
+                                                    <li>• DNI:  <?= $client->getDni(); ?> </li>
+                                                    <li>• Número de CUIL:  <?= $client->getCuilNumber(); ?> </li>
+                                                    <li>• Razón social:  <?= ucfirst( $client->getSocialReason() ); ?> </li>
+                                                    <li>• Tipo de facturacion:  <?= ucfirst( $client->getBilling() ); ?> </li>
                                                 </ul>
                                             </div>
                                         </li>
