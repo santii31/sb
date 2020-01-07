@@ -17,13 +17,10 @@ CREATE TABLE admin (
 
     `date_register` DATE NOT NULL,
     `register_by` INT DEFAULT NULL, 
-
     `date_disable` DATE DEFAULT NULL,    
-    `disable_by` INT DEFAULT NULL,
-    
+    `disable_by` INT DEFAULT NULL,    
     `date_enable` DATE DEFAULT NULL,
-    `enable_by` INT DEFAULT NULL,
-    
+    `enable_by` INT DEFAULT NULL,    
     `date_update` DATE DEFAULT NULL,    
     `update_by` INT DEFAULT NULL,
 
@@ -198,7 +195,7 @@ END$$
 
 DROP procedure IF EXISTS `client_getByIdPotential`;
 DELIMITER $$
-CREATE PROCEDURE client_getById (IN id INT)
+CREATE PROCEDURE client_getByIdPotential (IN id INT)
 BEGIN
 	SELECT * FROM `client` WHERE `client`.`id` = id AND `client`.`is_potential` = TRUE;
 END$$
@@ -225,17 +222,17 @@ DELIMITER $$
 CREATE PROCEDURE client_getAll ()
 BEGIN
 	SELECT * FROM `client`
-    WHERE 'client'.'is_potential' = FALSE;
+    WHERE `client`.`is_potential` = FALSE
     ORDER BY name ASC;
 END$$
 
 
 DROP procedure IF EXISTS `client_getAllPotentials`;
 DELIMITER $$
-CREATE PROCEDURE client_getAll ()
+CREATE PROCEDURE client_getAllPotentials ()
 BEGIN
 	SELECT * FROM `client` 
-    WHERE 'client'.'is_potential' = TRUE;
+    WHERE `client`.`is_potential` = TRUE
     ORDER BY name ASC;
 END$$
 
@@ -252,7 +249,7 @@ BEGIN
     SET 
         `client`.`is_active` = false, 
         `client`.`date_disable` = date_disable,
-        `client`.`disable_by` = disable_by,
+        `client`.`disable_by` = disable_by
     WHERE `client`.`id` = id;
 END$$
 
@@ -269,7 +266,7 @@ BEGIN
     SET 
         `client`.`is_active` = true,
         `client`.`date_enable` = date_enable,
-        `client`.`enable_by` = enable_by, 
+        `client`.`enable_by` = enable_by 
     WHERE `client`.`id` = id;	
 END$$
 
@@ -298,7 +295,7 @@ CREATE TABLE beach_tent (
 DROP procedure IF EXISTS `beach_tent_add`;
 DELIMITER $$
 CREATE PROCEDURE beach_tent_add (
-                                    IN number INT
+                                    IN number INT,
                                     IN price FLOAT                                
                                 )
 BEGIN
@@ -366,8 +363,7 @@ DROP procedure IF EXISTS `parking_getAll`;
 DELIMITER $$
 CREATE PROCEDURE parking_getAll ()
 BEGIN
-	SELECT * FROM `parking` ORDER BY number ASC;
-    
+	SELECT * FROM `parking` ORDER BY number ASC;    
 END$$
 
 
@@ -524,7 +520,7 @@ DELIMITER $$
 CREATE PROCEDURE reservation_disableById (
                                             IN id INT,
                                             IN date_disable DATE,
-                                            IN disable_by INT,                                            
+                                            IN disable_by INT                                            
                                         )
 BEGIN
 	UPDATE `reservation` 
@@ -945,17 +941,6 @@ BEGIN
 END$$
 
 
-DROP procedure IF EXISTS `product_checkDni`;
-DELIMITER $$
-CREATE PROCEDURE provider_checkDni (
-                                        IN name VARCHAR(255),
-                                        IN id INT
-                                    )
-BEGIN
-    SELECT `product`.`id` FROM `product` WHERE `product`.`name` = dni AND `provider`.`id` != id;	
-END$$
-
-
 DROP procedure IF EXISTS `product_update`;
 DELIMITER $$
 CREATE PROCEDURE product_update (
@@ -1322,12 +1307,10 @@ BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.total AS service_total,
-           additional_service.is_active AS service_is_active
-           additional_service.total AS service_total
+           additional_service.is_active AS service_is_active          
 	FROM reservationxservice
 	INNER JOIN additional_service ON reservationxservice.FK_id_service = additional_service.id	
-	WHERE (reservationxservice.FK_id_reservation = id_reservation);       
-    FROM `additional_service` ;    
+	WHERE (reservationxservice.FK_id_reservation = id_reservation);             
 END$$
 
 

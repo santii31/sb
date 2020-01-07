@@ -2,7 +2,9 @@
 
     namespace Models;
     
-    class Staff {
+    use Models\Basic as Basic;
+
+    class Staff extends Basic {
 
         private $id;
         private $name;

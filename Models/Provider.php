@@ -2,8 +2,9 @@
 
     namespace Models;
     
+    use Models\Basic as Basic;
 
-    class Provider {
+    class Provider extends Basic {
 
         private $id;
         private $name;

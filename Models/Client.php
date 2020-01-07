@@ -2,7 +2,9 @@
 
     namespace Models;
     
-    class Client {
+    use Models\Basic as Basic;
+
+    class Client extends Basic {
 
         private $id;
         private $name;

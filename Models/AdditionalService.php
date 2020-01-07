@@ -2,7 +2,9 @@
 
     namespace Models;
 
-    class AdditionalService {
+    use Models\Basic as Basic;
+
+    class AdditionalService extends Basic {
 
         private $id;
         private $description;        
