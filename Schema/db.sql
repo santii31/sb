@@ -616,6 +616,23 @@ BEGIN
     WHERE `product`.`id` = id;
 END$$
 
+DROP procedure IF EXISTS `product_getByCategory`;
+DELIMITER $$
+CREATE PROCEDURE product_getByCategory (IN id_category INT)
+BEGIN
+	SELECT  product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.quantity AS product_quantity,
+            product.is_active AS product_isActive,
+            category.id AS category_id,
+            category.name AS category_name,
+            category.description AS category_description
+    FROM `product` 
+    INNER JOIN category ON product.FK_id_category = category.id
+    WHERE `product`.`FK_id_category` = id_category;
+END$$
+
 DROP procedure IF EXISTS `product_getByName`;
 DELIMITER $$
 CREATE PROCEDURE product_getByName (IN name VARCHAR(255))

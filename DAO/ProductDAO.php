@@ -61,6 +61,36 @@
 			}
 		}
 
+
+		public function getByCategory($id_category) {
+			try {				
+				$productTemp = null;
+				$query = "CALL product_getByCategory(?)";
+				$parameters["FK_id_category"] = $id_category;
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$productTemp = new Product();
+                    $productTemp->setId($row["id"]);
+                    $productTemp->setName($row["name"]);
+					$productTemp->setPrice($row["price"]);
+					$productTemp->setQuantity($row["quantity"]);
+                    $productTemp->setIsActive($row["is_active"]);
+
+                    $category = new Category();
+                    $category->setId($row["id"]);
+                    $category->setName($row["name"]);
+                    $category->setDescription($row["description"]);
+
+                    $productTemp->setCategory($category);
+				}
+				return $productTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+
         public function getByName(Product $product) {
 			try {				
 				$productTemp = null;
@@ -115,6 +145,8 @@
 				return false;
 			}
 		}		
+
+		
 
 		public function checkName(Product $product) {
 			try {

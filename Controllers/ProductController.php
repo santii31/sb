@@ -4,14 +4,17 @@
 
     use Controllers\AdminController as AdminController;  
     use DAO\ProductDAO as ProductDAO;
+    use DAO\CategoryDAO as CategoryDAO;
 
     class ProductController {
 
         private $productDAO;
+        private $categoryDAO;
         private $adminController;
 
         public function __construct() {
             $this->productDAO = new ProductDAO();
+            $this->categoryDAO = new CategoryDAO();
             $this->adminController = new AdminController();
         }
 
@@ -54,7 +57,7 @@
             if (empty($name) || 
                 empty($price) || 
                 empty($quantity) || 
-                empty($category) {
+                empty($category)) {
                     return false;
             }
             return true;
@@ -63,6 +66,7 @@
         public function addProductPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Añadir producto";
+                $categories = $this->categoryDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-product.php");
@@ -72,9 +76,11 @@
 			}
         }
 
-        public function listProductPath($alert = "", $success = "") {
+        public function listProductPath($alert = "", $success = "", $id_category) {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Productos";
+                $category = $this->categoryDAO->getAll();
+                $products = $this->productDAO->getByCategory($id_category);
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-products.php");

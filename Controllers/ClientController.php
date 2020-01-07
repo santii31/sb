@@ -110,7 +110,7 @@
                 empty($phone) || 
                 empty($city) || 
                 empty($address) || 
-                empty($stay_address) {
+                empty($stay_address)) {
                     return false;
             }
             return true;
@@ -131,7 +131,7 @@
         public function listPotentialClientPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Potenciales clientes";
-                $client = $this->clientDAO->getAllPotentials();
+                $clients = $this->clientDAO->getAllPotentials();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-potential-client.php");
@@ -156,7 +156,7 @@
         public function listClientPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Clientes";
-                $client = $this->clientDAO->getAll();
+                $clients = $this->clientDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-client.php");
