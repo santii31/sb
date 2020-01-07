@@ -15,6 +15,7 @@ class StaffDAO {
 
     public function __construct() { }
 
+    
     public function add(Staff $staff) {								
         try {					            
             $query = "CALL staff_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

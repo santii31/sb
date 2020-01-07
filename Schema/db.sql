@@ -572,6 +572,7 @@ CREATE TABLE product (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
     `price` INT NOT NULL,
+    'quantity' INT NOT NULL,
     `FK_id_category` INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
     CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`)
@@ -583,16 +584,18 @@ DELIMITER $$
 CREATE PROCEDURE product_add (
                                 IN name VARCHAR(255),
                                 IN price int,
+                                IN quantity int,
                                 IN FK_id_category int
                                 )
 BEGIN
 	INSERT INTO product (
 			product.name,
             product.price,
+            product.quantity,
             product.FK_id_category            
 	)
     VALUES
-        (name,price,FK_id_category);
+        (name,price,quantity,FK_id_category);
 END$$
 
 
@@ -603,6 +606,7 @@ BEGIN
 	SELECT  product.id AS product_id,
             product.name AS product_name,
             product.price AS product_price,
+            product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
             category.name AS category_name,
@@ -619,6 +623,7 @@ BEGIN
 	SELECT  product.id AS product_id,
             product.name AS product_name,
             product.price AS product_price,
+            product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
             category.name AS category_name,
@@ -635,6 +640,7 @@ BEGIN
 	SELECT  product.id AS product_id,
             product.name AS product_name,
             product.price AS product_price,
+            product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
             category.name AS category_name,
@@ -656,6 +662,25 @@ DELIMITER $$
 CREATE PROCEDURE product_enableById (IN id INT)
 BEGIN
     UPDATE `product` SET `product`.`is_active` = true WHERE `product`.`id` = id;	
+END$$
+
+DROP procedure IF EXISTS `product_update`;
+DELIMITER $$
+CREATE PROCEDURE product_update (
+                                    IN name VARCHAR(255),
+                                    IN price int,
+                                    IN quantity int,
+                                    IN FK_id_category int
+                                )
+BEGIN
+    UPDATE `product` 
+    SET 
+        `product`.`name` = name, 
+        `product`.`price` = price,
+        `product`.`quantity` = quantity,
+        'product'.'FK_id_category'    
+    WHERE 
+        `product`.`id` = id;	
 END$$
 
 
@@ -1384,4 +1409,118 @@ BEGIN
         `staff`.`pant_size` = pant_size
     WHERE 
         `staff`.`id` = id;	
+END$$
+
+
+---------------------------- CLIENT ---------------------------
+
+CREATE TABLE client (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(255) NOT NULL,
+    `lastname` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `tel` INT NOT NULL,
+    `city` VARCHAR(255) NOT NULL,
+    `address` VARCHAR(255) NOT NULL,
+    `stay_address` VARCHAR(255) NOT NULL,
+    `is_potential` BOOLEAN NOT NULL DEFAULT FALSE,    
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE    
+);
+
+DROP procedure IF EXISTS `client_add`;
+DELIMITER $$
+CREATE PROCEDURE client_add (
+                                IN name VARCHAR(255),
+                                IN lastname VARCHAR(255),
+                                IN email VARCHAR(255),
+                                IN tel INT,
+                                IN city VARCHAR(255),
+                                IN address VARCHAR(255),
+                                IN stay_address VARCHAR(255),
+                                IN is_potential BOOLEAN
+                            )
+BEGIN
+	INSERT INTO client (
+			client.name,
+			client.lastname,
+			client.email,
+            client.tel,
+            client.city,
+            client.address,
+            client.stay_address,
+            client.is_potential			
+	)
+    VALUES
+        (name,lastname,email,tel,city,address,stay_address,is_potential);
+END$$
+
+DROP procedure IF EXISTS `client_getById`;
+DELIMITER $$
+CREATE PROCEDURE client_getById (IN id INT)
+BEGIN
+	SELECT * FROM `client` WHERE `client`.`id` = id AND `client`.`is_potential` = FALSE;
+END$$
+
+DROP procedure IF EXISTS `client_getByIdPotential`;
+DELIMITER $$
+CREATE PROCEDURE client_getById (IN id INT)
+BEGIN
+	SELECT * FROM `client` WHERE `client`.`id` = id AND `client`.`is_potential` = TRUE;
+END$$
+
+DROP procedure IF EXISTS `client_getByEmail`;
+DELIMITER $$
+CREATE PROCEDURE client_getByEmail (IN email VARCHAR(255))
+BEGIN
+	SELECT * FROM `client` WHERE `client`.`email` = email AND `client`.`is_potential` = FALSE;
+END$$
+
+DROP procedure IF EXISTS `client_getByEmailPotential`;
+DELIMITER $$
+CREATE PROCEDURE client_getByEmailPotential (IN email VARCHAR(255))
+BEGIN
+	SELECT * FROM `client` WHERE `client`.`email` = email AND `client`.`is_potential` = TRUE;
+END$$
+
+DROP procedure IF EXISTS `client_getAll`;
+DELIMITER $$
+CREATE PROCEDURE client_getAll ()
+BEGIN
+	SELECT * FROM `client`
+    WHERE 'client'.'is_potential' = FALSE;
+    ORDER BY name ASC;
+END$$
+
+DROP procedure IF EXISTS `client_getAllPotentials`;
+DELIMITER $$
+CREATE PROCEDURE client_getAll ()
+BEGIN
+	SELECT * FROM `client` 
+    WHERE 'client'.'is_potential' = TRUE;
+    ORDER BY name ASC;
+END$$
+
+DROP procedure IF EXISTS `client_disableById`;
+DELIMITER $$
+CREATE PROCEDURE admin_disableById (IN id INT)
+BEGIN
+	UPDATE `admin` SET `admin`.`is_active` = false WHERE `admin`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `client_enableById`;
+DELIMITER $$
+CREATE PROCEDURE client_enableById (IN id INT)
+BEGIN
+    UPDATE `client` SET `client`.`is_active` = true WHERE `client`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `client_checkEmail`;
+DELIMITER $$
+CREATE PROCEDURE client_checkEmail (
+                                        IN dni INT,
+                                        IN email VARCHAR(255)
+                                    )
+BEGIN
+    SELECT `client`.`id` FROM `client` WHERE `client`.`email` = email AND `client`.`id` != id;	
 END$$

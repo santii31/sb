@@ -57,7 +57,7 @@
                             <?php foreach ($services as $service): ?>
                                 <tr>
                                     <td> <?= $service->getId(); ?> </td>
-                                    <td> <?= $service->getDescription(); ?> </td>
+                                    <td> <?= ucfirst( $service->getDescription() ); ?> </td>
                                     <td> $ <?= $service->getTotal(); ?> </td>
                                     <td class="actions">
 

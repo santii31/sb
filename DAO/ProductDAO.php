@@ -16,6 +16,7 @@
 
 		public function __construct() { }
 
+		
         public function add(Product $product) {								
 			try {					
 				$query = "CALL product_add(?, ?, ?)";

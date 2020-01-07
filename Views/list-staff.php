@@ -60,9 +60,9 @@
                             <?php foreach ($staffs as $staff): ?>
                                 <tr>
                                     <td> <?= $staff->getId(); ?> </td>
-                                    <td> <?= $staff->getName(); ?> </td>
-                                    <td> <?= $staff->getLastName(); ?> </td>
-                                    <td> <?= $staff->getPosition(); ?> </td>
+                                    <td> <?= ucfirst( $staff->getName() ); ?> </td>
+                                    <td> <?= ucfirst( $staff->getLastName() ); ?> </td>
+                                    <td> <?= ucfirst( $staff->getPosition() ); ?> </td>
                                     <td> <?= $staff->getDateStart(); ?> </td>
                                     <td> <?= $staff->getDateEnd(); ?> </td>
                                     <td>
@@ -74,10 +74,10 @@
                                                 <div class="collapsible-body">
                                                     <ul>
                                                         <li>• DNI:  <?= $staff->getDni(); ?> </li>
-                                                        <li>• Dirección:  <?= $staff->getAddress(); ?> </li>
+                                                        <li>• Dirección:  <?= ucfirst( $staff->getAddress() ); ?> </li>
                                                         <li>• Telefono:  <?= $staff->getPhone(); ?> </li>
-                                                        <li>• Talle de remera:  <?= $staff->getShirtSize(); ?> </li>
-                                                        <li>• Talle de pantalon:  <?= $staff->getPantSize(); ?> </li>
+                                                        <li>• Talle de remera:  <?= ucfirst( $staff->getShirtSize() ); ?> </li>
+                                                        <li>• Talle de pantalon:  <?= ucfirst( $staff->getPantSize() ); ?> </li>
                                                     </ul>
                                                 </div>
                                             </li>

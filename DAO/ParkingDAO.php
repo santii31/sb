@@ -15,8 +15,7 @@
 
 		public function __construct() { }
 
-        
-					
+        					
 		public function getById(Parking $parking) {
 			try {				
 				$parking = null;

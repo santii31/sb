@@ -22,6 +22,7 @@
 
 		public function __construct() { }
 
+		
         public function add(ReservationxService $reservationxservice) {								
 			try {					
 				$query = "CALL reservationxservice_add(?, ?)";

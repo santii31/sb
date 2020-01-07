@@ -111,7 +111,7 @@
 
         public function updatePath($id_service, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
-                $title = "Modificar informacion";       
+                $title = "Servicios - Modificar informacion";       
                 $service = new AdditionalService();
                 $service->setId($id_service);                
                 $srv = $this->additionalServiceDAO->getById($service);    

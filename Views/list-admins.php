@@ -59,8 +59,8 @@
                             <?php foreach ($admins as $admin): ?>
                                 <tr>
                                     <td> <?= $admin->getId(); ?> </td>
-                                    <td> <?= $admin->getName(); ?> </td>
-                                    <td> <?= $admin->getLastName(); ?> </td>
+                                    <td> <?= ucfirst( $admin->getName() ); ?> </td>
+                                    <td> <?= ucfirst( $admin->getLastName() ); ?> </td>
                                     <td> <?= $admin->getEmail(); ?> </td>
                                     <td> <?= $admin->getDni(); ?> </td>
                                     <td class="actions">

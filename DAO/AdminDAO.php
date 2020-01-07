@@ -18,6 +18,7 @@
 
 		public function __construct() { }
 
+		
         public function add(Admin $admin) {								
 			try {					
 				$query = "CALL admin_add(?, ?, ?, ?, ?)";

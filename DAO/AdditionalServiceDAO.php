@@ -15,7 +15,7 @@
 
 		public function __construct() { }
 
-
+		
 		public function add(AdditionalService $additionalService) {
 			try {					
 				$query = "CALL service_add(?, ?)";

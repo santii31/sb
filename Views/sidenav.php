@@ -334,19 +334,19 @@
 
                     <ul class="collapsible">
                         <li>
-                            <div class="collapsible-header"><i class="material-icons">group</i>Empleados</div>
+                            <div class="collapsible-header"><i class="material-icons">group</i>Personal</div>
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>staff/addStaffPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">person_add</i>
-                                            Añadir empleado
+                                            Añadir personal
                                         </a>
                                     </li>
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>staff/listStaffPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
-                                            Listar/Modificar empleados
+                                            Listar/Modificar personal
                                         </a>
                                     </li>                                
                                 </ul>

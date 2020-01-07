@@ -15,6 +15,7 @@
 
 		public function __construct() { }
 
+		
         public function add(Provider $provider) {								
 			try {					
 				$query = "CALL provider_add(?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -129,7 +129,7 @@
 
         public function updatePath($id_provider, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
-                $title = "Modificar informacion";       
+                $title = "Proveedor - Modificar informacion";       
                 $providerTemp = new Provider();
                 $providerTemp->setId($id_provider);                
                 $provider = $this->providerDAO->getById($providerTemp);                    
@@ -166,7 +166,7 @@
                         $provider = new Provider();
                         $provider->setId($id);
                         $provider->setName( strtolower($name_s) );
-                        $provider->setLastName( strtolower($lastName_s) );
+                        $provider->setLastName( strtolower($lastname_s) );
                         $provider->setPhone($phone);
                         $provider->setEmail($email_s);
                         $provider->setDni($dni);

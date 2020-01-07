@@ -18,6 +18,7 @@
 
 		public function __construct() { }
 
+		
         public function add(ProviderxProduct $providerxproduct) {								
 			try {					
 				$query = "CALL providerxproduct_add(?, ?, ?, ?, ?, ?)";

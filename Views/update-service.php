@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Modificar
-                                    <i class="material-icons right">send</i>
+                                    <i class="material-icons right">update</i>
                                 </button>
                             </div>
                         </div>

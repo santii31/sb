@@ -21,8 +21,7 @@
 
 		public function __construct() { }
 
-        
-					
+        					
 		public function getById(Chest $chest) {
 			try {				
 				$chestTemp = null;

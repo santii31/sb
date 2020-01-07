@@ -60,11 +60,11 @@
                             <?php foreach ($providers as $provider): ?>
                             <tr>
                                 <td> <?= $provider->getId(); ?> </td>
-                                <td> <?= $provider->getName(); ?> </td>
-                                <td> <?= $provider->getLastName(); ?> </td>
+                                <td> <?= ucfirst( $provider->getName() ); ?> </td>
+                                <td> <?= ucfirst( $provider->getLastName() ); ?> </td>
                                 <td> <?= $provider->getPhone(); ?> </td>
                                 <td> <?= $provider->getEmail(); ?> </td>
-                                <td> <?= $provider->getAddress(); ?> </td>
+                                <td> <?= ucfirst( $provider->getAddress() ); ?> </td>
                                 <td>
                                     <ul class="collapsible">
                                         <li>
@@ -75,8 +75,8 @@
                                                 <ul>
                                                     <li>• DNI:  <?= $provider->getDni(); ?> </li>
                                                     <li>• Número de CUIL:  <?= $provider->getCuilNumber(); ?> </li>
-                                                    <li>• Razón social:  <?= $provider->getSocialReason(); ?> </li>
-                                                    <li>• Tipo de facturacion:  <?= $provider->getBilling(); ?> </li>
+                                                    <li>• Razón social:  <?= ucfirst( $provider->getSocialReason() ); ?> </li>
+                                                    <li>• Tipo de facturacion:  <?= ucfirst( $provider->getBilling() ); ?> </li>
                                                 </ul>
                                             </div>
                                         </li>

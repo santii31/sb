@@ -80,7 +80,7 @@
             return true;
         }
         
-        private function validateEmailForm($email) {
+        public function validateEmailForm($email) {
             return (filter_var($email, FILTER_VALIDATE_EMAIL));
         } 
 
@@ -136,7 +136,7 @@
 
         public function updatePath($id_user, $alert = "") {
             if ($admin = $this->isLogged()) {      
-                $title = "Modificar informacion";       
+                $title = "Administrador - Modificar informacion";       
                 $admTemp = new Admin();
                 $admTemp->setId($id_user);
                 

@@ -82,7 +82,7 @@
 
         public function addStaffPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                         
-                $title = "Añadir empleado";
+                $title = "Añadir personal";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-staff.php");
@@ -94,7 +94,7 @@
 
         public function listStaffPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Empleados";
+                $title = "Personal";
                 $staffs = $this->staffDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
@@ -135,7 +135,7 @@
 
         public function updatePath($id_staff, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
-                $title = "Modificar informacion";       
+                $title = "Personal - Modificar informacion";       
                 $staffTemp = new Staff();
                 $staffTemp->setId($id_staff);                
                 $staff = $this->staffDAO->getById($staffTemp);                    
