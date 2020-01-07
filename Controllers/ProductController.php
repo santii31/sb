@@ -16,9 +16,12 @@
         }
 
         private function add($id, $name, $price, $category) {
+
+            $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+
             $product = new Product();
             $product->setId($id);
-            $product->setName( strtolower($name) );
+            $product->setName( strtolower($name_s) );
             $product->setPrice($price);
             $product->setCategory($category);            
             			

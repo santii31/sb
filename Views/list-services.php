@@ -47,7 +47,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Descripcion</th>
+                            <th>Descripción</th>
                             <th>Precio</th>
                             <th>Acciones</th>
                         </tr>

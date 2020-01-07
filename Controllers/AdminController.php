@@ -28,10 +28,15 @@
         }         
         
     	private function add($name, $lastName, $email, $dni, $password) {
+            
+            $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+            $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
+            $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
+
 			$admin = new Admin();
-            $admin->setName( strtolower($name) );
-            $admin->setLastName( strtolower($lastName) );
-            $admin->setEmail($email);  
+            $admin->setName( strtolower($name_s) );
+            $admin->setLastName( strtolower($lastname_s) );
+            $admin->setEmail($email_s);  
             $admin->setDni($dni);
             $admin->setPassword($password);		
 

@@ -51,7 +51,7 @@
                                 <th>Cargo</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
-                                <th>Mas informacion</th>                                
+                                <th>Mas información</th>                                
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -74,7 +74,7 @@
                                                 <div class="collapsible-body">
                                                     <ul>
                                                         <li>• DNI:  <?= $staff->getDni(); ?> </li>
-                                                        <li>• Direccion:  <?= $staff->getAddress(); ?> </li>
+                                                        <li>• Dirección:  <?= $staff->getAddress(); ?> </li>
                                                         <li>• Telefono:  <?= $staff->getPhone(); ?> </li>
                                                         <li>• Talle de remera:  <?= $staff->getShirtSize(); ?> </li>
                                                         <li>• Talle de pantalon:  <?= $staff->getPantSize(); ?> </li>

@@ -88,7 +88,7 @@
                                                                                                
                         <div class="row">
                             <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Registrar
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>

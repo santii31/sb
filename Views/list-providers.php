@@ -50,8 +50,8 @@
                                 <th>Apellido</th>
                                 <th>Telefono</th>
                                 <th>Email</th>
-                                <th>Direccion</th>
-                                <th>Mas informacion</th>
+                                <th>Domicilio</th>
+                                <th>Mas información</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -74,8 +74,8 @@
                                             <div class="collapsible-body">
                                                 <ul>
                                                     <li>• DNI:  <?= $provider->getDni(); ?> </li>
-                                                    <li>• Numero de CUIL:  <?= $provider->getCuilNumber(); ?> </li>
-                                                    <li>• Razon social:  <?= $provider->getSocialReason(); ?> </li>
+                                                    <li>• Número de CUIL:  <?= $provider->getCuilNumber(); ?> </li>
+                                                    <li>• Razón social:  <?= $provider->getSocialReason(); ?> </li>
                                                     <li>• Tipo de facturacion:  <?= $provider->getBilling(); ?> </li>
                                                 </ul>
                                             </div>

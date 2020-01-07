@@ -17,8 +17,11 @@
         }
 
         private function add($description, $total) {
+            
+            $description_s = filter_var($description, FILTER_SANITIZE_STRING);
+
             $additionalService = new AdditionalService();
-            $additionalService->setDescription( strtolower($description) );
+            $additionalService->setDescription( strtolower($description_s) );
             $additionalService->setTotal($total);            
 
             if ($this->additionalServiceDAO->add($additionalService)) {
@@ -128,10 +131,14 @@
                 $serviceTemp->setId($id);                
                 $serviceTemp->setDescription( strtolower($description) );                
 
-				if ($this->additionalServiceDAO->checkDescription($serviceTemp) == null) {                                                       
+				if ($this->additionalServiceDAO->checkDescription($serviceTemp) == null) { 
+                    
+                    // aca? o arriba del if?
+                    $description_s = filter_var($description, FILTER_SANITIZE_STRING);
+                    
                     $additionalService = new AdditionalService();
                     $additionalService->setId($id);                
-                    $additionalService->setDescription( strtolower($description) );
+                    $additionalService->setDescription( strtolower($description_s) );
                     $additionalService->setTotal($total); 
 
                     if ($this->additionalServiceDAO->update($additionalService)) {                                                

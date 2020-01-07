@@ -17,16 +17,23 @@
         }     
         
         private function add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+
+            $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+            $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
+            $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
+            $social_reason_s = filter_var($social_reason, FILTER_SANITIZE_STRING);
+            $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+
             $provider = new Provider();            
-            $provider->setName( strtolower($name) );
-            $provider->setLastName( strtolower($lastName) );
+            $provider->setName( strtolower($name_s) );
+            $provider->setLastName( strtolower($lastname_s) );
             $provider->setPhone($phone);
-            $provider->setEmail($email);
+            $provider->setEmail($email_s);
             $provider->setDni($dni);
             $provider->setBilling( strtolower($billing) );
             $provider->setCuilNumber($cuil_number);
-            $provider->setSocialReason( strtolower($social_reason) );
-            $provider->setAddress( strtolower($address) );         
+            $provider->setSocialReason( strtolower($social_reason_s) );
+            $provider->setAddress( strtolower($address_s) );         
             
             if ($this->providerDAO->add($provider)) {
                 return true;
@@ -150,17 +157,23 @@
 
                     if ($this->providerDAO->checkDni($providerTemp) == null) { 
 
+                        $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+                        $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
+                        $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
+                        $social_reason_s = filter_var($social_reason, FILTER_SANITIZE_STRING);
+                        $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+
                         $provider = new Provider();
                         $provider->setId($id);
-                        $provider->setName( strtolower($name) );
-                        $provider->setLastName( strtolower($lastName) );
+                        $provider->setName( strtolower($name_s) );
+                        $provider->setLastName( strtolower($lastName_s) );
                         $provider->setPhone($phone);
-                        $provider->setEmail($email);
+                        $provider->setEmail($email_s);
                         $provider->setDni($dni);
                         $provider->setBilling( strtolower($billing) );
                         $provider->setCuilNumber($cuil_number);
-                        $provider->setSocialReason( strtolower($social_reason) );
-                        $provider->setAddress( strtolower($address) );   
+                        $provider->setSocialReason( strtolower($social_reason_s) );
+                        $provider->setAddress( strtolower($address_s) );   
 
                         if ($this->providerDAO->update($provider)) {                                                
                             return $this->listProviderPath(null, PROVIDER_UPDATE);

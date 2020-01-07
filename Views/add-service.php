@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <input id="name" type="text" name="description" class="validate" required>
-                                <label for="name">Descripcion</label>
+                                <label for="name">Descripción</label>
                             </div>
                             <div class="input-field col s6">
                                 <input id="last_name" type="number" name="price" class="validate" required>
@@ -46,7 +46,7 @@
                         </div>                        
                         <div class="row">
                             <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Registrar
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>

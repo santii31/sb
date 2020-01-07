@@ -17,14 +17,20 @@
         }     
         
         private function add($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
+
+            $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+            $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
+            $position_s = filter_var($position, FILTER_SANITIZE_STRING);
+            $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+
             $staff = new Staff();            
-            $staff->setName( strtolower($name) );
-            $staff->setLastName( strtolower($lastName) );
-            $staff->setPosition($position);
+            $staff->setName( strtolower($name_s) );
+            $staff->setLastName( strtolower($lastName_s) );
+            $staff->setPosition( strtolower($position_s) );
             $staff->setDateStart($date_start);
             $staff->setDateEnd($date_end);
             $staff->setDni($dni);
-            $staff->setAddress( strtolower($address) );
+            $staff->setAddress( strtolower($address_s) );
             $staff->setPhone($phone);
             $staff->setShirtSize($shirt_size);
             $staff->setPantSize($pant_size);                        
@@ -153,15 +159,20 @@
 
 				if ($this->staffDAO->checkDni($staffTemp) == null) {                                                                             
                     
+                    $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+                    $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
+                    $position_s = filter_var($position, FILTER_SANITIZE_STRING);
+                    $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+
                     $staff = new Staff();
                     $staff->setId($id);  
-                    $staff->setName( strtolower($name) );
-                    $staff->setLastName( strtolower($lastName) );
-                    $staff->setPosition($position);
+                    $staff->setName( strtolower($name_s) );
+                    $staff->setLastName( strtolower($lastName_s) );
+                    $staff->setPosition( strtolower($position_s) );
                     $staff->setDateStart($date_start);
                     $staff->setDateEnd($date_end);
                     $staff->setDni($dni);
-                    $staff->setAddress( strtolower($address) );
+                    $staff->setAddress( strtolower($address_s) );
                     $staff->setPhone($phone);
                     $staff->setShirtSize($shirt_size);
                     $staff->setPantSize($pant_size);   
