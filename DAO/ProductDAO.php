@@ -21,7 +21,8 @@
 			try {					
 				$query = "CALL product_add(?, ?, ?)";
 				$parameters["name"] = $product->getName();
-				$parameters["price"] = $product->getprice();
+				$parameters["price"] = $product->getPrice();
+				$parameters["quantity"] = $product->getQuantity();
 				$parameters["FK_id_category"] = $product->getCategory()->getId();				
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -43,7 +44,8 @@
 					$productTemp = new Product();
                     $productTemp->setId($row["id"]);
                     $productTemp->setName($row["name"]);
-                    $productTemp->setPrice($row["price"]);
+					$productTemp->setPrice($row["price"]);
+					$productTemp->setQuantity($row["quantity"]);
                     $productTemp->setIsActive($row["is_active"]);
 
                     $category = new Category();
@@ -70,7 +72,8 @@
 					$productTemp = new Product();
                     $productTemp->setId($row["id"]);
                     $productTemp->setName($row["name"]);
-                    $productTemp->setPrice($row["price"]);
+					$productTemp->setPrice($row["price"]);
+					$productTemp->setQuantity($row["quantity"]);
                     $productTemp->setIsActive($row["is_active"]);
 
                     $category = new Category();
@@ -95,7 +98,8 @@
 					$productTemp = new Product();
                     $productTemp->setId($row["id"]);
                     $productTemp->setName($row["name"]);
-                    $productTemp->setPrice($row["price"]);
+					$productTemp->setPrice($row["price"]);
+					$productTemp->setQuantity($row["quantity"]);
                     $productTemp->setIsActive($row["is_active"]);
 
                     $category = new Category();
@@ -111,6 +115,19 @@
 				return false;
 			}
 		}		
+
+		public function checkName(Product $product) {
+			try {
+				$query = "CALL product_checkName(?, ?)";
+				$parameters["name"] = $product->getName();
+				$parameters["id"] = $product->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+			}
+		}
 				
 		public function enableById(Product $product) {
 			try {
@@ -136,7 +153,23 @@
 			catch (Exception $e) {
 				return false;
 			}
-		}		
+		}
+		
+
+		public function update(Product $product) {
+			try {								
+				$query = "CALL product_update(?, ?, ?, ?)";		
+				$parameters["name"] = $product->getName();
+				$parameters["price"] = $product->getPrice();
+				$parameters["quantity"] = $product->getQuantity();
+				$parameters["FK_id_category"] = $product->getCategory()->getId(); 	
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
 
 		/*
 		public function updateUser(User $user) {

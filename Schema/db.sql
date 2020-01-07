@@ -664,6 +664,16 @@ BEGIN
     UPDATE `product` SET `product`.`is_active` = true WHERE `product`.`id` = id;	
 END$$
 
+DROP procedure IF EXISTS `product_checkDni`;
+DELIMITER $$
+CREATE PROCEDURE provider_checkDni (
+                                        IN name VARCHAR(255),
+                                        IN id INT
+                                    )
+BEGIN
+    SELECT `product`.`id` FROM `product` WHERE `product`.`name` = dni AND `provider`.`id` != id;	
+END$$
+
 DROP procedure IF EXISTS `product_update`;
 DELIMITER $$
 CREATE PROCEDURE product_update (
