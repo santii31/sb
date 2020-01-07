@@ -39,7 +39,7 @@
             $this->date_disable = $date_disable;            
         }   
         
-        public function getDateDisable() {
+        public function getDisableBy() {
             return $this->disable_by;
         }
 
