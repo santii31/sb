@@ -3,7 +3,8 @@
     namespace DAO;
 
 	use \Exception as Exception;
-    use Models\AdditionalService as AdditionalService;	
+	use Models\Admin as Admin;	
+	use Models\AdditionalService as AdditionalService;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -96,7 +97,7 @@
 				
 		public function enableById(AdditionalService $additionalService, Admin $enableBy) {
 			try {
-				$query = "CALL service_enableById(?)";
+				$query = "CALL service_enableById(?, ?, ?)";
 				$parameters["id"] = $additionalService->getId();
 				$parameters["date_enable"] = date("Y-m-d");
 				$parameters["enable_by"] = $enableBy->getId();
@@ -111,7 +112,7 @@
 
 		public function disableById(AdditionalService $additionalService, Admin $disableBy) {
 			try {
-				$query = "CALL service_disableById(?)";
+				$query = "CALL service_disableById(?, ?, ?)";
 				$parameters["id"] = $additionalService->getId();
 				$parameters["date_disable"] = date("Y-m-d");
 				$parameters["disable_by"] = $disableBy->getId();
@@ -140,7 +141,7 @@
 
 		public function update(AdditionalService $additionalService, Admin $updateBy) {
 			try {								
-				$query = "CALL service_update(?, ?, ?)";		
+				$query = "CALL service_update(?, ?, ?, ?, ?)";		
 				$parameters["description"] = $additionalService->getDescription();
 				$parameters["total"] = $additionalService->getTotal();				
 				$parameters["id"] = $additionalService->getId();				

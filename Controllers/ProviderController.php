@@ -35,7 +35,9 @@
             $provider->setSocialReason( strtolower($social_reason_s) );
             $provider->setAddress( strtolower($address_s) );         
             
-            if ($this->providerDAO->add($provider)) {
+            $register_by = $this->adminController->isLogged();
+
+            if ($this->providerDAO->add($provider, $register_by)) {
                 return true;
             } else {
                 return false;
@@ -103,7 +105,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $provider = new Provider();
                 $provider->setId($id);
-                if ($this->providerDAO->enableById($provider)) {
+                if ($this->providerDAO->enableById($provider, $admin)) {
                     return $this->listProviderPath(null, PROVIDER_ENABLE);
                 } else {
                     return $this->listProviderPath(DB_ERROR, null);
@@ -117,7 +119,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $provider = new Provider();
                 $provider->setId($id);
-                if ($this->providerDAO->disableById($provider)) {
+                if ($this->providerDAO->disableById($provider, $admin)) {
                     return $this->listProviderPath(null, PROVIDER_DISABLE);
                 } else {
                     return $this->listProviderPath(DB_ERROR, null);
@@ -175,7 +177,9 @@
                         $provider->setSocialReason( strtolower($social_reason_s) );
                         $provider->setAddress( strtolower($address_s) );   
 
-                        if ($this->providerDAO->update($provider)) {                                                
+                        $update_by = $this->adminController->isLogged();
+
+                        if ($this->providerDAO->update($provider, $update_by)) {                                                
                             return $this->listProviderPath(null, PROVIDER_UPDATE);
                         } else {                        
                             return $this->listProviderPath(DB_ERROR, null);        

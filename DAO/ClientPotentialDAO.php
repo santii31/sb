@@ -3,34 +3,31 @@
     namespace DAO;
 
 	use \Exception as Exception;
-	use Models\Client as Client;
+	use Models\ClientPotential as ClientPotential;
 	use Models\Admin as Admin;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
-    class ClientDAO {
+    class ClientPotentialDAO {
 
 		private $connection;
-		private $clientList = array();
-		private $tableName = "client";		
+		private $clientPotentialList = array();
+		private $tableName = "client_potential";		
 
 		public function __construct() { }
 
 		
         public function add(Client $client, Admin $registerBy) {								
 			try {					
-				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();
-				$parameters["stay"] = $client->getStay();
-				$parameters["address"] = $client->getAddress();
-				$parameters["city"] = $client->getCity();
-				$parameters["cp"] = $client->getCp();
 				$parameters["email"] = $client->getEmail();
 				$parameters["tel"] = $client->getPhone();
-				$parameters["family_group"] = $client->getFamilyGroup();
-				$parameters["stay_address"] = $client->getStayAddress();             
-				$parameters["tel_stay"] = $client->getPhoneStay();
+                $parameters["city"] = $client->getCity();
+				$parameters["address"] = $client->getAddress();
+				$parameters["stay_address"] = $client->getStayAddress();                
+				$parameters["is_potential"] = $client->getIsPotential();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();
 				$this->connection = Connection::getInstance();
@@ -55,22 +52,45 @@
 					$userTemp->setId($row["id"]);
 					$userTemp->setName($row["name"]);
 					$userTemp->setLastName($row["lastname"]);
-					$userTemp->setStay($row["stay"]);
-					$userTemp->setAddress($row["address"]);
-					$userTemp->setCity($row["city"]);				
-					$userTemp->setCp($row["cp"]);
 					$userTemp->setEmail($row["email"]);
 					$userTemp->setPhone($row["tel"]);
-					$userTemp->setFamilyGroup($row["family_group"]);
+					$userTemp->setCity($row["city"]);				
+					$userTemp->setAddress($row["address"]);
 					$userTemp->setStayAddress($row["stay_address"]);
-					$userTemp->setPhoneStay($row["tel_stay"]);
-                    $userTemp->setIsActive($row["is_active"]);                    
+                    $userTemp->setIsActive($row["is_active"]);
+                    $userTemp->setIsPotential($row["is_potential"]);
 				}
 				return $userTemp;
 			} catch (Exception $e) {
 				return false;
 			}
-		}		
+		}
+
+		public function getByIdPotential(Client $client) {
+			try {				
+				$userTemp = null;
+				$query = "CALL client_getByIdPotential(?)";
+				$parameters["id"] = $client->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$userTemp = new Client();
+					$userTemp->setId($row["id"]);
+					$userTemp->setName($row["name"]);
+					$userTemp->setLastName($row["lastname"]);
+					$userTemp->setEmail($row["email"]);
+					$userTemp->setPhone($row["tel"]);
+					$userTemp->setCity($row["city"]);				
+					$userTemp->setAddress($row["address"]);
+					$userTemp->setStayAddress($row["stay_address"]);
+                    $userTemp->setIsActive($row["is_active"]);
+                    $userTemp->setIsPotential($row["is_potential"]);
+				}
+				return $userTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
 
         public function getByEmail(Client $client) {
 			try {				
@@ -84,16 +104,39 @@
 					$userTemp->setId($row["id"]);
 					$userTemp->setName($row["name"]);
 					$userTemp->setLastName($row["lastname"]);
-					$userTemp->setStay($row["stay"]);
-					$userTemp->setAddress($row["address"]);
-					$userTemp->setCity($row["city"]);				
-					$userTemp->setCp($row["cp"]);
 					$userTemp->setEmail($row["email"]);
 					$userTemp->setPhone($row["tel"]);
-					$userTemp->setFamilyGroup($row["family_group"]);
+					$userTemp->setCity($row["city"]);				
+					$userTemp->setAddress($row["address"]);
 					$userTemp->setStayAddress($row["stay_address"]);
-					$userTemp->setPhoneStay($row["tel_stay"]);
                     $userTemp->setIsActive($row["is_active"]);
+                    $userTemp->setIsPotential($row["is_potential"]);
+				}
+				return $userTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function getByEmailPotential(Client $client) {
+			try {				
+				$userTemp = null;
+				$query = "CALL client_getByEmailPotential(?)";
+				$parameters["email"] = $client->getEmail();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$userTemp = new Client();
+					$userTemp->setId($row["id"]);
+					$userTemp->setName($row["name"]);
+					$userTemp->setLastName($row["lastname"]);
+					$userTemp->setEmail($row["email"]);
+					$userTemp->setPhone($row["tel"]);
+					$userTemp->setCity($row["city"]);				
+					$userTemp->setAddress($row["address"]);
+					$userTemp->setStayAddress($row["stay_address"]);
+                    $userTemp->setIsActive($row["is_active"]);
+                    $userTemp->setIsPotential($row["is_potential"]);
 				}
 				return $userTemp;
 			} catch (Exception $e) {
@@ -111,16 +154,38 @@
 					$client->setId($row["id"]);
 					$client->setName($row["name"]);
 					$client->setLastName($row["lastname"]);
-					$client->setStay($row["stay"]);
-					$client->setAddress($row["address"]);
-					$client->setCity($row["city"]);				
-					$client->setCp($row["cp"]);
 					$client->setEmail($row["email"]);
 					$client->setPhone($row["tel"]);
-					$client->setFamilyGroup($row["family_group"]);
+					$client->setCity($row["city"]);				
+					$client->setAddress($row["address"]);
 					$client->setStayAddress($row["stay_address"]);
-					$client->setPhoneStay($row["tel_stay"]);
                     $client->setIsActive($row["is_active"]);
+                    $client->setIsPotential($row["is_potential"]);
+					array_push($this->clientList, $client);
+				}
+				return $this->clientList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+		
+		public function getAllPotentials() {
+			try {
+				$query = "CALL client_getAllPotentials()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$client = new Client();
+					$client->setId($row["id"]);
+					$client->setName($row["name"]);
+					$client->setLastName($row["lastname"]);
+					$client->setEmail($row["email"]);
+					$client->setPhone($row["tel"]);
+					$client->setCity($row["city"]);				
+					$client->setAddress($row["address"]);
+					$client->setStayAddress($row["stay_address"]);
+                    $client->setIsActive($row["is_active"]);
+                    $client->setIsPotential($row["is_potential"]);
 					array_push($this->clientList, $client);
 				}
 				return $this->clientList;	
@@ -174,21 +239,17 @@
 
 		public function update(Client $client, Admin $update_by) {
 			try {								
-				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-				
+				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();
-				$parameters["stay"] = $client->getStay();
-				$parameters["address"] = $client->getAddress();
-				$parameters["city"] = $client->getCity();
-				$parameters["cp"] = $client->getCp();
 				$parameters["email"] = $client->getEmail();
 				$parameters["tel"] = $client->getPhone();
-				$parameters["family_group"] = $client->getFamilyGroup();
-				$parameters["stay_address"] = $client->getStayAddress();             
-				$parameters["tel_stay"] = $client->getPhoneStay();
+                $parameters["city"] = $client->getCity();
+				$parameters["address"] = $client->getAddress();
+				$parameters["stay_address"] = $client->getStayAddress();                
+				$parameters["is_potential"] = $client->getIsPotential(); 
 				$parameters["date_update"] = date("Y-m-d");
-				$parameters["update_by"] = $update_by->getId();	
+				$parameters["update_by"] = $updateBy->getId();	
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

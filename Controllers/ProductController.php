@@ -29,8 +29,10 @@
             $product->setPrice($price);
             $product->setQuantity($quantity_s);
             $product->setCategory($category);            
+
+            $register_by = $this->adminController->isLogged();
             			
-            if ($this->productDAO->add($product)) {
+            if ($this->productDAO->add($product, $register_by)) {
                 return true;
             } else {
                 return false;
@@ -97,7 +99,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $product = new Product();
                 $product->setId($id);
-                if ($this->productDAO->enableById($product)) {
+                if ($this->productDAO->enableById($product, $admin)) {
                     return $this->listProductPath(null, PRODUCT_ENABLE);
                 } else {
                     return $this->listProductPath(DB_ERROR, null);
@@ -111,7 +113,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $product = new Product();
                 $product->setId($id);
-                if ($this->productDAO->disableById($product)) {
+                if ($this->productDAO->disableById($product, $admin)) {
                     return $this->listProductPath(null, PRODUCT_DISABLE);
                 } else {
                     return $this->listProductPath(DB_ERROR, null);
@@ -155,8 +157,10 @@
                     $product->setPrice($price);
                     $product->setQuantity($quantity_s);
                     $product->setCategory($category);
+
+                    $update_by = $this->adminController->isLogged();
                     
-                    if ($this->productDAO->update($product)) {                                                
+                    if ($this->productDAO->update($product, $update_by)) {                                                
                         return $this->listProductPath(null, PRODUCT_UPDATE);
                     } else {                        
                         return $this->listProductPath(DB_ERROR, null);        

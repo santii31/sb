@@ -162,7 +162,7 @@
 
 		public function update(Provider $provider, Admin $updateBy) {
 			try {								
-				$query = "CALL admin_update(?, ?, ?, ?, ?, ?, ?, ?, ?)";		
+				$query = "CALL admin_update(?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $admin->getName();
 				$parameters["lastname"] = $admin->getLastName();
 				$parameters["dni"] = $admin->getDni();

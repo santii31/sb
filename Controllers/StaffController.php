@@ -25,7 +25,7 @@
 
             $staff = new Staff();            
             $staff->setName( strtolower($name_s) );
-            $staff->setLastName( strtolower($lastName_s) );
+            $staff->setLastName( strtolower($lastname_s) );
             $staff->setPosition( strtolower($position_s) );
             $staff->setDateStart($date_start);
             $staff->setDateEnd($date_end);
@@ -35,7 +35,9 @@
             $staff->setShirtSize($shirt_size);
             $staff->setPantSize($pant_size);                        
             
-            if ($this->staffDAO->add($staff)) {
+            $register_by = $this->adminController->isLogged();
+
+            if ($this->staffDAO->add($staff, $register_by)) {
                 return true;
             } else {
                 return false;
@@ -109,7 +111,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $staff = new Staff();
                 $staff->setId($id);
-                if ($this->staffDAO->enableById($staff)) {
+                if ($this->staffDAO->enableById($staff, $admin)) {
                     return $this->listStaffPath(null, STAFF_ENABLE);
                 } else {
                     return $this->listStaffPath(DB_ERROR, null);
@@ -123,7 +125,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $staff = new Staff();
                 $staff->setId($id);
-                if ($this->staffDAO->disableById($staff)) {
+                if ($this->staffDAO->disableById($staff, $admin)) {
                     return $this->listStaffPath(null, STAFF_DISABLE);
                 } else {
                     return $this->listStaffPath(DB_ERROR, null);
@@ -167,7 +169,7 @@
                     $staff = new Staff();
                     $staff->setId($id);  
                     $staff->setName( strtolower($name_s) );
-                    $staff->setLastName( strtolower($lastName_s) );
+                    $staff->setLastName( strtolower($lastname_s) );
                     $staff->setPosition( strtolower($position_s) );
                     $staff->setDateStart($date_start);
                     $staff->setDateEnd($date_end);
@@ -177,7 +179,9 @@
                     $staff->setShirtSize($shirt_size);
                     $staff->setPantSize($pant_size);   
 
-                    if ($this->staffDAO->update($staff)) {                                                
+                    $update_by = $this->adminController->isLogged();
+
+                    if ($this->staffDAO->update($staff, $update_by)) {                                                
                         return $this->listStaffPath(null, STAFF_UPDATE);
                     } else {                        
                         return $this->listStaffPath(DB_ERROR, null);        

@@ -88,9 +88,8 @@
 					$parking->setNumber($row["parking_number"]);
 					$parking->setPrice($row["parking_price"]);
 					$parking->setIsActive($row["parking_isActive"]);
+					
 					$reservationTemp->setParking($parking);
-
-
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
@@ -145,6 +144,7 @@
 					$parking->setNumber($row["parking_number"]);
 					$parking->setPrice($row["parking_price"]);
 					$parking->setIsActive($row["parking_isActive"]);
+					
 					$reservation->setParking($parking);
                     
 					array_push($this->reservationList, $reservation);
@@ -185,34 +185,10 @@
 			}
 		}		
 
-		/*
-		public function updateUser(User $user) {
-			try {								
-				$query = "UPDATE " . $this->tableName . " AS user 
-														  INNER JOIN profile_users AS p_user ON user.FK_dni =  p_user.dni
-														 SET
-															 user.mail = :mail,
-															 user.password = :password,
-															 p_user.dni = :dni,
-															 p_user.first_name = :firstname,
-															 p_user.last_name = :lastname
- 														 WHERE 
-															 p_user.dni = :dni";					
-				
-				$parameters["mail"] = $user->getMail();
-				$parameters["password"] = $user->getPassword();
-				$parameters["dni"] = $user->getDni();
-				$parameters["firstname"] = $user->getFirstName();
-				$parameters["lastname"] = $user->getLastName();				
+		// hacer
+		public function update(Reservation $reservation, Admin $updateBy) {
 
-				$this->connection = Connection::GetInstance();
-				$this->connection->ExecuteNonQuery($query, $parameters);								
-				return true;
-			} catch (Exception $e) {
-				return false;
-			}
 		}
-		*/
 
     }
 

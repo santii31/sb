@@ -24,7 +24,9 @@
             $additionalService->setDescription( strtolower($description_s) );
             $additionalService->setTotal($total);            
 
-            if ($this->additionalServiceDAO->add($additionalService)) {
+            $register_by = $this->adminController->isLogged();
+
+            if ($this->additionalServiceDAO->add($additionalService, $register_by)) {
                 return true;
             } else {
                 return false;
@@ -85,7 +87,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $service = new AdditionalService();
                 $service->setId($id);
-                if ($this->additionalServiceDAO->enableById($service)) {
+                if ($this->additionalServiceDAO->enableById($service, $admin)) {
                     return $this->listServicePath(null, SERVICE_ENABLE);
                 } else {
                     return $this->listServicePath(DB_ERROR, null);
@@ -99,7 +101,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 $service = new AdditionalService();
                 $service->setId($id);
-                if ($this->additionalServiceDAO->disableById($service)) {
+                if ($this->additionalServiceDAO->disableById($service, $admin)) {
                     return $this->listServicePath(null, SERVICE_DISABLE);
                 } else {
                     return $this->listServicePath(DB_ERROR, null);
@@ -141,7 +143,9 @@
                     $additionalService->setDescription( strtolower($description_s) );
                     $additionalService->setTotal($total); 
 
-                    if ($this->additionalServiceDAO->update($additionalService)) {                                                
+                    $update_by = $this->adminController->isLogged();
+
+                    if ($this->additionalServiceDAO->update($additionalService, $update_by)) {                                                
                         return $this->listServicePath(null, SERVICE_UPDATE);
                     } else {                                                
                         return $this->listServicePath(DB_ERROR, null);        

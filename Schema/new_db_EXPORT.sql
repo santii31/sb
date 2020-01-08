@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-01-2020 a las 22:40:38
+-- Tiempo de generación: 08-01-2020 a las 17:48:51
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -104,25 +104,24 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `category_getByName` (IN `Name` VARC
 	SELECT * FROM `category` WHERE `category`.`name` = name;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `email` VARCHAR(255), IN `tel` INT, IN `city` VARCHAR(255), IN `address` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `is_potential` BOOLEAN, IN `date_register` DATE, IN `register_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `stay` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
 	INSERT INTO client (
 			client.name,
 			client.lastname,
+            client.stay,
+            client.address,
+            client.city,
+            client.cp,
 			client.email,
             client.tel,
-            client.city,
-            client.address,
+            client.family_group,
             client.stay_address,
-            client.is_potential,
+            client.tel_stay,            
             client.date_register,			
             client.register_by
 	)
     VALUES
-        (name, lastname, email, tel, city, address, stay_address, is_potential, date_register, register_by);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_checkEmail` (IN `dni` INT, IN `email` VARCHAR(255))  BEGIN
-    SELECT `client`.`id` FROM `client` WHERE `client`.`email` = email AND `client`.`id` != id;	
+        (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_disableById` (IN `id` INT, IN `date_disable` DATE, IN `disable_by` INT)  BEGIN
@@ -144,31 +143,101 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_enableById` (IN `id` INT, IN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getAll` ()  BEGIN
-	SELECT * FROM `client`
-    WHERE `client`.`is_potential` = FALSE
-    ORDER BY name ASC;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getAllPotentials` ()  BEGIN
-	SELECT * FROM `client` 
-    WHERE `client`.`is_potential` = TRUE
-    ORDER BY name ASC;
+	SELECT * FROM `client` ORDER BY name ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getByEmail` (IN `email` VARCHAR(255))  BEGIN
-	SELECT * FROM `client` WHERE `client`.`email` = email AND `client`.`is_potential` = FALSE;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getByEmailPotential` (IN `email` VARCHAR(255))  BEGIN
-	SELECT * FROM `client` WHERE `client`.`email` = email AND `client`.`is_potential` = TRUE;
+	SELECT * FROM `client` WHERE `client`.`email` = email;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getById` (IN `id` INT)  BEGIN
-	SELECT * FROM `client` WHERE `client`.`id` = id AND `client`.`is_potential` = FALSE;
+	SELECT * FROM `client` WHERE `client`.`id` = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getByIdPotential` (IN `id` INT)  BEGIN
-	SELECT * FROM `client` WHERE `client`.`id` = id AND `client`.`is_potential` = TRUE;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `email` VARCHAR(255), IN `tel` INT, IN `num_tent` INT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
+	INSERT INTO client_potential (
+			client_potential.name,
+			client_potential.lastname,
+            client_potential.address,                        
+            client_potential.city,
+			client_potential.email,
+            client_potential.tel,
+            client_potential.num_tent,
+            client_potential.date_register,			
+            client_potential.register_by
+	)
+    VALUES
+        (name, lastname, email, address, city, email, tel, num_tent, date_register, register_by);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_checkEmail` (IN `id` INT, IN `email` VARCHAR(255))  BEGIN
+    SELECT `client_potential`.`id` FROM `client_potential` WHERE `client_potential`.`email` = email AND `client_potential`.`id` != id;	
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_disableById` (IN `id` INT, IN `date_disable` DATE, IN `disable_by` INT)  BEGIN
+	UPDATE `client_potential` 
+    SET 
+        `client_potential`.`is_active` = false, 
+        `client_potential`.`date_disable` = date_disable,
+        `client_potential`.`disable_by` = disable_by
+    WHERE `client_potential`.`id` = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_enableById` (IN `id` INT, IN `date_enable` DATE, IN `enable_by` INT)  BEGIN
+    UPDATE `client_potential` 
+    SET 
+        `client_potential`.`is_active` = true,
+        `client_potential`.`date_enable` = date_enable,
+        `client_potential`.`enable_by` = enable_by 
+    WHERE `client_potential`.`id` = id;	
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getAll` ()  BEGIN
+	SELECT * FROM `client_potential` ORDER BY name ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getByEmail` (IN `email` VARCHAR(255))  BEGIN
+	SELECT * FROM `client_potential` WHERE `client_potential`.`email` = email;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getById` (IN `id` INT)  BEGIN
+	SELECT * FROM `client_potential` WHERE `client_potential`.`id` = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `email` VARCHAR(255), IN `tel` INT, IN `num_tent` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+    UPDATE `client_potential` 
+    SET 
+        `client_potential`.`name` = name, 
+        `client_potential`.`lastname` = lastname,
+        `client_potential`.`address` = address,
+        `client_potential`.`city` = city,
+        `client_potential`.`email` = email,
+        `client_potential`.`tel` = tel,        
+        `client_potential`.`num_tent` = num_tent,     
+        `client_potential`.`date_update` = date_update,
+        `client_potential`.`update_by` = update_by    
+    WHERE 
+        `client_potential`.`id` = id;	
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `stay` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+    UPDATE `client` 
+    SET 
+        `client`.`name` = name, 
+        `client`.`lastname` = lastname,
+        `client`.`stay` = stay,
+        `client`.`address` = address,
+        `client`.`city` = city,
+        `client`.`cp` = cp,
+        `client`.`email` = email,
+        `client`.`tel` = tel,
+        `client`.`family_group` = family_group,
+        `client`.`stay_address` = stay_address,
+        `client`.`tel_stay` = tel_stay,
+        `client`.`date_update` = date_update,
+        `client`.`update_by` = update_by    
+    WHERE 
+        `client`.`id` = id;	
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `locker_getAll` ()  BEGIN
@@ -966,6 +1035,13 @@ CREATE TABLE `additional_service` (
   `update_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Volcado de datos para la tabla `additional_service`
+--
+
+INSERT INTO `additional_service` (`id`, `description`, `total`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'cofre', 1000, 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -995,7 +1071,9 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `lastname`, `dni`, `email`, `password`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'Admin', 'Admin', 404040, 'admin@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1, '2020-01-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 'admin', 'admin', 404040, 'admin@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1, '2020-01-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'Test', 'Test', 505050, 'test@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 0, '2020-01-07', 1, '2020-01-08', 1, NULL, NULL, NULL, NULL),
+(3, 'pepe', 'admin', 707070, 'pepeadmin@admin.com', '$2y$10$t5m0VNDRsrv96z3k386mHuoo/YdnRldp.DN409hnRjEiiBRKTGDly', 0, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1031,12 +1109,41 @@ CREATE TABLE `client` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `lastname` varchar(255) COLLATE utf8_bin NOT NULL,
+  `stay` varchar(255) COLLATE utf8_bin NOT NULL,
+  `address` varchar(255) COLLATE utf8_bin NOT NULL,
+  `city` varchar(255) COLLATE utf8_bin NOT NULL,
+  `cp` int(11) NOT NULL,
   `email` varchar(255) COLLATE utf8_bin NOT NULL,
   `tel` int(11) NOT NULL,
-  `city` varchar(255) COLLATE utf8_bin NOT NULL,
-  `address` varchar(255) COLLATE utf8_bin NOT NULL,
+  `family_group` varchar(255) COLLATE utf8_bin NOT NULL,
   `stay_address` varchar(255) COLLATE utf8_bin NOT NULL,
-  `is_potential` tinyint(1) NOT NULL DEFAULT 0,
+  `tel_stay` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `date_register` date NOT NULL,
+  `register_by` int(11) NOT NULL,
+  `date_disable` date DEFAULT NULL,
+  `disable_by` int(11) DEFAULT NULL,
+  `date_enable` date DEFAULT NULL,
+  `enable_by` int(11) DEFAULT NULL,
+  `date_update` date DEFAULT NULL,
+  `update_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `client_potential`
+--
+
+CREATE TABLE `client_potential` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `lastname` varchar(255) COLLATE utf8_bin NOT NULL,
+  `address` varchar(255) COLLATE utf8_bin NOT NULL,
+  `city` varchar(255) COLLATE utf8_bin NOT NULL,
+  `email` varchar(255) COLLATE utf8_bin NOT NULL,
+  `tel` int(11) NOT NULL,
+  `num_tent` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `date_register` date NOT NULL,
   `register_by` int(11) NOT NULL,
@@ -1137,6 +1244,13 @@ CREATE TABLE `provider` (
   `update_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Volcado de datos para la tabla `provider`
+--
+
+INSERT INTO `provider` (`id`, `name`, `lastname`, `tel`, `email`, `dni`, `address`, `cuil`, `social_reason`, `type_billing`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'prov1', 'prov1', 4500000, 'prov1@mail.com', 101010, 'calle 1 mod', 123, 'x', 'a', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1218,6 +1332,13 @@ CREATE TABLE `staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
+-- Volcado de datos para la tabla `staff`
+--
+
+INSERT INTO `staff` (`id`, `name`, `lastname`, `position`, `date_start`, `date_end`, `dni`, `address`, `tel`, `shirt_size`, `pant_size`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'per1', 'per', 'cargo 1', '2020-01-08', '2020-01-30', 505052, 'calle 100 mod', 4230000, 5, 5, 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -1266,6 +1387,17 @@ ALTER TABLE `client`
   ADD KEY `FK_client_disable_by` (`disable_by`),
   ADD KEY `FK_client_enable_by` (`enable_by`),
   ADD KEY `FK_client_update_by` (`update_by`);
+
+--
+-- Indices de la tabla `client_potential`
+--
+ALTER TABLE `client_potential`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `FK_client_potential_register_by` (`register_by`),
+  ADD KEY `FK_client_potential_disable_by` (`disable_by`),
+  ADD KEY `FK_client_potential_enable_by` (`enable_by`),
+  ADD KEY `FK_client_potential_update_by` (`update_by`);
 
 --
 -- Indices de la tabla `locker`
@@ -1358,13 +1490,13 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT de la tabla `additional_service`
 --
 ALTER TABLE `additional_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `beach_tent`
@@ -1382,6 +1514,12 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT de la tabla `client`
 --
 ALTER TABLE `client`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `client_potential`
+--
+ALTER TABLE `client_potential`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -1412,7 +1550,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT de la tabla `provider`
 --
 ALTER TABLE `provider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `reservation`
@@ -1424,7 +1562,7 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT de la tabla `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -1456,6 +1594,15 @@ ALTER TABLE `client`
   ADD CONSTRAINT `FK_client_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_client_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_client_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
+
+--
+-- Filtros para la tabla `client_potential`
+--
+ALTER TABLE `client_potential`
+  ADD CONSTRAINT `FK_client_potential_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
+  ADD CONSTRAINT `FK_client_potential_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
+  ADD CONSTRAINT `FK_client_potential_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
+  ADD CONSTRAINT `FK_client_potential_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
 -- Filtros para la tabla `locker`

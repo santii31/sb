@@ -2,7 +2,7 @@
 
     namespace DAO;
 
-	use \Exception as Exception;
+	use \Exception as Exception;	
     use Models\BeachTent as BeachTent;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	

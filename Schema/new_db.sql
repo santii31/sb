@@ -149,20 +149,21 @@ END$$
 
 
 
-
-
 ----------------------------- CLIENT -----------------------------
 
 CREATE TABLE client (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
-    `lastname` VARCHAR(255) NOT NULL,
+    `lastname` VARCHAR(255) NOT NULL,    
+    `stay` VARCHAR(255) NOT NULL, --estadia
+    `address` VARCHAR(255) NOT NULL,
+    `city` VARCHAR(255) NOT NULL,
+    `cp` INT NOT NULL,  -- cp
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `tel` INT NOT NULL,
-    `city` VARCHAR(255) NOT NULL,
-    `address` VARCHAR(255) NOT NULL,
-    `stay_address` VARCHAR(255) NOT NULL,
-    `is_potential` BOOLEAN NOT NULL DEFAULT FALSE,    
+    `family_group` VARCHAR(255) NOT NULL,   -- grupo familiar
+    `stay_address` VARCHAR(255) NOT NULL,      
+    `tel_stay` INT NOT NULL,    -- tel estadia
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
     
     `date_register` DATE NOT NULL,
@@ -185,12 +186,15 @@ DELIMITER $$
 CREATE PROCEDURE client_add (
                                 IN name VARCHAR(255),
                                 IN lastname VARCHAR(255),
+                                IN stay VARCHAR(255),
+                                IN address VARCHAR(255),
+                                IN city VARCHAR(255),
+                                IN cp INT,
                                 IN email VARCHAR(255),
                                 IN tel INT,
-                                IN city VARCHAR(255),
-                                IN address VARCHAR(255),
+                                IN family_group VARCHAR(255),
                                 IN stay_address VARCHAR(255),
-                                IN is_potential BOOLEAN,
+                                IN tel_stay INT,                                
                                 IN date_register DATE,
                                 IN register_by INT
                             )
@@ -198,17 +202,20 @@ BEGIN
 	INSERT INTO client (
 			client.name,
 			client.lastname,
+            client.stay,
+            client.address,
+            client.city,
+            client.cp,
 			client.email,
             client.tel,
-            client.city,
-            client.address,
+            client.family_group,
             client.stay_address,
-            client.is_potential,
+            client.tel_stay,            
             client.date_register,			
             client.register_by
 	)
     VALUES
-        (name, lastname, email, tel, city, address, stay_address, is_potential, date_register, register_by);
+        (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
 END$$
 
 
@@ -216,15 +223,7 @@ DROP procedure IF EXISTS `client_getById`;
 DELIMITER $$
 CREATE PROCEDURE client_getById (IN id INT)
 BEGIN
-	SELECT * FROM `client` WHERE `client`.`id` = id AND `client`.`is_potential` = FALSE;
-END$$
-
-
-DROP procedure IF EXISTS `client_getByIdPotential`;
-DELIMITER $$
-CREATE PROCEDURE client_getByIdPotential (IN id INT)
-BEGIN
-	SELECT * FROM `client` WHERE `client`.`id` = id AND `client`.`is_potential` = TRUE;
+	SELECT * FROM `client` WHERE `client`.`id` = id;
 END$$
 
 
@@ -232,15 +231,7 @@ DROP procedure IF EXISTS `client_getByEmail`;
 DELIMITER $$
 CREATE PROCEDURE client_getByEmail (IN email VARCHAR(255))
 BEGIN
-	SELECT * FROM `client` WHERE `client`.`email` = email AND `client`.`is_potential` = FALSE;
-END$$
-
-
-DROP procedure IF EXISTS `client_getByEmailPotential`;
-DELIMITER $$
-CREATE PROCEDURE client_getByEmailPotential (IN email VARCHAR(255))
-BEGIN
-	SELECT * FROM `client` WHERE `client`.`email` = email AND `client`.`is_potential` = TRUE;
+	SELECT * FROM `client` WHERE `client`.`email` = email;
 END$$
 
 
@@ -248,19 +239,7 @@ DROP procedure IF EXISTS `client_getAll`;
 DELIMITER $$
 CREATE PROCEDURE client_getAll ()
 BEGIN
-	SELECT * FROM `client`
-    WHERE `client`.`is_potential` = FALSE
-    ORDER BY name ASC;
-END$$
-
-
-DROP procedure IF EXISTS `client_getAllPotentials`;
-DELIMITER $$
-CREATE PROCEDURE client_getAllPotentials ()
-BEGIN
-	SELECT * FROM `client` 
-    WHERE `client`.`is_potential` = TRUE
-    ORDER BY name ASC;
+	SELECT * FROM `client` ORDER BY name ASC;
 END$$
 
 
@@ -314,12 +293,16 @@ DELIMITER $$
 CREATE PROCEDURE client_update (
                                     IN name VARCHAR(255),
                                     IN lastname VARCHAR(255),
+                                    IN stay VARCHAR(255),
+                                    IN address VARCHAR(255),
+                                    IN city VARCHAR(255),
+                                    IN cp INT,
                                     IN email VARCHAR(255),
                                     IN tel INT,
-                                    IN city VARCHAR(255),
-                                    IN address VARCHAR(255),
+                                    IN family_group VARCHAR(255),
                                     IN stay_address VARCHAR(255),
-                                    IN is_potential BOOLEAN,
+                                    IN tel_stay INT,  
+                                    IN id INT,                              
                                     IN date_update DATE,
                                     IN update_by INT
                                 )
@@ -328,16 +311,179 @@ BEGIN
     SET 
         `client`.`name` = name, 
         `client`.`lastname` = lastname,
+        `client`.`stay` = stay,
+        `client`.`address` = address,
+        `client`.`city` = city,
+        `client`.`cp` = cp,
         `client`.`email` = email,
         `client`.`tel` = tel,
-        `client`.`city` = city,
-        `client`.`address` = address,
+        `client`.`family_group` = family_group,
         `client`.`stay_address` = stay_address,
+        `client`.`tel_stay` = tel_stay,
         `client`.`date_update` = date_update,
         `client`.`update_by` = update_by    
     WHERE 
-        `admin`.`id` = id;	
+        `client`.`id` = id;	
 END$$
+
+
+
+----------------------------- CLIENT POTENTIAL -----------------------------
+
+CREATE TABLE client_potential (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(255) NOT NULL,
+    `lastname` VARCHAR(255) NOT NULL,
+    `address` VARCHAR(255) NOT NULL,
+    `city` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `tel` INT NOT NULL,    
+    `num_tent` INT NOT NULL,
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
+    
+    `date_register` DATE NOT NULL,
+    `register_by` INT NOT NULL, 
+    `date_disable` DATE DEFAULT NULL,    
+    `disable_by` INT DEFAULT NULL,
+    `date_enable` DATE DEFAULT NULL,
+    `enable_by` INT DEFAULT NULL,
+    `date_update` DATE DEFAULT NULL, 
+    `update_by` INT DEFAULT NULL,
+    CONSTRAINT `FK_client_potential_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_client_potential_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_client_potential_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_client_potential_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`)
+);
+
+
+DROP procedure IF EXISTS `client_potential_add`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_add (
+                                        IN name VARCHAR(255),
+                                        IN lastname VARCHAR(255),
+                                        IN address VARCHAR(255),
+                                        IN city VARCHAR(255),
+                                        IN email VARCHAR(255),
+                                        IN tel INT,  
+                                        IN num_tent INT,                                                          
+                                        IN date_register DATE,
+                                        IN register_by INT
+                                    )
+BEGIN
+	INSERT INTO client_potential (
+			client_potential.name,
+			client_potential.lastname,
+            client_potential.address,                        
+            client_potential.city,
+			client_potential.email,
+            client_potential.tel,
+            client_potential.num_tent,
+            client_potential.date_register,			
+            client_potential.register_by
+	)
+    VALUES
+        (name, lastname, email, address, city, email, tel, num_tent, date_register, register_by);
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getById`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getById (IN id INT)
+BEGIN
+	SELECT * FROM `client_potential` WHERE `client_potential`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getByEmail`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getByEmail (IN email VARCHAR(255))
+BEGIN
+	SELECT * FROM `client_potential` WHERE `client_potential`.`email` = email;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getAll`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getAll ()
+BEGIN
+	SELECT * FROM `client_potential` ORDER BY name ASC;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_disableById`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_disableById (
+                                                IN id INT,
+                                                IN date_disable DATE,
+                                                IN disable_by INT
+                                            )
+BEGIN
+	UPDATE `client_potential` 
+    SET 
+        `client_potential`.`is_active` = false, 
+        `client_potential`.`date_disable` = date_disable,
+        `client_potential`.`disable_by` = disable_by
+    WHERE `client_potential`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_enableById`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_enableById (
+                                                IN id INT,
+                                                IN date_enable DATE,
+                                                IN enable_by INT
+                                            )
+BEGIN
+    UPDATE `client_potential` 
+    SET 
+        `client_potential`.`is_active` = true,
+        `client_potential`.`date_enable` = date_enable,
+        `client_potential`.`enable_by` = enable_by 
+    WHERE `client_potential`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `client_checkEmail`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_checkEmail (
+                                                IN id INT,
+                                                IN email VARCHAR(255)
+                                            )
+BEGIN
+    SELECT `client_potential`.`id` FROM `client_potential` WHERE `client_potential`.`email` = email AND `client_potential`.`id` != id;	
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_update`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_update (
+                                            IN name VARCHAR(255),
+                                            IN lastname VARCHAR(255),
+                                            IN address VARCHAR(255),
+                                            IN city VARCHAR(255),
+                                            IN email VARCHAR(255),
+                                            IN tel INT, 
+                                            IN num_tent INT,                                                           
+                                            IN date_update DATE,
+                                            IN update_by INT
+                                        )
+BEGIN
+    UPDATE `client_potential` 
+    SET 
+        `client_potential`.`name` = name, 
+        `client_potential`.`lastname` = lastname,
+        `client_potential`.`address` = address,
+        `client_potential`.`city` = city,
+        `client_potential`.`email` = email,
+        `client_potential`.`tel` = tel,        
+        `client_potential`.`num_tent` = num_tent,     
+        `client_potential`.`date_update` = date_update,
+        `client_potential`.`update_by` = update_by    
+    WHERE 
+        `client_potential`.`id` = id;	
+END$$
+
 
 
 ----------------------------- BEACH-TENT -----------------------------

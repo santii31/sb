@@ -4,20 +4,16 @@
     
     use Models\Basic as Basic;
 
-    class Client extends Basic {
+    class ClientPotential extends Basic {
 
         private $id;
         private $name;
-        private $lastname;
-        private $stay;
+        private $lastname;        
         private $address;        
-        private $city;
-        private $cp;
+        private $city;        
         private $email;
         private $phone;
-        private $family_group;
-        private $stayAddress; 
-        private $phone_stay;
+        private $num_tent;
         private $is_active;
 
         public function getId() {
@@ -45,14 +41,6 @@
             $this->lastname = $lastname;
             return $this;
         }
-
-        public function getStay() {
-            return $this->stay;
-        }
-
-        public function setStay($stay) {
-            $this->stay = $stay;            
-        }
         
         public function getAddress() {
             return $this->address;
@@ -69,15 +57,6 @@
 
         public function setCity($city) {
             $this->city = $city;
-            return $this;
-        }
-
-        public function getCp() {
-            return $this->cp;
-        }
-
-        public function setCp($cp) {
-            $this->cp = $cp;
             return $this;
         }
 
@@ -99,31 +78,12 @@
             return $this;
         }
 
-        public function getFamilyGroup() {
-            return $this->family_group;
+        public function getNumTent() {
+            return $this->num_tent;
         }
 
-        public function setFamilyGroup($family_group) {
-            $this->family_group = $family_group;
-            return $this;
-        }
-
-        public function getStayAddress() {
-            return $this->stayAddress;
-        }
-
-        public function setStayAddress($stayAddress) {
-            $this->stayAddress = $stayAddress;
-            return $this;
-        }
-
-        
-        public function getPhoneStay() {
-            return $this->phone_stay;
-        }
-
-        public function setPhoneStay($phone_stay) {
-            $this->phone_stay = $phone_stay;
+        public function setNumTent($num_tent) {
+            $this->num_tent = $num_tent;
             return $this;
         }
 
@@ -135,7 +95,6 @@
             $this->is_active = $is_active;
             return $this;
         }
-
 
     }
 

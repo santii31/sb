@@ -40,7 +40,9 @@
             $admin->setDni($dni);
             $admin->setPassword($password);		
 
-            if ($this->adminDAO->add($admin)) {
+            $register_by = $this->isLogged();
+            
+            if ($this->adminDAO->add($admin, $register_by)) {
                 return $admin;
             } else {
                 return false;
@@ -195,9 +197,9 @@
                 
         public function enable($id) {
             if ($admin = $this->isLogged()) {
-                $admin = new Admin();
-                $admin->setId($id);
-                if ($this->adminDAO->enableById($admin)) {
+                $admin_enable = new Admin();
+                $admin_enable->setId($id);
+                if ($this->adminDAO->enableById($admin_enable, $admin)) {
                     return $this->listAdminPath(null, ADMIN_ENABLE);
                 } else {
                     return $this->listAdminPath(DB_ERROR, null);
@@ -213,9 +215,9 @@
                 if ($admin->getId() == $id) {                
                     return $this->listAdminPath(DISABLE_YOURSELF, null);
                 } else {
-                    $admin = new Admin();
-                    $admin->setId($id);           
-                    if ($this->adminDAO->disableById($admin)) {
+                    $admin_disable = new Admin();
+                    $admin_disable->setId($id);           
+                    if ($this->adminDAO->disableById($admin_disable, $admin)) {
                         return $this->listAdminPath(null, ADMIN_DISABLE);
                     } else {
                         return $this->listAdminPath(DB_ERROR, null);

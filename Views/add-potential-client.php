@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT  ?>client/addPotentialClient" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -46,27 +46,25 @@
                         </div>
                                                 
                         <div class="row">
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="domicilio" type="text" name="address" class="validate" required>
                                 <label for="domicilio">Domicilio</label>
                             </div>
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="ciudad" type="text" name="city" class="validate" required>
                                 <label for="ciudad">Ciudad</label>
                             </div>                                                       
                         </div>
                         <div class="row">
-                            <div class="input-field col s8">
+                            <div class="input-field col s6">
                                 <input id="email" type="email" name="email" class="validate" required>
                                 <label for="email">Email</label>
                             </div>
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="tel1" type="number" name="tel1" class="validate" required>
                                 <label for="tel1">Telefono</label>
                             </div>                            
-                        </div>
-                        
-                        <div class="divider mb-divider"></div>
+                        </div>                                            
                                                
                         <div class="row">
                             <div class="col s12 center-align">
@@ -75,11 +73,12 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
-
 </div>
     
