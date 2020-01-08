@@ -469,7 +469,7 @@ BEGIN
 
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `reservation`.`id` = id;
@@ -512,7 +512,7 @@ BEGIN
 
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY date_start ASC;

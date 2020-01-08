@@ -3,7 +3,8 @@
     namespace DAO;
 
 	use \Exception as Exception;
-    use Models\Client as Client;	
+	use Models\Client as Client;
+	use Models\Admin as Admin;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -16,9 +17,9 @@
 		public function __construct() { }
 
 		
-        public function add(Client $client) {								
+        public function add(Client $client, Admin $registerBy) {								
 			try {					
-				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?)";
+				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();
 				$parameters["email"] = $client->getEmail();
@@ -26,7 +27,9 @@
                 $parameters["city"] = $client->getCity();
 				$parameters["address"] = $client->getAddress();
 				$parameters["stay_address"] = $client->getStayAddress();                
-                $parameters["is_potential"] = $client->getIsPotential();
+				$parameters["is_potential"] = $client->getIsPotential();
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["register_by"] = $registerBy->getId();
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -203,10 +206,12 @@
 			}
 		}
 				
-		public function enableById(Client $client) {
+		public function enableById(Client $client, Admin $enableBy) {
 			try {
-				$query = "CALL client_enableById(?)";
+				$query = "CALL client_enableById(?, ?, ?)";
 				$parameters["id"] = $client->getId();
+				$parameters["date_enable"] = date("Y-m-d");
+				$parameters["enable_by"] = $enableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -216,10 +221,12 @@
 			}
 		}
 
-		public function disableById(Client $client) {
+		public function disableById(Client $client, Admin $disableBy) {
 			try {
-				$query = "CALL client_disableById(?)";
+				$query = "CALL client_disableById(?, ?, ?)";
 				$parameters["id"] = $client->getId();
+				$parameters["date_disable"] = date("Y-m-d");
+				$parameters["disable_by"] = $disableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -229,7 +236,7 @@
 			}
 		}		
 
-		public function update(Client $client) {
+		public function update(Client $client, Admin $update_by) {
 			try {								
 				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $client->getName();
@@ -239,7 +246,9 @@
                 $parameters["city"] = $client->getCity();
 				$parameters["address"] = $client->getAddress();
 				$parameters["stay_address"] = $client->getStayAddress();                
-                $parameters["is_potential"] = $client->getIsPotential(); 	
+				$parameters["is_potential"] = $client->getIsPotential(); 
+				$parameters["date_update"] = date("Y-m-d");
+				$parameters["update_by"] = $updateBy->getId();	
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

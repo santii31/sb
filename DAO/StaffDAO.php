@@ -16,9 +16,9 @@ class StaffDAO {
     public function __construct() { }
 
     
-    public function add(Staff $staff) {								
+    public function add(Staff $staff, Admin $registerBy) {								
         try {					            
-            $query = "CALL staff_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "CALL staff_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $parameters["name"] = $staff->getName();
             $parameters["lastname"] = $staff->getLastName();
             $parameters["position"] = $staff->getPosition();
@@ -28,7 +28,9 @@ class StaffDAO {
             $parameters["address"] = $staff->getAddress();
             $parameters["tel"] = $staff->getPhone();
             $parameters["shirt_size"] = $staff->getShirtSize();
-            $parameters["pant_size"] = $staff->getPantSize();            
+            $parameters["pant_size"] = $staff->getPantSize();          
+            $parameters["date_register"] = date("Y-m-d");
+			$parameters["register_by"] = $registerBy->getId();  
             $this->connection = Connection::getInstance();
             $this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
             return true;
@@ -122,10 +124,12 @@ class StaffDAO {
         }
     }		
             
-    public function enableById(Staff $staff) {
+    public function enableById(Staff $staff, Admin $enableBy) {
         try {
-            $query = "CALL staff_enableById(?)";
+            $query = "CALL staff_enableById(?, ?, ?)";
             $parameters["id"] = $staff->getId();
+            $parameters["date_enable"] = date("Y-m-d");
+			$parameters["enable_by"] = $enableBy->getId();
             $this->connection = Connection::GetInstance();
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
             return true;
@@ -135,10 +139,12 @@ class StaffDAO {
         }
     }
 
-    public function disableById(Staff $staff) {
+    public function disableById(Staff $staff, Admin $disableBy) {
         try {
-            $query = "CALL staff_disableById(?)";
+            $query = "CALL staff_disableById(?, ?, ?)";
             $parameters["id"] = $staff->getId();
+            $parameters["date_disable"] = date("Y-m-d");
+			$parameters["disable_by"] = $disableBy->getId();
             $this->connection = Connection::GetInstance();
             $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
             return true;
@@ -163,7 +169,7 @@ class StaffDAO {
     
     public function update(Staff $staff) {
         try {								
-            $query = "CALL staff_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; //11
+            $query = "CALL staff_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; //11
             $parameters["name"] = $staff->getName();
             $parameters["lastname"] = $staff->getLastName();
             $parameters["position"] = $staff->getPosition();
@@ -175,6 +181,8 @@ class StaffDAO {
             $parameters["shirt_size"] = $staff->getShirtSize();
             $parameters["pant_size"] = $staff->getPantSize(); 
             $parameters["id"] = $staff->getId(); 	
+            $parameters["date_update"] = date("Y-m-d");
+			$parameters["update_by"] = $updateBy->getId();
             $this->connection = Connection::GetInstance();
             return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
         } catch (Exception $e) {

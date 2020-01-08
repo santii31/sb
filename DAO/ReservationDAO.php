@@ -20,16 +20,17 @@
 		public function __construct() { }
 
 		
-        public function add(Reservation $reservation) {								
+        public function add(Reservation $reservation, Admin $registerBy) {								
 			try {					
-				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?)";
+				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?, ?, ?)";
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["FK_id_client"] = $reservation->getClient()->getId();
-				$parameters["FK_id_admin"] = $reservation->getAdmin()->getId();
 				$parameters["FK_id_tent"] = $reservation->getBeachTent()->getId();
-				$parameters["FK_id_parking"] = $reservation->getParking()->getId();                
+				$parameters["FK_id_parking"] = $reservation->getParking()->getId();
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["register_by"] = $registerBy->getId();                
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -154,10 +155,12 @@
 			}
 		}		
 				
-		public function enableById(Reservation $reservation) {
+		public function enableById(Reservation $reservation, Admin $enableBy) {
 			try {
-				$query = "CALL reservation_enableById(?)";
+				$query = "CALL reservation_enableById(?, ?, ?)";
 				$parameters["id"] = $reservation->getId();
+				$parameters["date_enable"] = date("Y-m-d");
+				$parameters["register_by"] = $enableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -167,10 +170,12 @@
 			}
 		}
 
-		public function disableById(Reservation $reservation) {
+		public function disableById(Reservation $reservation, Admin $disableBy) {
 			try {
 				$query = "CALL reservation_disableById(?)";
 				$parameters["id"] = $reservation->getId();
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["disable_by"] = $registerBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;

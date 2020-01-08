@@ -16,11 +16,13 @@
 		public function __construct() { }
 
 		
-		public function add(AdditionalService $additionalService) {
+		public function add(AdditionalService $additionalService, Admin $registerBy) {
 			try {					
-				$query = "CALL service_add(?, ?)";
+				$query = "CALL service_add(?, ?, ?, ?)";
 				$parameters["description"] = $additionalService->getDescription();
-				$parameters["total"] = $additionalService->getTotal();				
+				$parameters["total"] = $additionalService->getTotal();	
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["register_by"] = $registerBy->getId();			
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -92,10 +94,12 @@
 			}
 		}		
 				
-		public function enableById(AdditionalService $additionalService) {
+		public function enableById(AdditionalService $additionalService, Admin $enableBy) {
 			try {
 				$query = "CALL service_enableById(?)";
 				$parameters["id"] = $additionalService->getId();
+				$parameters["date_enable"] = date("Y-m-d");
+				$parameters["enable_by"] = $enableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -105,10 +109,12 @@
 			}
 		}
 
-		public function disableById(AdditionalService $additionalService) {
+		public function disableById(AdditionalService $additionalService, Admin $disableBy) {
 			try {
 				$query = "CALL service_disableById(?)";
 				$parameters["id"] = $additionalService->getId();
+				$parameters["date_disable"] = date("Y-m-d");
+				$parameters["disable_by"] = $disableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -132,12 +138,14 @@
 			}
 		}
 
-		public function update(AdditionalService $additionalService) {
+		public function update(AdditionalService $additionalService, Admin $updateBy) {
 			try {								
 				$query = "CALL service_update(?, ?, ?)";		
 				$parameters["description"] = $additionalService->getDescription();
 				$parameters["total"] = $additionalService->getTotal();				
 				$parameters["id"] = $additionalService->getId();				
+				$parameters["date_update"] = date("Y-m-d");
+				$parameters["update_by"] = $updateBy->getId();
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
 
