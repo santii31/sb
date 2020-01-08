@@ -52,6 +52,8 @@
                                 <th>Ciudad</th>
                                 <th>Email</th>
                                 <th>Telefono</th>
+                                <th>Carpa interesado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                                                
@@ -65,38 +67,22 @@
                                 <td> <?= ucfirst( $client->getCity() ); ?> </td>
                                 <td> <?= $client->getEmail(); ?> </td>
                                 <td> <?= $client->getPhone(); ?> </td>
-                                
-                                <td>
-                                    <ul class="collapsible">
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <i class="material-icons left">arrow_forward</i>Ver mas
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <ul>
-                                                    <li>• DNI:  <?= $client->getDni(); ?> </li>
-                                                    <li>• Número de CUIL:  <?= $client->getCuilNumber(); ?> </li>
-                                                    <li>• Razón social:  <?= ucfirst( $client->getSocialReason() ); ?> </li>
-                                                    <li>• Tipo de facturacion:  <?= ucfirst( $client->getBilling() ); ?> </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>                                      
-                                </td>                                
+                                <td> <?= $client->getNumTent(); ?> </td>
+                                                                   
                                 <td class="actions">
                                     <?php if ($client->getIsActive()): ?>
-                                        <a href="<?= FRONT_ROOT ?>client/disablePotential/<?= $client->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/disable/<?= $client->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
                                             <i class="material-icons left">delete_forever</i>
                                             Deshabilitar
                                         </a>
                                     <?php else: ?>
-                                        <a href="<?= FRONT_ROOT ?>client/enablePotential/<?= $client->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/enable/<?= $client->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
                                             <i class="material-icons left">delete_forever</i>
                                             Habilitar
                                         </a>
                                     <?php endif; ?>
 
-                                    <a href="<?= FRONT_ROOT ?>client/updatePotentialPath/<?= $client->getId(); ?>" class="waves-effect waves-light btn-small">
+                                    <a href="<?= FRONT_ROOT ?>clientPotential/updatePotentialPath/<?= $client->getId(); ?>" class="waves-effect waves-light btn-small">
                                         <i class="material-icons left">build</i>
                                         Modificar
                                     </a>                                                                                            

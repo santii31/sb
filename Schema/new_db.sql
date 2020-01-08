@@ -382,7 +382,7 @@ BEGIN
             client_potential.register_by
 	)
     VALUES
-        (name, lastname, email, address, city, email, tel, num_tent, date_register, register_by);
+        (name, lastname, address, city, email, tel, num_tent, date_register, register_by);
 END$$
 
 

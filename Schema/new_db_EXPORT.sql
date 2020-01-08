@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-01-2020 a las 17:48:51
+-- Tiempo de generación: 08-01-2020 a las 23:39:26
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -167,7 +167,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_add` (IN `name` VA
             client_potential.register_by
 	)
     VALUES
-        (name, lastname, email, address, city, email, tel, num_tent, date_register, register_by);
+        (name, lastname, address, city, email, tel, num_tent, date_register, register_by);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_checkEmail` (IN `id` INT, IN `email` VARCHAR(255))  BEGIN
@@ -1155,6 +1155,13 @@ CREATE TABLE `client_potential` (
   `update_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Volcado de datos para la tabla `client_potential`
+--
+
+INSERT INTO `client_potential` (`id`, `name`, `lastname`, `address`, `city`, `email`, `tel`, `num_tent`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'pepe', 'jose', 'asd', 'asd', 'asd@mail.com', 43430, 100, 0, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1520,7 +1527,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT de la tabla `client_potential`
 --
 ALTER TABLE `client_potential`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `locker`

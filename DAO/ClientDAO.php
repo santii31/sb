@@ -172,7 +172,7 @@
 			}
 		}		
 
-		public function update(Client $client, Admin $update_by) {
+		public function update(Client $client, Admin $updateBy) {
 			try {								
 				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				
@@ -188,7 +188,7 @@
 				$parameters["stay_address"] = $client->getStayAddress();             
 				$parameters["tel_stay"] = $client->getPhoneStay();
 				$parameters["date_update"] = date("Y-m-d");
-				$parameters["update_by"] = $update_by->getId();	
+				$parameters["update_by"] = $updateBy->getId();	
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

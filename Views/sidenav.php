@@ -316,13 +316,13 @@
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>client/addPotentialClientPath" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/addPotentialClientPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">person_add</i>
                                             Añadir cliente potencial
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>client/listPotentialClientPath" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
                                             Listar clientes potenciales
                                         </a>

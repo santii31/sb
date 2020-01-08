@@ -16,24 +16,28 @@
             $this->adminController = new AdminController();
         }       
         
-
-        private function add($name, $lastName, $email, $phone, $city, $address, $stay_address) {
+        private function add($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {
 
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);
             $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
-            $city_s = filter_var($city, FILTER_SANITIZE_STRING);
+            $stay_s = filter_var($stay, FILTER_SANITIZE_STRING);
             $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+            $city_s = filter_var($city, FILTER_SANITIZE_STRING);
+            $family_group_s = filter_var($family_group, FILTER_SANITIZE_STRING);
             $stay_address_s = filter_var($stay_address, FILTER_SANITIZE_STRING);
 
             $client = new Client();            
             $client->setName( strtolower($name_s) );
             $client->setLastName( strtolower($lastname_s) );
+            $client->setStay( strtolower($stay_s) );
+            $client->setAddress( strtolower($address_s) );
+            $client->setCity( strtolower($city_s) );
+            $client->setCp($cp);
             $client->setEmail($email);
             $client->setPhone($phone);
-            $client->setCity( strtolower($city_s) );
-            $client->setAddress( strtolower($address_s) );
-            $client->setStayAddress( strtolower($stay_address_s) );  
-            $client->setIsPotential(FALSE);  
+            $client->setFamilyGroup( strtolower($family_group_s) );
+            $client->setStayAddress( strtolower($stay_address_s) );
+            $client->setPhoneStay($tel_stay);
             
             $register_by = $this->adminController->isLogged();
 
@@ -44,14 +48,14 @@
             }
         }     
 
-        public function addClient($name, $lastName, $email, $phone, $city, $address, $stay_address) {
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $email, $phone, $city, $address, $stay_address)) {
+        public function addClient($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {
+            if ($this->isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay)) {
                 
                 $clientTemp = new Client();
                 $clientTemp->setEmail($email);                
                 
                 if ($this->clientDAO->getByEmail($clientTemp) == null) {                                                            
-                    if ($this->add($name, $lastName, $email, $phone, $city, $address, $stay_address)) {            
+                    if ($this->add($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay)) {      
                         return $this->addClientPath(null, CLIENT_ADDED);
                     } else {                        
                         return $this->addClientPath(DB_ERROR, null);        
@@ -62,21 +66,26 @@
             return $this->addClientPath(EMPTY_FIELDS, null);            
         }
 
-        // clientes normales
-/*         private function isFormRegisterNotEmpty() {
-            if (empty() || 
-                empty() || 
-                empty() || 
-                empty() || 
-                empty() || 
-                empty()) {
+
+        private function isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {         
+            if (empty($name) || 
+                empty($lastname) || 
+                empty($stay) || 
+                empty($address) || 
+                empty($city) || 
+                empty($cp) || 
+                empty($email) || 
+                empty($tel) || 
+                empty($family_group) || 
+                empty($stay_address) || 
+                empty($tel_stay)) {
                     return false;
             }
             return true;
-        } */
+        }
         
         public function addClientPath($alert = "", $success = "") {
-            if ($admin = $this->adminController->isLogged()) {                         
+            if ($admin = $this->adminController->isLogged()) {                       
                 $title = "Añadir cliente";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
@@ -143,31 +152,36 @@
             }           
         }
 
-        public function update($name, $lastName, $email, $phone, $city, $address, $stay_address) {      
+        public function update($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {      
             
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $email, $phone, $city, $address, $stay_address)) {     
+            if ($this->isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay)) {    
                 
                 $clientTemp = new Client();
                 $clientTemp->setId($id);                
                 $clientTemp->setEmail($email);
 
-				if ($this->clientDAO->checkDni($clientTemp) == null) {                                                                           
+				if ($this->clientDAO->checkDni($clientTemp) == null) {               
                     
                     $name_s = filter_var($name, FILTER_SANITIZE_STRING);
                     $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
-                    $city_s = filter_var($city, FILTER_SANITIZE_STRING);
+                    $stay_s = filter_var($stay, FILTER_SANITIZE_STRING);
                     $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+                    $city_s = filter_var($city, FILTER_SANITIZE_STRING);
+                    $family_group_s = filter_var($family_group, FILTER_SANITIZE_STRING);
                     $stay_address_s = filter_var($stay_address, FILTER_SANITIZE_STRING);
         
                     $client = new Client();            
-                    $client->setId($id);  
                     $client->setName( strtolower($name_s) );
                     $client->setLastName( strtolower($lastname_s) );
+                    $client->setStay( strtolower($stay_s) );
+                    $client->setAddress( strtolower($address_s) );
+                    $client->setCity( strtolower($city_s) );
+                    $client->setCp($cp);
                     $client->setEmail($email);
                     $client->setPhone($phone);
-                    $client->setCity( strtolower($city_s) );
-                    $client->setAddress( strtolower($address_s) );
-                    $client->setStayAddress( strtolower($stay_address_s) );  
+                    $client->setFamilyGroup( strtolower($family_group_s) );
+                    $client->setStayAddress( strtolower($stay_address_s) );
+                    $client->setPhoneStay($tel_stay);
                     
                     $update_by = $this->adminController->isLogged();
 
@@ -179,7 +193,7 @@
                 }                
                 return $this->updatePath($id, EMAIL_ERROR);
             }            
-            return $this->updatePath($id ,EMPTY_FIELDS);
+            return $this->updatePath($id, EMPTY_FIELDS);
         }
 
     }
