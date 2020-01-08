@@ -64,25 +64,6 @@
                                     <td> <?= $admin->getEmail(); ?> </td>
                                     <td> <?= $admin->getDni(); ?> </td>
                                     <td class="actions">
-                                        <!-- <div>
-                                            <form action="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" method="post">
-                                                <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
-                                                <button type="submit" class="waves-effect waves-light btn-small btn-danger">
-                                                    <i class="material-icons left">delete_forever</i>
-                                                    Deshabilitar
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div>
-                                            <form action="<?= FRONT_ROOT ?>admin/updatePath/<?= $admin->getId(); ?>" method="post">
-                                                <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
-                                                <button type="submit" class="waves-effect waves-light btn-small">
-                                                    <i class="material-icons left">build</i>
-                                                    Modificar
-                                                </button>
-                                            </form>
-                                        </div> -->
-
                                         <?php if ($admin->getIsActive()): ?>
                                             <a href="<?= FRONT_ROOT ?>admin/disable/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
                                                 <i class="material-icons left">delete_forever</i>
@@ -99,7 +80,6 @@
                                             <i class="material-icons left">build</i>
                                             Modificar
                                         </a>
-
                                     </td>                    
                                 </tr>
                             <?php endforeach; ?>

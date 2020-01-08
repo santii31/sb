@@ -118,7 +118,7 @@
 
         public function addPotentialClientPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                         
-                $title = "Añadir potencial cliente";
+                $title = "Añadir cliente potencial";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-potential-client.php");
@@ -130,7 +130,7 @@
         
         public function listPotentialClientPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Potenciales clientes";
+                $title = "Clientes Potenciales";
                 $clients = $this->clientDAO->getAllPotentials();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");

@@ -60,7 +60,6 @@
                                     <td> <?= ucfirst( $service->getDescription() ); ?> </td>
                                     <td> $ <?= $service->getTotal(); ?> </td>
                                     <td class="actions">
-
                                         <?php if ($service->getIsActive()): ?>
                                             <a href="<?= FRONT_ROOT ?>additionalService/disable/<?= $service->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
                                                 <i class="material-icons left">delete_forever</i>

@@ -83,7 +83,6 @@
                                     </ul>                                      
                                 </td>                                
                                 <td class="actions">
-
                                     <?php if ($provider->getIsActive()): ?>
                                         <a href="<?= FRONT_ROOT ?>provider/disable/<?= $provider->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
                                             <i class="material-icons left">delete_forever</i>
@@ -101,7 +100,6 @@
                                         Modificar
                                     </a>                                                                                            
                                 </td>
-
                             </tr>
                             <?php endforeach; ?>         
                         </tbody>

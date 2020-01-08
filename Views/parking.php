@@ -58,23 +58,26 @@
                             <div class="center-upper">
                                 <div class="center-upper-left">                                    
                                     
-                                <!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="item">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
+                                    
+                                    <div class="parking-container">
+                                        <!-- Modal Trigger -->
+                                        <a class="modal-trigger" href="#modal1">
+                                            <div class="item">
+                                                <span>150</span>		
+                                            </div>      
+                                        </a>
+    
+                                        <!-- Modal Structure -->
+                                        <div id="modal1" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                                                         
                                     <div class="item">21</div>
                                     <div class="item">21</div>

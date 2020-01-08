@@ -83,7 +83,6 @@
                                     <td> $ <?= $product->getPrice(); ?> </td>
                                     <td> $ <?= $product->getQuantity(); ?> </td>
                                     <td class="actions">
-
                                         <?php if ($service->getIsActive()): ?>
                                             <a href="<?= FRONT_ROOT ?>product/disable/<?= $product->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
                                                 <i class="material-icons left">delete_forever</i>

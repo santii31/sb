@@ -85,25 +85,6 @@
                                     </td>  
 
                                     <td class="actions">
-                                        <!-- <div>
-                                            <form action="<?= FRONT_ROOT ?>staff/disable/<?= $staff->getId(); ?>" method="post">
-                                                <input type="hidden" name="id" value="<?= $staff->getId(); ?>">
-                                                <button type="submit" class="waves-effect waves-light btn-small btn-danger">
-                                                    <i class="material-icons left">delete_forever</i>
-                                                    Deshabilitar
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div>
-                                            <form action="<?= FRONT_ROOT ?>staff/updatePath/<?= $staff->getId(); ?>" method="post">
-                                                <input type="hidden" name="id" value="<?= $staff->getId(); ?>">
-                                                <button type="submit" class="waves-effect waves-light btn-small">
-                                                    <i class="material-icons left">build</i>
-                                                    Modificar
-                                                </button>
-                                            </form>
-                                        </div> -->
-
                                         <?php if ($staff->getIsActive()): ?>
                                             <a href="<?= FRONT_ROOT ?>staff/disable/<?= $staff->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
                                                 <i class="material-icons left">delete_forever</i>
@@ -121,7 +102,7 @@
                                             Modificar
                                         </a>
                                     </td>                                   
-                 
+                                                    
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

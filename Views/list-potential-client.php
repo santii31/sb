@@ -84,7 +84,6 @@
                                     </ul>                                      
                                 </td>                                
                                 <td class="actions">
-
                                     <?php if ($client->getIsActive()): ?>
                                         <a href="<?= FRONT_ROOT ?>client/disablePotential/<?= $client->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
                                             <i class="material-icons left">delete_forever</i>
@@ -102,7 +101,6 @@
                                         Modificar
                                     </a>                                                                                            
                                 </td>
-
                             </tr>
                             <?php endforeach; ?>         
                         </tbody>

@@ -326,7 +326,13 @@
                                             <i class="material-icons left">format_list_numbered</i>
                                             Listar clientes potenciales
                                         </a>
-                                    </li>                                
+                                    </li>  
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">email</i>
+                                            Enviar correo
+                                        </a>
+                                    </li>                                                                    
                                 </ul>
                             </div>
                         </li>                    

@@ -288,7 +288,8 @@ END$$
 CREATE TABLE beach_tent (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`number` INT NOT NULL UNIQUE,
-    `price` FLOAT NOT NULL
+    `price` FLOAT NOT NULL,
+    `position` INT NOT NULL         -- ?
 );
 
 

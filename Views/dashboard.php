@@ -30,32 +30,36 @@
 					<div class="beach-map">
 						
 						<div class="beach-map-container">                
+							
 							<!-- Only for the first hall -->
 							<div class="extra-beach-tents">
 								<!-- Normal flow tents -->
 								<div class="beach-tents">									
-									<div class="tent-container">																	
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 
+									<div class="tent-container">	
+										
+										<div>
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent yellow">
+													<span>150</span>		
+												</div>      
+											</a>
+	
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div> 
+										</div>
 										
 										<!-- Modal Trigger -->
 										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
+											<div class="tent green">
 												<span>150</span>		
 											</div>      
 										</a>
@@ -73,7 +77,7 @@
 										
 										<!-- Modal Trigger -->
 										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
+											<div class="tent fuchsia">
 												<span>150</span>		
 											</div>      
 										</a>
@@ -91,7 +95,7 @@
 										
 										<!-- Modal Trigger -->
 										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
+											<div class="tent orange">
 												<span>150</span>		
 											</div>      
 										</a>
@@ -109,7 +113,7 @@
 										
 										<!-- Modal Trigger -->
 										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
+											<div class="tent blue">
 												<span>150</span>		
 											</div>      
 										</a>
@@ -127,7 +131,7 @@
 										
 										<!-- Modal Trigger -->
 										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
+											<div class="tent green">
 												<span>150</span>		
 											</div>      
 										</a>
@@ -145,7 +149,7 @@
 										
 										<!-- Modal Trigger -->
 										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
+											<div class="tent fuchsia">
 												<span>150</span>		
 											</div>      
 										</a>
@@ -394,7 +398,7 @@
 
 							</div>                
 
-							<!-- Halls -->
+							<!-- 1 Halls -->
 							<div class="beach-hall">
 							
 								<div class="hall-container">
@@ -706,6 +710,26 @@
 											</div>                     
 										</div>										
 										
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent tent-inverse">
+													<span>150</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>											
+
 										<!-- Second row -->
 										<div class="tent-container">
 											<!-- Modal Trigger -->
@@ -1005,7 +1029,27 @@
 													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
 												</div>
 											</div>                     
-										</div>																					
+										</div>	
+
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent">
+													<span>220</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>																														
 									</div>
 								</div>
 								
@@ -1190,7 +1234,7 @@
 
 							</div>							
 
-							<!-- Halls -->
+							<!-- 2 Halls -->
 							<div class="beach-hall">
 							
 								<div class="hall-container">
@@ -1502,6 +1546,26 @@
 											</div>                     
 										</div>										
 										
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent tent-inverse">
+													<span>150</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>											
+
 										<!-- Second row -->
 										<div class="tent-container">
 											<!-- Modal Trigger -->
@@ -1801,7 +1865,27 @@
 													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
 												</div>
 											</div>                     
-										</div>																					
+										</div>	
+
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent">
+													<span>220</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>																														
 									</div>
 								</div>
 								
@@ -1985,8 +2069,8 @@
 								</div>
 
 							</div>
-							
-							<!-- Halls -->
+
+							<!-- 3 Halls -->
 							<div class="beach-hall">
 							
 								<div class="hall-container">
@@ -2298,6 +2382,26 @@
 											</div>                     
 										</div>										
 										
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent tent-inverse">
+													<span>150</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>											
+
 										<!-- Second row -->
 										<div class="tent-container">
 											<!-- Modal Trigger -->
@@ -2597,7 +2701,27 @@
 													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
 												</div>
 											</div>                     
-										</div>																					
+										</div>	
+
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent">
+													<span>220</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>																														
 									</div>
 								</div>
 								
@@ -2781,8 +2905,8 @@
 								</div>
 
 							</div>
-							
-							<!-- Halls -->
+
+							<!-- 4 Halls -->
 							<div class="beach-hall">
 							
 								<div class="hall-container">
@@ -3094,6 +3218,26 @@
 											</div>                     
 										</div>										
 										
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent tent-inverse">
+													<span>150</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>											
+
 										<!-- Second row -->
 										<div class="tent-container">
 											<!-- Modal Trigger -->
@@ -3393,7 +3537,27 @@
 													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
 												</div>
 											</div>                     
-										</div>																					
+										</div>	
+
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent">
+													<span>220</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>																														
 									</div>
 								</div>
 								
@@ -3577,8 +3741,8 @@
 								</div>
 
 							</div>
-							
-							<!-- Halls -->
+
+							<!-- 5 Halls -->
 							<div class="beach-hall">
 							
 								<div class="hall-container">
@@ -3890,6 +4054,26 @@
 											</div>                     
 										</div>										
 										
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent tent-inverse">
+													<span>150</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>											
+
 										<!-- Second row -->
 										<div class="tent-container">
 											<!-- Modal Trigger -->
@@ -4189,7 +4373,27 @@
 													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
 												</div>
 											</div>                     
-										</div>																					
+										</div>	
+
+										<div class="tent-container">
+											<!-- Modal Trigger -->
+											<a class="modal-trigger" href="#modal1">
+												<div class="tent">
+													<span>220</span>		
+												</div>      
+											</a>
+
+											<!-- Modal Structure -->
+											<div id="modal1" class="modal modal-fixed-footer">
+												<div class="modal-content">
+													<h4>Carpa nº 150</h4>
+													<p>A bunch of text</p>
+												</div>
+												<div class="modal-footer">
+													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+												</div>
+											</div>                     
+										</div>																														
 									</div>
 								</div>
 								
@@ -4372,9 +4576,9 @@
 									</div>																		
 								</div>
 
-							</div>
+							</div>																					
 
-							<!-- Last Hall -->
+							<!-- 6 Last Hall -->
 							<div class="beach-hall last-hall">
 							
 								<div class="hall-container ">
