@@ -2,19 +2,19 @@
 
     namespace Models;
 
-    use Models\Client as Client;
-    use Models\Admin as Admin;
+    use Models\Basic as Basic;
+    use Models\Client as Client;    
 
-    class Reservation {
+    class Reservation extends Basic {
 
         private $id;
         private $date_start;
         private $date_end;
         private $price;    
-        private $client;    
-        private $admin;
+        private $client;            
         private $beachTent;
         private $parking;
+        private $is_active;
         
         public function getId() {
             return $this->id;
@@ -57,15 +57,6 @@
 
         public function setClient(Client $client) {
             $this->client = $client;
-            return $this;
-        }
-        
-        public function getAdmin() {
-            return $this->admin;
-        }
-
-        public function setAdmin(Admin $admin) {
-            $this->admin = $admin;
             return $this;
         }
 

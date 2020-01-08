@@ -2,7 +2,9 @@
 
     namespace Models;
     
-    class Admin {
+    use Models\Basic as Basic;
+
+    class Admin extends Basic {
 
         private $id;
         private $name;

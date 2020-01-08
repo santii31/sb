@@ -12,7 +12,7 @@
 
 	//DB
 	define("DB_HOST", "localhost");
-	define("DB_NAME", "southbeach");
+	define("DB_NAME", "southbeach2");
 	define("DB_USER", "root");
 	define("DB_PASS", "");
 

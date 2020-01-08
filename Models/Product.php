@@ -2,9 +2,10 @@
 
     namespace Models;
 
+    use Models\Basic as Basic;
     use Models\Category as Category;
 
-    class Product {
+    class Product extends Basic {
 
         private $id;  
         private $name;
