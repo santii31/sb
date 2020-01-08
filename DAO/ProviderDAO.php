@@ -3,7 +3,8 @@
     namespace DAO;
 
 	use \Exception as Exception;
-    use Models\Provider as Provider;	
+	use Models\Provider as Provider;
+	use Models\Admin as Admin;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -16,9 +17,9 @@
 		public function __construct() { }
 
 		
-        public function add(Provider $provider) {								
+        public function add(Provider $provider, Admin $registerBy) {								
 			try {					
-				$query = "CALL provider_add(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$query = "CALL provider_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				$parameters["name"] = $provider->getName();
 				$parameters["lastname"] = $provider->getLastName();
 				$parameters["tel"] = $provider->getPhone();
@@ -27,7 +28,9 @@
                 $parameters["address"] = $provider->getAddress();
                 $parameters["cuil"] = $provider->getCuilNumber();
                 $parameters["social_reason"] = $provider->getSocialReason();
-                $parameters["type_billing"] = $provider->getBilling();                
+				$parameters["type_billing"] = $provider->getBilling();     
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["register_by"] = $registerBy->getId();           
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -145,10 +148,12 @@
 			}
 		}		
 				
-		public function enableById(Provider $provider) {
+		public function enableById(Provider $provider, Admin $enableBy) {
 			try {
-				$query = "CALL provider_enableById(?)";
+				$query = "CALL provider_enableById(?, ?, ?)";
 				$parameters["id"] = $provider->getId();
+				$parameters["date_enable"] = date("Y-m-d");
+				$parameters["enable_by"] = $enableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -158,10 +163,12 @@
 			}
 		}
 
-		public function disableById(Provider $provider) {
+		public function disableById(Provider $provider, Admin $disableBy) {
 			try {
-				$query = "CALL provider_disableById(?)";
+				$query = "CALL provider_disableById(?, ?, ?)";
 				$parameters["id"] = $provider->getId();
+				$parameters["date_disable"] = date("Y-m-d");
+				$parameters["disable_by"] = $disableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -197,9 +204,9 @@
 			}
 		}		
 		
-		public function update(Provider $provider) {
+		public function update(Provider $provider, Admin $updateBy) {
 			try {								
-				$query = "CALL provider_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
+				$query = "CALL provider_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $provider->getName();
 				$parameters["lastname"] = $provider->getLastName();
 				$parameters["tel"] = $provider->getPhone();
@@ -210,6 +217,8 @@
                 $parameters["social_reason"] = $provider->getSocialReason();
 				$parameters["type_billing"] = $provider->getBilling(); 			
 				$parameters["id"] = $provider->getId(); 	
+				$parameters["date_update"] = date("Y-m-d");
+				$parameters["update_by"] = $updateBy->getId();
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

@@ -19,14 +19,16 @@
 		public function __construct() { }
 
 		
-        public function add(Admin $admin) {								
+        public function add(Admin $admin, Admin $registerBy) {								
 			try {					
-				$query = "CALL admin_add(?, ?, ?, ?, ?)";
+				$query = "CALL admin_add(?, ?, ?, ?, ?, ?, ?)";
 				$parameters["name"] = $admin->getName();
 				$parameters["lastname"] = $admin->getLastName();
 				$parameters["email"] = $admin->getEmail();
 				$parameters["dni"] = $admin->getDni();
 				$parameters["password"] = $admin->getPassword();
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["register_by"] = $registerBy->getId();
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -128,10 +130,12 @@
 			}
 		}		
 				
-		public function enableById(Admin $admin) {
+		public function enableById(Admin $admin, Admin $enableBy) {
 			try {
-				$query = "CALL admin_enableById(?)";
+				$query = "CALL admin_enableById(?, ?, ?)";
 				$parameters["id"] = $admin->getId();
+				$parameters["date_enable"] = date("Y-m-d");
+				$parameters["enable_by"] = $enableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -141,10 +145,12 @@
 			}
 		}
 
-		public function disableById(Admin $admin) {
+		public function disableById(Admin $admin, Admin $disableBy) {
 			try {
-				$query = "CALL admin_disableById(?)";
+				$query = "CALL admin_disableById(?, ?, ?)";
 				$parameters["id"] = $admin->getId();
+				$parameters["date_disable"] = date("Y-m-d");
+				$parameters["disable_by"] = $disableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -153,34 +159,25 @@
 				return false;
 			}
 		}		
-		
-		public function update(Admin $admin) {
+
+		public function update(Provider $provider, Admin $updateBy) {
 			try {								
-				// $query = "UPDATE " . $this->tableName . " AS user 
-				// 										  INNER JOIN profile_users AS p_user ON user.FK_dni =  p_user.dni
-				// 										 SET
-				// 											 user.mail = :mail,
-				// 											 user.password = :password,
-				// 											 p_user.dni = :dni,
-				// 											 p_user.first_name = :firstname,
-				// 											 p_user.last_name = :lastname
- 				// 										 WHERE 
-				// 											 p_user.dni = :dni";					
-				
-				// $parameters["mail"] = $user->getMail();
-				// $parameters["password"] = $user->getPassword();
-				// $parameters["dni"] = $user->getDni();
-				// $parameters["firstname"] = $user->getFirstName();
-				// $parameters["lastname"] = $user->getLastName();				
-
+				$query = "CALL admin_update(?, ?, ?, ?, ?, ?, ?, ?, ?)";		
+				$parameters["name"] = $admin->getName();
+				$parameters["lastname"] = $admin->getLastName();
+				$parameters["dni"] = $admin->getDni();
+				$parameters["email"] = $admin->getEmail();
+                $parameters["password"] = $admin->getPassword();	
+				$parameters["date_update"] = date("Y-m-d");
+				$parameters["update_by"] = $updateBy->getId();
 				$this->connection = Connection::GetInstance();
-				$this->connection->ExecuteNonQuery($query, $parameters);
-
-				return true;
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
 				return false;
-			}			
-		}		
+			}
+		}
+		
+				
 
     }
 

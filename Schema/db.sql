@@ -683,7 +683,7 @@ END$$
 
 DROP procedure IF EXISTS `product_checkDni`;
 DELIMITER $$
-CREATE PROCEDURE provider_checkDni (
+CREATE PROCEDURE product_checkDni (
                                         IN name VARCHAR(255),
                                         IN id INT
                                     )

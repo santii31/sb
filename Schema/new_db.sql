@@ -122,6 +122,33 @@ BEGIN
     WHERE `admin`.`id` = id;	
 END$$
 
+DROP procedure IF EXISTS `admin_update`;
+DELIMITER $$
+CREATE PROCEDURE admin_update (
+                                    IN name VARCHAR(255),
+                                    IN lastname VARCHAR(255),
+                                    IN dni VARCHAR(255),
+                                    IN email VARCHAR(255),
+                                    IN password VARCHAR(255),
+                                    IN date_update DATE,
+                                    IN update_by INT
+                                )
+BEGIN
+    UPDATE `admin` 
+    SET 
+        `admin`.`name` = name, 
+        `admin`.`lastname` = lastname,
+        `admin`.`dni` = dni,
+        `admin`.`email` = email,
+        `admin`.`password` = password,
+        `admin`.`date_update` = date_update,
+        `admin`.`update_by` = update_by    
+    WHERE 
+        `admin`.`id` = id;	
+END$$
+
+
+
 
 
 ----------------------------- CLIENT -----------------------------
@@ -281,6 +308,36 @@ BEGIN
     SELECT `client`.`id` FROM `client` WHERE `client`.`email` = email AND `client`.`id` != id;	
 END$$
 
+
+DROP procedure IF EXISTS `client_update`;
+DELIMITER $$
+CREATE PROCEDURE client_update (
+                                    IN name VARCHAR(255),
+                                    IN lastname VARCHAR(255),
+                                    IN email VARCHAR(255),
+                                    IN tel INT,
+                                    IN city VARCHAR(255),
+                                    IN address VARCHAR(255),
+                                    IN stay_address VARCHAR(255),
+                                    IN is_potential BOOLEAN,
+                                    IN date_update DATE,
+                                    IN update_by INT
+                                )
+BEGIN
+    UPDATE `client` 
+    SET 
+        `client`.`name` = name, 
+        `client`.`lastname` = lastname,
+        `client`.`email` = email,
+        `client`.`tel` = tel,
+        `client`.`city` = city,
+        `client`.`address` = address,
+        `client`.`stay_address` = stay_address,
+        `client`.`date_update` = date_update,
+        `client`.`update_by` = update_by    
+    WHERE 
+        `admin`.`id` = id;	
+END$$
 
 
 ----------------------------- BEACH-TENT -----------------------------
@@ -466,7 +523,7 @@ BEGIN
 
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `reservation`.`id` = id;
@@ -509,7 +566,7 @@ BEGIN
 
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY date_start ASC;
@@ -549,8 +606,35 @@ BEGIN
     WHERE `reservation`.`id` = id;	
 END$$
 
+DROP procedure IF EXISTS `reservation_update`;
+DELIMITER $$
+CREATE PROCEDURE reservation_update (
+                                    IN date_start DATE,
+                                    IN date_end DATE,
+                                    IN total_price FLOAT,
+                                    IN FK_id_client INT,                                    
+                                    IN FK_id_tent INT,
+                                    IN FK_id_parking INT,
+                                    IN date_update DATE,
+                                    IN update_by INT
+                                )
+BEGIN
+    UPDATE `reservation` 
+    SET 
+        `reservation`.`date_start` = date_start, 
+        `reservation`.`date_end` = date_end,
+        `reservation`.`total_price` = total_price,
+        `reservation`.`FK_id_client` = FK_id_client,
+        `reservation`.`FK_id_tent` = FK_id_tent,
+        `reservation`.`FK_id_parking` = FK_id_parking,
+        `reservation`.`date_update` = date_update,
+        `reservation`.`update_by` = update_by    
+    WHERE 
+        `reservation`.`id` = id;	
+END$$
 
--- FALTA UPDATE
+
+
 
 
 ----------------------------- PROVIDER -----------------------------

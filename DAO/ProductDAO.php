@@ -4,7 +4,8 @@
 
 	use \Exception as Exception;
     use Models\Product as Product;
-    use Models\Category as Category;	
+	use Models\Category as Category;
+	use Models\Admin as Admin;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -17,12 +18,14 @@
 		public function __construct() { }
 
 		
-        public function add(Product $product) {								
+        public function add(Product $product, Admin $registerBy) {								
 			try {					
 				$query = "CALL product_add(?, ?, ?)";
 				$parameters["name"] = $product->getName();
 				$parameters["price"] = $product->getPrice();
 				$parameters["quantity"] = $product->getQuantity();
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["register_by"] = $registerBy->getId();
 				$parameters["FK_id_category"] = $product->getCategory()->getId();				
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -161,10 +164,12 @@
 			}
 		}
 				
-		public function enableById(Product $product) {
+		public function enableById(Product $product, Admin $enableBy) {
 			try {
-				$query = "CALL product_enableById(?)";
+				$query = "CALL product_enableById(?, ?, ?)";
 				$parameters["id"] = $product->getId();
+				$parameters["date_enable"] = date("Y-m-d");
+				$parameters["enable_by"] = $enableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -174,9 +179,11 @@
 			}
 		}
 
-		public function disableById(Product $product) {
+		public function disableById(Product $product, Admin $disableBy) {
 			try {
 				$query = "CALL product_disableById(?)";
+				$parameters["date_disable"] = date("Y-m-d");
+				$parameters["disable_by"] = $disableBy->getId();
 				$parameters["id"] = $product->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -188,13 +195,15 @@
 		}
 		
 
-		public function update(Product $product) {
+		public function update(Product $product, Admin $updateBy) {
 			try {								
-				$query = "CALL product_update(?, ?, ?, ?)";		
+				$query = "CALL product_update(?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $product->getName();
 				$parameters["price"] = $product->getPrice();
 				$parameters["quantity"] = $product->getQuantity();
-				$parameters["FK_id_category"] = $product->getCategory()->getId(); 	
+				$parameters["FK_id_category"] = $product->getCategory()->getId();
+				$parameters["update_update"] = date("Y-m-d");
+				$parameters["update_by"] = $updateBy->getId(); 	
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
