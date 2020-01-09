@@ -97,6 +97,65 @@
 			}
 		}
 
+
+		public function getByClientId(Reservation $reservation) {
+			try {				
+				$reservationTemp = null;
+				$query = "CALL reservation_getByClientId(?)";
+				$parameters["client_id"] = $reservation->getClient()->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$reservationTemp = new Reservation();
+					$reservationTemp->setId($row["reservation_id"]);
+					$reservationTemp->setDateStart($row["reservation_dateStart"]);
+                    $reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+                    $reservationTemp->setPrice($row["reservation_totalPrice"]);
+					$reservationTemp->setIsActive($row["reservation_isActive"]);
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setIsPotential($row["client_isPotential"]);
+					$client->setIsActive($row["client_isActive"]);
+					$reservationTemp->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+					$admin->setDni($row["admin_dni"]);
+					$admin->setEmail($row["admin_email"]);
+					$admin->setPassword($row["admin_password"]);
+					$admin->setIsActive($row["admin_isActive"]);
+					$reservationTemp->setAdmin($admin);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+					$beachTent->setIsActive($row["tent_isActive"]);
+					$reservationTemp->setBeachTent($beachTent);
+
+					$parking = new Parking();
+					$parking->setId($row["parking_id"]);
+					$parking->setNumber($row["parking_number"]);
+					$parking->setPrice($row["parking_price"]);
+					$parking->setIsActive($row["parking_isActive"]);
+					
+					$reservationTemp->setParking($parking);
+				}
+				return $reservationTemp;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+
 		
 		public function getAll() {
 			try {
