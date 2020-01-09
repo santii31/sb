@@ -8,6 +8,7 @@
     use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
     use DAO\ServicexLocker as ServicexLocker;
     use DAO\ServicexParasol as ServicexParasol;
+    use DAO\ReservationxService as ReservationxService;
     use Controllers\AdminController as AdminController;  
 
     class AdditionalServiceController {
@@ -21,6 +22,7 @@
             $this->additionalServiceDAO = new AdditionalServiceDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
+            $this->reservationxserviceDAO = new ReservationxService();
             $this->adminController = new AdminController();
         }
 
@@ -62,10 +64,8 @@
                     $servicexparasol->setIdParasol($parasol->getId());
                     $this->servicexparasolDAO->add($servicexparasol);
                 }
-
             }
 
-            
 
             if ($lastId == false) {
                 return false;
@@ -103,9 +103,10 @@
             return true;
         }        
 
-        public function addServicePath($alert = "", $success = "") {
+        public function addServicePath($alert = "", $success = "", $id_reservation) {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Añadir servicio adicional";
+                $this->reservationxserviceDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-service.php");

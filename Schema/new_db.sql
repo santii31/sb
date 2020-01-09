@@ -605,7 +605,7 @@ CREATE TABLE reservation (
 );
 
 
-DROP procedure IF EXISTS `reservation_add`;
+/*DROP procedure IF EXISTS `reservation_add`;
 DELIMITER $$
 CREATE PROCEDURE reservation_add (
                                     IN date_start DATE,
@@ -630,6 +630,36 @@ BEGIN
 	)
     VALUES
         (date_start, date_end, total_price, FK_id_client, FK_id_admin, FK_id_tent, FK_id_parking, date_register, register_by);
+END$$*/
+
+
+DROP PROCEDURE IF EXISTS `reservation_add`;
+DELIMITER $$
+CREATE PROCEDURE reservation_add(
+								IN date_start DATE,
+                                    IN date_end DATE,
+                                    IN total_price FLOAT,
+                                    IN FK_id_client INT,                                    
+                                    IN FK_id_tent INT,
+                                    IN FK_id_parking INT,
+                                    IN date_register DATE,
+                                    IN register_by INT,
+								    OUT lastId int
+							)
+BEGIN
+    INSERT INTO reservation (
+			reservation.date_start,
+            reservation.date_end,
+            reservation.total_price,
+            reservation.FK_id_client,            
+            reservation.FK_id_tent,
+            reservation.FK_id_parking,
+            reservation.date_register,
+            reservation.register_by
+	)
+    VALUES (date_start, date_end, total_price, FK_id_client, FK_id_admin, FK_id_tent, FK_id_parking, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 
@@ -1554,7 +1584,13 @@ BEGIN
 	WHERE (reservationxservice.FK_id_reservation = id_reservation);             
 END$$
 
-
+DROP procedure IF EXISTS `reservationxservice_getAll`;
+DELIMITER $$
+CREATE PROCEDURE reservationxservice_getAll ()
+BEGIN
+	SELECT *
+    FROM `reservationxservice`;
+END$$
 
 ---------------------------- LOCKER ---------------------------
 

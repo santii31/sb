@@ -116,6 +116,25 @@
             }
 		}
 
+		public function getAll() {
+			try {
+				$query = "CALL reservationxservice_getAll()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$reservationxservice = new ReservationxService();
+					$reservationxserviceTemp->setIdReservation($row["reservationxservice.FK_id_reservation"]);
+					$reservationxserviceTemp->setIdService($row["reservationxservice.FK_id_service"]);
+                    
+					array_push($this->reservationxserviceList, $reservationxserviceTemp);
+				}
+				return $this->reservationxserviceList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+		
+
 		/*
 		public function updateUser(User $user) {
 			try {								
