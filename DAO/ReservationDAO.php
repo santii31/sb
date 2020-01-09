@@ -185,11 +185,35 @@
 			}
 		}		
 
-		// hacer
-		public function update(Reservation $reservation, Admin $updateBy) {
-
+		public function checkDateStart(Reservation $reservation) {
+			try {
+				$query = "CALL service_checkDateStart(?, ?)";
+				$parameters["date_start"] = $reservation->getDateStart();
+				$parameters["id"] = $reservation->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+			}
 		}
 
+		public function update(Reservation $reservation, Admin $updateBy) {
+			try {								
+				$query = "CALL reservation_update(?, ?, ?, ?, ?)";		
+				$parameters["date_start"] = $reservation->getDateStart();
+				$parameters["date_end"] = $reservation->getDateEnd();
+				$parameters["total_price"] = $reservation->getPrice();
+				$parameters["date_update"] = date("Y-m-d");
+				$parameters["update_by"] = $updateBy->getId();  
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
+
+			} catch (Exception $e) {
+				return false;				
+			}
+		}
+		
     }
 
  ?>

@@ -9,7 +9,7 @@
         private $adminController;
 
         public function __construct() {        
-            $this->adminController = new AdminController();
+            // $this->adminController = new AdminController();
         }
 
         public function Index($alert = "") {        

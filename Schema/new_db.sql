@@ -752,6 +752,18 @@ BEGIN
     WHERE `reservation`.`id` = id;	
 END$$
 
+
+DROP procedure IF EXISTS `reservation_checkDateStart`;
+DELIMITER $$
+CREATE PROCEDURE reservation_checkDateStart (
+                                        IN date_start DATE,
+                                        IN id INT
+                                    )
+BEGIN
+    SELECT `reservation`.`id` FROM `reservation` WHERE `reservation`.`date_start` = date_start AND `reservation`.`id` != id;	
+END$$
+
+
 DROP procedure IF EXISTS `reservation_update`;
 DELIMITER $$
 CREATE PROCEDURE reservation_update (
@@ -778,8 +790,6 @@ BEGIN
     WHERE 
         `reservation`.`id` = id;	
 END$$
-
-
 
 
 
