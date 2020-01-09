@@ -106,7 +106,7 @@
 								<div class="tents-sea-container">
                                     
                                     <?php foreach ($firstSeaRow as $tent): ?>
-									<div class="tent-sea">	                                        
+									<div>	                                        
                                         <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
 											<div class="tent-sea">
 												<span>
@@ -178,7 +178,7 @@
                                 <div class="tents-sea-container">
                                     
                                     <?php foreach ($secondSeaRow as $tent): ?>
-                                    <div class="tent-sea">										
+                                    <div>										
                                         <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
                                             <div class="tent-sea">
                                                 <span>
@@ -305,7 +305,7 @@
                                 <div class="tents-sea-container">
                                     
                                     <?php foreach ($thirdSeaRow as $tent): ?>
-                                    <div class="tent-sea">										
+                                    <div>										
                                         <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
                                             <div class="tent-sea">
                                                 <span>
@@ -432,7 +432,7 @@
 								<div class="tents-sea-container">
 
                                     <?php foreach ($fourthSeaRow as $tent): ?>
-                                        <div class="tent-sea">										
+                                        <div>										
                                             <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
                                                 <div class="tent-sea">
                                                     <span>
@@ -559,7 +559,7 @@
                                 <div class="tents-sea-container">
                                     				
                                     <?php foreach ($fifthSeaRow as $tent): ?>
-                                        <div class="tent-sea">										
+                                        <div>										
                                             <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
                                                 <div class="tent-sea">
                                                     <span>
@@ -686,7 +686,7 @@
                                 <div class="tents-sea-container">
                                     
                                     <?php foreach ($sixthSeaRow as $tent): ?>
-                                        <div class="tent-sea">										
+                                        <div>										
                                             <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
                                                 <div class="tent-sea">
                                                     <span>
@@ -805,7 +805,7 @@
 								<div class="tents-sea-container">
 
                                     <?php foreach ($seventhSeaRow as $tent): ?>
-                                        <div class="tent-sea">										
+                                        <div>										
                                             <a class="modal-trigger" href="#show<?= $tent->getId(); ?>">
                                                 <div class="tent-sea">
                                                     <span>
