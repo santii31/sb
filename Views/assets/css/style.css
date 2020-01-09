@@ -336,6 +336,10 @@ nav .input-field label.active i {
     border-right: 5em solid #006699;     
 }
 
+.map-container a {
+    color: #2b2f3a;
+}
+
 .tents-sea-container {    
     background-color: #dbd1b4;    
     margin: 3rem 0 0 0;
@@ -422,12 +426,6 @@ nav .input-field label.active i {
     clip-path: polygon(50% 0%, 100% 0, 100% 75%, 50% 100%, 0% 75%, 0 0);
 }
 
-.tent-container > a,
-.parasol-item > a,
-.tents-sea-container a {
-    color: #2b2f3a;
-}
-
 .tent-inverse {
     -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 50% 100%, 0 100%, 0% 25%);
     clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 50% 100%, 0 100%, 0% 25%);    
@@ -436,8 +434,7 @@ nav .input-field label.active i {
 .tent:hover,
 .tent-sea:hover, 
 .parasol-item:hover {
-    background-color: #edf1f5;
-    background-color: rgba(1, 1, 1, .3) !important;
+    background-color: #edf1f5 !important;    
 }
 
 /* Extra tents */
@@ -476,6 +473,10 @@ nav .input-field label.active i {
 .last-hall .tents-sea-container {    
     justify-content: flex-start;    
     margin: 3.4rem 0 0 0;
+}
+
+.last-hall .beach-tents {    
+    grid-template-columns: repeat(15, 1fr);
 }
 
 /* Parking map */

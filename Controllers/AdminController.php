@@ -5,6 +5,7 @@
     use Models\Admin as Admin;
 	use DAO\AdminDAO as AdminDAO;
     use Controllers\HomeController as HomeController;    
+    use Controllers\BeachTentController as BeachTentController;        
     
     class AdminController {
 
@@ -113,11 +114,10 @@
 
         public function dashboard() {
             if ($admin = $this->isLogged()) {      
-                $title = "Dashboard";
-                require_once(VIEWS_PATH . "head.php");
-                require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "dashboard.php");
-                require_once(VIEWS_PATH . "footer.php");
+                
+                $beachTentController = new BeachTentController();                
+                return $beachTentController->showMap();          
+                      
             } else {
                 return $this->userPath();
             }

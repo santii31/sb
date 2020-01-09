@@ -1,8 +1,7 @@
 <?php
 
     namespace Models;
-    
-    
+        
     class Locker {
 
         private $id;
@@ -33,7 +32,6 @@
         public function setPrice($price) {
             $this->price = $price;            
         }
-
 
     }
 

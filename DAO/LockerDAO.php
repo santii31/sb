@@ -35,7 +35,6 @@
 				return false;
 			}
 		}
-
 		
 		public function getAll() {
 			try {
