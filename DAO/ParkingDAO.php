@@ -3,11 +3,12 @@
     namespace DAO;
 
 	use \Exception as Exception;
-    use Models\Parking as Parking;	
+	use Models\Parking as Parking;	
+	use Models\ParkingHall as ParkingHall;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
-    class BeachTentDAO {
+    class ParkingDAO {
 
 		private $connection;
 		private $parkingList = array();
@@ -73,6 +74,32 @@
 			}
 		}		
 				
+		public function getN_row($row) {
+			try {
+				$parkings = array();
+				$query = "CALL parking_getN_row(?)";
+				$parameters["start"] = $row;				
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
+				foreach ($results as $row) {					
+					$parking = new Parking();
+                    $parking->setId($row["id"]);
+					$parking->setNumber($row["number"]);
+					$parking->setPrice($row["price"]);                    					
+					$parking->setPosition($row["position"]);      
+
+					$hall = new ParkingHall();
+					$hall->setNumber($row["hall_number"]);
+
+					$parking->setHall($hall);
+
+					array_push($parkings, $parking);
+				}
+				return $parkings;	
+			} catch (Exception $e) {
+				return false;								
+			}
+		}		
 
     }
 
