@@ -16,23 +16,28 @@
 
 		public function __construct() { }
 
-		
+
 		public function add(AdditionalService $additionalService, Admin $registerBy) {
-			try {					
-				$query = "CALL service_add(?, ?, ?, ?)";
+            try {
+                $query = "CALL service_add(?, ?, ?, ?, @lastId)";
 				$parameters["description"] = $additionalService->getDescription();
 				$parameters["total"] = $additionalService->getTotal();	
 				$parameters["date_register"] = date("Y-m-d");
-				$parameters["register_by"] = $registerBy->getId();			
-				$this->connection = Connection::getInstance();
-				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
-				return true;
-			}
-			catch (Exception $e) {
-				// throw $e;
-				return false;
-			}
-		}        				
+				$parameters["register_by"] = $registerBy->getId();
+				$this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                
+                foreach ($results as $row) {
+                    $lastId = $row['lastId'];                
+                }
+                
+                return $lastId;
+            } catch(Exception $e) {
+                return false;
+            }            
+        }
+		
+		        				
 
 		public function getById(AdditionalService $additionalService) {
 			try {				

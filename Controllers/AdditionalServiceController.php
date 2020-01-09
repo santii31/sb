@@ -3,44 +3,85 @@
     namespace Controllers;    
 
     use Models\AdditionalService as AdditionalService;
+    use Models\Locker as Locker;
+    use Models\Parasol as Parasol;
     use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
+    use DAO\ServicexLocker as ServicexLocker;
+    use DAO\ServicexParasol as ServicexParasol;
     use Controllers\AdminController as AdminController;  
 
     class AdditionalServiceController {
 
         private $additionalServiceDAO;
+        private $servicexlockerDAO;
+        private $servicexparasolDAO;
         private $adminController;
 
         public function __construct() {
             $this->additionalServiceDAO = new AdditionalServiceDAO();
+            $this->servicexlockerDAO = new ServicexLockerDAO();
+            $this->servicexparasolDAO = new ServicexParasolDAO();
             $this->adminController = new AdminController();
         }
 
-        private function add($description, $total) {
+        private function add($description, $locker, $parasol) {
+
             
+            $total = 0;
+            $flag1 = FALSE;
+            $flag2 = FALSE;
             $description_s = filter_var($description, FILTER_SANITIZE_STRING);
 
             $additionalService = new AdditionalService();
             $additionalService->setDescription( strtolower($description_s) );
-            $additionalService->setTotal($total);            
+            
+            $servicexlocker = new ServicexLocker();
+            $servicexparasol = new ServicexParasol();
 
-            $register_by = $this->adminController->isLogged();
+            if(!empty($locker)) {
+                $total = $total + $locker->getPrice();
+                $flag1 = TRUE;
+            }
 
-            if ($this->additionalServiceDAO->add($additionalService, $register_by)) {
-                return true;
-            } else {
+            if(!empty($parasol)) {
+                $total = $total + $parasol->getPrice();
+                $flag2 = TRUE;
+            }
+
+            if($flag1 || $flag2) {
+                $additionalService->setTotal($total);
+                $register_by = $this->adminController->isLogged();
+                $lastId = $this->additionalServiceDAO->add($additionalService, $register_by);
+                if($flag1) {
+                    $servicexlocker->setIdService($lastId);
+                    $servicexlocker->setIdLocker($locker->setId());
+                    $this->servicexlockerDAO->add($servicexlocker);
+                }
+                if($flag2) {
+                    $servicexparasol->setIdService($lastId);
+                    $servicexparasol->setIdParasol($parasol->getId());
+                    $this->servicexparasolDAO->add($servicexparasol);
+                }
+
+            }
+
+            
+
+            if ($lastId == false) {
                 return false;
+            } else {
+                return true;
             }
         }
 
-        public function addService($description, $total) {
-            if ($this->isFormRegisterNotEmpty($description, $total)) {   
+        public function addService($description, $locker, $parasol) {
+            if ($this->isFormRegisterNotEmpty($description, $locker, $parasol)) {   
                                                                              
                 $serviceTemp = new AdditionalService();
                 $serviceTemp->setDescription( strtolower($description) );                
                 
 				if ($this->additionalServiceDAO->getByDescription($serviceTemp) == null) {                                                       
-                    if ($this->add($description, $total)) {                                                
+                    if ($this->add($description, $locker, $parasol)) {                                                
                         return $this->addServicePath(null, SERVICE_ADDED);
                     } else {                        
                         return $this->addServicePath(DB_ERROR, null);        
@@ -51,10 +92,14 @@
             return $this->addServicePath(EMPTY_FIELDS, null);            
         }
 
-        private function isFormRegisterNotEmpty($description, $total) {
-            if (empty($description) || empty($total)) {
+        private function isFormRegisterNotEmpty($description, $locker, $parasol) {
+            if (empty($description) ) {
                 return false;
             }
+            if (empty($locker) || empty($parasol)) {
+                return false;
+            }
+
             return true;
         }        
 

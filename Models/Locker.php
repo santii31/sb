@@ -2,13 +2,13 @@
 
     namespace Models;
     
-
-    class Parasol {
+    
+    class Locker {
 
         private $id;
-        private $parasol_number;
+        private $locker_number;
         private $price;
-    
+        
         public function getId() {
             return $this->id;
         }
@@ -17,12 +17,12 @@
             $this->id = $id;            
         }
 
-        public function getParasolNumber() {
-            return $this->parasol_number;
+        public function getLockerNumber() {
+            return $this->locker_number;
         }
 
-        public function setParasolNumber($parasol_number) {
-            $this->parasol_number = $parasol_number;
+        public function setLockerNumber($locker_number) {
+            $this->locker_number = $locker_number;
             return $this;
         }
         
@@ -34,7 +34,6 @@
             $this->price = $price;            
         }
 
-    
 
     }
 
