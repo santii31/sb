@@ -35,14 +35,37 @@
                         <?php endif; ?>
 
                         <div class="row">
-                            <div class="input-field col s6">
-                                <input id="name" type="text" name="description" class="validate" required>
-                                <label for="name">Descripción</label>
+                        <div class="input-field col s6">
+                                <select name="parasol">
+                                    <option value="" disabled selected>Seleccione numero de sombrilla</option>
+                                    <?php foreach ($parasoles as $parasol): ?>
+                                        <option value="<?= $parasol; ?>">
+                                            <?= $parasol->getNumber(); ?>
+                                        </option>
+                                    <?php endforeach; ?> 
+                                </select>
+                                <label>Sombrilla</label>
                             </div>
+
                             <div class="input-field col s6">
-                                <input id="last_name" type="number" name="price" class="validate" required>
-                                <label for="last_name">Precio</label>
-                            </div>                         
+                                <select name="locker">
+                                    <option value="" disabled selected>Seleccione numero de locker</option>
+                                    <?php foreach ($lockers as $locker): ?>
+                                        <option value="<?= $locker; ?>">
+                                            <?= $locker->getNumber(); ?>
+                                        </option>
+                                    <?php endforeach; ?> 
+                                </select>
+                                <label>Locker</label>
+                            </div>
+
+
+                            <div class="input-field col s6">
+                                <input id="last_name" type="text" name="description" class="validate" required>
+                                <label for="last_name">Descripcion</label>
+                            </div>
+                            
+                                                     
                         </div>                        
                         <div class="row">
                             <div class="col s12 center-align">

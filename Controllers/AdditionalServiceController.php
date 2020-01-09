@@ -6,8 +6,12 @@
     use Models\Locker as Locker;
     use Models\Parasol as Parasol;
     use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
+    use DAO\ParasolDAO as ParasolDAO;
+    use DAO\LockerDAO as LockerDAO;
+    use DAO\ReservationDAO as ReservationDAO;
     use DAO\ServicexLocker as ServicexLocker;
     use DAO\ServicexParasol as ServicexParasol;
+    use DAO\ReservationxService as ReservationxService;
     use Controllers\AdminController as AdminController;  
 
     class AdditionalServiceController {
@@ -19,12 +23,17 @@
 
         public function __construct() {
             $this->additionalServiceDAO = new AdditionalServiceDAO();
+            $this->parasolDAO = new ParasolDAO();
+            $this->lockerDAO = new LockerDAO();
+            $this->reservationDAO = new ReservationDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
+            $this->reservationxserviceDAO = new ReservationxService();
             $this->adminController = new AdminController();
         }
 
         private function add($description, $locker, $parasol) {
+
             
             $total = 0;
             $flag1 = FALSE;
@@ -61,7 +70,8 @@
                     $servicexparasol->setIdParasol($parasol->getId());
                     $this->servicexparasolDAO->add($servicexparasol);
                 }
-            }            
+            }
+
 
             if ($lastId == false) {
                 return false;
@@ -99,9 +109,35 @@
             return true;
         }        
 
-        public function addServicePath($alert = "", $success = "") {
+        public function addServicePath($alert = "", $success = "", $id_reservation) {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Añadir servicio adicional";
+                
+                $reservations = $this->reservationDAO->getAll();
+                $parasoles1 = $this->parasolesDAO->getAll();
+                $lockers1 = $this->lockerDAO->getAll();
+                $lockers = array();
+                $parasoles = array();
+                foreach($reservations as $reservation) {
+                    foreach($lockers1 as $locker) {
+                        if( ($reservation->getAvailability() == true) && ($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) != false ) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) )->getId() == $locker->getId() ) {
+
+                        }else {
+                            array_push($lockers, $locker);       
+                        }
+                    } 
+                }
+
+                foreach($reservations as $reservation) {
+                    foreach($parasoles1 as $parasol) {
+                        if( ($reservation->getAvailability() == true) && ($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) != false ) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) )->getId() == $parasol->getId() ) {
+
+                        }else {
+                            array_push($parasoles, $parasol);       
+                        }
+                    } 
+                }
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-service.php");

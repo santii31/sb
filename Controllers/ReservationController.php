@@ -7,40 +7,66 @@
     use Models\Client as Client;
     use Models\BeachTent as BeachTent;
     use Models\Parking as Parking;
-	use DAO\ReservationDAO as ReservationDAO;
+    use Models\ReservationxService as ReservationxService;
+    use DAO\ReservationDAO as ReservationDAO;
+    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     
     class ReservationController {
 
         private $reservationDAO;
+        private $reservationxserviceDAO;
         private $adminController;
         private $clientController;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();
+            $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->clientController = new ClientController();
             $this->adminController = new AdminController();
         }               
 
-        private function add($date_start, $date_end, $total_price, Client $client, BeachTent $beach_tent, Parking $parking) {
+        private function add($date_start, $date_end, $total_price, Client $client, BeachTent $beach_tent, Parking $parking, AdditionalService $additional_service) {
             
-            $reservation = new Reservation();            
+            $reservation = new Reservation();
+            $reservationxservice = new ReservationxService();
+
             $reservation->setDateStart($date_start);
             $reservation->setDateEnd($date_end);
             $reservation->setPrice($total_price);
             $reservation->setClient($client);
             $reservation->setBeachTent($beach_tent);
-            $reservation->setParking($parking);  
-            
+            $reservation->setParking($parking);
+
             $register_by = $this->adminController->isLogged();
 
-            if ($this->reservationDAO->add($reservation, $register_by)) {
-                return true;
-            } else {
-                return false;
+            if(!empty($additional_service)) {
+                $reservation->setPrice($total_price + $additional_service->getTotal());
             }
-        }     
+
+            $lastId = $this->reservationDAO->add($reservation, $register_by);
+
+            if($this->isServiceNotEmpty($additional_service)) {
+                $reservationxservice->setIdReservation($lastId);
+                $reservationxservice->setIdService($additional_service->getIdService());
+                $this->reservationxserviceDAO->add($reservationxservice);
+            }
+
+
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        
+        private function isServiceNotEmpty(AdditionalService $additional_service) {
+            if (empty($additional_service)) {
+                    return false;
+            }
+            return true;
+        }
 
         public function addReservation($date_start, $date_end, $total_price, Client $client, BeachTent $beach_tent, Parking $parking) {
             if ($this->isFormRegisterNotEmpty($beach_tent, $client, $date_start, $date_end, $total_price, $parking, $additional_service)) {

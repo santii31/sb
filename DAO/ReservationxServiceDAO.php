@@ -116,6 +116,54 @@
             }
 		}
 
+		public function getAll() {
+			try {
+				$query = "CALL reservationxservice_getAll()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$reservationxservice = new ReservationxService();
+					$reservationxserviceTemp->setIdReservation($row["reservationxservice.FK_id_reservation"]);
+					$reservationxserviceTemp->setIdService($row["reservationxservice.FK_id_service"]);
+                    
+					array_push($this->reservationxserviceList, $reservationxserviceTemp);
+				}
+				return $this->reservationxserviceList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+		
+
+		/*
+		public function updateUser(User $user) {
+			try {								
+				$query = "UPDATE " . $this->tableName . " AS user 
+														  INNER JOIN profile_users AS p_user ON user.FK_dni =  p_user.dni
+														 SET
+															 user.mail = :mail,
+															 user.password = :password,
+															 p_user.dni = :dni,
+															 p_user.first_name = :firstname,
+															 p_user.last_name = :lastname
+ 														 WHERE 
+															 p_user.dni = :dni";					
+				
+				$parameters["mail"] = $user->getMail();
+				$parameters["password"] = $user->getPassword();
+				$parameters["dni"] = $user->getDni();
+				$parameters["firstname"] = $user->getFirstName();
+				$parameters["lastname"] = $user->getLastName();				
+
+				$this->connection = Connection::GetInstance();
+				$this->connection->ExecuteNonQuery($query, $parameters);								
+				return true;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+		*/
+
     }
 
  ?>
