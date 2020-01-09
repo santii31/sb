@@ -33,274 +33,41 @@
 							
 							<!-- Only for the first hall -->
 							<div class="extra-beach-tents">
-								<!-- Normal flow tents -->
+								
+                                <!-- Normal flow tents -->
 								<div class="beach-tents">									
-									<div class="tent-container">	
+									<div class="tent-container">											
+                                        <?php foreach ($firstRow as $tent): ?>
+                                            <div>                                                
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <div class="tent">
+                                                        <span>
+                                                            <?= $tent->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                                
+                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        <?php endforeach; ?> 
 										
-										<div>
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent yellow">
-													<span>150</span>		
-												</div>      
-											</a>
-	
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div> 
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent green">
-												<span>150</span>		
-											</div>      
-										</a>
+										<!-- <div class="tent-special-container">
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent fuchsia">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent orange">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent blue">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent green">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent fuchsia">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent">
-												<span>150</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>
-										
-										<div class="tent-special-container">
-
-											<!-- Modal Trigger -->
+											
 											<a class="modal-trigger" href="#modal1">
 												<div class="tent tent-inverse">
 													<span>150B</span>		
 												</div>      
 											</a>
 
-											<!-- Modal Structure -->
+											
 											<div id="modal1" class="modal modal-fixed-footer">
 												<div class="modal-content">
 													<h4>Carpa nº 150</h4>
@@ -312,14 +79,14 @@
 											</div>		
 
 
-											<!-- Modal Trigger -->
+											
 											<a class="modal-trigger" href="#modal1">
 												<div class="tent">
 													<span>150</span>		
 												</div>      
 											</a>
 
-											<!-- Modal Structure -->
+											
 											<div id="modal1" class="modal modal-fixed-footer">
 												<div class="modal-content">
 													<h4>Carpa nº 150</h4>
@@ -330,25 +97,27 @@
 												</div>
 											</div>		
 
-										</div>
+										</div> -->
 																		
 									</div>
 								</div>
 
-								<!-- CARPAS AL MAR x6 -->
+								<!-- Sea tent -->
 								<div class="tents-sea-container">
-									<div class="tent-sea">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
+                                    
+                                    <?php foreach ($firstSeaRow as $tent): ?>
+									<div class="tent-sea">	                                        
+                                        <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
 											<div class="tent-sea">
-												<span>2</span>		
+												<span>
+                                                    <?= $tent->getNumber(); ?>
+                                                </span>		
 											</div>      
 										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
+										
+										<div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
 											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
+												<h4>Carpa nº <?= $tent->getNumber(); ?></h4>
 												<p>A bunch of text</p>
 											</div>
 											<div class="modal-footer">
@@ -356,44 +125,8 @@
 											</div>
 										</div> 
 									</div>
-									<div class="tent-sea">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
+                                    <?php endforeach; ?>									
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 
-									</div>
-									<div class="tent-sea">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 
-									</div>
 								</div>								
 
 							</div>                
@@ -401,6 +134,7 @@
 							<!-- 1 Halls -->
 							<div class="beach-hall">
 							
+                                <!-- Normal flow -->
 								<div class="hall-container">
 									<!-- Hall number -->
 									<div class="hall-name">
@@ -408,835 +142,126 @@
 									</div>
 																	
 									<div class="beach-tents">
-
-										<!-- First row  -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>										
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>											
-
-										<!-- Second row -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>				
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>	
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>																														
+                                            
+                                        <?php $i = 1; ?>                                        
+                                        <?php foreach ($secondRow as $row): ?>
+                                                
+                                            <div class="tent-container">
+                                                <a class="modal-trigger" href="#modal<?=$row->getId();?>">                                      
+                                                    <?php if ($i <= 16): ?>
+                                                    <div class="tent tent-inverse">
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif?>
+                                                        <span>
+                                                            <?= $row->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                            
+                                                <div id="modal<?=$row->getId();?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Carpa nº <?= $row->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                        
+                                                                                            
+                                        <?php $i++; ?>
+                                        <?php endforeach; ?> 							
 									</div>
 								</div>
-								
-								<!-- CARPAS AL MAR x6 -->
-								<div class="tents-sea-container">
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
+								                                
+                                <!-- Sea tent -->
+                                <div class="tents-sea-container">
+                                    
+                                    <?php foreach ($secondSeaRow as $tent): ?>
+                                    <div class="tent-sea">										
+                                        <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                            <div class="tent-sea">
+                                                <span>
+                                                    <?= $tent->getNumber(); ?>
+                                                </span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <?php endforeach; ?>									
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>									
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
+                                </div>   
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>4</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>5</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>6</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>																																													
-								</div>
-
-								<!-- SOMBRILLAS x3 -->
-								<div class="parasol">                        
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>																		
-								</div>
+                                <!-- Parasol -->
+                                <div class="parasol">                        
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>1</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>2</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>3</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>																		
+                                </div>
 
 							</div>							
 
 							<!-- 2 Halls -->
 							<div class="beach-hall">
 							
+                                <!-- Normal flow -->
 								<div class="hall-container">
 									<!-- Hall number -->
 									<div class="hall-name">
@@ -1244,835 +269,126 @@
 									</div>
 																	
 									<div class="beach-tents">
-
-										<!-- First row  -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>										
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>											
-
-										<!-- Second row -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>				
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>	
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>																														
+                                            
+                                        <?php $i = 1; ?>                                        
+                                        <?php foreach ($thirdRow as $row): ?>
+                                                
+                                            <div class="tent-container">
+                                                <a class="modal-trigger" href="#modal<?=$row->getId();?>">                                      
+                                                    <?php if ($i <= 16): ?>
+                                                    <div class="tent tent-inverse">
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif?>
+                                                        <span>
+                                                            <?= $row->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                            
+                                                <div id="modal<?=$row->getId();?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Carpa nº <?= $row->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                        
+                                                                                            
+                                        <?php $i++; ?>
+                                        <?php endforeach; ?> 							
 									</div>
 								</div>
-								
-								<!-- CARPAS AL MAR x6 -->
-								<div class="tents-sea-container">
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
+								                                
+                                <!-- Sea tent -->
+                                <div class="tents-sea-container">
+                                    
+                                    <?php foreach ($thirdSeaRow as $tent): ?>
+                                    <div class="tent-sea">										
+                                        <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                            <div class="tent-sea">
+                                                <span>
+                                                    <?= $tent->getNumber(); ?>
+                                                </span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <?php endforeach; ?>									
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>									
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
+                                </div> 
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
+                                <!-- Parasol -->
+                                <div class="parasol">                        
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>1</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>2</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>3</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>																		
+                                </div>
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>4</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>5</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>6</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>																																													
-								</div>
-
-								<!-- SOMBRILLAS x3 -->
-								<div class="parasol">                        
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>																		
-								</div>
-
-							</div>
+							</div>																				
 
 							<!-- 3 Halls -->
 							<div class="beach-hall">
-							
+                                
+                                <!-- Normal flow -->
 								<div class="hall-container">
 									<!-- Hall number -->
 									<div class="hall-name">
@@ -2080,2880 +396,443 @@
 									</div>
 																	
 									<div class="beach-tents">
-
-										<!-- First row  -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>										
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>											
-
-										<!-- Second row -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>				
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>	
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>																														
+                                            
+                                        <?php $i = 1; ?>                                        
+                                        <?php foreach ($fourthRow as $row): ?>
+                                                
+                                            <div class="tent-container">
+                                                <a class="modal-trigger" href="#modal<?=$row->getId();?>">                                      
+                                                    <?php if ($i <= 16): ?>
+                                                    <div class="tent tent-inverse">
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif?>
+                                                        <span>
+                                                            <?= $row->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                            
+                                                <div id="modal<?=$row->getId();?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Carpa nº <?= $row->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                        
+                                                                                            
+                                        <?php $i++; ?>
+                                        <?php endforeach; ?> 							
 									</div>
 								</div>
-								
-								<!-- CARPAS AL MAR x6 -->
+								                                
+                                <!-- Sea tent -->
 								<div class="tents-sea-container">
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>									
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
+                                    <?php foreach ($fourthSeaRow as $tent): ?>
+                                        <div class="tent-sea">										
+                                            <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $tent->getNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                    <p>A bunch of text</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <?php endforeach; ?>									
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>4</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>5</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>6</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>																																													
 								</div>
 
-								<!-- SOMBRILLAS x3 -->
-								<div class="parasol">                        
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>																		
-								</div>
+                                <!-- Parasol -->
+                                <div class="parasol">                        
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>1</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>2</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>3</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>																		
+                                </div>
 
 							</div>
 
-							<!-- 4 Halls -->
+                            <!-- 4 Halls -->
+							<div class="beach-hall">
+							    
+                                <!-- Normal flow -->
+                                <div class="hall-container">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 4
+                                    </div>
+                                                                    
+                                    <div class="beach-tents">
+                                            
+                                        <?php $i = 1; ?>                                        
+                                        <?php foreach ($fifthRow as $row): ?>
+                                                
+                                            <div class="tent-container">
+                                                <a class="modal-trigger" href="#modal<?=$row->getId();?>">                                      
+                                                    <?php if ($i <= 16): ?>
+                                                    <div class="tent tent-inverse">
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif?>
+                                                        <span>
+                                                            <?= $row->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                            
+                                                <div id="modal<?=$row->getId();?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Carpa nº <?= $row->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                        
+                                                                                            
+                                        <?php $i++; ?>
+                                        <?php endforeach; ?> 							
+                                    </div>
+                                </div>
+                                                                
+                                <!-- Sea tent -->
+                                <div class="tents-sea-container">
+                                    				
+                                    <?php foreach ($fifthSeaRow as $tent): ?>
+                                        <div class="tent-sea">										
+                                            <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $tent->getNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                    <p>A bunch of text</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <?php endforeach; ?>									
+                                                    																																							
+                                </div>
+
+                                <!-- Parasol -->
+                                <div class="parasol">                        
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>1</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>2</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>3</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>																		
+                                </div>
+
+                            </div>
+
+                            <!-- 5 Halls -->
 							<div class="beach-hall">
 							
-								<div class="hall-container">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 4
-									</div>
-																	
-									<div class="beach-tents">
-
-										<!-- First row  -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>										
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>											
-
-										<!-- Second row -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>				
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>	
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>																														
-									</div>
-								</div>
-								
-								<!-- CARPAS AL MAR x6 -->
-								<div class="tents-sea-container">
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>									
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>4</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>5</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>6</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>																																													
-								</div>
-
-								<!-- SOMBRILLAS x3 -->
-								<div class="parasol">                        
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>																		
-								</div>
-
-							</div>
-
-							<!-- 5 Halls -->
-							<div class="beach-hall">
-							
-								<div class="hall-container">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 5
-									</div>
-																	
-									<div class="beach-tents">
-
-										<!-- First row  -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>										
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>											
-
-										<!-- Second row -->
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>				
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>	
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent">
-													<span>220</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>																														
-									</div>
-								</div>
-								
-								<!-- CARPAS AL MAR x6 -->
-								<div class="tents-sea-container">
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>									
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>4</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>5</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>
-									<div class="tent-container">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>6</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div>                     
-									</div>																																													
-								</div>
-
-								<!-- SOMBRILLAS x3 -->
-								<div class="parasol">                        
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="parasol-item">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>																		
-								</div>
-
-							</div>																					
+                                <!-- Normal flow -->
+                                <div class="hall-container">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 5
+                                    </div>
+                                                                    
+                                    <div class="beach-tents">
+                                            
+                                        <?php $i = 1; ?>                                        
+                                        <?php foreach ($sixthRow as $row): ?>
+                                                
+                                            <div class="tent-container">
+                                                <a class="modal-trigger" href="#modal<?=$row->getId();?>">                                      
+                                                    <?php if ($i <= 16): ?>
+                                                    <div class="tent tent-inverse">
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif?>
+                                                        <span>
+                                                            <?= $row->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                            
+                                                <div id="modal<?=$row->getId();?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Carpa nº <?= $row->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                        
+                                                                                            
+                                        <?php $i++; ?>
+                                        <?php endforeach; ?> 							
+                                    </div>
+                                </div>
+                                                                
+                                <!-- Sea tent -->
+                                <div class="tents-sea-container">
+                                    
+                                    <?php foreach ($sixthSeaRow as $tent): ?>
+                                        <div class="tent-sea">										
+                                            <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $tent->getNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                    <p>A bunch of text</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <?php endforeach; ?>									
+
+                                </div>
+
+                                <!-- Parasol -->
+                                <div class="parasol">                        
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>1</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>2</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>
+                                    <div class="parasol-item">                                        
+                                        <a class="modal-trigger" href="#">
+                                            <div class="tent-sea">
+                                                <span>3</span>		
+                                            </div>      
+                                        </a>
+                                        
+                                        <div id="" class="modal modal-fixed-footer">
+                                            <div class="modal-content">
+                                                <h4>Carpa nº 150</h4>
+                                                <p>A bunch of text</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            </div>
+                                        </div> 										
+                                    </div>																		
+                                </div>
+
+                            </div>
 
 							<!-- 6 Last Hall -->
 							<div class="beach-hall last-hall">
 							
+                                <!-- Normal flow -->
 								<div class="hall-container ">
 									<!-- Hall number -->
 									<div class="hall-name">
 										Pasillo 6
 									</div>
 																	
-									<div class="beach-tents">
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-										
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>
-
-										<div class="tent-container">
-											<!-- Modal Trigger -->
-											<a class="modal-trigger" href="#modal1">
-												<div class="tent tent-inverse">
-													<span>150</span>		
-												</div>      
-											</a>
-
-											<!-- Modal Structure -->
-											<div id="modal1" class="modal modal-fixed-footer">
-												<div class="modal-content">
-													<h4>Carpa nº 150</h4>
-													<p>A bunch of text</p>
-												</div>
-												<div class="modal-footer">
-													<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-												</div>
-											</div>                     
-										</div>																
-									</div>
+                                    <div class="beach-tents">                                        
+                                        <?php foreach ($seventhRow as $tent): ?>
+                                            <div class="tent-container">                                                
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <div class="tent tent-inverse">
+                                                        <span>
+                                                            <?= $tent->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>
+                                                
+                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>                     
+                                            </div>                                                                                
+                                        <?php endforeach; ?>
+                                    </div>
 								</div>
 								
-								<!-- CARPAS AL MAR x3 -->
+                                <!-- Sea tent -->
 								<div class="tents-sea-container">
-									<div class="tent-sea">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>1</span>		
-											</div>      
-										</a>
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="tent-sea">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>2</span>		
-											</div>      
-										</a>
+                                    <?php foreach ($seventhSeaRow as $tent): ?>
+                                        <div class="tent-sea">										
+                                            <a class="modal-trigger" href="#show<?= $tent->getId(); ?>">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $tent->getNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="show<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
+                                                    <p>A bunch of text</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <?php endforeach; ?>									
 
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>
-									<div class="tent-sea">
-										<!-- Modal Trigger -->
-										<a class="modal-trigger" href="#modal1">
-											<div class="tent-sea">
-												<span>3</span>		
-											</div>      
-										</a>
-
-										<!-- Modal Structure -->
-										<div id="modal1" class="modal modal-fixed-footer">
-											<div class="modal-content">
-												<h4>Carpa nº 150</h4>
-												<p>A bunch of text</p>
-											</div>
-											<div class="modal-footer">
-												<a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-											</div>
-										</div> 										
-									</div>									
 								</div>
-							</div>																								   
+
+							</div>	
 
 						</div>
+                        
+                    </div>
     			</div>
 			</div>
 		</div>

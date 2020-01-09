@@ -486,13 +486,25 @@ END$$
 
 
 
+----------------------------- HALLS -----------------------------
+
+CREATE TABLE hall (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `number` INT NOT NULL
+)
+
+
 ----------------------------- BEACH-TENT -----------------------------
 
 CREATE TABLE beach_tent (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`number` INT NOT NULL UNIQUE,
+	`number` VARCHAR(50) NOT NULL UNIQUE,
     `price` FLOAT NOT NULL,
-    `position` INT NOT NULL         -- ?
+    `position` INT NOT NULL,
+    `sea` BOOLEAN NOT NULL DEFAULT FALSE,
+    `FK_id_hall` INT NOT NULL,
+    CONSTRAINT `FK_id_hall_beach_tent` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`),
+
 );
 
 
@@ -500,15 +512,21 @@ DROP procedure IF EXISTS `beach_tent_add`;
 DELIMITER $$
 CREATE PROCEDURE beach_tent_add (
                                     IN number INT,
-                                    IN price FLOAT                                
+                                    IN price FLOAT,
+                                    IN position INT,
+                                    IN sea BOOLEAN,
+                                    IN FK_id_hall INT                                
                                 )
 BEGIN
 	INSERT INTO beach_tent (
 			beach_tent.number,
-            beach_tent.price          
+            beach_tent.price,
+            beach_tent.position,
+            beach_tent.sea,
+            beach_tent.FK_id_hall          
 	)
     VALUES
-        (number, price);
+        (number, price, position, sea, FK_id_hall);
 END$$
 
 
@@ -534,6 +552,33 @@ CREATE PROCEDURE tent_getAll ()
 BEGIN
 	SELECT * FROM `beach_tent` ORDER BY number ASC;
     
+END$$
+
+
+DROP procedure IF EXISTS `tent_getN_row`;
+DELIMITER $$
+CREATE PROCEDURE tent_getN_row (IN start INT)
+BEGIN
+	SELECT         
+        `beach_tent`.*, 
+        `hall`.`number` AS hall_number 
+    FROM `beach_tent` 
+    INNER JOIN `hall` ON `beach_tent`.`FK_id_hall` = `hall`.`id`
+    WHERE (`beach_tent`.`FK_id_hall` = start ) AND  (`beach_tent`.`sea` = 0)
+    ORDER BY `beach_tent`.`position` ASC;     
+END$$
+
+DROP procedure IF EXISTS `tent_getSea_N_row`;
+DELIMITER $$
+CREATE PROCEDURE tent_getSea_N_row (IN start INT)
+BEGIN
+	SELECT         
+        `beach_tent`.*, 
+        `hall`.`number` AS hall_number 
+    FROM `beach_tent` 
+    INNER JOIN `hall` ON `beach_tent`.`FK_id_hall` = `hall`.`id`
+    WHERE (`beach_tent`.`FK_id_hall` = start ) AND  (`beach_tent`.`sea` = 1)
+    ORDER BY `beach_tent`.`position` ASC;     
 END$$
 
 
@@ -1318,6 +1363,66 @@ END$$
 
 
 
+---------------------------- PARASOL ---------------------------
+
+CREATE TABLE parasol (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `parasol_number` INT NOT NULL UNIQUE,
+    `price` FLOAT NOT NULL
+);
+
+
+DROP procedure IF EXISTS `parasol_getById`;
+DELIMITER $$
+CREATE PROCEDURE parasol_getById (IN id INT)
+BEGIN
+	SELECT *             
+    FROM `parasol` 
+    WHERE `parasol`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `parasol_getAll`;
+DELIMITER $$
+CREATE PROCEDURE parasol_getAll ()
+BEGIN
+	SELECT *
+    FROM `parasol` 
+    ORDER BY price ASC;
+END$$
+
+
+
+---------------------------- LOCKER ---------------------------
+
+CREATE TABLE locker (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `locker_number` INT NOT NULL UNIQUE,
+    `price` FLOAT NOT NULL
+);
+
+
+DROP procedure IF EXISTS `locker_getById`;
+DELIMITER $$
+CREATE PROCEDURE locker_getById (IN id INT)
+BEGIN
+	SELECT * 
+    FROM `locker` 
+    WHERE `locker`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `locker_getAll`;
+DELIMITER $$
+CREATE PROCEDURE locker_getAll ()
+BEGIN
+	SELECT *
+    FROM `locker`
+    ORDER BY price ASC;
+END$$
+
+
+
 ------------------------- ADDITIONAL SERVICE ---------------------
 
 CREATE TABLE additional_service (
@@ -1342,23 +1447,25 @@ CREATE TABLE additional_service (
 );
 
 
-DROP procedure IF EXISTS `service_add`;
+DROP PROCEDURE IF EXISTS `service_add`;
 DELIMITER $$
-CREATE PROCEDURE service_add (
-                                IN description VARCHAR(255),                                
+CREATE PROCEDURE service_add(
+								IN description VARCHAR(255),                                
                                 IN total FLOAT,
                                 IN date_register DATE,
-                                IN register_by INT
-                             )
+                                IN register_by INT,
+								OUT lastId int
+							)
 BEGIN
-	INSERT INTO additional_service (
+    INSERT INTO additional_service (
 			additional_service.description,
             additional_service.total,                   
             additional_service.date_register,
             additional_service.register_by
 	)
-    VALUES
-        (description, total, date_register, register_by);
+    VALUES (description, total, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 
@@ -1466,6 +1573,122 @@ BEGIN
         `additional_service`.`update_by` = update_by
     WHERE 
         `additional_service`.`id` = id;	
+END$$
+
+
+
+---------------------------- SERVICEXPARASOL ---------------------------
+
+CREATE TABLE servicexparasol (
+    `FK_id_service` INT NOT NULL,
+    `FK_id_parasol` INT NOT NULL,
+    CONSTRAINT `FK_id_service_servicexparasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`),
+    CONSTRAINT `FK_id_parasol_servicexparasol` FOREIGN KEY (`FK_id_parasol`) REFERENCES `parasol`(`id`)
+);
+
+
+DROP procedure IF EXISTS `servicexparasol_add`;
+DELIMITER $$
+CREATE PROCEDURE servicexparasol_add (
+                                            IN FK_id_service INT,                                
+                                            IN FK_id_parasol INT
+                                        )
+BEGIN
+	INSERT INTO servicexparasol (
+			servicexlocker.FK_id_service,
+            servicexlocker.FK_id_parasol                   
+	)
+    VALUES
+        (FK_id_service, FK_id_parasol);
+END$$
+
+
+DROP procedure IF EXISTS `servicexparasol_getServiceByParasol`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexparasol_getServiceByParasol (IN id_parasol INT)
+BEGIN
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
+	FROM servicexparasol
+	INNER JOIN additional_service ON servicexparasol.FK_id_service = additional_service.id
+	
+	WHERE (servicexparasol.FK_id_parasol = id_parasol)
+	GROUP BY additional_service.id;
+END$$
+
+
+DROP procedure IF EXISTS `servicexparasol_getParasolByService`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexparasol_getParasolByService (IN id_service INT)
+BEGIN
+	SELECT parasol.id AS parasol_id,
+           parasol.parasol_number AS parasol_number,
+           parasol.price AS parasol_price
+	FROM servicexparasol
+	INNER JOIN parasol ON servicexparasol.FK_id_parasol = parasol.id
+	
+	WHERE (servicexparasol.FK_id_service = id_service)
+	GROUP BY parasol.id;
+END$$
+
+
+
+---------------------------- SERVICEXLOCKER ---------------------------
+
+CREATE TABLE servicexlocker (
+    `FK_id_service` INT NOT NULL,
+    `FK_id_locker` INT NOT NULL,
+    CONSTRAINT `FK_id_service_servicexlocker` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`),
+    CONSTRAINT `FK_id_locker_servicexlocker` FOREIGN KEY (`FK_id_locker`) REFERENCES `locker`(`id`)
+);
+
+
+DROP procedure IF EXISTS `servicexlocker_add`;
+DELIMITER $$
+CREATE PROCEDURE servicexlocker_add (
+                                            IN FK_id_service INT,                                
+                                            IN FK_id_locker INT
+                                        )
+BEGIN
+	INSERT INTO servicexlocker (
+			servicexlocker.FK_id_service,
+            servicexlocker.FK_id_locker                   
+	)
+    VALUES
+        (FK_id_service, FK_id_locker);
+END$$
+
+
+DROP procedure IF EXISTS `servicexlocker_getServiceByLocker`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexlocker_getServiceByLocker (IN id_locker INT)
+BEGIN
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
+	FROM servicexlocker
+	INNER JOIN additional_service ON servicexlocker.FK_id_service = additional_service.id
+	
+	WHERE (servicexlocker.FK_id_locker = id_locker)
+	GROUP BY additional_service.id;
+END$$
+
+
+DROP procedure IF EXISTS `servicexlocker_getLockerByService`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexlocker_getLockerByService (IN id_service INT)
+BEGIN
+	SELECT locker.id AS locker_id,
+           locker.locker_number AS locker_number,
+           locker.price AS locker_price
+	FROM servicexlocker
+	INNER JOIN locker ON servicexlocker.FK_id_locker = locker.id
+	
+	WHERE (servicexlocker.FK_id_service = id_service)
+	GROUP BY locker.id;
 END$$
 
 
