@@ -2,7 +2,6 @@
 
     namespace Models;
     
-
     class Parasol {
 
         private $id;
@@ -33,7 +32,6 @@
         public function setPrice($price) {
             $this->price = $price;            
         }
-
     
 
     }

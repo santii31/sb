@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-01-2020 a las 23:39:26
+-- Tiempo de generación: 09-01-2020 a las 20:19:29
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -72,15 +72,6 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`id` = id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `beach_tent_add` (IN `number` INT, IN `price` FLOAT)  BEGIN
-	INSERT INTO beach_tent (
-			beach_tent.number,
-            beach_tent.price          
-	)
-    VALUES
-        (number, price);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `category_add` (IN `name` VARCHAR(255), IN `description` VARCHAR(255))  BEGIN
@@ -241,185 +232,26 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_update` (IN `name` VARCHAR(2
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `locker_getAll` ()  BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.total AS service_total,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent.is_active AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
+	SELECT *
     FROM `locker`
-    INNER JOIN additional_service ON locker.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY price ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `locker_getById` (IN `id` INT)  BEGIN
-	SELECT locker.id AS locker_id,
-           locker.locker_number AS locker_number,
-           locker.price AS locker_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.total AS service_total,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive 
+	SELECT * 
     FROM `locker` 
-    INNER JOIN additional_service ON locker.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `locker`.`id` = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getAll` ()  BEGIN
-	SELECT parasol.id AS parasol_id,
-           parasol.parasol_number AS parasol_number,
-           parasol.price AS parasol_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
+	SELECT *
     FROM `parasol` 
-    INNER JOIN additional_service ON parasol.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY price ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getById` (IN `id` INT)  BEGIN
-	SELECT parasol.id AS parasol_id,
-           parasol.parasol_number AS parasol_number,
-           parasol.price AS parasol_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive             
+	SELECT *             
     FROM `parasol` 
-    INNER JOIN additional_service ON parasol.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `parasol`.`id` = id;
 END$$
 
@@ -854,15 +686,80 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getById` (IN `id` INT) 
     WHERE `reservation`.`id` = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `service_add` (IN `description` VARCHAR(255), IN `total` FLOAT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
-	INSERT INTO additional_service (
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexlocker_add` (IN `FK_id_service` INT, IN `FK_id_locker` INT)  BEGIN
+	INSERT INTO servicexlocker (
+			servicexlocker.FK_id_service,
+            servicexlocker.FK_id_locker                   
+	)
+    VALUES
+        (FK_id_service, FK_id_locker);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexlocker_getLockerByService` (IN `id_service` INT)  BEGIN
+	SELECT locker.id AS locker_id,
+           locker.locker_number AS locker_number,
+           locker.price AS locker_price
+	FROM servicexlocker
+	INNER JOIN locker ON servicexlocker.FK_id_locker = locker.id
+	
+	WHERE (servicexlocker.FK_id_service = id_service)
+	GROUP BY locker.id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexlocker_getServiceByLocker` (IN `id_locker` INT)  BEGIN
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
+	FROM servicexlocker
+	INNER JOIN additional_service ON servicexlocker.FK_id_service = additional_service.id
+	
+	WHERE (servicexlocker.FK_id_locker = id_locker)
+	GROUP BY additional_service.id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_add` (IN `FK_id_service` INT, IN `FK_id_parasol` INT)  BEGIN
+	INSERT INTO servicexparasol (
+			servicexlocker.FK_id_service,
+            servicexlocker.FK_id_parasol                   
+	)
+    VALUES
+        (FK_id_service, FK_id_parasol);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_getParasolByService` (IN `id_service` INT)  BEGIN
+	SELECT parasol.id AS parasol_id,
+           parasol.parasol_number AS parasol_number,
+           parasol.price AS parasol_price
+	FROM servicexparasol
+	INNER JOIN parasol ON servicexparasol.FK_id_parasol = parasol.id
+	
+	WHERE (servicexparasol.FK_id_service = id_service)
+	GROUP BY parasol.id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_getServiceByParasol` (IN `id_parasol` INT)  BEGIN
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
+	FROM servicexparasol
+	INNER JOIN additional_service ON servicexparasol.FK_id_service = additional_service.id
+	
+	WHERE (servicexparasol.FK_id_parasol = id_parasol)
+	GROUP BY additional_service.id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `service_add` (IN `description` VARCHAR(255), IN `total` FLOAT, IN `date_register` DATE, IN `register_by` INT, OUT `lastId` INT)  BEGIN
+    INSERT INTO additional_service (
 			additional_service.description,
             additional_service.total,                   
             additional_service.date_register,
             additional_service.register_by
 	)
-    VALUES
-        (description, total, date_register, register_by);
+    VALUES (description, total, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `service_checkDescription` (IN `description` VARCHAR(255), IN `id` INT)  BEGIN
@@ -999,17 +896,24 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_update` (IN `name` VARCHAR(25
         `staff`.`id` = id;	
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getAll` ()  BEGIN
-	SELECT * FROM `beach_tent` ORDER BY number ASC;
-    
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getN_row` (IN `start` INT)  BEGIN
+	SELECT         
+        `beach_tent`.*, 
+        `hall`.`number` AS hall_number 
+    FROM `beach_tent` 
+    INNER JOIN `hall` ON `beach_tent`.`FK_id_hall` = `hall`.`id`
+    WHERE (`beach_tent`.`FK_id_hall` = start ) AND  (`beach_tent`.`sea` = 0)
+    ORDER BY `beach_tent`.`position` ASC;     
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getById` (IN `id` INT)  BEGIN
-	SELECT * FROM `beach_tent` WHERE `beach_tent`.`id` = id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getByNumber` (IN `number` INT)  BEGIN
-	SELECT * FROM `beach_tent` WHERE `beach_tent`.`number` = number;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getSea_N_row` (IN `start` INT)  BEGIN
+	SELECT         
+        `beach_tent`.*, 
+        `hall`.`number` AS hall_number 
+    FROM `beach_tent` 
+    INNER JOIN `hall` ON `beach_tent`.`FK_id_hall` = `hall`.`id`
+    WHERE (`beach_tent`.`FK_id_hall` = start ) AND  (`beach_tent`.`sea` = 1)
+    ORDER BY `beach_tent`.`position` ASC;     
 END$$
 
 DELIMITER ;
@@ -1083,9 +987,244 @@ INSERT INTO `admin` (`id`, `name`, `lastname`, `dni`, `email`, `password`, `is_a
 
 CREATE TABLE `beach_tent` (
   `id` int(11) NOT NULL,
-  `number` int(11) NOT NULL,
-  `price` float NOT NULL
+  `number` varchar(50) COLLATE utf8_bin NOT NULL,
+  `price` float NOT NULL,
+  `position` int(11) NOT NULL,
+  `sea` tinyint(1) NOT NULL DEFAULT 0,
+  `FK_id_hall` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `beach_tent`
+--
+
+INSERT INTO `beach_tent` (`id`, `number`, `price`, `position`, `sea`, `FK_id_hall`) VALUES
+(2, '16B', 100, 0, 0, 1),
+(3, '16', 100, 1, 0, 1),
+(4, '15', 100, 2, 0, 1),
+(5, '14', 100, 3, 0, 1),
+(6, '13', 100, 4, 0, 1),
+(7, '12', 100, 5, 0, 1),
+(8, '11', 100, 6, 0, 1),
+(9, '10', 100, 7, 0, 1),
+(10, '9', 100, 8, 0, 1),
+(11, '8', 100, 9, 0, 1),
+(12, '7', 100, 10, 0, 1),
+(13, '6', 100, 11, 0, 1),
+(14, '5', 100, 12, 0, 1),
+(15, '4', 100, 13, 0, 1),
+(16, '3', 100, 14, 0, 1),
+(17, '17B', 100, 15, 0, 2),
+(18, '17', 100, 16, 0, 2),
+(19, '18', 100, 17, 0, 2),
+(20, '19', 100, 18, 0, 2),
+(21, '20', 100, 19, 0, 2),
+(22, '21', 100, 20, 0, 2),
+(23, '22', 100, 21, 0, 2),
+(24, '23', 100, 22, 0, 2),
+(25, '24', 100, 23, 0, 2),
+(26, '25', 100, 24, 0, 2),
+(27, '26', 100, 25, 0, 2),
+(28, '27', 100, 26, 0, 2),
+(29, '28', 100, 27, 0, 2),
+(30, '29', 100, 28, 0, 2),
+(31, '30', 100, 29, 0, 2),
+(32, '30B', 100, 30, 0, 2),
+(33, '49B', 100, 31, 0, 2),
+(34, '49', 100, 32, 0, 2),
+(35, '48', 100, 33, 0, 2),
+(36, '47', 100, 34, 0, 2),
+(37, '46', 100, 35, 0, 2),
+(38, '45', 100, 36, 0, 2),
+(39, '44', 100, 37, 0, 2),
+(40, '43', 100, 38, 0, 2),
+(41, '42', 100, 39, 0, 2),
+(42, '41', 100, 40, 0, 2),
+(43, '40', 100, 41, 0, 2),
+(44, '39', 100, 42, 0, 2),
+(45, '38', 100, 43, 0, 2),
+(46, '37', 100, 44, 0, 2),
+(47, '36', 100, 45, 0, 2),
+(48, '36B', 100, 46, 0, 2),
+(49, '50B', 100, 47, 0, 3),
+(50, '50', 100, 48, 0, 3),
+(51, '51', 100, 49, 0, 3),
+(52, '52', 100, 50, 0, 3),
+(53, '53', 100, 51, 0, 3),
+(54, '54', 100, 52, 0, 3),
+(55, '55', 100, 53, 0, 3),
+(56, '56', 100, 54, 0, 3),
+(57, '57', 100, 55, 0, 3),
+(58, '58', 100, 56, 0, 3),
+(59, '59', 100, 57, 0, 3),
+(60, '60', 100, 58, 0, 3),
+(61, '61', 100, 59, 0, 3),
+(62, '62', 100, 60, 0, 3),
+(63, '63', 100, 61, 0, 3),
+(64, '63B', 100, 62, 0, 3),
+(65, '82B', 100, 63, 0, 3),
+(66, '82', 100, 64, 0, 3),
+(67, '81', 100, 65, 0, 3),
+(68, '80', 100, 66, 0, 3),
+(69, '79', 100, 67, 0, 3),
+(70, '78', 100, 68, 0, 3),
+(71, '77', 100, 69, 0, 3),
+(72, '76', 100, 70, 0, 3),
+(73, '75', 100, 71, 0, 3),
+(74, '74', 100, 72, 0, 3),
+(75, '73', 100, 73, 0, 3),
+(76, '72', 100, 74, 0, 3),
+(77, '71', 100, 75, 0, 3),
+(78, '70', 100, 76, 0, 3),
+(79, '69', 100, 77, 0, 3),
+(80, '69B', 100, 78, 0, 3),
+(81, '83B', 100, 79, 0, 4),
+(82, '83', 100, 80, 0, 4),
+(83, '84', 100, 81, 0, 4),
+(84, '85', 100, 82, 0, 4),
+(85, '86', 100, 83, 0, 4),
+(86, '87', 100, 84, 0, 4),
+(87, '88', 100, 85, 0, 4),
+(88, '89', 100, 86, 0, 4),
+(89, '90', 100, 87, 0, 4),
+(90, '91', 100, 88, 0, 4),
+(91, '92', 100, 89, 0, 4),
+(92, '93', 100, 90, 0, 4),
+(93, '94', 100, 91, 0, 4),
+(94, '95', 100, 92, 0, 4),
+(95, '96', 100, 93, 0, 4),
+(96, '96B', 100, 94, 0, 4),
+(97, '115B', 100, 95, 0, 4),
+(98, '115', 100, 96, 0, 4),
+(99, '114', 100, 97, 0, 4),
+(100, '113', 100, 98, 0, 4),
+(101, '112', 100, 99, 0, 4),
+(102, '111', 100, 100, 0, 4),
+(103, '110', 100, 101, 0, 4),
+(104, '109', 100, 102, 0, 4),
+(105, '108', 100, 103, 0, 4),
+(106, '107', 100, 104, 0, 4),
+(107, '106', 100, 105, 0, 4),
+(108, '105', 100, 106, 0, 4),
+(109, '104', 100, 107, 0, 4),
+(110, '103', 100, 108, 0, 4),
+(111, '102', 100, 109, 0, 4),
+(112, '102B', 100, 110, 0, 4),
+(113, '116B', 100, 111, 0, 5),
+(114, '116', 100, 112, 0, 5),
+(115, '117', 100, 113, 0, 5),
+(116, '118', 100, 114, 0, 5),
+(117, '119', 100, 115, 0, 5),
+(118, '120', 100, 116, 0, 5),
+(119, '121', 100, 117, 0, 5),
+(120, '122', 100, 118, 0, 5),
+(121, '123', 100, 119, 0, 5),
+(122, '124', 100, 120, 0, 5),
+(123, '125', 100, 121, 0, 5),
+(124, '126', 100, 122, 0, 5),
+(125, '127', 100, 123, 0, 5),
+(126, '128', 100, 124, 0, 5),
+(127, '129', 100, 125, 0, 5),
+(128, '129B', 100, 126, 0, 5),
+(129, '148B', 100, 127, 0, 5),
+(130, '148', 100, 128, 0, 5),
+(131, '147', 100, 129, 0, 5),
+(132, '146', 100, 130, 0, 5),
+(133, '145', 100, 131, 0, 5),
+(134, '144', 100, 132, 0, 5),
+(135, '143', 100, 133, 0, 5),
+(136, '142', 100, 134, 0, 5),
+(137, '141', 100, 135, 0, 5),
+(138, '140', 100, 136, 0, 5),
+(139, '139', 100, 137, 0, 5),
+(140, '138', 100, 138, 0, 5),
+(141, '137', 100, 139, 0, 5),
+(142, '136', 100, 140, 0, 5),
+(143, '135', 100, 141, 0, 5),
+(144, '135B', 100, 142, 0, 5),
+(145, '149B', 100, 143, 0, 6),
+(146, '149', 100, 144, 0, 6),
+(147, '150', 100, 145, 0, 6),
+(148, '151', 100, 146, 0, 6),
+(149, '152', 100, 147, 0, 6),
+(150, '153', 100, 148, 0, 6),
+(151, '154', 100, 149, 0, 6),
+(152, '155', 100, 150, 0, 6),
+(153, '156', 100, 151, 0, 6),
+(154, '157', 100, 152, 0, 6),
+(155, '158', 100, 153, 0, 6),
+(156, '159', 100, 154, 0, 6),
+(157, '160', 100, 155, 0, 6),
+(158, '161', 100, 156, 0, 6),
+(161, '162', 100, 157, 0, 6),
+(163, '162B', 100, 158, 0, 6),
+(164, '181B', 100, 160, 0, 6),
+(165, '181', 100, 161, 0, 6),
+(166, '180', 100, 162, 0, 6),
+(167, '179', 100, 163, 0, 6),
+(168, '178', 100, 164, 0, 6),
+(169, '177', 100, 165, 0, 6),
+(170, '176', 100, 166, 0, 6),
+(171, '175', 100, 167, 0, 6),
+(172, '174', 100, 168, 0, 6),
+(173, '173', 100, 169, 0, 6),
+(174, '172', 100, 170, 0, 6),
+(175, '171', 100, 171, 0, 6),
+(176, '170', 100, 172, 0, 6),
+(177, '169', 100, 173, 0, 6),
+(178, '168', 100, 174, 0, 6),
+(179, '168B', 100, 175, 0, 6),
+(180, '182B', 100, 176, 0, 7),
+(181, '182', 100, 177, 0, 7),
+(182, '183', 100, 178, 0, 7),
+(183, '184', 100, 179, 0, 7),
+(184, '185', 100, 180, 0, 7),
+(185, '186', 100, 181, 0, 7),
+(186, '187', 100, 182, 0, 7),
+(187, '188', 100, 183, 0, 7),
+(188, '189', 100, 184, 0, 7),
+(189, '190', 100, 185, 0, 7),
+(190, '191', 100, 186, 0, 7),
+(191, '192', 100, 187, 0, 7),
+(192, '193', 100, 188, 0, 7),
+(193, '194', 100, 189, 0, 7),
+(194, '195', 100, 190, 0, 7),
+(196, '1', 100, 190, 1, 1),
+(197, '2', 100, 191, 1, 1),
+(198, '2B', 100, 192, 1, 1),
+(199, '31', 100, 193, 1, 2),
+(200, '32', 100, 194, 1, 2),
+(201, '33', 100, 195, 1, 2),
+(202, '34', 100, 196, 1, 2),
+(203, '35', 100, 197, 1, 2),
+(204, '35B', 100, 198, 1, 2),
+(205, '64', 100, 199, 1, 3),
+(206, '65', 100, 200, 1, 3),
+(207, '66', 100, 201, 1, 3),
+(208, '67', 100, 202, 1, 3),
+(209, '68', 100, 203, 1, 3),
+(210, '68B', 100, 204, 1, 3),
+(211, '97', 100, 205, 1, 4),
+(212, '98', 100, 206, 1, 4),
+(213, '99', 100, 207, 1, 4),
+(214, '100', 100, 208, 1, 4),
+(215, '101', 100, 209, 1, 4),
+(216, '101B', 100, 210, 1, 4),
+(217, '130', 100, 211, 1, 5),
+(218, '131', 100, 212, 1, 5),
+(219, '132', 100, 213, 1, 5),
+(220, '133', 100, 214, 1, 5),
+(221, '134', 100, 215, 1, 5),
+(222, '134B', 100, 216, 1, 5),
+(223, '163', 100, 217, 1, 6),
+(224, '164', 100, 218, 1, 6),
+(225, '165', 100, 219, 1, 6),
+(226, '166', 100, 220, 1, 6),
+(227, '167', 100, 221, 1, 6),
+(228, '167B', 100, 222, 1, 6),
+(229, '195B', 100, 223, 1, 7),
+(230, '196', 100, 224, 1, 7),
+(231, '197', 100, 225, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -1165,14 +1304,38 @@ INSERT INTO `client_potential` (`id`, `name`, `lastname`, `address`, `city`, `em
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `hall`
+--
+
+CREATE TABLE `hall` (
+  `id` int(11) NOT NULL,
+  `number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `hall`
+--
+
+INSERT INTO `hall` (`id`, `number`) VALUES
+(1, 0),
+(2, 1),
+(3, 2),
+(4, 3),
+(5, 4),
+(6, 5),
+(7, 6),
+(8, 7);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `locker`
 --
 
 CREATE TABLE `locker` (
   `id` int(11) NOT NULL,
   `locker_number` int(11) NOT NULL,
-  `price` float NOT NULL,
-  `FK_id_service` int(11) NOT NULL
+  `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -1184,8 +1347,7 @@ CREATE TABLE `locker` (
 CREATE TABLE `parasol` (
   `id` int(11) NOT NULL,
   `parasol_number` int(11) NOT NULL,
-  `price` float NOT NULL,
-  `FK_id_service` int(11) NOT NULL
+  `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -1312,6 +1474,28 @@ CREATE TABLE `reservationxservice` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `servicexlocker`
+--
+
+CREATE TABLE `servicexlocker` (
+  `FK_id_service` int(11) NOT NULL,
+  `FK_id_locker` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `servicexparasol`
+--
+
+CREATE TABLE `servicexparasol` (
+  `FK_id_service` int(11) NOT NULL,
+  `FK_id_parasol` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `staff`
 --
 
@@ -1376,7 +1560,8 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `beach_tent`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `number` (`number`);
+  ADD UNIQUE KEY `number` (`number`),
+  ADD KEY `FK_id_hall_beach_tent` (`FK_id_hall`);
 
 --
 -- Indices de la tabla `category`
@@ -1407,20 +1592,24 @@ ALTER TABLE `client_potential`
   ADD KEY `FK_client_potential_update_by` (`update_by`);
 
 --
+-- Indices de la tabla `hall`
+--
+ALTER TABLE `hall`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `locker`
 --
 ALTER TABLE `locker`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `locker_number` (`locker_number`),
-  ADD KEY `FK_id_service_locker` (`FK_id_service`);
+  ADD UNIQUE KEY `locker_number` (`locker_number`);
 
 --
 -- Indices de la tabla `parasol`
 --
 ALTER TABLE `parasol`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `parasol_number` (`parasol_number`),
-  ADD KEY `FK_id_service_parasol` (`FK_id_service`);
+  ADD UNIQUE KEY `parasol_number` (`parasol_number`);
 
 --
 -- Indices de la tabla `parking`
@@ -1480,6 +1669,20 @@ ALTER TABLE `reservationxservice`
   ADD KEY `FK_id_service_reservationxservice` (`FK_id_service`);
 
 --
+-- Indices de la tabla `servicexlocker`
+--
+ALTER TABLE `servicexlocker`
+  ADD KEY `FK_id_service_servicexlocker` (`FK_id_service`),
+  ADD KEY `FK_id_locker_servicexlocker` (`FK_id_locker`);
+
+--
+-- Indices de la tabla `servicexparasol`
+--
+ALTER TABLE `servicexparasol`
+  ADD KEY `FK_id_service_servicexparasol` (`FK_id_service`),
+  ADD KEY `FK_id_parasol_servicexparasol` (`FK_id_parasol`);
+
+--
 -- Indices de la tabla `staff`
 --
 ALTER TABLE `staff`
@@ -1509,7 +1712,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `beach_tent`
 --
 ALTER TABLE `beach_tent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
 
 --
 -- AUTO_INCREMENT de la tabla `category`
@@ -1528,6 +1731,12 @@ ALTER TABLE `client`
 --
 ALTER TABLE `client_potential`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `hall`
+--
+ALTER TABLE `hall`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `locker`
@@ -1594,6 +1803,12 @@ ALTER TABLE `admin`
   ADD CONSTRAINT `FK_admin_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
+-- Filtros para la tabla `beach_tent`
+--
+ALTER TABLE `beach_tent`
+  ADD CONSTRAINT `FK_id_hall_beach_tent` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`);
+
+--
 -- Filtros para la tabla `client`
 --
 ALTER TABLE `client`
@@ -1610,18 +1825,6 @@ ALTER TABLE `client_potential`
   ADD CONSTRAINT `FK_client_potential_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_client_potential_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_client_potential_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
-
---
--- Filtros para la tabla `locker`
---
-ALTER TABLE `locker`
-  ADD CONSTRAINT `FK_id_service_locker` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
-
---
--- Filtros para la tabla `parasol`
---
-ALTER TABLE `parasol`
-  ADD CONSTRAINT `FK_id_service_parasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
 -- Filtros para la tabla `product`
@@ -1667,6 +1870,20 @@ ALTER TABLE `reservation`
 ALTER TABLE `reservationxservice`
   ADD CONSTRAINT `FK_id_reservation_reservationxservice` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`),
   ADD CONSTRAINT `FK_id_service_reservationxservice` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
+
+--
+-- Filtros para la tabla `servicexlocker`
+--
+ALTER TABLE `servicexlocker`
+  ADD CONSTRAINT `FK_id_locker_servicexlocker` FOREIGN KEY (`FK_id_locker`) REFERENCES `locker` (`id`),
+  ADD CONSTRAINT `FK_id_service_servicexlocker` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
+
+--
+-- Filtros para la tabla `servicexparasol`
+--
+ALTER TABLE `servicexparasol`
+  ADD CONSTRAINT `FK_id_parasol_servicexparasol` FOREIGN KEY (`FK_id_parasol`) REFERENCES `parasol` (`id`),
+  ADD CONSTRAINT `FK_id_service_servicexparasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
 -- Filtros para la tabla `staff`

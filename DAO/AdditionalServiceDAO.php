@@ -35,9 +35,7 @@
             } catch(Exception $e) {
                 return false;
             }            
-        }
-		
-		        				
+        }	
 
 		public function getById(AdditionalService $additionalService) {
 			try {				

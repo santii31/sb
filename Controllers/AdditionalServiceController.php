@@ -25,7 +25,6 @@
         }
 
         private function add($description, $locker, $parasol) {
-
             
             $total = 0;
             $flag1 = FALSE;
@@ -62,10 +61,7 @@
                     $servicexparasol->setIdParasol($parasol->getId());
                     $this->servicexparasolDAO->add($servicexparasol);
                 }
-
-            }
-
-            
+            }            
 
             if ($lastId == false) {
                 return false;
