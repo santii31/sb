@@ -43,6 +43,7 @@
         <li><a href="<?= FRONT_ROOT ?>admin/logout"><i class="material-icons">keyboard_backspace</i>Desconectarse</a></li>        
         <li><div class="divider"></div></li>                
         <ul>
+            <!-- aca empiezan los links -->
             <li>
                 <a href="<?= FRONT_ROOT ?>admin/dashboard" class="valign-wrapper waves-effect">
                     <i class="material-icons left">dashboard</i>
@@ -192,12 +193,12 @@
             <div class="sidenav-container">
                 <ul>
 
-                    <li>
+                    <!-- <li>
                         <a href="<?= FRONT_ROOT ?>admin/dashboard" class="valign-wrapper waves-effect">
                             <i class="material-icons left">dashboard</i>
                             Dashboard
                         </a>
-                    </li>
+                    </li> -->
 
                     <ul class="collapsible">
                         <li>
@@ -205,9 +206,9 @@
                             <div class="collapsible-body">
                                 <ul>
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>beachTent/addReservePath" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>beachTent/showMap" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">add_circle</i>
-                                            Añadir reserva
+                                            Ver mapa de reservas
                                         </a>
                                     </li>                                           
                                 </ul>
@@ -219,13 +220,7 @@
                         <li>
                             <div class="collapsible-header"><i class="material-icons">directions_car</i>Estacionamiento</div>
                             <div class="collapsible-body">
-                                <ul>
-                                    <li>
-                                        <a href="<?= FRONT_ROOT ?>parking/addParkingPath" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">add_circle_outline</i>
-                                            Añadir reserva
-                                        </a>
-                                    </li>                                     
+                                <ul>                                           
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>parking/parkingMap" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">map</i>

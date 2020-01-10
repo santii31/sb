@@ -771,10 +771,10 @@
 							
                                 <!-- Normal flow -->
 								<div class="hall-container ">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 6
-									</div>
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 6
+                                    </div>
 																	
                                     <div class="beach-tents">                                        
                                         <?php foreach ($seventhRow as $tent): ?>

@@ -69,7 +69,7 @@
 
         public function addProductPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                                       
-                $title = "Añadir producto";
+                $title = "Producto - Añadir";
                 $categories = $this->categoryDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
@@ -125,7 +125,7 @@
 
         public function updateProductPath($id_client, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
-                $title = "Modificar informacion";       
+                $title = "Producto - Modificar informacion";       
                 $productTemp = new Product();
                 $productTemp->setId($id_product);                
                 $product = $this->productDAO->getById($productTemp);                    

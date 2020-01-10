@@ -86,7 +86,7 @@
         
         public function addClientPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                       
-                $title = "Añadir cliente";
+                $title = "Clientes - Añadir";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-client.php");
@@ -139,7 +139,7 @@
 
         public function updatePath($id_client, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
-                $title = "Modificar informacion";       
+                $title = "Cliente - Modificar informacion";       
                 $clientTemp = new Client();
                 $clientTemp->setId($id_client);                
                 $client = $this->clientDAO->getById($clientTemp);                    

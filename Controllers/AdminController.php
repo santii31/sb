@@ -18,7 +18,7 @@
         
 		public function addAdminPath($alert = "", $success = "") {
             if ($admin = $this->isLogged()) {                                       
-                $title = "Añadir administrador";
+                $title = "Administrador - Añadir";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-admin.php");
@@ -140,11 +140,8 @@
             if ($admin = $this->isLogged()) {      
                 $title = "Administrador - Modificar informacion";       
                 $admTemp = new Admin();
-                $admTemp->setId($id_user);
-                
+                $admTemp->setId($id_user);                
                 $adm = $this->adminDAO->getById($admTemp);
-                // ver como hacer con la contraseña encriptada
-
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "update-admin.php");
@@ -155,8 +152,8 @@
         }        
 
         // arreglar
-        public function update($id, $name, $lastName, $dni, $email, $password) {
-			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email, $password) && $this->validateEmailForm($email)) {     
+        public function update($id, $name, $lastName, $dni, $email) {
+			if ($this->isFormRegisterNotEmpty($name, $lastName, $dni, $email) && $this->validateEmailForm($email)) {     
                 
                 $adminTemp = new Admin();
                 $adminTemp->setEmail($email);

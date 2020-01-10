@@ -84,7 +84,7 @@
 
         public function addStaffPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                         
-                $title = "Añadir personal";
+                $title = "Personal - Añadir";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-staff.php");

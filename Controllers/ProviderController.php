@@ -78,7 +78,7 @@
 
         public function addProviderPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                         
-                $title = "Añadir proveedor";
+                $title = "Proveedor - Añadir";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-provider.php");
