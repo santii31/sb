@@ -323,7 +323,7 @@
                                         </a>
                                     </li>  
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>email/send" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">email</i>
                                             Enviar correo
                                         </a>
