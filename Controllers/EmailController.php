@@ -25,15 +25,20 @@
             }
         } 
         
-        public function sendEmail($title, $msg, $client = "", $client_p = "", $admin = "") {
+        public function sendEmail($check, $title, $msg) {
 
-            echo '<pre>';
-            var_dump( '$title - ' . $title);
-            var_dump( '$msg - ' . $msg);
-            var_dump('$client - ' . $client);
-            var_dump('$client_p - ' . $client_p);
-            var_dump('$admin - ' . $admin);
-            echo '</pre>';
+            if (sizeof($check) > 0) {
+                if ( in_array("client", $check) ) {
+                    echo 'cliente si <br>';
+                }
+                if ( in_array("client_p", $check) ) {
+                    echo 'cliente potencial si <br>';
+                }
+                if ( in_array("admin", $check) ) {
+                    echo 'admin si <br>';
+                }
+
+            }
 
         }
 

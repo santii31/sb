@@ -34,19 +34,18 @@
                         </div>                
                         <?php endif; ?>
 
-
                         <div class="mail-filter">
                             <span>Enviar a:</span>
                             <label>
-                                <input type="checkbox" name="client" value="client" />
+                                <input type="checkbox" name="check[]" value="client" checked />
                                 <span>Clientes</span>
                             </label>
                             <label>
-                                <input type="checkbox" name="client_p" value="client_p" />
+                                <input type="checkbox" name="check[]" value="client_p" />
                                 <span>Clientes potenciales</span>
                             </label>
                             <label>
-                                <input type="checkbox" name="admin" value="admin" />
+                                <input type="checkbox" name="check[]" value="admin" />
                                 <span>Administradores</span>
                             </label>
                         </div>                        
