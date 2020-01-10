@@ -10,6 +10,7 @@
         private $id;
         private $date_start;
         private $date_end;
+        private $discount;
         private $price;    
         private $client;            
         private $beachTent;
@@ -39,6 +40,15 @@
 
         public function setDateEnd($date_end) {
             $this->date_end = $date_end;
+            return $this;
+        }
+
+        public function getDiscount() {
+            return $this->discount;
+        }
+
+        public function setDiscount($discount) {
+            $this->discount = $discount;
             return $this;
         }
 

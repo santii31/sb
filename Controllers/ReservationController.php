@@ -27,19 +27,33 @@
             $this->adminController = new AdminController();
         }               
 
-        private function add($date_start, $date_end, $total_price, Client $client, BeachTent $beach_tent, Parking $parking, AdditionalService $additional_service) {
+        private function add($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, BeachTent $beach_tent) {
             
             $reservation = new Reservation();
+            $client = new Client();
             $reservationxservice = new ReservationxService();
 
             $reservation->setDateStart($date_start);
             $reservation->setDateEnd($date_end);
-            $reservation->setPrice($total_price);
-            $reservation->setClient($client);
+            $reservation->setEstadia($estadia);
             $reservation->setBeachTent($beach_tent);
-            $reservation->setParking($parking);
+
+            $client->setName($name);
+            $client->setLastName($lastname);
+            $client->setAddress($address);
+            $client->setCity($city);
+            $client->setCP($cp);
+            $client->setEmail($email);
+            $client->setPhone($tel1);
+            $client->setFamilyGroup($groupF);
+            $client->setStayAddress($addressEsta);
+            $client->setPhoneStay($tel2);
+
+            $reservation->setPrice($beach_tent->getPrice() - $discount);
+            $reservation->setClient($client);
 
             $register_by = $this->adminController->isLogged();
+
 
             if(!empty($additional_service)) {
                 $reservation->setPrice($total_price + $additional_service->getTotal());
@@ -122,7 +136,7 @@
             } else {
                 return $this->adminController->userPath();
             }
-        }        
+        }
 
         public function enable($id) {
             if ($reservation = $this->reservationController->isLogged()) {

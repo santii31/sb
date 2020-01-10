@@ -14,6 +14,8 @@
             $this->adminController = new AdminController();
         }
 
+        public function 
+
         public function parkingMap() {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Plano de cocheras";       
