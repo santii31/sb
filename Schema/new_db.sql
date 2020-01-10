@@ -649,10 +649,10 @@ CREATE TABLE reservation (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `date_start` DATE NOT NULL,
     `date_end` DATE NOT NULL,
+    'discount' FLOAT NOT NULL,
     `total_price` FLOAT NOT NULL,
     `FK_id_client` INT NOT NULL,    
     `FK_id_tent` INT NOT NULL,
-    `FK_id_parking` INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
     
     `date_register` DATE NOT NULL,
@@ -666,7 +666,6 @@ CREATE TABLE reservation (
 
     CONSTRAINT `FK_id_client_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),    
     CONSTRAINT `FK_id_tent_reservation` FOREIGN KEY (`FK_id_tent`) REFERENCES `beach_tent` (`id`),
-    CONSTRAINT `FK_id_parking` FOREIGN KEY(`FK_id_parking`) REFERENCES `parking` (`id`),
     
     CONSTRAINT `FK_reservation_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_reservation_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
@@ -709,10 +708,10 @@ DELIMITER $$
 CREATE PROCEDURE reservation_add(
 								IN date_start DATE,
                                     IN date_end DATE,
+                                    IN discount FLOAT,
                                     IN total_price FLOAT,
                                     IN FK_id_client INT,                                    
                                     IN FK_id_tent INT,
-                                    IN FK_id_parking INT,
                                     IN date_register DATE,
                                     IN register_by INT,
 								    OUT lastId int
@@ -721,14 +720,14 @@ BEGIN
     INSERT INTO reservation (
 			reservation.date_start,
             reservation.date_end,
+            reservation.discount,
             reservation.total_price,
             reservation.FK_id_client,            
             reservation.FK_id_tent,
-            reservation.FK_id_parking,
             reservation.date_register,
             reservation.register_by
 	)
-    VALUES (date_start, date_end, total_price, FK_id_client, FK_id_admin, FK_id_tent, FK_id_parking, date_register, register_by);
+    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_admin, FK_id_tent, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -741,6 +740,7 @@ BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
+           reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
            client.id AS client_id,
@@ -762,17 +762,12 @@ BEGIN
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price,
-           beach_tent AS tent_is_active,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_is_active
+           beach_tent AS tent_is_active
 
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
     INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `reservation`.`id` = id;
 END$$
 
@@ -784,6 +779,7 @@ BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
+           reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
            client.id AS client_id,
@@ -805,17 +801,12 @@ BEGIN
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price,
-           beach_tent AS tent_is_active,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_is_active
+           beach_tent AS tent_is_active
 
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
     INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY date_start ASC;
 END$$
 
@@ -870,10 +861,10 @@ DELIMITER $$
 CREATE PROCEDURE reservation_update (
                                     IN date_start DATE,
                                     IN date_end DATE,
+                                    IN discount FLOAT,
                                     IN total_price FLOAT,
                                     IN FK_id_client INT,                                    
                                     IN FK_id_tent INT,
-                                    IN FK_id_parking INT,
                                     IN date_update DATE,
                                     IN update_by INT
                                 )
@@ -882,10 +873,10 @@ BEGIN
     SET 
         `reservation`.`date_start` = date_start, 
         `reservation`.`date_end` = date_end,
+        'reservation'.'discount' = discount,
         `reservation`.`total_price` = total_price,
         `reservation`.`FK_id_client` = FK_id_client,
         `reservation`.`FK_id_tent` = FK_id_tent,
-        `reservation`.`FK_id_parking` = FK_id_parking,
         `reservation`.`date_update` = date_update,
         `reservation`.`update_by` = update_by    
     WHERE 
@@ -1632,6 +1623,63 @@ BEGIN
 END$$
 
 
+---------------------------- SERVICEXPARKING ---------------------------
+
+
+CREATE TABLE servicexparking (
+    `FK_id_service` INT NOT NULL,
+    `FK_id_parking` INT NOT NULL,
+    CONSTRAINT `FK_id_service_servicexparking` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`),
+    CONSTRAINT `FK_id_parking_servicexparking` FOREIGN KEY (`FK_id_parking`) REFERENCES `parking`(`id`)
+);
+
+
+DROP procedure IF EXISTS `servicexparking_add`;
+DELIMITER $$
+CREATE PROCEDURE servicexparking_add (
+                                            IN FK_id_service INT,                                
+                                            IN FK_id_parking INT
+                                        )
+BEGIN
+	INSERT INTO servicexparking (
+			servicexparking.FK_id_service,
+            servicexparking.FK_id_parking                   
+	)
+    VALUES
+        (FK_id_service, FK_id_parking);
+END$$
+
+
+DROP procedure IF EXISTS `servicexparking_getServiceByParking`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexparking_getServiceByParking (IN id_parking INT)
+BEGIN
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
+	FROM servicexparking
+	INNER JOIN additional_service ON servicexparking.FK_id_service = additional_service.id
+	
+	WHERE (servicexparking.FK_id_parking = id_parking)
+	GROUP BY additional_service.id;
+END$$
+
+
+DROP procedure IF EXISTS `servicexparking_getParkingByService`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexparking_getParkingByService (IN id_service INT)
+BEGIN
+	SELECT parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price
+	FROM servicexparking
+	INNER JOIN parking ON servicexparking.FK_id_parking = parking.id
+	
+	WHERE (servicexparking.FK_id_service = id_service)
+	GROUP BY parking.id;
+END$$
+
 
 ---------------------------- SERVICEXPARASOL ---------------------------
 
@@ -1651,8 +1699,8 @@ CREATE PROCEDURE servicexparasol_add (
                                         )
 BEGIN
 	INSERT INTO servicexparasol (
-			servicexlocker.FK_id_service,
-            servicexlocker.FK_id_parasol                   
+			servicexparasol.FK_id_service,
+            servicexparasol.FK_id_parasol                   
 	)
     VALUES
         (FK_id_service, FK_id_parasol);

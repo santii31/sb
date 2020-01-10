@@ -3,27 +3,27 @@
     namespace DAO;
 
     use \Exception as Exception;
-    use Models\ServicexLocker as ServicexLocker;
+    use Models\ServicexParking as ServicexParking;
     use Models\AdditionalService as AdditionalService;
-    use Models\Locker as Locker;	
+    use Models\Parking as Parking;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
-    class ServicexLockerDAO {
+    class ServicexParkingDAO {
 
 		private $connection;
         private $serviceList = array();
-        private $lockerList = array();
-		private $tableName = "servicexlocker";		
+        private $parkingList = array();
+		private $tableName = "servicexparking";		
 
 		public function __construct() { }
 
 		
-        public function add(ServicexLocker $servicexlocker) {								
+        public function add(ServicexParking $servicexparking) {								
 			try {					
-				$query = "CALL servicexlocker_add(?, ?)";
-                $parameters["FK_id_service"] = $servicexlocker->getIdService();
-                $parameters["FK_id_locker"] = $servicexlocker->getIdLocker();
+				$query = "CALL servicexparking_add(?, ?)";
+                $parameters["FK_id_service"] = $servicexparking->getIdService();
+                $parameters["FK_id_parking"] = $servicexparking->getIdParking();
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -33,10 +33,10 @@
 			}			
         }
 					
-		public function getServiceByLocker($id) {
+		public function getServiceByParking($id) {
 			try {				
-				$query = "CALL servicexlocker_getServiceByLocker(?)";
-				$parameters["id_locker"] = $id;
+				$query = "CALL servicexparking_getServiceByParking(?)";
+				$parameters["id_parking"] = $id;
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
@@ -54,22 +54,22 @@
             }
 		}
 
-        public function getLockerByService($id) {
+        public function getParkingByService($id) {
 			try {				
-				$query = "CALL servicexlocker_getLockerByService(?)";
+				$query = "CALL servicexparking_getParkingByService(?)";
 				$parameters["id_service"] = $id;
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
                     
-                    $locker = new Locker();
-                    $locker->setId($row["locker_id"]);
-                    $locker->setLockerNumber($row["locker_number"]);
-                    $locker->setPrice($row["locker_price"]);
+                    $parking = new Parking();
+                    $parking->setId($row["parking_id"]);
+                    $parking->setNumber($row["parking_number"]);
+                    $parking->setPrice($row["parking_price"]);
                     
-                    array_push($lockerList, $locker);
+                    array_push($parkingList, $parking);
 				}
-				return $lockerList;
+				return $parkingList;
 			} catch (Exception $e) {
 				return false;
             }

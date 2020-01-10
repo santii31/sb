@@ -3,36 +3,188 @@
     namespace Controllers;    
 
     use Models\AdditionalService as AdditionalService;
+    use Models\ReservationxService as ReservationxService;
     use Models\Locker as Locker;
     use Models\Parasol as Parasol;
+    use Models\Parking as Parking;
     use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
+    use DAO\ClientDAO as ClientDAO;
     use DAO\ParasolDAO as ParasolDAO;
     use DAO\LockerDAO as LockerDAO;
+    use DAO\ParkingDAO as ParkingDAO;
     use DAO\ReservationDAO as ReservationDAO;
-    use DAO\ServicexLocker as ServicexLocker;
-    use DAO\ServicexParasol as ServicexParasol;
-    use DAO\ReservationxService as ReservationxService;
+    use DAO\ServicexLockerDAO as ServicexLockerDAO;
+    use DAO\ServicexParasolDAO as ServicexParasolDAO;
+    use DAO\ServicexParkingDAO as ServicexParkingDAO;
+    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use Controllers\AdminController as AdminController;  
 
     class AdditionalServiceController {
 
         private $additionalServiceDAO;
+        private $reservationxserviceDAO;
         private $servicexlockerDAO;
         private $servicexparasolDAO;
+        private $servicexparkingDAO;
+        private $clientDAO;
+        private $reservationDAO;
         private $adminController;
 
         public function __construct() {
             $this->additionalServiceDAO = new AdditionalServiceDAO();
             $this->parasolDAO = new ParasolDAO();
             $this->lockerDAO = new LockerDAO();
+            $this->clientDAO = new ClientDAO();
             $this->reservationDAO = new ReservationDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
-            $this->reservationxserviceDAO = new ReservationxService();
+            $this->servicexparkingDAO = new ServicexParkingDAO();
+            $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->adminController = new AdminController();
         }
 
-        private function add($description, $locker, $parasol) {
+        private function addServiceWithLocker($description, $locker, $id_reservation) {
+            $total = 0;
+            $description_s = filter_var($description, FILTER_SANITIZE_STRING);
+            $additionalService = new AdditionalService();
+            $reservationxservice = new ReservationxService();
+            $servicexLocker = new ServicexLocker();
+            $additionalService->setDescription( strtolower($description_s) );
+            if(!empty($locker)) {
+                $total = $total + $locker->getPrice();
+                $additionalService->setTotal($total);
+                $register_by = $this->adminController->isLogged();
+                $lastId = $this->additionalServiceDAO->add($additionalService, $register_by);
+                $reservationxservice->setIdReservation($id_reservation);
+                $reservationxservice->setIdService($lastId);
+                $reservationxserviceDAO->add($reservationxservice);
+                $servicexlocker->setIdService($lastId);
+                $servicexlocker->setIdLocker($locker->setId());
+                $this->servicexlockerDAO->add($servicexlocker);
+            }
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        private function addLocker(AdditionalService $additionalService, $locker) {
+            $total = 0;
+            $servicexLocker = new ServicexLocker();
+            if(!empty($locker)) {
+                $total = $additionalService->GetTotal + $locker->getPrice();
+                $additionalService->setTotal($total);
+                $update_by = $this->adminController->isLogged();
+                $additionalServiceDAO->update($additionalService, $update_by);
+                $servicexlocker->setIdService($additionalService->getId());
+                $servicexlocker->setIdLocker($locker->setId());
+                $this->servicexlockerDAO->add($servicexlocker);
+            }
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        private function addServiceWithParasol($description, $parasol, $id_reservation) {
+            $total = 0;
+            $description_s = filter_var($description, FILTER_SANITIZE_STRING);
+            $additionalService = new AdditionalService();
+            $reservationxservice = new ReservationxService();
+            $servicexParasol = new ServicexParasol();
+            $additionalService->setDescription( strtolower($description_s) );
+            if(!empty($parasol)) {
+                $total = $total + $parasol->getPrice();
+                $additionalService->setTotal($total);
+                $register_by = $this->adminController->isLogged();
+                $lastId = $this->additionalServiceDAO->add($additionalService, $register_by);
+                $reservationxservice->setIdReservation($id_reservation);
+                $reservationxservice->setIdService($lastId);
+                $reservationxserviceDAO->add($reservationxservice);
+                $servicexparasol->setIdService($lastId);
+                $servicexparasol->setIdParasol($parasol->setId());
+                $this->servicexparasolDAO->add($servicexparasol);
+            }
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        private function addParasol(AdditionalService $additionalService, $parasol) {
+            $total = 0;
+            $servicexParasol = new ServicexParasol();
+            if(!empty($parasol)) {
+                $total = $additionalService->GetTotal + $parasol->getPrice();
+                $additionalService->setTotal($total);
+                $update_by = $this->adminController->isLogged();
+                $additionalServiceDAO->update($additionalService, $update_by);
+                $servicexparasol->setIdService($additionalService->getId());
+                $servicexparasol->setIdParasol($parasol->setId());
+                $this->servicexparasolDAO->add($servicexparasol);
+            }
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        private function addServiceWithParking($description, $parking, $id_reservation) {
+            $total = 0;
+            $description_s = filter_var($description, FILTER_SANITIZE_STRING);
+            $additionalService = new AdditionalService();
+            $servicexParking = new ServicexParking();
+            $reservationxservice = new ReservationxService();
+            $additionalService->setDescription( strtolower($description_s) );
+            if(!empty($parking)) {
+                $total = $total + $parking->getPrice();
+                $additionalService->setTotal($total);
+                $register_by = $this->adminController->isLogged();
+                $lastId = $this->additionalServiceDAO->add($additionalService, $register_by);
+                $reservationxservice->setIdReservation($id_reservation);
+                $reservationxservice->setIdService($lastId);
+                $reservationxserviceDAO->add($reservationxservice);
+                $servicexparking->setIdService($lastId);
+                $servicexparking->setIdParking($parking->setId());
+                $this->servicexparkingDAO->add($servicexparking);
+            }
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        private function addParking(AdditionalService $additionalService, $parking) {
+            $total = 0;
+            $servicexParking = new ServicexParking();
+            if(!empty($parking)) {
+                $total = $additionalService->GetTotal + $parking->getPrice();
+                $additionalService->setTotal($total);
+                $update_by = $this->adminController->isLogged();
+                $additionalServiceDAO->update($additionalService, $update_by);
+                $servicexparking->setIdService($additionalService->getId());
+                $servicexparking->setIdParking($parking->setId());
+                $this->servicexparkingDAO->add($servicexparking);
+            }
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+
+
+
+
+        /*private function add($description, $locker, $parasol, $parking) {
 
             
             $total = 0;
@@ -45,6 +197,7 @@
             
             $servicexlocker = new ServicexLocker();
             $servicexparasol = new ServicexParasol();
+            $servicexparking = new ServicexParking();
 
             if(!empty($locker)) {
                 $total = $total + $locker->getPrice();
@@ -56,7 +209,12 @@
                 $flag2 = TRUE;
             }
 
-            if($flag1 || $flag2) {
+            if(!empty($parking)) {
+                $total = $total + $parking->getPrice();
+                $flag3 = TRUE;
+            }
+
+            if($flag1 || $flag2 || $flag3) {
                 $additionalService->setTotal($total);
                 $register_by = $this->adminController->isLogged();
                 $lastId = $this->additionalServiceDAO->add($additionalService, $register_by);
@@ -70,6 +228,11 @@
                     $servicexparasol->setIdParasol($parasol->getId());
                     $this->servicexparasolDAO->add($servicexparasol);
                 }
+                if($flag3) {
+                    $servicexparking->setIdService($lastId);
+                    $servicexparking->setIdParking($parking->getId());
+                    $this->servicexparkingDAO->add($servicexparking);
+                }
             }
 
 
@@ -78,16 +241,16 @@
             } else {
                 return true;
             }
-        }
+        }*/
 
-        public function addService($description, $locker, $parasol) {
-            if ($this->isFormRegisterNotEmpty($description, $locker, $parasol)) {   
+        public function addService($description, $locker, $parasol, $parking) {
+            if ($this->isFormRegisterNotEmpty($description, $locker, $parasol, $parking)) {   
                                                                              
                 $serviceTemp = new AdditionalService();
                 $serviceTemp->setDescription( strtolower($description) );                
                 
 				if ($this->additionalServiceDAO->getByDescription($serviceTemp) == null) {                                                       
-                    if ($this->add($description, $locker, $parasol)) {                                                
+                    if ($this->add($description, $locker, $parasol, $parking)) {                                                
                         return $this->addServicePath(null, SERVICE_ADDED);
                     } else {                        
                         return $this->addServicePath(DB_ERROR, null);        
@@ -109,20 +272,21 @@
             return true;
         }        
 
-        public function addServicePath($alert = "", $success = "", $id_reservation) {
+        /*public function addServicePath($alert = "", $success = "", $id_reservation=NULL) {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Añadir servicio adicional";
                 
                 $reservations = $this->reservationDAO->getAll();
-                $parasoles1 = $this->parasolesDAO->getAll();
+                $clients = $this->clientDAO->getAll();
+                $parasoles1 = $this->parasolDAO->getAll();
                 $lockers1 = $this->lockerDAO->getAll();
                 $lockers = array();
                 $parasoles = array();
                 foreach($reservations as $reservation) {
                     foreach($lockers1 as $locker) {
-                        if( ($reservation->getAvailability() == true) && ($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) != false ) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) )->getId() == $locker->getId() ) {
+                        if( ($reservation->getAvailability() == true) && ($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) != false ) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()))->getId() == $locker->getId())) {
 
-                        }else {
+                        } else {
                             array_push($lockers, $locker);       
                         }
                     } 
@@ -130,7 +294,7 @@
 
                 foreach($reservations as $reservation) {
                     foreach($parasoles1 as $parasol) {
-                        if( ($reservation->getAvailability() == true) && ($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) != false ) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) )->getId() == $parasol->getId() ) {
+                        if( ($reservation->getAvailability() == true) && ($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) != false ) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) )->getId() == $parasol->getId() )) {
 
                         }else {
                             array_push($parasoles, $parasol);       
@@ -145,7 +309,51 @@
 			} else {                
                 return $this->adminController->userPath();
 			}
+        }*/
+
+
+
+        public function addSelectServicePath($alert = "", $success = "", $id_reservation=NULL) {
+            if ($admin = $this->adminController->isLogged()) {                                       
+                $title = "Seleccione servicio adicional";
+                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "select-service.php");
+                require_once(VIEWS_PATH . "footer.php");                    
+			} else {                
+                return $this->adminController->userPath();
+			}
         }
+
+        public function addLockerPath($alert = "", $success = "", $id_reservation) {
+            if ($admin = $this->adminController->isLogged()) {                                       
+                $title = "Seleccione numero de locker";
+                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "add-locker.php");
+                require_once(VIEWS_PATH . "footer.php");                    
+			} else {                
+                return $this->adminController->userPath();
+			}
+        }
+
+        public function addParasolPath($alert = "", $success = "", $id_reservation) {
+            if ($admin = $this->adminController->isLogged()) {                                       
+                $title = "Seleccione numero de sombrilla";
+                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "add-parasol.php");
+                require_once(VIEWS_PATH . "footer.php");                    
+			} else {                
+                return $this->adminController->userPath();
+			}
+        }
+
+
+
 
         public function listServicePath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {

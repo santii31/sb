@@ -35,6 +35,17 @@
                         <?php endif; ?>
 
                         <div class="row">
+
+                            <div class="input-field col s6">
+                                <input id="name" type="Date" name="date_start" class="validate" required>
+                                <label for="name">Fecha de ingreso</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="name" type="Date" name="date_end" class="validate" required>
+                                <label for="name">Fecha de egreso</label>
+                            </div>
+
                             <div class="input-field col s6">
                                 <input id="name" type="text" name="name" class="validate" required>
                                 <label for="name">Nombre</label>
@@ -48,15 +59,7 @@
                             <div class="input-field col s4">
                                 <input id="estadia" type="text" name="estadia" class="validate" required>
                                 <label for="estadia">Estadia</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="cofres" type="text" name="chest" class="validate" required>
-                                <label for="cofres">Cofres</label>
-                            </div>    
-                            <div class="input-field col s4">
-                                <input id="servicio_ad" type="text" name="additionalServ" class="validate">
-                                <label for="servicio_ad">Servicio adicional</label>
-                            </div>                                                       
+                            </div>                                                   
                         </div>                        
                         <div class="row">
                             <div class="input-field col s4">

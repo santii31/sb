@@ -22,7 +22,7 @@
         public function add(ServicexParasol $servicexparasol) {								
 			try {					
 				$query = "CALL servicexparasol_add(?, ?)";
-                $parameters["FK_id_service"] = $servicexlocker->getIdService();
+                $parameters["FK_id_service"] = $servicexparasol->getIdService();
                 $parameters["FK_id_parasol"] = $servicexparasol->getIdParasol();
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
@@ -36,7 +36,7 @@
 		public function getServiceByParasol($id) {
 			try {				
 				$query = "CALL servicexparasol_getServiceByParasol(?)";
-				$parameters["id"] = $id;
+				$parameters["id_parasol"] = $id;
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
@@ -57,7 +57,7 @@
         public function getParasolByService($id) {
 			try {				
 				$query = "CALL servicexparasol_getParasolByService(?)";
-				$parameters["id"] = $id;
+				$parameters["id_service"] = $id;
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {

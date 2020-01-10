@@ -7,7 +7,6 @@
 	use Models\Client as Client;
 	use Models\Admin as Admin;
 	use Models\BeachTent as BeachTent;
-	use Models\Parking as Parking;
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -25,10 +24,10 @@
 				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?, ?, ?)";
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();
+				$parameters["discount"] = $reservation->getDiscount();
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["FK_id_client"] = $reservation->getClient()->getId();
 				$parameters["FK_id_tent"] = $reservation->getBeachTent()->getId();
-				$parameters["FK_id_parking"] = $reservation->getParking()->getId();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();                
 				$this->connection = Connection::getInstance();
@@ -51,7 +50,8 @@
 					$reservationTemp = new Reservation();
 					$reservationTemp->setId($row["reservation_id"]);
 					$reservationTemp->setDateStart($row["reservation_dateStart"]);
-                    $reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+					$reservationTemp->setDiscount($row["reservation_discount"]);
                     $reservationTemp->setPrice($row["reservation_totalPrice"]);
 					$reservationTemp->setIsActive($row["reservation_isActive"]);
 					$client = new Client();
@@ -83,13 +83,7 @@
 					$beachTent->setIsActive($row["tent_isActive"]);
 					$reservationTemp->setBeachTent($beachTent);
 
-					$parking = new Parking();
-					$parking->setId($row["parking_id"]);
-					$parking->setNumber($row["parking_number"]);
-					$parking->setPrice($row["parking_price"]);
-					$parking->setIsActive($row["parking_isActive"]);
 					
-					$reservationTemp->setParking($parking);
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
@@ -109,7 +103,8 @@
 					$reservationTemp = new Reservation();
 					$reservationTemp->setId($row["reservation_id"]);
 					$reservationTemp->setDateStart($row["reservation_dateStart"]);
-                    $reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+					$reservationTemp->setDiscount($row["reservation_discount"]);
                     $reservationTemp->setPrice($row["reservation_totalPrice"]);
 					$reservationTemp->setIsActive($row["reservation_isActive"]);
 					$client = new Client();
@@ -141,13 +136,7 @@
 					$beachTent->setIsActive($row["tent_isActive"]);
 					$reservationTemp->setBeachTent($beachTent);
 
-					$parking = new Parking();
-					$parking->setId($row["parking_id"]);
-					$parking->setNumber($row["parking_number"]);
-					$parking->setPrice($row["parking_price"]);
-					$parking->setIsActive($row["parking_isActive"]);
 					
-					$reservationTemp->setParking($parking);
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
@@ -166,7 +155,8 @@
                     $reservation = new Reservation();
 					$reservation->setId($row["reservation_id"]);
 					$reservation->setDateStart($row["reservation_dateStart"]);
-                    $reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setDiscount($row["reservation_discount"]);
                     $reservation->setPrice($row["reservation_totalPrice"]);
 					$reservation->setIsActive($row["reservation_isActive"]);
 					$client = new Client();
@@ -198,13 +188,7 @@
 					$beachTent->setIsActive($row["tent_isActive"]);
 					$reservation->setBeachTent($beachTent);
 
-					$parking = new Parking();
-					$parking->setId($row["parking_id"]);
-					$parking->setNumber($row["parking_number"]);
-					$parking->setPrice($row["parking_price"]);
-					$parking->setIsActive($row["parking_isActive"]);
 					
-					$reservation->setParking($parking);
                     
 					array_push($this->reservationList, $reservation);
 				}
@@ -262,6 +246,7 @@
 				$query = "CALL reservation_update(?, ?, ?, ?, ?)";		
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();
+				$parameters["discount"] = $reservation->getDiscount();
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();  
