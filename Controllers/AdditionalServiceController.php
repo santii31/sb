@@ -44,17 +44,23 @@
         }
 
         private function addServiceWithLocker($description, $locker, $id_reservation) {
-            $total = 0;
-            $description_s = filter_var($description, FILTER_SANITIZE_STRING);
-            $additionalService = new AdditionalService();
-            $reservationxservice = new ReservationxService();
-            $servicexLocker = new ServicexLocker();
-            $additionalService->setDescription( strtolower($description_s) );
             if(!empty($locker)) {
+                $total = 0;
+                $description_s = filter_var($description, FILTER_SANITIZE_STRING);
+                $additionalService = new AdditionalService();
+                $reservationxservice = new ReservationxService();
+                $servicexLocker = new ServicexLocker();
+                $additionalService->setDescription( strtolower($description_s) );
+            
                 $total = $total + $locker->getPrice();
                 $additionalService->setTotal($total);
                 $register_by = $this->adminController->isLogged();
                 $lastId = $this->additionalServiceDAO->add($additionalService, $register_by);
+                if ($lastId == false) {
+                    return false;
+                } else {
+                    return true;
+                }
                 $reservationxservice->setIdReservation($id_reservation);
                 $reservationxservice->setIdService($lastId);
                 $reservationxserviceDAO->add($reservationxservice);
@@ -62,11 +68,7 @@
                 $servicexlocker->setIdLocker($locker->setId());
                 $this->servicexlockerDAO->add($servicexlocker);
             }
-            if ($lastId == false) {
-                return false;
-            } else {
-                return true;
-            }
+            
         }
 
         private function addLocker(AdditionalService $additionalService, $locker) {
@@ -254,11 +256,25 @@
                         return $this->addServicePath(null, SERVICE_ADDED);
                     } else {                        
                         return $this->addServicePath(DB_ERROR, null);        
-                    }
+                    }    
                 }                
                 return $this->addServicePath(SERVICE_ERROR, null);
             }            
             return $this->addServicePath(EMPTY_FIELDS, null);            
+        }
+
+        public function optionsDistributor($option, $id_reservation) {
+            if(!empty($option)) {
+                if(get_class($option) == "locker") {
+                    $this->addLockerPath($id_reservation);
+                }
+                if(get_class($option) == "parasol") {
+                    $this->addParasolPath($id_reservation);
+                }
+                if(get_class($option) == "parking") {
+                    $this->addParkingPath($id_reservation);
+                }
+            }
         }
 
         private function isFormRegisterNotEmpty($description, $locker, $parasol) {
@@ -276,12 +292,14 @@
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Añadir servicio adicional";
                 
-                $reservations = $this->reservationDAO->getAll();
+                
                 $clients = $this->clientDAO->getAll();
                 $parasoles1 = $this->parasolDAO->getAll();
+                $parasoles = array();
+
+                $reservations = $this->reservationDAO->getAll();
                 $lockers1 = $this->lockerDAO->getAll();
                 $lockers = array();
-                $parasoles = array();
                 foreach($reservations as $reservation) {
                     foreach($lockers1 as $locker) {
                         if( ($reservation->getAvailability() == true) && ($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()) != false ) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId()))->getId() == $locker->getId())) {
@@ -326,7 +344,7 @@
 			}
         }
 
-        public function addLockerPath($alert = "", $success = "", $id_reservation) {
+        public function addLockerPath($alert = "", $success = "", $id_reservation="") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione numero de locker";
                 
@@ -352,8 +370,20 @@
 			}
         }
 
+        public function addParkingPath($alert = "", $success = "", $id_reservation) {
+            if ($admin = $this->adminController->isLogged()) {                                       
+                $title = "Seleccione cochera";
+                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "add-parking.php");
+                require_once(VIEWS_PATH . "footer.php");                    
+			} else {                
+                return $this->adminController->userPath();
+			}
+        }
 
-
+        
 
         public function listServicePath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
