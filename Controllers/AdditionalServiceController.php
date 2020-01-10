@@ -331,7 +331,7 @@
 
 
 
-        public function addSelectServicePath($alert = "", $success = "", $id_reservation=NULL) {
+        public function addSelectServicePath($alert = "", $success = "", $id_reservation="") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione servicio adicional";
                 
@@ -347,7 +347,28 @@
         public function addLockerPath($alert = "", $success = "", $id_reservation="") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione numero de locker";
-                
+                $reserve = $this->reservationDAO->getById($id_reservation);
+                $reservations = $this->reservationDAO->getAll();
+                $listLockers = $this->lockerDAO->getAll();
+                $lockers = array();
+                foreach($listLockers as $locker) {
+                    foreach($reservations as $reservation) {
+                        if( ($reservation->getAvailability() == true) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
+                            if($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $locker->getNumber()) {
+
+                            }
+                        }else if( ($reservation->getAvailability() == false) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
+                            if($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $locker->getNumber()) {
+                                if($reserve->getDateEnd() => $reservation->getDateStart()) {
+
+                                }
+                            }
+                        }else{
+                            array_push($lockers, $locker);       
+                        }
+                    } 
+                }
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-locker.php");
@@ -357,10 +378,35 @@
 			}
         }
 
-        public function addParasolPath($alert = "", $success = "", $id_reservation) {
+        public function checkTime($reserve, $reserveAux) {
+            $reserve
+        }
+
+        public function addParasolPath($alert = "", $success = "", $id_reservation="") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione numero de sombrilla";
-                
+                $reserve = $this->reservationDAO->getById($id_reservation);
+                $reservations = $this->reservationDAO->getAll();
+                $listParasol = $this->parasolDAO->getAll();
+                $parasoles = array();
+                foreach($listParasol as $parasol) {
+                    foreach($reservations as $reservation) {
+                        if( ($reservation->getAvailability() == true) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
+                            if($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $parasol->getNumber()) {
+
+                            }
+                        }else if( ($reservation->getAvailability() == false) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
+                            if($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $parasol->getNumber()) {
+                                if($reserve->getDateEnd() => $reservation->getDateStart()) {
+
+                                }
+                            }
+                        }else{
+                            array_push($parasoles, $parasol);       
+                        }
+                    } 
+                }
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-parasol.php");
@@ -370,7 +416,7 @@
 			}
         }
 
-        public function addParkingPath($alert = "", $success = "", $id_reservation) {
+        public function addParkingPath($alert = "", $success = "", $id_reservation="") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione cochera";
                 
