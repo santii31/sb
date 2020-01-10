@@ -16,7 +16,7 @@
             $this->adminController = new AdminController();
         }     
         
-        private function add($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
+        private function add($name, $lastName, $position, $salary, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
 
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);
             $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
@@ -27,6 +27,7 @@
             $staff->setName( strtolower($name_s) );
             $staff->setLastName( strtolower($lastname_s) );
             $staff->setPosition( strtolower($position_s) );
+            $staff->setSalary($salary);
             $staff->setDateStart($date_start);
             $staff->setDateEnd($date_end);
             $staff->setDni($dni);
@@ -44,16 +45,16 @@
             }
         }
 
-        public function addStaff($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
+        public function addStaff($name, $lastName, $position, $salary, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
            
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, 
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
                                                 $address, $phone, $shirt_size, $pant_size)) {
 
                 $staffTemp = new Staff();
                 $staffTemp->setDni($dni);                
                 
 				if ($this->staffDAO->getByDni($staffTemp) == null) {                                                            
-                    if ($this->add($name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size)) {      
+                    if ($this->add($name, $lastName, $position, $salary, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size)) {      
                         return $this->addStaffPath(null, STAFF_ADDED);
                     } else {                        
                         return $this->addStaffPath(DB_ERROR, null);        
@@ -64,12 +65,13 @@
             return $this->addStaffPath(EMPTY_FIELDS, null);            
         }
 
-        private function isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, 
+        private function isFormRegisterNotEmpty($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
                                                 $address, $phone, $shirt_size, $pant_size) {
 
             if (empty($name) || 
                 empty($lastName) || 
                 empty($position) || 
+                empty($salary) || 
                 empty($date_start) || 
                 empty($date_end) || 
                 empty($dni) || 
@@ -150,9 +152,9 @@
             }           
         }        
 
-        public function update($id, $name, $lastName, $position, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {      
+        public function update($id, $name, $lastName, $position, $salary, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {      
             
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $date_start, $date_end, $dni, 
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
                                                 $address, $phone, $shirt_size, $pant_size)) {     
                 
                 $staffTemp = new Staff();
@@ -171,6 +173,7 @@
                     $staff->setName( strtolower($name_s) );
                     $staff->setLastName( strtolower($lastname_s) );
                     $staff->setPosition( strtolower($position_s) );
+                    $staff->setSalary($salary);
                     $staff->setDateStart($date_start);
                     $staff->setDateEnd($date_end);
                     $staff->setDni($dni);

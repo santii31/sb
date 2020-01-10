@@ -10,6 +10,7 @@
         private $name;
         private $lastname;
         private $position;
+        private $salary;
         private $date_start;
         private $date_end;
         private $dni;
@@ -42,6 +43,15 @@
 
         public function setLastName($lastname) {
             $this->lastname = $lastname;
+            return $this;
+        }
+
+        public function getSalary() {
+            return $this->salary;
+        }
+
+        public function setSalary($salary) {
+            $this->salary = $salary;
             return $this;
         }
 

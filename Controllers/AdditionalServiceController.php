@@ -73,7 +73,7 @@
             $total = 0;
             $servicexLocker = new ServicexLocker();
             if(!empty($locker)) {
-                $total = $additionalService->GetTotal + $locker->getPrice();
+                $total = $additionalService->getTotal() + $locker->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
@@ -87,7 +87,6 @@
                 return true;
             }
         }
-
 
         private function addServiceWithParasol($description, $parasol, $id_reservation) {
             $total = 0;
@@ -119,7 +118,7 @@
             $total = 0;
             $servicexParasol = new ServicexParasol();
             if(!empty($parasol)) {
-                $total = $additionalService->GetTotal + $parasol->getPrice();
+                $total = $additionalService->getTotal() + $parasol->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
@@ -164,7 +163,7 @@
             $total = 0;
             $servicexParking = new ServicexParking();
             if(!empty($parking)) {
-                $total = $additionalService->GetTotal + $parking->getPrice();
+                $total = $additionalService->getTotal() + $parking->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
@@ -178,10 +177,6 @@
                 return true;
             }
         }
-
-
-
-
 
 
         /*private function add($description, $locker, $parasol, $parking) {
@@ -313,7 +308,7 @@
 
 
 
-        public function addSelectServicePath($alert = "", $success = "", $id_reservation=NULL) {
+        public function addSelectServicePath($alert = "", $success = "", $id_reservation = NULL) {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione servicio adicional";
                 
@@ -351,9 +346,6 @@
                 return $this->adminController->userPath();
 			}
         }
-
-
-
 
         public function listServicePath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
@@ -419,8 +411,7 @@
                 $serviceTemp->setDescription( strtolower($description) );                
 
 				if ($this->additionalServiceDAO->checkDescription($serviceTemp) == null) { 
-                    
-                    // aca? o arriba del if?
+                                        
                     $description_s = filter_var($description, FILTER_SANITIZE_STRING);
                     
                     $additionalService = new AdditionalService();

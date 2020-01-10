@@ -594,3 +594,40 @@ nav .input-field label.active i {
     text-align: left;
 }
 
+
+/* Pop up tents */
+.tab-extra {
+    margin-top: 6rem;
+    font-size: 1.5rem;               
+    text-align: center !important;
+}
+
+.tab-extra > div {
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-extra i {
+    font-size: 3rem;
+    margin-right: .5rem;
+}
+
+.tabs .tab a:hover, 
+.tabs .tab a.active {
+    background-color: transparent;
+    color: #6a56a5;
+}
+
+.tabs .tab a {
+    color: #22252e;
+}
+
+.tabs .indicator {    
+    background-color: #473e64;    
+}
+
+.tabs .tab a:focus.active {
+    background-color: rgba(95, 46, 110, 0.2);    
+}
+  

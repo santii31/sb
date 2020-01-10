@@ -35,23 +35,31 @@
                         <?php endif; ?>
 
                         <div class="row">
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="name" type="text" name="name" class="validate" required>
                                 <label for="name">Nombre</label>
                             </div>  
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="lastname" type="text" name="lastname" class="validate" required>
                                 <label for="lastname">Apellido</label>
                             </div>                                        
-                            <div class="input-field col s4">
-                                <input id="position" type="text" name="position" class="validate" required>
-                                <label for="position">Cargo</label>
-                            </div>                                                 
                         </div>   
 
                         <div class="row">
                             <div class="input-field col s6">
+                                <input id="position" type="text" name="position" class="validate" required>
+                                <label for="position">Cargo</label>
+                            </div>                                                 
+                            <div class="input-field col s6">
+                                <input id="salary" type="number" name="salary" class="validate" required>
+                                <label for="salary">Sueldo</label>
+                            </div> 
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
                                 <input id="date_start" type="date" name="date_start" class="validate" required>
+                                <!-- <input type="text" class="datepicker"> -->
                                 <label for="date_start">Fecha de inicio</label>
                             </div>                         
                             <div class="input-field col s6">

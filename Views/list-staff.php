@@ -51,6 +51,7 @@
                                 <th>Cargo</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
+                                <th>Sueldo</th>
                                 <th>Mas información</th>                                
                                 <th>Acciones</th>
                             </tr>
@@ -65,6 +66,7 @@
                                     <td> <?= ucfirst( $staff->getPosition() ); ?> </td>
                                     <td> <?= $staff->getDateStart(); ?> </td>
                                     <td> <?= $staff->getDateEnd(); ?> </td>
+                                    <td> $<?= $staff->getSalary(); ?> </td>
                                     <td>
                                         <ul class="collapsible">
                                             <li>
@@ -78,6 +80,10 @@
                                                         <li>• Telefono:  <?= $staff->getPhone(); ?> </li>
                                                         <li>• Talle de remera:  <?= ucfirst( $staff->getShirtSize() ); ?> </li>
                                                         <li>• Talle de pantalon:  <?= ucfirst( $staff->getPantSize() ); ?> </li>
+                                                        <li>• Registrado por: 
+                                                                <?= ucfirst( $staff->getRegisterBy()->getName() ); ?>
+                                                                <?= ucfirst( $staff->getRegisterBy()->getLastName() ); ?>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </li>

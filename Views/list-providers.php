@@ -77,6 +77,10 @@
                                                     <li>• Número de CUIL:  <?= $provider->getCuilNumber(); ?> </li>
                                                     <li>• Razón social:  <?= ucfirst( $provider->getSocialReason() ); ?> </li>
                                                     <li>• Tipo de facturacion:  <?= ucfirst( $provider->getBilling() ); ?> </li>
+                                                    <li>• Registrado por: 
+                                                            <?= ucfirst( $provider->getRegisterBy()->getName() ); ?>
+                                                            <?= ucfirst( $provider->getRegisterBy()->getLastName() ); ?>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>

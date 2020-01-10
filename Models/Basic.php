@@ -2,7 +2,7 @@
 
     namespace Models;
     
-    use Models\Admin as AdditionAdminalService;
+    use Models\Admin as Admin;
 
     abstract class Basic {
 

@@ -7,6 +7,8 @@
         private $id;
         private $parasol_number;
         private $price;
+        private $position;        
+        private $hall;  
     
         public function getId() {
             return $this->id;
@@ -33,6 +35,24 @@
             $this->price = $price;            
         }
     
+        public function getPosition() {
+            return $this->position;
+        }
+
+        public function setPosition($position) {
+            $this->position = $position;
+            return $this;
+        }        
+
+        public function getHall() {
+            return $this->hall;
+        }
+
+        public function setHall(Hall $hall) {
+            $this->hall = $hall;
+            return $this;
+        }          
+
 
     }
 

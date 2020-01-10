@@ -25,10 +25,10 @@
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
 					$parasolTemp = new Parasol();
-                    $parasolTemp->setId($row["parasol.id"]);
-                    $parasolTemp->setChestNumber($row["parasol.number"]);
-                    $parasolTemp->setPrice($row["parasol.price"]);
-                    
+                    $parasol->setId($row["id"]);
+                    $parasol->setParasolNumber($row["parasol_number"]);
+                    $parasol->setPrice($row["price"]);                                    					
+					$parasol->setPosition($row["position"]);
                     
 				}
 				return $parasolTemp;
@@ -44,10 +44,10 @@
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
 					$parasol = new Parasol();
-                    $parasol->setId($row["parasol.id"]);
-                    $parasol->setChestNumber($row["parasol.number"]);
-                    $parasol->setPrice($row["parasol.price"]);
-                    
+                    $parasol->setId($row["id"]);
+                    $parasol->setParasolNumber($row["parasol_number"]);
+                    $parasol->setPrice($row["price"]);                                    					
+					$parasol->setPosition($row["position"]);
                     
 					array_push($this->parasolList, $parasol);
 				}
@@ -57,6 +57,26 @@
 			}
 		}		
 				
+		public function getN_row($row) {
+			try {
+				$parasolTemp = array();
+				$query = "CALL parasol_getN_row(?)";
+				$parameters["start"] = $row;				
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
+				foreach ($results as $row) {					
+					$parasol = new Parasol();
+                    $parasol->setId($row["id"]);
+                    $parasol->setParasolNumber($row["parasol_number"]);
+                    $parasol->setPrice($row["price"]);                                    					
+					$parasol->setPosition($row["position"]);
+					array_push($parasolTemp, $parasol);
+				}
+				return $parasolTemp;	
+			} catch (Exception $e) {
+				return false;								
+			}
+		}
 	
     }
 
