@@ -29,27 +29,28 @@
 
                     <div class="parking-map">
 
+                        <!-- Left -->
                         <div class="left">
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
-                            <div class="item">2</div>
+                            <?php foreach($firstRow as $parking): ?>
+                                <div class="parking-container">                                    
+                                    <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                        <div class="item">
+                                            <span>
+                                                <?= $parking->getNumber(); ?>
+                                            </span>		
+                                        </div>      
+                                    </a>                                    
+                                    <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                        <div class="modal-content">
+                                            <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                            <p>A bunch of text</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
 
                         <div class="center-container">
@@ -57,20 +58,18 @@
                             <!-- Center upper -->
                             <div class="center-upper">
                                 <div class="center-upper-left">                                    
-                                    
-                                    
-                                    <div class="parking-container">
-                                        <!-- Modal Trigger -->
-                                        <a class="modal-trigger" href="#modal1">
+                                <?php foreach($secondRow as $parking): ?>
+                                    <div class="parking-container">                                    
+                                        <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
                                             <div class="item">
-                                                <span>150</span>		
+                                                <span>
+                                                    <?= $parking->getNumber(); ?>
+                                                </span>		
                                             </div>      
-                                        </a>
-    
-                                        <!-- Modal Structure -->
-                                        <div id="modal1" class="modal modal-fixed-footer">
+                                        </a>                                    
+                                        <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                             <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
+                                                <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
                                                 <p>A bunch of text</p>
                                             </div>
                                             <div class="modal-footer">
@@ -78,31 +77,30 @@
                                             </div>
                                         </div>
                                     </div>
-                                                                        
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
-                                    <div class="item">21</div>
+                                <?php endforeach; ?>
                                 </div>
 
                                 <div class="center-upper-right">
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
-                                    <div class="item">55</div>
+                                    <?php foreach($thirdRow as $parking): ?>
+                                        <div class="parking-container">                                    
+                                            <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                                <div class="item">
+                                                    <span>
+                                                        <?= $parking->getNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>                                    
+                                            <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                                    <p>A bunch of text</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>                                
                             </div>
 
@@ -112,186 +110,173 @@
                                 <!-- Center first  -->
                                 <div class="center-first">
                                     <div class="upper">
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
-                                        <div class="item">4</div>
+                                        <?php foreach($fourthRow as $parking): ?>
+                                            <div class="parking-container">                                    
+                                                <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                                    <div class="item">
+                                                        <span>
+                                                            <?= $parking->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                    
+                                                <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                     <div class="lower">
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
-                                        <div class="item">5</div>
+                                        <?php foreach($fifthRow as $parking): ?>
+                                            <div class="parking-container">                                    
+                                                <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                                    <div class="item">
+                                                        <span>
+                                                            <?= $parking->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                    
+                                                <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
 
                                 <!-- Center middle single -->
                                 <div class="center-middle-single">
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
-                                    <div class="item">6</div>
+                                    <?php foreach($sixthRow as $parking): ?>
+                                        <div class="parking-container">                                    
+                                            <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                                <div class="item">
+                                                    <span>
+                                                        <?= $parking->getNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>                                    
+                                            <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                                    <p>A bunch of text</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
 
                                 <!-- Center middle up -->
                                 <div class="center-middle-double">
                                     <div class="upper">
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
-                                        <div class="item">22</div>
+                                        <?php foreach($seventhRow as $parking): ?>
+                                            <div class="parking-container">                                    
+                                                <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                                    <div class="item">
+                                                        <span>
+                                                            <?= $parking->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                    
+                                                <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                     
                                     <div class="last">
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
-                                        <div class="item">20</div>
+                                        <?php foreach($eighthRow as $parking): ?>
+                                            <div class="parking-container">                                    
+                                                <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                                    <div class="item">
+                                                        <span>
+                                                            <?= $parking->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                                    
+                                                <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content">
+                                                        <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                                        <p>A bunch of text</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
 
                                 <!-- Center last -->
                                 <div class="center-lower">
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
-                                    <div class="item">9</div>
+                                    <?php foreach($ninthhRow as $parking): ?>
+                                        <div class="parking-container">                                    
+                                            <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                                <div class="item">
+                                                    <span>
+                                                        <?= $parking->getNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>                                    
+                                            <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                                    <p>A bunch of text</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
 
                             </div>
                         </div>
 
+                        <!-- Right -->
                         <div class="right">
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
-                            <div class="item">7</div>
+                            <?php foreach($tenthRow as $parking): ?>
+                                <div class="parking-container">                                    
+                                    <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">
+                                        <div class="item">
+                                            <span>
+                                                <?= $parking->getNumber(); ?>
+                                            </span>		
+                                        </div>      
+                                    </a>                                    
+                                    <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
+                                        <div class="modal-content">
+                                            <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
+                                            <p>A bunch of text</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
 
                     </div>

@@ -494,6 +494,16 @@ CREATE TABLE hall (
 )
 
 
+
+----------------------------- PARKING HALL -----------------------------
+
+CREATE TABLE parking_hall (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `number` INT NOT NULL
+)
+
+
+
 ----------------------------- BEACH-TENT -----------------------------
 
 CREATE TABLE beach_tent (
@@ -503,8 +513,7 @@ CREATE TABLE beach_tent (
     `position` INT NOT NULL,
     `sea` BOOLEAN NOT NULL DEFAULT FALSE,
     `FK_id_hall` INT NOT NULL,
-    CONSTRAINT `FK_id_hall_beach_tent` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`),
-
+    CONSTRAINT `FK_id_hall_beach_tent` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`)
 );
 
 
@@ -587,8 +596,11 @@ END$$
 
 CREATE TABLE parking (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`number` INT NOT NULL UNIQUE,    
-    `price` FLOAT NULL 
+	`number` VARCHAR(50) NOT NULL UNIQUE, 
+    `price` FLOAT NULL,
+    `position` INT NOT NULL,
+    `FK_id_hall` INT NOT NULL,
+    CONSTRAINT `FK_id_hall_parking` FOREIGN KEY (`FK_id_hall`) REFERENCES `parking_hall` (`id`)    
 );
 
 
@@ -613,6 +625,20 @@ DELIMITER $$
 CREATE PROCEDURE parking_getAll ()
 BEGIN
 	SELECT * FROM `parking` ORDER BY number ASC;    
+END$$
+
+
+DROP procedure IF EXISTS `parking_getN_row`;
+DELIMITER $$
+CREATE PROCEDURE parking_getN_row (IN start INT)
+BEGIN
+	SELECT         
+        `parking`.*, 
+        `parking_hall`.`number` AS hall_number 
+    FROM `parking` 
+    INNER JOIN `parking_hall` ON `parking`.`FK_id_hall` = `parking_hall`.`id`
+    WHERE `parking`.`FK_id_hall` = start 
+    ORDER BY `parking`.`position` ASC;     
 END$$
 
 
