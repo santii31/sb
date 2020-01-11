@@ -1,4 +1,4 @@
-<!-- Main content  -->
+a<!-- Main content  -->
 <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
@@ -37,7 +37,7 @@
                         <div class="row">
                         <div class="input-field col s6">
                                 <select name="services">
-                                    <option value="" disabled selected>Seleccione una opcion</option>
+                                    <option value="" disabled selected>Seleccione servicio</option>
                                     
                                     <option value="$parasol"> Sombrilla </option>
                                     <option value="$locker"> Locker </option>
@@ -46,7 +46,19 @@
                                 </select>
                                 <label>Servicios</label>
                             </div>
-                            
+                            <div class="input-field col s6">
+                                <select name="services">
+                                    <option value="" disabled selected>Seleccione un cliente</option>
+                                    
+                                    <?php foreach ($clientList as $client): ?>
+                                        <option value="<?= $client->getId(); ?>">
+                                            <?= $client->getEmail(); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                     
+                                </select>
+                                <label>Servicios</label>
+                            </div>
                                                      
                         </div>                        
                         <div class="row">
@@ -61,4 +73,4 @@
             </div>
         </div>
     </div>
-</div>    
+</div>

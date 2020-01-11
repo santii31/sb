@@ -239,7 +239,7 @@ DROP procedure IF EXISTS `client_getAll`;
 DELIMITER $$
 CREATE PROCEDURE client_getAll ()
 BEGIN
-	SELECT * FROM `client` ORDER BY name ASC;
+	SELECT * FROM `client` ORDER BY dni ASC;
 END$$
 
 
@@ -1236,7 +1236,7 @@ BEGIN
             category.description AS category_description
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
-    ORDER BY price ASC;
+    ORDER BY product.price ASC;
 END$$
 
 
