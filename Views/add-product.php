@@ -36,32 +36,44 @@
 
                         <div class="row">
 
-                            <div class="input-field col s6">
-                                <select name="category">
+                            <div class="input-field col s4">
+                                <select name="id_category">
                                     <option value="" disabled selected>Seleccione su opcion</option>
                                     <?php foreach ($categories as $category): ?>
                                         <option value="<?= $category->getId(); ?>">
-                                            <?= $category->getName(); ?>
+                                            <?= ucfirst( $category->getName() ); ?>
                                         </option>
                                     <?php endforeach; ?> 
                                 </select>
                                 <label>Categoria</label>
                             </div>
 
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
+                                <select name="id_provider">
+                                    <option value="" disabled selected>Seleccione su opcion</option>
+                                    <?php foreach ($providers as $provider): ?>
+                                        <option value="<?= $provider->getId(); ?>">
+                                            <?= ucfirst( $provider->getName() ); ?>
+                                        </option>
+                                    <?php endforeach; ?> 
+                                </select>
+                                <label>Proveedor</label>
+                            </div>
+
+                            <div class="input-field col s4">
                                 <input id="name" type="text" name="name" class="validate" required>
                                 <label for="name">Nombre</label>
-                            </div>
+                            </div>                            
                         </div>
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="last_name" type="number" name="price" class="validate" required>
-                                <label for="last_name">Precio</label>
+                                <input id="price" type="number" name="price" class="validate" required>
+                                <label for="price">Precio</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="last_name" type="number" name="quantity" class="validate" required>
-                                <label for="last_name">Cantidad</label>
+                                <input id="quantity" type="number" name="quantity" class="validate" required>
+                                <label for="quantity">Cantidad</label>
                             </div>
                         </div>                        
 

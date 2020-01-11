@@ -47,12 +47,52 @@
                                                     </div>      
                                                 </a>                                                
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                    <div class="modal-content">
-                                                        <h4>Carpa nº <?= $tent->getNumber(); ?></h4>
-                                                        <p>A bunch of text</p>
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                                                                            
+                                                        <ul id="tabs-swipe-demo" class="tabs">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">
+                                                                    Estado
+                                                                </a>
+                                                            </li>
+                                                            <li class="tab col s6">
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    Futuras reservas
+                                                                </a>
+                                                            </li>                                                     
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <i class="material-icons">info_outline</i>
+                                                                La carpa se encuentra actualmente reservada.
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>                                                                
+                                                                <ol>
+                                                                    <li>
+                                                                        15/1/2020
+                                                                    </li>
+                                                                    <li>
+                                                                        25/1/2020
+                                                                    </li>
+                                                                    <li>
+                                                                        3/2/2020
+                                                                    </li>
+                                                                </ol>
+                                                            </div>    
+                                                        </div>
+                                                                                             
                                                     </div>
+
                                                     <div class="modal-footer">
-                                                        <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                        <a href="<?= FRONT_ROOT ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>
                                                     </div>
                                                 </div> 
                                             </div>
@@ -203,57 +243,27 @@
 
                                 <!-- Parasol -->
                                 <div class="parasol">                        
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>1</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>2</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>3</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>																		
+                                    <?php foreach ($firtsParasol as $parasol): ?>
+                                        <div class="parasol-item">                                        
+                                            <a class="modal-trigger" href="#">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4></h4>
+                                                    <p></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 										
+                                        </div>
+                                    <?php endforeach; ?>                                                                                         
                                 </div>
 
 							</div>							
@@ -327,60 +337,30 @@
                                     <?php endforeach; ?>									
 
                                 </div> 
-
+                                
                                 <!-- Parasol -->
                                 <div class="parasol">                        
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>1</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>2</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>3</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>																		
+                                    <?php foreach ($secondParasol as $parasol): ?>
+                                        <div class="parasol-item">                                        
+                                            <a class="modal-trigger" href="#">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4></h4>
+                                                    <p></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 										
+                                        </div>
+                                    <?php endforeach; ?>                                                                                         
                                 </div>
 
 							</div>																				
@@ -457,57 +437,27 @@
 
                                 <!-- Parasol -->
                                 <div class="parasol">                        
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>1</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>2</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>3</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>																		
+                                    <?php foreach ($thirdParasol as $parasol): ?>
+                                        <div class="parasol-item">                                        
+                                            <a class="modal-trigger" href="#">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4></h4>
+                                                    <p></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 										
+                                        </div>
+                                    <?php endforeach; ?>                                                                                         
                                 </div>
 
 							</div>
@@ -584,57 +534,27 @@
 
                                 <!-- Parasol -->
                                 <div class="parasol">                        
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>1</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>2</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>3</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>																		
+                                    <?php foreach ($fourthParasol as $parasol): ?>
+                                        <div class="parasol-item">                                        
+                                            <a class="modal-trigger" href="#">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4></h4>
+                                                    <p></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 										
+                                        </div>
+                                    <?php endforeach; ?>                                                                                         
                                 </div>
 
                             </div>
@@ -711,57 +631,27 @@
 
                                 <!-- Parasol -->
                                 <div class="parasol">                        
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>1</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>2</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>
-                                    <div class="parasol-item">                                        
-                                        <a class="modal-trigger" href="#">
-                                            <div class="tent-sea">
-                                                <span>3</span>		
-                                            </div>      
-                                        </a>
-                                        
-                                        <div id="" class="modal modal-fixed-footer">
-                                            <div class="modal-content">
-                                                <h4>Carpa nº 150</h4>
-                                                <p>A bunch of text</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                            </div>
-                                        </div> 										
-                                    </div>																		
+                                    <?php foreach ($fifthParasol as $parasol): ?>
+                                        <div class="parasol-item">                                        
+                                            <a class="modal-trigger" href="#">
+                                                <div class="tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+                                            
+                                            <div id="" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4></h4>
+                                                    <p></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 										
+                                        </div>
+                                    <?php endforeach; ?>                                                                                         
                                 </div>
 
                             </div>
@@ -771,10 +661,10 @@
 							
                                 <!-- Normal flow -->
 								<div class="hall-container ">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 6
-									</div>
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 6
+                                    </div>
 																	
                                     <div class="beach-tents">                                        
                                         <?php foreach ($seventhRow as $tent): ?>

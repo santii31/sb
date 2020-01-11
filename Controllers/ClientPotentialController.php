@@ -74,7 +74,7 @@
 
         public function addPotentialClientPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                         
-                $title = "Añadir cliente potencial";
+                $title = "Cliente potencial - Añadir";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-potential-client.php");
@@ -127,7 +127,7 @@
 
         public function updatePotentialPath($id_client, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
-                $title = "Modificar informacion";       
+                $title = "Cliente Potencial - Modificar informacion";       
                 $clientTemp = new ClientPotential();
                 $clientTemp->setId($id_client);                
                 $client = $this->clientPotentialDAO->getById($clientTemp);                    
@@ -175,7 +175,14 @@
                 return $this->updatePotentialPath($id, EMAIL_ERROR);
             }            
             return $this->updatePotentialPath($id ,EMPTY_FIELDS);
-        }               
+        }            
+        
+
+        // 
+        
+        public function getEmails() {
+            return $this->clientPotentialDAO->getEmails();
+        }
 
     }
 

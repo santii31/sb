@@ -139,7 +139,14 @@
                     $providerTemp->setCuilNumber($row["cuil"]);
                     $providerTemp->setSocialReason($row["social_reason"]);
                     $providerTemp->setBilling($row["type_billing"]);
-                    $providerTemp->setIsActive($row["is_active"]);
+					$providerTemp->setIsActive($row["is_active"]);
+					
+					$admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+					$providerTemp->setRegisterBy($admin);
+					
 					array_push($this->providerList, $providerTemp);
 				}
 				return $this->providerList;	

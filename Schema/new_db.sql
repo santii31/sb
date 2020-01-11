@@ -81,6 +81,14 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `admin_getEmails`;
+DELIMITER $$
+CREATE PROCEDURE admin_getEmails ()
+BEGIN
+	SELECT `admin`.`email` FROM `admin`;
+END$$
+
+
 DROP procedure IF EXISTS `admin_getAll`;
 DELIMITER $$
 CREATE PROCEDURE admin_getAll ()
@@ -232,6 +240,14 @@ DELIMITER $$
 CREATE PROCEDURE client_getByEmail (IN email VARCHAR(255))
 BEGIN
 	SELECT * FROM `client` WHERE `client`.`email` = email;
+END$$
+
+
+DROP procedure IF EXISTS `client_getEmails`;
+DELIMITER $$
+CREATE PROCEDURE client_getEmails ()
+BEGIN
+	SELECT `client`.`email` FROM `client`;
 END$$
 
 
@@ -399,6 +415,14 @@ DELIMITER $$
 CREATE PROCEDURE client_potential_getByEmail (IN email VARCHAR(255))
 BEGIN
 	SELECT * FROM `client_potential` WHERE `client_potential`.`email` = email;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getEmails`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getEmails ()
+BEGIN
+	SELECT `client_potential`.`email` FROM `client_potential`;
 END$$
 
 
@@ -576,6 +600,7 @@ BEGIN
     WHERE (`beach_tent`.`FK_id_hall` = start ) AND  (`beach_tent`.`sea` = 0)
     ORDER BY `beach_tent`.`position` ASC;     
 END$$
+
 
 DROP procedure IF EXISTS `tent_getSea_N_row`;
 DELIMITER $$
@@ -970,7 +995,12 @@ DROP procedure IF EXISTS `provider_getAll`;
 DELIMITER $$
 CREATE PROCEDURE provider_getAll ()
 BEGIN
-	SELECT * FROM `provider` ORDER BY lastname ASC;
+    SELECT `provider`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname
+    FROM `provider` 
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`
+    ORDER BY name ASC;
 END$$
 
 
@@ -1070,24 +1100,21 @@ END$$
 
 CREATE TABLE category (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`name` VARCHAR(255) NOT NULL,
-    `description` VARCHAR(255) NOT NULL 
+	`name` VARCHAR(255) NOT NULL
 );
 
 
 DROP procedure IF EXISTS `category_add`;
 DELIMITER $$
 CREATE PROCEDURE category_add (
-                                IN name VARCHAR(255),
-                                IN description VARCHAR(255)
+                                IN name VARCHAR(255)
                             )
 BEGIN
 	INSERT INTO category (
-			category.name,
-            category.description
+			category.name
 	)
     VALUES
-        (name, description);
+        (name);
 END$$
 
 
@@ -1123,7 +1150,8 @@ CREATE TABLE product (
 	`name` VARCHAR(255) NOT NULL,
     `price` FLOAT NOT NULL,
     `quantity` INT NOT NULL,
-    `FK_id_category` INT NOT NULL,
+    -- `FK_id_category` INT NOT NULL,
+    -- `FK_id_provider` INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
     
     `date_register` DATE NOT NULL,
@@ -1135,8 +1163,8 @@ CREATE TABLE product (
     `date_update` DATE DEFAULT NULL, 
     `update_by` INT DEFAULT NULL,
 
-    CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
-
+    -- CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
+    -- CONSTRAINT `FK_id_provider_product` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_product_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
@@ -1144,27 +1172,28 @@ CREATE TABLE product (
 );
 
 
-DROP procedure IF EXISTS `product_add`;
+DROP PROCEDURE IF EXISTS `product_add`;
 DELIMITER $$
-CREATE PROCEDURE product_add (
+CREATE PROCEDURE product_add(
                                 IN name VARCHAR(255),
                                 IN price INT,
                                 IN quantity INT,
-                                IN FK_id_category INT,
                                 IN date_register DATE,
-                                IN register_by INT
-                            )
+                                IN register_by INT,
+								OUT lastId int
+							)
 BEGIN
 	INSERT INTO product (
 			product.name,
             product.price,
-            product.quantity,
-            product.FK_id_category,
+            product.quantity,            
             product.date_register,
             product.register_by
 	)
     VALUES
-        (name, price, quantity, FK_id_category, date_register, register_by);
+        (name, price, quantity, date_register, register_by);    
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 
@@ -1304,10 +1333,10 @@ END$$
 CREATE TABLE providerxproduct (
 	`FK_id_provider` INT NOT NULL,
     `FK_id_product` INT NOT NULL,
-	`quantity` INT NOT NULL,
-    `total` FLOAT NOT NULL,
-    `discount` FLOAT NOT NULL,
-    `transaction_date` DATE NOT NULL, 
+	-- `quantity` INT NOT NULL,
+    -- `total` FLOAT NOT NULL,
+    -- `discount` FLOAT NOT NULL,
+    -- `transaction_date` DATE NOT NULL, 
     CONSTRAINT `FK_id_provider_providerxproduct` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_id_product_providerxproduct` FOREIGN KEY (`FK_id_product`) REFERENCES `product` (`id`)
 );
@@ -1317,23 +1346,23 @@ DROP procedure IF EXISTS `providerxproduct_add`;
 DELIMITER $$
 CREATE PROCEDURE providerxproduct_add (
 								IN FK_id_provider INT,
-								IN FK_id_product INT,
-                                IN quantity INT,
-                                IN total FLOAT,
-                                IN discount FLOAT,
-                                IN transaction_date DATE
+								IN FK_id_product INT
+                                -- IN quantity INT,
+                                -- IN total FLOAT,
+                                -- IN discount FLOAT,
+                                -- IN transaction_date DATE
 							 )
 BEGIN
 	INSERT INTO providerxproduct (
 			providerxproduct.FK_id_provider,
-            providerxproduct.FK_id_product,
-            providerxproduct.quantity,
-            providerxproduct.total,
-            providerxproduct.discount,
-            providerxproduct.transaction_date
+            providerxproduct.FK_id_product
+    --         providerxproduct.quantity,
+    --         providerxproduct.total,
+    --         providerxproduct.discount,
+    --         providerxproduct.transaction_date
 	)
     VALUES
-        (FK_id_provider, FK_id_product, quantity, total, discount, transaction_date);
+        (FK_id_provider, FK_id_product);
 END$$
 
 
@@ -1415,7 +1444,10 @@ END$$
 CREATE TABLE parasol (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `parasol_number` INT NOT NULL UNIQUE,
-    `price` FLOAT NOT NULL
+    `price` FLOAT NOT NULL,
+    `position` INT NOT NULL,    
+    `FK_id_hall` INT NOT NULL,
+    CONSTRAINT `FK_id_hall_parasol` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`)
 );
 
 
@@ -1438,6 +1470,36 @@ BEGIN
     ORDER BY price ASC;
 END$$
 
+
+DROP procedure IF EXISTS `parasol_getN_row`;
+DELIMITER $$
+CREATE PROCEDURE parasol_getN_row (IN start INT)
+BEGIN
+	SELECT *
+    FROM `parasol` 
+    WHERE `parasol`.`FK_id_hall` = start
+    ORDER BY `parasol`.`position` ASC;
+END$$
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (1, 100, 1, 1);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (3, 100, 2, 1);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (5, 100, 3, 1);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (7, 100, 4, 2);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (9, 100, 5, 2);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (11, 100, 6, 2);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (13, 100, 7, 3);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (15, 100, 8, 3);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (17, 100, 9, 3);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (19, 100, 10, 4);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (21, 100, 11, 4);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (23, 100, 12, 4);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (25, 100, 13, 5);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (27, 100, 14, 5);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (29, 100, 15, 5);
 
 
 ---------------------------- LOCKER ---------------------------
@@ -2120,6 +2182,7 @@ CREATE TABLE staff (
     `name` VARCHAR(255) NOT NULL,
     `lastname` VARCHAR(255) NOT NULL,
     `position` VARCHAR(255) NOT NULL,
+    `salary` FLOAT NOT NULL,
     `date_start` DATE NOT NULL,
     `date_end` DATE NOT NULL,
     `dni` INT NOT NULL,
@@ -2151,6 +2214,7 @@ CREATE PROCEDURE staff_add (
                                 IN name VARCHAR(255),
                                 IN lastname VARCHAR(255),
                                 IN position VARCHAR(255),
+                                IN salary FLOAT,
                                 IN date_start DATE,
                                 IN date_end DATE,
                                 IN dni INT,
@@ -2166,6 +2230,7 @@ BEGIN
 			staff.name,
 			staff.lastname,
 			staff.position,
+            staff.salary,
             staff.date_start,
             staff.date_end,
             staff.dni,
@@ -2177,7 +2242,7 @@ BEGIN
             staff.register_by
 	)
     VALUES
-        (name, lastname, position, date_start, date_end, dni, address, tel, shirt_size, pant_size, date_register, register_by);
+        (name, lastname, position, salary, date_start, date_end, dni, address, tel, shirt_size, pant_size, date_register, register_by);
 END$$
 
 
@@ -2201,7 +2266,12 @@ DROP procedure IF EXISTS `staff_getAll`;
 DELIMITER $$
 CREATE PROCEDURE staff_getAll ()
 BEGIN
-	SELECT * FROM `staff` ORDER BY name ASC;
+	SELECT `staff`.*,
+            `admin`.`name` AS admin_name,
+            `admin`.`lastname` AS admin_lastname
+    FROM `staff` 
+    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
+    ORDER BY name ASC;
 END$$
 
 
@@ -2256,6 +2326,7 @@ CREATE PROCEDURE staff_update (
                                     IN name VARCHAR(255),
                                     IN lastname VARCHAR(255),
                                     IN position VARCHAR(255),
+                                    IN salary FLOAT,
                                     IN date_start DATE,
                                     IN date_end DATE,
                                     IN dni INT,
@@ -2273,6 +2344,7 @@ BEGIN
         `staff`.`name` = name, 
         `staff`.`lastname` = lastname,
         `staff`.`position` = position,
+        `staff`.`salary` = salary,
         `staff`.`date_start` = date_start,
         `staff`.`date_end` = date_end,
         `staff`.`dni` = dni,

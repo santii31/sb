@@ -122,6 +122,10 @@ a:hover {
     color: #721c24;
 }
 
+.card-warning {
+    color: #856404;
+}
+
 .dashboard {
     font-size: 0.875rem;
     background-color: #edf1f5;
@@ -280,7 +284,7 @@ nav .input-field label.active i {
 }
 
 /* BEACH MAP COLORS */
-.beach-map-colors {
+.beach-map-colors {    
     font-size: 1.1rem;
     width: 80%;    
     display: flex;
@@ -325,14 +329,12 @@ nav .input-field label.active i {
 }
 
 /* Beach map container */
-.beach-map {        
-    display: grid;
-    grid-template-columns: 5fr .5fr;        
+.beach-map {                
+    width: 90%;    
 }
 
 .beach-map-container {                
-    background-color: #dbd1b4;    
-    border-left: 2.5em solid #8E8171;   
+    background-color: #dbd1b4;        
     border-right: 5em solid #006699;     
 }
 
@@ -406,7 +408,7 @@ nav .input-field label.active i {
 
 .beach-tents {        
     display: grid;    
-    padding: 4rem 0 2.5rem 2.5rem;
+    padding: 4rem 0 2.5rem .5rem;
     grid-template-columns: repeat(16, 1fr);    
     align-items: center;    
     justify-content: center;    
@@ -437,6 +439,20 @@ nav .input-field label.active i {
     background-color: #edf1f5 !important;    
 }
 
+.hall-container {
+    border-left: 2.5em solid #8E8171;   
+}
+
+.last-hall .hall-container {
+    border-left: 2.5em solid transparent;
+}
+
+.last-hall .hall-name {    
+    position: relative;
+    width: 104%;
+    left: -4%;
+}
+
 /* Extra tents */
 .extra-beach-tents {    
     display: grid;
@@ -446,12 +462,12 @@ nav .input-field label.active i {
 .extra-beach-tents > .beach-tents {    
     padding: 0 0 0 2.5rem;        
     display: inline;    
-    padding-top: 2rem;
+    /* padding-top: .5rem;     */
 }
 
 .extra-beach-tents .tent-container {
     display: grid;        
-    grid-template-columns: repeat(15, 1fr);    
+    grid-template-columns: repeat(16, 1fr);    
     align-items: center;    
     justify-content: center;           
 }
@@ -582,3 +598,54 @@ nav .input-field label.active i {
     text-align: left;
 }
 
+
+/* Pop up tents */
+.tab-extra {
+    margin-top: 6rem;
+    font-size: 1.5rem;               
+    text-align: center !important;
+}
+
+.tab-extra > div {
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-extra i {
+    font-size: 3rem;
+    margin-right: .5rem;
+}
+
+.tabs .tab a:hover, 
+.tabs .tab a.active {
+    background-color: transparent;
+    color: #6a56a5;
+}
+
+.tabs .tab a {
+    color: #22252e;
+}
+
+.tabs .indicator {    
+    background-color: #473e64;    
+}
+
+.tabs .tab a:focus.active {
+    background-color: rgba(95, 46, 110, 0.2);    
+}
+  
+
+
+/* Mail page */
+.mail-filter {    
+    padding: 1rem;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mail-filter > span {
+    font-size: 1.3rem;
+}

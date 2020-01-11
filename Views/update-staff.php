@@ -26,19 +26,26 @@
                         <input id="id" type="hidden" name="id" value="<?= $staff->getId(); ?>" >
 
                         <div class="row">
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="name" type="text" name="name" class="validate" value="<?= $staff->getName(); ?>" required>
                                 <label for="name">Nombre</label>
                             </div>  
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="lastname" type="text" name="lastname" value="<?= $staff->getLastName(); ?>" class="validate" required>
                                 <label for="lastname">Apellido</label>
                             </div>                                        
-                            <div class="input-field col s4">
+                        </div>   
+
+                        <div class="row">
+                            <div class="input-field col s6">
                                 <input id="position" type="text" name="position" value="<?= $staff->getPosition(); ?>" class="validate" required>
                                 <label for="position">Cargo</label>
-                            </div>                                                 
-                        </div>   
+                            </div>                                    
+                            <div class="input-field col s6">
+                                <input id="salary" type="number" name="salary" value="<?= $staff->getSalary(); ?>" class="validate" required>
+                                <label for="salary">Sueldo</label>
+                            </div>                                                             
+                        </div>
 
                         <div class="row">
                             <div class="input-field col s6">

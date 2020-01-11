@@ -19,20 +19,24 @@
 
 		
         public function add(Product $product, Admin $registerBy) {								
-			try {					
-				$query = "CALL product_add(?, ?, ?, ?, ?, ?)";
+			try {													
+				$query = "CALL product_add(?, ?, ?, ?, ?, @lastId)";
 				$parameters["name"] = $product->getName();
 				$parameters["price"] = $product->getPrice();
-				$parameters["quantity"] = $product->getQuantity();
+				$parameters["quantity"] = $product->getQuantity();				
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();
-				$parameters["FK_id_category"] = $product->getCategory()->getId();				
 				$this->connection = Connection::getInstance();
-				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
-				return true;
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+
+				foreach ($results as $row) {
+                    $lastId = $row['lastId'];                
+                }
+				return $lastId;
 			}
 			catch (Exception $e) {
-				return false;
+				return false;				
+				// echo $e;
 			}			
         }
 					

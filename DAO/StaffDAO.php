@@ -19,10 +19,11 @@
         
         public function add(Staff $staff, Admin $registerBy) {								
             try {					            
-                $query = "CALL staff_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $query = "CALL staff_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $parameters["name"] = $staff->getName();
                 $parameters["lastname"] = $staff->getLastName();
                 $parameters["position"] = $staff->getPosition();
+                $parameters["salary"] = $staff->getSalary();
                 $parameters["date_start"] = $staff->getDateStart();
                 $parameters["date_end"] = $staff->getDateEnd();
                 $parameters["dni"] = $staff->getDni();
@@ -55,6 +56,7 @@
                     $staffTemp->setName($row["name"]);
                     $staffTemp->setLastName($row["lastname"]);
                     $staffTemp->setPosition($row["position"]);
+                    $staffTemp->setSalary($row["salary"]);
                     $staffTemp->setDateStart($row["date_start"]);
                     $staffTemp->setDateEnd($row["date_end"]);
                     $staffTemp->setDni($row["dni"]);
@@ -83,6 +85,7 @@
                     $staffTemp->setName($row["name"]);
                     $staffTemp->setLastName($row["lastname"]);
                     $staffTemp->setPosition($row["position"]);
+                    $staffTemp->setSalary($row["salary"]);
                     $staffTemp->setDateStart($row["date_start"]);
                     $staffTemp->setDateEnd($row["date_end"]);
                     $staffTemp->setDni($row["dni"]);
@@ -109,6 +112,7 @@
                     $staff->setName($row["name"]);
                     $staff->setLastName($row["lastname"]);
                     $staff->setPosition($row["position"]);
+                    $staff->setSalary($row["salary"]);
                     $staff->setDateStart($row["date_start"]);
                     $staff->setDateEnd($row["date_end"]);
                     $staff->setDni($row["dni"]);
@@ -117,6 +121,13 @@
                     $staff->setShirtSize($row["shirt_size"]);
                     $staff->setPantSize($row["pant_size"]);
                     $staff->setIsActive($row["is_active"]);
+                    
+                    $admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+                    $staff->setRegisterBy($admin);
+
                     array_push($this->staffList, $staff);
                 }
                 return $this->staffList;	
@@ -170,10 +181,11 @@
         
         public function update(Staff $staff, Admin $updateBy) {
             try {								
-                $query = "CALL staff_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
+                $query = "CALL staff_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
                 $parameters["name"] = $staff->getName();
                 $parameters["lastname"] = $staff->getLastName();
-                $parameters["position"] = $staff->getPosition();
+                $parameters["position"] = $staff->getPosition();                
+                $parameters["salary"] = $staff->getSalary();
                 $parameters["date_start"] = $staff->getDateStart();
                 $parameters["date_end"] = $staff->getDateEnd();
                 $parameters["dni"] = $staff->getDni();

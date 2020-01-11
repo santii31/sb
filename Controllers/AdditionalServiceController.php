@@ -75,7 +75,7 @@
             $total = 0;
             $servicexLocker = new ServicexLocker();
             if(!empty($locker)) {
-                $total = $additionalService->GetTotal + $locker->getPrice();
+                $total = $additionalService->getTotal() + $locker->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
@@ -121,7 +121,7 @@
             $total = 0;
             $servicexParasol = new ServicexParasol();
             if(!empty($parasol)) {
-                $total = $additionalService->GetTotal + $parasol->getPrice();
+                $total = $additionalService->getTotal() + $parasol->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
@@ -166,7 +166,7 @@
             $total = 0;
             $servicexParking = new ServicexParking();
             if(!empty($parking)) {
-                $total = $additionalService->GetTotal + $parking->getPrice();
+                $total = $additionalService->getTotal() + $parking->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
@@ -180,10 +180,6 @@
                 return true;
             }
         }
-
-
-
-
 
 
         /*private function add($description, $locker, $parasol, $parking) {
@@ -530,8 +526,7 @@
                 $serviceTemp->setDescription( strtolower($description) );                
 
 				if ($this->additionalServiceDAO->checkDescription($serviceTemp) == null) { 
-                    
-                    // aca? o arriba del if?
+                                        
                     $description_s = filter_var($description, FILTER_SANITIZE_STRING);
                     
                     $additionalService = new AdditionalService();

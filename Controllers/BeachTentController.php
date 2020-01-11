@@ -3,8 +3,9 @@
     namespace Controllers;    
 
     use Models\BeachTent as BeachTent;
-	use DAO\BeachTentDAO as BeachTentDAO;
+    use DAO\BeachTentDAO as BeachTentDAO;
     use Controllers\AdminController as AdminController;  
+    use Controllers\ParasolController as ParasolController;  
 
     class BeachTentController {
         
@@ -33,6 +34,15 @@
                 
                 $title = 'Mapa de carpas';		
 
+                $parasolController = new ParasolController();
+
+                // parasols
+                $firtsParasol = $parasolController->getRowParasol(1);
+                $secondParasol = $parasolController->getRowParasol(2);
+                $thirdParasol = $parasolController->getRowParasol(3);
+                $fourthParasol = $parasolController->getRowParasol(4);
+                $fifthParasol = $parasolController->getRowParasol(5);
+
                 // Tents
                 $firstRow = $this->beachTentDAO->getN_row(1);
                 $secondRow = $this->beachTentDAO->getN_row(2);
@@ -49,7 +59,7 @@
                 $fourthSeaRow = $this->beachTentDAO->getSea_N_row(4);
                 $fifthSeaRow = $this->beachTentDAO->getSea_N_row(5);
                 $sixthSeaRow = $this->beachTentDAO->getSea_N_row(6);
-                $seventhSeaRow = $this->beachTentDAO->getSea_N_row(7);
+                $seventhSeaRow = $this->beachTentDAO->getSea_N_row(7);                
 
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");

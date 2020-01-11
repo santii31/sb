@@ -14,9 +14,7 @@
         public function __construct() {
             $this->parkingDAO = new ParkingDAO();
             $this->adminController = new AdminController();
-        }
-
-        public function 
+        }        
 
         public function parkingMap() {
             if ($admin = $this->adminController->isLogged()) {

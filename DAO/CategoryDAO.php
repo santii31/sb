@@ -16,9 +16,7 @@
 		public function __construct() { }
 
 
-		public function add() {
-
-		}        
+		public function add() { }        
 					
 		public function getById(Category $category) {
 			try {				
@@ -65,10 +63,9 @@
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
-                    $categoryTemp = new Category();
-                    $categoryTemp->setId($row["id"]);
-                    $categoryTemp->setName($row["name"]);
-                    $categoryTemp->setDescription($row["description"]);
+                    $category = new Category();
+                    $category->setId($row["id"]);
+                    $category->setName($row["name"]);                    
 					array_push($this->categoryList, $category);
 				}
 				return $this->categoryList;	
