@@ -19,20 +19,20 @@
 
 		
         public function add(Product $product, Admin $registerBy) {								
-			try {					
+			try {									
 				$query = "CALL product_add(?, ?, ?, ?, ?, ?)";
 				$parameters["name"] = $product->getName();
 				$parameters["price"] = $product->getPrice();
 				$parameters["quantity"] = $product->getQuantity();
+				$parameters["FK_id_category"] = $product->getCategory()->getId();				
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();
-				$parameters["FK_id_category"] = $product->getCategory()->getId();				
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
 			}
 			catch (Exception $e) {
-				return false;
+				return false;				
 			}			
         }
 					

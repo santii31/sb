@@ -9,7 +9,15 @@
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
 	define("IMG_PATH", FRONT_ROOT . VIEWS_PATH . "assets/img/");	
-
+	
+	// EMAIL {COMPLETAR}
+	define("SB_EMAIL", "");
+	define("SB_EMAIL_PASS", "");
+	define("EMAIL_HOST", "smtp.live.com");	//-> este sirve si la cuenta es hotmail
+	define('EMAIL_PORT', 587);
+	define('EMAIL_SUCCESS', 'Correos enviados con exito.');
+	define('EMAIL_ERROR', 'Error al enviar los correos. Intente mas tarde.');
+	
 	//DB
 	define("DB_HOST", "localhost");
 	define("DB_NAME", "southbeach");

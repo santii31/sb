@@ -321,13 +321,7 @@
                                             <i class="material-icons left">format_list_numbered</i>
                                             Listar clientes potenciales
                                         </a>
-                                    </li>  
-                                    <li>
-                                        <a href="<?= FRONT_ROOT ?>email/send" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">email</i>
-                                            Enviar correo
-                                        </a>
-                                    </li>                                                                    
+                                    </li>                                                                     
                                 </ul>
                             </div>
                         </li>                    
@@ -357,6 +351,22 @@
 
                     <ul class="collapsible">
                         <li>
+                            <div class="collapsible-header"><i class="material-icons">email</i>Correo</div>
+                            <div class="collapsible-body">
+                                <ul>                                
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>email/sendEmailPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">send</i>
+                                            Enviar nuevo correo
+                                        </a>
+                                    </li> 
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>                     
+
+                    <ul class="collapsible">
+                        <li>
                             <div class="collapsible-header"><i class="material-icons">person_pin</i>Administradores</div>
                             <div class="collapsible-body">
                                 <ul>
@@ -375,7 +385,23 @@
                                 </ul>
                             </div>
                         </li>                    
-                    </ul>                                       
+                    </ul>       
+                    
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">settings</i>Configuracion</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>config/updateValuesPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">subdirectory_arrow_right</i>
+                                            Actualizar valores
+                                        </a>
+                                    </li>                                                                  
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul>                          
 
                 </ul>                
             </div>

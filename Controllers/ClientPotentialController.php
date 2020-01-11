@@ -175,7 +175,14 @@
                 return $this->updatePotentialPath($id, EMAIL_ERROR);
             }            
             return $this->updatePotentialPath($id ,EMPTY_FIELDS);
-        }               
+        }            
+        
+
+        // 
+        
+        public function getEmails() {
+            return $this->clientPotentialDAO->getEmails();
+        }
 
     }
 

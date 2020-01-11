@@ -81,6 +81,14 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `admin_getEmails`;
+DELIMITER $$
+CREATE PROCEDURE admin_getEmails ()
+BEGIN
+	SELECT `admin`.`email` FROM `admin`;
+END$$
+
+
 DROP procedure IF EXISTS `admin_getAll`;
 DELIMITER $$
 CREATE PROCEDURE admin_getAll ()
@@ -232,6 +240,14 @@ DELIMITER $$
 CREATE PROCEDURE client_getByEmail (IN email VARCHAR(255))
 BEGIN
 	SELECT * FROM `client` WHERE `client`.`email` = email;
+END$$
+
+
+DROP procedure IF EXISTS `client_getEmails`;
+DELIMITER $$
+CREATE PROCEDURE client_getEmails ()
+BEGIN
+	SELECT `client`.`email` FROM `client`;
 END$$
 
 
@@ -399,6 +415,14 @@ DELIMITER $$
 CREATE PROCEDURE client_potential_getByEmail (IN email VARCHAR(255))
 BEGIN
 	SELECT * FROM `client_potential` WHERE `client_potential`.`email` = email;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getEmails`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getEmails ()
+BEGIN
+	SELECT `client_potential`.`email` FROM `client_potential`;
 END$$
 
 
@@ -1076,24 +1100,21 @@ END$$
 
 CREATE TABLE category (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`name` VARCHAR(255) NOT NULL,
-    `description` VARCHAR(255) NOT NULL 
+	`name` VARCHAR(255) NOT NULL
 );
 
 
 DROP procedure IF EXISTS `category_add`;
 DELIMITER $$
 CREATE PROCEDURE category_add (
-                                IN name VARCHAR(255),
-                                IN description VARCHAR(255)
+                                IN name VARCHAR(255)
                             )
 BEGIN
 	INSERT INTO category (
-			category.name,
-            category.description
+			category.name
 	)
     VALUES
-        (name, description);
+        (name);
 END$$
 
 

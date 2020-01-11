@@ -11,6 +11,7 @@
         private $name;
         private $price;
         private $category;
+        private $quantity;
         private $is_active;
 
         public function getId() {
@@ -38,11 +39,19 @@
         }
         
         public function getCategory() {
-            return $this->provider;
+            return $this->category;
         }
 
         public function setCategory(Category $category) {
             $this->category = $category;            
+        }
+
+        public function getQuantity() {
+            return $this->quantity;
+        }
+
+        public function setQuantity($quantity) {
+            $this->quantity = $quantity;            
         }
         
         public function getIsActive() {

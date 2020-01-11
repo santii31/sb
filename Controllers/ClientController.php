@@ -195,6 +195,15 @@
             }            
             return $this->updatePath($id, EMPTY_FIELDS);
         }
+        
+
+        
+        // 
+
+        public function getEmails() {
+            return $this->clientDAO->getEmails();
+        }
+
 
     }
 

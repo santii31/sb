@@ -9,7 +9,7 @@
     class ParasolController {
 
         private $parasolDAO;
-        private $adminController;
+        // private $adminController;
 
         public function __construct() {
             $this->parasolDAO = new ParasolDAO();

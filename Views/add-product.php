@@ -37,11 +37,11 @@
                         <div class="row">
 
                             <div class="input-field col s6">
-                                <select name="category">
+                                <select name="id_category">
                                     <option value="" disabled selected>Seleccione su opcion</option>
                                     <?php foreach ($categories as $category): ?>
                                         <option value="<?= $category->getId(); ?>">
-                                            <?= $category->getName(); ?>
+                                            <?= ucfirst( $category->getName() ); ?>
                                         </option>
                                     <?php endforeach; ?> 
                                 </select>
@@ -56,12 +56,12 @@
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="last_name" type="number" name="price" class="validate" required>
-                                <label for="last_name">Precio</label>
+                                <input id="price" type="number" name="price" class="validate" required>
+                                <label for="price">Precio</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="last_name" type="number" name="quantity" class="validate" required>
-                                <label for="last_name">Cantidad</label>
+                                <input id="quantity" type="number" name="quantity" class="validate" required>
+                                <label for="quantity">Cantidad</label>
                             </div>
                         </div>                        
 

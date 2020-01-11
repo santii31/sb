@@ -52,8 +52,8 @@
 
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="title" type="text" name="title" class="validate" required>
-                                <label for="title">Asunto</label>
+                                <input id="subject" type="text" name="subject" class="validate" required>
+                                <label for="subject">Asunto</label>
                             </div>                            
                         </div>                                                    
                         <div class="row">

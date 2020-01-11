@@ -50,9 +50,9 @@
                                                     <div class="modal-content center-align">
                                                         <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
                                                                                                             
-                                                        <ul id="tabs-swipe-demo" class="tabs centered">
-                                                            <li class="tab col s6 centered">
-                                                                <a class="active " href="#status-<?= $tent->getId(); ?>">
+                                                        <ul id="tabs-swipe-demo" class="tabs">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">
                                                                     Estado
                                                                 </a>
                                                             </li>

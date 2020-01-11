@@ -122,6 +122,10 @@ a:hover {
     color: #721c24;
 }
 
+.card-warning {
+    color: #856404;
+}
+
 .dashboard {
     font-size: 0.875rem;
     background-color: #edf1f5;

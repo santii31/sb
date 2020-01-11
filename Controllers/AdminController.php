@@ -223,7 +223,15 @@
             } else {
                 return $this->userPath();
             }                
-		}
+        }
+        
+
+        
+        // 
+
+        public function getEmails() {
+            return $this->adminDAO->getEmails();
+        }
 
     }
 

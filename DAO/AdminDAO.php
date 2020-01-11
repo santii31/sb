@@ -177,7 +177,21 @@
 			}
 		}
 		
-				
+		public function getEmails() {
+			try {
+				$emails = array();
+				$query = "CALL admin_getEmails()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$email =  $row["email"];										
+					array_push($emails, $email);
+				}
+				return $emails;	
+			} catch (Exception $e) {
+				return false;				
+			}
+		}		
 
     }
 
