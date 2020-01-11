@@ -21,19 +21,16 @@
 		
         public function add(ProviderxProduct $providerxproduct) {								
 			try {					
-				$query = "CALL providerxproduct_add(?, ?, ?, ?, ?, ?)";
+				$query = "CALL providerxproduct_add(?, ?)";
 				$parameters["FK_id_provider"] = $providerxproduct->getProvider()->getId();
-				$parameters["FK_id_product"] = $providerxproduct->getProduct()->getId();
-				$parameters["quantity"] = $providerxproduct->getQuantity();
-				$parameters["total"] = $providerxproduct->getTotal();
-                $parameters["discount"] = $providerxproduct->getDiscount();
-                $parameters["transaction_date"] = $providerxproduct->getTransactionDate();
+				$parameters["FK_id_product"] = $providerxproduct->getProduct()->getId();			
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
 			}
 			catch (Exception $e) {
 				return false;
+				// echo $e;
 			}			
         }
 					
@@ -58,12 +55,7 @@
                     $category->setName($row["name"]);
                     $category->setDescription($row["description"]);
 
-                    $providerxproductTemp->setProduct($product);
-                    $providerxproductTemp->setQuantity($row["quantity"]);
-                    $providerxproductTemp->setTotal($row["total"]);
-                    $providerxproductTemp->setDiscount($row["discount"]);
-                    $providerxproductTemp->setTransactionDate($row["transaction_date"]);
-					
+                    $providerxproductTemp->setProduct($product);    					
 				}
 				return $providerxproductTemp;
 			} catch (Exception $e) {
@@ -93,13 +85,7 @@
                     $provider->setSocialReason($row["social_reason"]);
                     $provider->setBilling($row["type_billing"]);
                     $provider->setIsActive($row["is_active"]);
-                    $providerxproductTemp->setProvider($provider);
-
-                    $providerxproductTemp->setQuantity($row["quantity"]);
-                    $providerxproductTemp->setTotal($row["total"]);
-                    $providerxproductTemp->setDiscount($row["discount"]);
-                    $providerxproductTemp->setTransactionDate($row["transaction_date"]);
-					
+                    $providerxproductTemp->setProvider($provider);                    					
 				}
 				return $providerxproductTemp;
 			} catch (Exception $e) {

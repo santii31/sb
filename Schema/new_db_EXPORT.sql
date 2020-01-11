@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-01-2020 a las 00:05:44
+-- Tiempo de generación: 11-01-2020 a las 21:58:37
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `southbeach2`
+-- Base de datos: `southbeach`
 --
 
 DELIMITER $$
@@ -74,13 +74,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`id` = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `category_add` (IN `name` VARCHAR(255), IN `description` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getEmails` ()  BEGIN
+	SELECT `admin`.`email` FROM `admin`;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `category_add` (IN `name` VARCHAR(255))  BEGIN
 	INSERT INTO category (
-			category.name,
-            category.description
+			category.name
 	)
     VALUES
-        (name, description);
+        (name);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `category_getAll` ()  BEGIN
@@ -145,6 +148,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getById` (IN `id` INT)  BEGI
 	SELECT * FROM `client` WHERE `client`.`id` = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getEmails` ()  BEGIN
+	SELECT `client`.`email` FROM `client`;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `email` VARCHAR(255), IN `tel` INT, IN `num_tent` INT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
 	INSERT INTO client_potential (
 			client_potential.name,
@@ -193,6 +200,10 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `client_potential` WHERE `client_potential`.`id` = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getEmails` ()  BEGIN
+	SELECT `client_potential`.`email` FROM `client_potential`;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `email` VARCHAR(255), IN `tel` INT, IN `num_tent` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
@@ -255,6 +266,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getById` (IN `id` INT)  BEG
     WHERE `parasol`.`id` = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getN_row` (IN `start` INT)  BEGIN
+	SELECT *
+    FROM `parasol` 
+    WHERE `parasol`.`FK_id_hall` = start
+    ORDER BY `parasol`.`position` ASC;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parking_getAll` ()  BEGIN
 	SELECT * FROM `parking` ORDER BY number ASC;
     
@@ -278,17 +296,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `parking_getN_row` (IN `start` INT) 
     ORDER BY `parking`.`position` ASC;     
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `product_add` (IN `name` VARCHAR(255), IN `price` INT, IN `quantity` INT, IN `FK_id_category` INT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_add` (IN `name` VARCHAR(255), IN `price` INT, IN `quantity` INT, IN `date_register` DATE, IN `register_by` INT, OUT `lastId` INT)  BEGIN
 	INSERT INTO product (
 			product.name,
             product.price,
-            product.quantity,
-            product.FK_id_category,
+            product.quantity,            
             product.date_register,
             product.register_by
 	)
     VALUES
-        (name, price, quantity, FK_id_category, date_register, register_by);
+        (name, price, quantity, date_register, register_by);    
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `product_disableById` (IN `id` INT, IN `date_disable` DATE, IN `disable_by` INT)  BEGIN
@@ -378,17 +397,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `product_update` (IN `name` VARCHAR(
         `product`.`id` = id;	
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `providerxproduct_add` (IN `FK_id_provider` INT, IN `FK_id_product` INT, IN `quantity` INT, IN `total` FLOAT, IN `discount` FLOAT, IN `transaction_date` DATE)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `providerxproduct_add` (IN `FK_id_provider` INT, IN `FK_id_product` INT)  BEGIN
 	INSERT INTO providerxproduct (
 			providerxproduct.FK_id_provider,
-            providerxproduct.FK_id_product,
-            providerxproduct.quantity,
-            providerxproduct.total,
-            providerxproduct.discount,
-            providerxproduct.transaction_date
+            providerxproduct.FK_id_product
+    --         providerxproduct.quantity,
+    --         providerxproduct.total,
+    --         providerxproduct.discount,
+    --         providerxproduct.transaction_date
 	)
     VALUES
-        (FK_id_provider, FK_id_product, quantity, total, discount, transaction_date);
+        (FK_id_provider, FK_id_product);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `providerxproduct_getAll` ()  BEGIN
@@ -496,7 +515,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_enableById` (IN `id` INT, 
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getAll` ()  BEGIN
-	SELECT * FROM `provider` ORDER BY lastname ASC;
+    SELECT `provider`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname
+    FROM `provider` 
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`
+    ORDER BY name ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getByDni` (IN `dni` INT)  BEGIN
@@ -834,11 +858,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `service_update` (IN `description` V
         `additional_service`.`id` = id;	
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `position` VARCHAR(255), IN `date_start` DATE, IN `date_end` DATE, IN `dni` INT, IN `address` VARCHAR(255), IN `tel` INT, IN `shirt_size` FLOAT, IN `pant_size` FLOAT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `position` VARCHAR(255), IN `salary` FLOAT, IN `date_start` DATE, IN `date_end` DATE, IN `dni` INT, IN `address` VARCHAR(255), IN `tel` INT, IN `shirt_size` FLOAT, IN `pant_size` FLOAT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
 	INSERT INTO staff (
 			staff.name,
 			staff.lastname,
 			staff.position,
+            staff.salary,
             staff.date_start,
             staff.date_end,
             staff.dni,
@@ -850,7 +875,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_add` (IN `name` VARCHAR(255),
             staff.register_by
 	)
     VALUES
-        (name, lastname, position, date_start, date_end, dni, address, tel, shirt_size, pant_size, date_register, register_by);
+        (name, lastname, position, salary, date_start, date_end, dni, address, tel, shirt_size, pant_size, date_register, register_by);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_checkDni` (IN `dni` INT, IN `id` INT)  BEGIN
@@ -876,7 +901,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_enableById` (IN `id` INT, IN 
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_getAll` ()  BEGIN
-	SELECT * FROM `staff` ORDER BY name ASC;
+	SELECT `staff`.*,
+            `admin`.`name` AS admin_name,
+            `admin`.`lastname` AS admin_lastname
+    FROM `staff` 
+    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
+    ORDER BY name ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_getByDni` (IN `dni` INT)  BEGIN
@@ -887,12 +917,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `staff` WHERE `staff`.`id` = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `position` VARCHAR(255), IN `date_start` DATE, IN `date_end` DATE, IN `dni` INT, IN `address` VARCHAR(255), IN `tel` INT, IN `shirt_size` FLOAT, IN `pant_size` FLOAT, IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `position` VARCHAR(255), IN `salary` FLOAT, IN `date_start` DATE, IN `date_end` DATE, IN `dni` INT, IN `address` VARCHAR(255), IN `tel` INT, IN `shirt_size` FLOAT, IN `pant_size` FLOAT, IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
     UPDATE `staff` 
     SET 
         `staff`.`name` = name, 
         `staff`.`lastname` = lastname,
         `staff`.`position` = position,
+        `staff`.`salary` = salary,
         `staff`.`date_start` = date_start,
         `staff`.`date_end` = date_end,
         `staff`.`dni` = dni,
@@ -986,8 +1017,8 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id`, `name`, `lastname`, `dni`, `email`, `password`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
 (1, 'admin', 'admin', 404040, 'admin@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1, '2020-01-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'Test', 'Test', 505050, 'test@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 0, '2020-01-07', 1, '2020-01-08', 1, NULL, NULL, NULL, NULL),
-(3, 'pepe', 'admin', 707070, 'pepeadmin@admin.com', '$2y$10$t5m0VNDRsrv96z3k386mHuoo/YdnRldp.DN409hnRjEiiBRKTGDly', 0, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, NULL, NULL);
+(2, 'Test', 'Test', 505050, 'rodrigoleon2016@hotmail.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1, '2020-01-07', 1, '2020-01-08', 1, '2020-01-10', 1, NULL, NULL),
+(3, 'pepe', 'admin', 707070, 'rinaldisantiago@hotmail.com', '$2y$10$t5m0VNDRsrv96z3k386mHuoo/YdnRldp.DN409hnRjEiiBRKTGDly', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-10', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1244,9 +1275,21 @@ INSERT INTO `beach_tent` (`id`, `number`, `price`, `position`, `sea`, `FK_id_hal
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `description` varchar(255) COLLATE utf8_bin NOT NULL
+  `name` varchar(255) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `category`
+--
+
+INSERT INTO `category` (`id`, `name`) VALUES
+(1, 'administracion'),
+(2, 'herramientas'),
+(3, 'recreacion'),
+(4, 'playa-plasticos'),
+(5, 'playa-pileta'),
+(6, 'playa-carpas'),
+(7, 'playa-juegos');
 
 -- --------------------------------------------------------
 
@@ -1309,7 +1352,7 @@ CREATE TABLE `client_potential` (
 --
 
 INSERT INTO `client_potential` (`id`, `name`, `lastname`, `address`, `city`, `email`, `tel`, `num_tent`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'pepe', 'jose', 'asd', 'asd', 'asd@mail.com', 43430, 100, 0, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+(1, 'pepe', 'jose', 'asd', 'asd', 'clientepot@hotmail.com', 43430, 100, 0, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
 
 -- --------------------------------------------------------
 
@@ -1357,8 +1400,31 @@ CREATE TABLE `locker` (
 CREATE TABLE `parasol` (
   `id` int(11) NOT NULL,
   `parasol_number` int(11) NOT NULL,
-  `price` float NOT NULL
+  `price` float NOT NULL,
+  `position` int(11) NOT NULL,
+  `FK_id_hall` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `parasol`
+--
+
+INSERT INTO `parasol` (`id`, `parasol_number`, `price`, `position`, `FK_id_hall`) VALUES
+(1, 1, 100, 1, 1),
+(2, 3, 100, 2, 1),
+(3, 5, 100, 3, 1),
+(4, 7, 100, 4, 2),
+(5, 9, 100, 5, 2),
+(6, 11, 100, 6, 2),
+(7, 13, 100, 7, 3),
+(8, 15, 100, 8, 3),
+(9, 17, 100, 9, 3),
+(10, 19, 100, 10, 4),
+(11, 21, 100, 11, 4),
+(12, 23, 100, 12, 4),
+(13, 25, 100, 13, 5),
+(14, 27, 100, 14, 5),
+(15, 29, 100, 15, 5);
 
 -- --------------------------------------------------------
 
@@ -1614,7 +1680,6 @@ CREATE TABLE `product` (
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
-  `FK_id_category` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `date_register` date NOT NULL,
   `register_by` int(11) NOT NULL,
@@ -1625,6 +1690,14 @@ CREATE TABLE `product` (
   `date_update` date DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `price`, `quantity`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'test', 50, 100, 1, '2020-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'producto 2', 133, 20, 1, '2020-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1669,12 +1742,16 @@ INSERT INTO `provider` (`id`, `name`, `lastname`, `tel`, `email`, `dni`, `addres
 
 CREATE TABLE `providerxproduct` (
   `FK_id_provider` int(11) NOT NULL,
-  `FK_id_product` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `total` float NOT NULL,
-  `discount` float NOT NULL,
-  `transaction_date` date NOT NULL
+  `FK_id_product` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `providerxproduct`
+--
+
+INSERT INTO `providerxproduct` (`FK_id_provider`, `FK_id_product`) VALUES
+(1, 1),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -1745,6 +1822,7 @@ CREATE TABLE `staff` (
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `lastname` varchar(255) COLLATE utf8_bin NOT NULL,
   `position` varchar(255) COLLATE utf8_bin NOT NULL,
+  `salary` float NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
   `dni` int(11) NOT NULL,
@@ -1767,8 +1845,9 @@ CREATE TABLE `staff` (
 -- Volcado de datos para la tabla `staff`
 --
 
-INSERT INTO `staff` (`id`, `name`, `lastname`, `position`, `date_start`, `date_end`, `dni`, `address`, `tel`, `shirt_size`, `pant_size`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'per1', 'per', 'cargo 1', '2020-01-08', '2020-01-30', 505052, 'calle 100 mod', 4230000, 5, 5, 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+INSERT INTO `staff` (`id`, `name`, `lastname`, `position`, `salary`, `date_start`, `date_end`, `dni`, `address`, `tel`, `shirt_size`, `pant_size`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'per1', 'per', 'cargo 1', 20000, '2020-01-08', '2020-01-30', 505052, 'calle 100 mod', 4230000, 5, 5, 1, '2020-01-08', 1, '2020-01-10', 2, '2020-01-10', 2, '2020-01-10', 2),
+(2, 'x', 'x', 'x', 5000, '2020-01-17', '2020-01-31', 4040, 'cal421', 41241, 5, 5, 1, '2020-01-10', 2, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -1850,7 +1929,8 @@ ALTER TABLE `locker`
 --
 ALTER TABLE `parasol`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `parasol_number` (`parasol_number`);
+  ADD UNIQUE KEY `parasol_number` (`parasol_number`),
+  ADD KEY `FK_id_hall_parasol` (`FK_id_hall`);
 
 --
 -- Indices de la tabla `parking`
@@ -1871,7 +1951,6 @@ ALTER TABLE `parking_hall`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_id_category_product` (`FK_id_category`),
   ADD KEY `FK_product_register_by` (`register_by`),
   ADD KEY `FK_product_disable_by` (`disable_by`),
   ADD KEY `FK_product_enable_by` (`enable_by`),
@@ -1966,7 +2045,7 @@ ALTER TABLE `beach_tent`
 -- AUTO_INCREMENT de la tabla `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `client`
@@ -1996,7 +2075,7 @@ ALTER TABLE `locker`
 -- AUTO_INCREMENT de la tabla `parasol`
 --
 ALTER TABLE `parasol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `parking`
@@ -2014,7 +2093,7 @@ ALTER TABLE `parking_hall`
 -- AUTO_INCREMENT de la tabla `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `provider`
@@ -2032,7 +2111,7 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT de la tabla `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -2081,6 +2160,12 @@ ALTER TABLE `client_potential`
   ADD CONSTRAINT `FK_client_potential_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
+-- Filtros para la tabla `parasol`
+--
+ALTER TABLE `parasol`
+  ADD CONSTRAINT `FK_id_hall_parasol` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`);
+
+--
 -- Filtros para la tabla `parking`
 --
 ALTER TABLE `parking`
@@ -2090,7 +2175,6 @@ ALTER TABLE `parking`
 -- Filtros para la tabla `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `FK_product_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_product_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_product_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),

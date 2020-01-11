@@ -255,7 +255,7 @@ DROP procedure IF EXISTS `client_getAll`;
 DELIMITER $$
 CREATE PROCEDURE client_getAll ()
 BEGIN
-	SELECT * FROM `client` ORDER BY name ASC;
+	SELECT * FROM `client` ORDER BY dni ASC;
 END$$
 
 
@@ -1150,7 +1150,8 @@ CREATE TABLE product (
 	`name` VARCHAR(255) NOT NULL,
     `price` FLOAT NOT NULL,
     `quantity` INT NOT NULL,
-    `FK_id_category` INT NOT NULL,
+    -- `FK_id_category` INT NOT NULL,
+    -- `FK_id_provider` INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
     
     `date_register` DATE NOT NULL,
@@ -1162,8 +1163,8 @@ CREATE TABLE product (
     `date_update` DATE DEFAULT NULL, 
     `update_by` INT DEFAULT NULL,
 
-    CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
-
+    -- CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
+    -- CONSTRAINT `FK_id_provider_product` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_product_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
@@ -1171,27 +1172,28 @@ CREATE TABLE product (
 );
 
 
-DROP procedure IF EXISTS `product_add`;
+DROP PROCEDURE IF EXISTS `product_add`;
 DELIMITER $$
-CREATE PROCEDURE product_add (
+CREATE PROCEDURE product_add(
                                 IN name VARCHAR(255),
                                 IN price INT,
                                 IN quantity INT,
-                                IN FK_id_category INT,
                                 IN date_register DATE,
-                                IN register_by INT
-                            )
+                                IN register_by INT,
+								OUT lastId int
+							)
 BEGIN
 	INSERT INTO product (
 			product.name,
             product.price,
-            product.quantity,
-            product.FK_id_category,
+            product.quantity,            
             product.date_register,
             product.register_by
 	)
     VALUES
-        (name, price, quantity, FK_id_category, date_register, register_by);
+        (name, price, quantity, date_register, register_by);    
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 
@@ -1263,7 +1265,7 @@ BEGIN
             category.description AS category_description
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
-    ORDER BY price ASC;
+    ORDER BY product.price ASC;
 END$$
 
 
@@ -1331,10 +1333,10 @@ END$$
 CREATE TABLE providerxproduct (
 	`FK_id_provider` INT NOT NULL,
     `FK_id_product` INT NOT NULL,
-	`quantity` INT NOT NULL,
-    `total` FLOAT NOT NULL,
-    `discount` FLOAT NOT NULL,
-    `transaction_date` DATE NOT NULL, 
+	-- `quantity` INT NOT NULL,
+    -- `total` FLOAT NOT NULL,
+    -- `discount` FLOAT NOT NULL,
+    -- `transaction_date` DATE NOT NULL, 
     CONSTRAINT `FK_id_provider_providerxproduct` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_id_product_providerxproduct` FOREIGN KEY (`FK_id_product`) REFERENCES `product` (`id`)
 );
@@ -1344,23 +1346,23 @@ DROP procedure IF EXISTS `providerxproduct_add`;
 DELIMITER $$
 CREATE PROCEDURE providerxproduct_add (
 								IN FK_id_provider INT,
-								IN FK_id_product INT,
-                                IN quantity INT,
-                                IN total FLOAT,
-                                IN discount FLOAT,
-                                IN transaction_date DATE
+								IN FK_id_product INT
+                                -- IN quantity INT,
+                                -- IN total FLOAT,
+                                -- IN discount FLOAT,
+                                -- IN transaction_date DATE
 							 )
 BEGIN
 	INSERT INTO providerxproduct (
 			providerxproduct.FK_id_provider,
-            providerxproduct.FK_id_product,
-            providerxproduct.quantity,
-            providerxproduct.total,
-            providerxproduct.discount,
-            providerxproduct.transaction_date
+            providerxproduct.FK_id_product
+    --         providerxproduct.quantity,
+    --         providerxproduct.total,
+    --         providerxproduct.discount,
+    --         providerxproduct.transaction_date
 	)
     VALUES
-        (FK_id_provider, FK_id_product, quantity, total, discount, transaction_date);
+        (FK_id_provider, FK_id_product);
 END$$
 
 

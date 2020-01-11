@@ -4,23 +4,30 @@
 
     use Models\Category as Category;
     use Models\Product as Product;
+    use Models\Provider as Provider;
+    use Models\ProviderxProduct as ProviderxProduct;
     use DAO\ProductDAO as ProductDAO;
+    use DAO\ProviderxProductDAO as ProviderxProductDAO;
     use Controllers\CategoryController as CategoryController;  
     use Controllers\AdminController as AdminController;  
 
     class ProductController {
 
         private $productDAO;
+        private $providerxProductDAO;
         private $adminController;
         private $categoryController;
+        private $providerController;
 
         public function __construct() {
             $this->productDAO = new ProductDAO();
+            $this->providerxProductDAO = new ProviderxProductDAO();
             $this->adminController = new AdminController();
             $this->categoryController = new CategoryController();
+            $this->providerController = new ProviderController();
         }
 
-        private function add($id_category, $name, $price, $quantity) {
+        private function add($id_category, $id_provider, $name, $price, $quantity) {
 
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);
             $quantity_s = filter_var($quantity, FILTER_SANITIZE_NUMBER_INT);
@@ -29,29 +36,39 @@
             $product->setName( strtolower($name_s) );
             $product->setPrice($price);
             $product->setQuantity($quantity_s);
-
             $category = new Category();
             $category->setId($id_category);
-
-            $product->setCategory($category);            
+            $product->setCategory($category);  
+            
+            $provider = new Provider();
+            $provider->setId($id_provider);
 
             $register_by = $this->adminController->isLogged();
             
-            if ($this->productDAO->add($product, $register_by)) {
-                return true;
+            if ($lastId = $this->productDAO->add($product, $register_by)) {                                
+                
+                $product->setId($lastId);
+                $providerProduct = new ProviderxProduct();
+                $providerProduct->setProvider($provider);
+                $providerProduct->setProduct($product);
+
+                if ($this->providerxProductDAO->add($providerProduct)) {
+                    return true;                    
+                }
+                return false;
             } else {
                 return false;
             }
         }
 
-        public function addProduct($id_category, $name, $price, $quantity) {
-            if ($this->isFormRegisterNotEmpty($id_category, $name, $price, $quantity)) {
+        public function addProduct($id_category, $id_provider, $name, $price, $quantity) {
+            if ($this->isFormRegisterNotEmpty($id_category, $id_provider, $name, $price, $quantity)) {
                 
                 $productTemp = new Product();
                 $productTemp->setName($name);                
                 
 				if ($this->productDAO->getByName($productTemp) == null) {                                                            
-                    if ($this->add($id_category, $name, $price, $quantity)) {            
+                    if ($this->add($id_category, $id_provider, $name, $price, $quantity)) {            
                         return $this->addProductPath(null, PRODUCT_ADDED);
                     } else {                        
                         return $this->addProductPath(DB_ERROR, null);        
@@ -62,8 +79,9 @@
             return $this->addProductPath(EMPTY_FIELDS, null);            
         }
 
-        private function isFormRegisterNotEmpty($id_category, $name, $price, $quantity) {
+        private function isFormRegisterNotEmpty($id_category, $id_provider, $name, $price, $quantity) {
             if (empty($id_category) || 
+                empty($id_provider) || 
                 empty($name) || 
                 empty($price) || 
                 empty($quantity)) {
@@ -76,6 +94,7 @@
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Producto - Añadir";
                 $categories = $this->categoryController->getCategorys();
+                $providers = $this->providerController->getProviders();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-product.php");

@@ -12,6 +12,7 @@
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
+    use Controllers\AdditionalServiceController as AdditionalServiceController;
     
     class ReservationController {
 
@@ -19,11 +20,13 @@
         private $reservationxserviceDAO;
         private $adminController;
         private $clientController;
+        private $additionalServiceController;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();
             $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->clientController = new ClientController();
+            $this->additionalServiceController = new AdditionalServiceController();
             $this->adminController = new AdminController();
         }               
 
@@ -54,24 +57,13 @@
 
             $register_by = $this->adminController->isLogged();
 
-
-            if(!empty($additional_service)) {
-                $reservation->setPrice($total_price + $additional_service->getTotal());
-            }
-
             $lastId = $this->reservationDAO->add($reservation, $register_by);
-
-            if($this->isServiceNotEmpty($additional_service)) {
-                $reservationxservice->setIdReservation($lastId);
-                $reservationxservice->setIdService($additional_service->getIdService());
-                $this->reservationxserviceDAO->add($reservationxservice);
-            }
-
 
             if ($lastId == false) {
                 return false;
             } else {
-                return true;
+                $this->additionalServiceController->addParkingPath($lastId);
+                $this->additionalServiceController->addSelectServicePath($lastId);
             }
         }
         

@@ -4,6 +4,7 @@
 
     use Models\Basic as Basic;
     use Models\Category as Category;
+    use Models\Provider as Provider;
 
     class Product extends Basic {
 
@@ -11,6 +12,7 @@
         private $name;
         private $price;
         private $category;
+        private $provider;
         private $quantity;
         private $is_active;
 
@@ -44,6 +46,14 @@
 
         public function setCategory(Category $category) {
             $this->category = $category;            
+        }
+
+        public function getProvider() {
+            return $this->provider;
+        }
+
+        public function setProvider(Provider $provider) {
+            $this->provider = $provider;            
         }
 
         public function getQuantity() {

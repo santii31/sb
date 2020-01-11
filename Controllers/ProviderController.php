@@ -191,6 +191,12 @@
             }            
             return $this->updatePath($id ,EMPTY_FIELDS);
         }         
+
+
+        // 
+        public function getProviders() {
+            return $this->providerDAO->getAll();
+        }
                 
     }
     

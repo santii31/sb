@@ -5,20 +5,16 @@
     use Models\Provider as Provider;
     use Models\Product as Product;
 
-    class Product {
+    class ProviderxProduct {
 
         private $provider;  
-        private $product;
-        private $quantity;
-        private $total;
-        private $discount;
-        private $transaction_date;
+        private $product;      
 
         public function getProvider() {
             return $this->provider;
         }
 
-        public function setProvider($provider) {
+        public function setProvider(Provider $provider) {
             $this->provider = $provider;            
         }
 
@@ -26,41 +22,33 @@
             return $this->product;
         }
 
-        public function setProduct($product) {
+        public function setProduct(Product $product) {
             $this->product = $product;            
         }
         
-        public function getQuantity() {
-            return $this->quantity;
-        }
+        // public function getTotal() {
+        //     return $this->total;
+        // }
 
-        public function setQuantity($quantity) {
-            $this->quantity = $quantity;            
-        }
+        // public function setTotal($total) {
+        //     $this->total = $total;            
+        // }
         
-        public function getTotal() {
-            return $this->total;
-        }
+        // public function getDiscount() {
+        //     return $this->discount;
+        // }
 
-        public function setTotal($total) {
-            $this->total = $total;            
-        }
-        
-        public function getDiscount() {
-            return $this->discount;
-        }
+        // public function setDiscount($discount) {
+        //     $this->discount = $discount;            
+        // }
 
-        public function setDiscount($discount) {
-            $this->discount = $discount;            
-        }
+        // public function getTransactionDate() {
+        //     return $this->transaction_date;
+        // }
 
-        public function getTransactionDate() {
-            return $this->transaction_date;
-        }
-
-        public function setTransactionDate($transaction_date) {
-            $this->transaction_date = $transaction_date;            
-        }
+        // public function setTransactionDate($transaction_date) {
+        //     $this->transaction_date = $transaction_date;            
+        // }
         
 
     }
