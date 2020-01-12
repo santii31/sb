@@ -349,12 +349,12 @@
                     require_once(VIEWS_PATH . "sidenav.php");
                     require_once(VIEWS_PATH . "select-service-client.php");
                     require_once(VIEWS_PATH . "footer.php");
-                }
-                
-                require_once(VIEWS_PATH . "head.php");
-                require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "select-service.php");
-                require_once(VIEWS_PATH . "footer.php");                   
+                }else{
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "select-service.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                }                   
 			} else {                
                 return $this->adminController->userPath();
 			}
@@ -384,7 +384,7 @@
                             }
                         }else if( ($reservation->getAvailability() == false) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
                             if($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $locker->getNumber()) {
-                                if($reserve->getDateEnd() => $reservation->getDateStart()) {
+                                if($reserve->getDateEnd() >= $reservation->getDateStart()) {
 
                                 }
                             }
@@ -428,7 +428,7 @@
                             }
                         }else if( ($reservation->getAvailability() == false) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
                             if($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $parasol->getNumber()) {
-                                if($reserve->getDateEnd() => $reservation->getDateStart()) {
+                                if($reserve->getDateEnd() >= $reservation->getDateStart()) {
 
                                 }
                             }
