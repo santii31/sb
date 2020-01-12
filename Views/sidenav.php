@@ -288,12 +288,12 @@
                             <div class="collapsible-header"><i class="material-icons">room_service</i>Servicio adicional</div>
                             <div class="collapsible-body">
                                 <ul>
-                                    <!-- <li>
-                                        <a href="<?= FRONT_ROOT ?>additionalService/addServicePath" class="valign-wrapper waves-effect">
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>additionalService/addSelectServicePath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">add_circle</i>
                                             Añadir servicio
                                         </a>
-                                    </li> -->
+                                    </li> 
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>additionalService/listServicePath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>

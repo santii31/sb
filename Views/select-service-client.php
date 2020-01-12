@@ -57,7 +57,7 @@
                                     <?php endforeach; ?>
                                      
                                 </select>
-                                <label>Servicios</label>
+                                <label>Clientes</label>
                             </div>
                                                      
                         </div>                        
