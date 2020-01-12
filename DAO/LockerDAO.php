@@ -44,7 +44,7 @@
 				foreach ($results as $row) {
 					$locker = new Locker();
                     $locker->setId($row["locker.id"]);
-                    $locker->setChestNumber($row["locker.number"]);
+                    $locker->setLockerNumber($row["locker.number"]);
                     $locker->setPrice($row["locker.price"]);
                     
 					array_push($this->lockerList, $locker);

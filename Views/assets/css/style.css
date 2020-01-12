@@ -606,7 +606,7 @@ nav .input-field label.active i {
 
 /* Pop up tents */
 .tab-extra {
-    margin-top: 6rem;
+    margin-top: 2rem;
     font-size: 1.5rem;               
     text-align: center !important;
 }
@@ -640,7 +640,42 @@ nav .input-field label.active i {
     background-color: rgba(95, 46, 110, 0.2);    
 }
   
+/* reserve pop up */
+.reserve-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.reserve-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.reserve-client {
+    display: grid;
+    grid-template-columns: 1fr 1fr;    
+    align-items: center;    
+}
+
+.reserve-client > i {
+    font-size: 5rem;
+    color: rgba(106, 86, 165, .5);
+}
+
+.reserve-client > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.2rem;
+}
+
+.reserve-client > div > span {
+    margin-bottom: .5rem;
+}
 
 /* Mail page */
 .mail-filter {    

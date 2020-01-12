@@ -58,22 +58,22 @@
             $register_by = $this->adminController->isLogged();
 
             if ($lastId = $this->reservationDAO->add($reservation, $register_by) ) {
-                $this->additionalServiceController->addParkingPath($lastId, null, null);
-                $this->additionalServiceController->addSelectServicePath($lastId);
+                //$this->additionalServiceController->addParkingPath($lastId, null, null);
+                $this->additionalServiceController->addSelectServicePath($lastId, null, null);
             } else {
                 return false;
             }
 
         }
 
-        public function addReservation($date_start, $date_end, $total_price, $client, $beach_tent) {
-            if ($this->isFormRegisterNotEmpty($beach_tent, $client, $date_start, $date_end, $total_price)) {
+        public function addReservation($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, $beach_tent) {
+            if ($this->isFormRegisterNotEmpty($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, $beach_tent)) {
                 
                 $reservationTemp = new Reservation();
-                // $reservationTemp->set($);                
+                $reservationTemp->set($);                
                 
-                if ($this->reservationDAO->getBy($reservationTemp) == null) {                                                            
-                    if ($this->add($beach_tent, $client, $date_start, $date_end, $total_price)) {            
+                if ($this->checkInterval($date_start, $date_end, $beach_tent) == 1) {                                                            
+                    if ($this->add($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, $beach_tent)) {            
                         return $this->addReservationPath(null, RESERVATION_ADDED);
                     } else {                        
                         return $this->addReservationPath(DB_ERROR, null);        
@@ -83,6 +83,24 @@
             }            
             return $this->addReservationPath(EMPTY_FIELDS, null);            
         }
+
+
+        public function checkInterval ($date_start, $date_end, $id_tent) {
+			$existance = $this->this->getByIdTent($id_tent);
+			
+			$flag = 1;
+			if ($existance != null) {
+				foreach ($existance as $reserve) {
+					if ( ($date_end < $reserve->getDateStart()) xor ($date_start > $reserve->getDateEnd())  ) {
+						$flag *= 1;	
+					} else {
+						$flag *= 0;
+					}
+				}
+			}
+		}
+			
+
 
        private function isFormRegisterNotEmpty($date_start, $date_end, $total_price, $client, $beach_tent) {
             if (empty($beach_tent) || 
@@ -95,12 +113,12 @@
             return true;
         } 
         
-        public function addReservationPath($alert = "", $success = "") { //LE FALTA
+        public function addReservationPath($id_tent="", $alert = "", $success = "") { //LE FALTA
             if ($admin = $this->adminController->isLogged()) {                         
                 $title = "Añadir reserva";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "add-reservation.php");
+                require_once(VIEWS_PATH . "add-reserve.php");
                 require_once(VIEWS_PATH . "footer.php");                
 			} else {
 				return $this->adminController->userPath();
@@ -195,39 +213,6 @@
         }
 
 
-        public function checkIsReserved($id_reservation) {            
-            
-            $today = date("Y-m-d");
-
-            $reservationTemp = new Reservation();
-            $reservationTemp->setId($id_reservation);
-
-            $reservation = $this->reservationDAO->getById($reservationTemp);
-
-            $dateStart =  strtotime( $reservation->getDateStart() ) ;
-            $dateEnd =  strtotime( $reservation->getDateEnd() );
-            $dateToCompare = strtotime( $today );
-
-            // echo '<pre>';
-            // var_dump($dateStart);
-            // echo '<br>';
-            // var_dump($dateEnd);
-            // echo '<br>';
-            // var_dump($dateToCompare);
-            // echo '</pre>';
-
-            if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
-                
-                $reservation->setIsReserved(true);
-                
-                
-
-            } else {
-                echo 'no esta entre las fechas';
-                
-            }
-
-        }
 
         public function checkIsDateReserved(Reservation $reservation) {            
             
@@ -237,12 +222,15 @@
             $dateEnd =  strtotime( $reservation->getDateEnd() );
             $dateToCompare = strtotime( $today );
 
-
             if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
-                $reservation->setIsReserved(true);   
+                $reservation->setIsReserved(true);                   
+                return $reservation;
             }
-
+            return false;
         }
+
+
+        // 
 
         public function getByIdTent($id_tent) {
 

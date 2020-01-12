@@ -66,7 +66,7 @@
                             </div>      
                             <div class="input-field col s4">
                                 <input id="num_tent" type="number" name="num_tent" class="validate" required>
-                                <label for="num_tent">Numero de carpa</label>
+                                <label for="num_tent">Numero de carpa de interes</label>
                             </div>                         
                         </div>                                            
                                                
