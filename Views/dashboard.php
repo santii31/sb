@@ -54,11 +54,12 @@
                                                             <li class="tab col s6">
                                                                 <a class="active" href="#status-<?= $tent->getId(); ?>">                         
                                                                     
-                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>
-                                                                    reservada
-                                                                <?php else: ?>
+                                                                <?php if ($reservation = $this->hasReservation( $tent->getId() )){ ?>
+                                                                    ocupada
+                                                                <?php }else{ ?>
                                                                     libre
-                                                                <?php endif; ?>
+                                                                <?php } ?>
+                                                                
                                                                 
                                                                     <!-- verificar si tienen reserva -->
                                                                     <!-- if (tiene reserva) reservada -->

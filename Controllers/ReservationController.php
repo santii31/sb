@@ -218,12 +218,28 @@
 
             if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
                 
-                $reservation->setIsReserved(true);
-                
+                //$reservation->setIsReserved(true);
+                return true;
                 
 
             } else {
-                echo 'no esta entre las fechas';
+                //echo 'no esta entre las fechas';
+                return false;
+            }
+
+        }
+
+        public function checkIsDateReserved(Reservation $reservation) {            
+            
+            $today = date("Y-m-d");
+
+            $dateStart =  strtotime( $reservation->getDateStart() ) ;
+            $dateEnd =  strtotime( $reservation->getDateEnd() );
+            $dateToCompare = strtotime( $today );
+
+
+            if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
+                $reservation->setIsReserved(true);   
             }
 
         }

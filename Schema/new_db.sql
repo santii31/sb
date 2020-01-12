@@ -674,6 +674,10 @@ END$$
 
 ----------------------------- RESERVATION -----------------------------
 
+INSERT INTO reservation (id, date_start, date_end, discount, total_price, FK_id_client, FK_id_tent, is_reserved,is_active, date_register, register_by)
+(1, 2020-01-15, 2020-01-20, 20.00, 100.00, 1, 2,FALSE, TRUE, 2020,01,11, 1),
+(2, 2020-01-20, 2020-01-25, 30.00, 200.00, 2, 10,FALSE, TRUE, 2020,01,11, 1)
+
 CREATE TABLE reservation (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `date_start` DATE NOT NULL,

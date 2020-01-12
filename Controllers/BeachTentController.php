@@ -3,6 +3,7 @@
     namespace Controllers;    
 
     use Models\BeachTent as BeachTent;
+    use Models\Reservation as Reservation;
     use DAO\BeachTentDAO as BeachTentDAO;
     use Controllers\AdminController as AdminController;  
     use Controllers\ParasolController as ParasolController;  
@@ -15,7 +16,8 @@
 
         public function __construct() {
             $this->beachTentDAO = new BeachTentDAO();
-            $this->adminController = new AdminController();            
+            $this->adminController = new AdminController(); 
+            $this->reservationController = new ReservationController();           
         }
 
         public function addReservePath($alert = "", $success = "") {                        
@@ -72,10 +74,37 @@
             }
         }                 
 
-        public function hasReservation($id_tent) {
-            $this->reservationController = new ReservationController();            
+        /*public function hasReservation($id_tent) {
+            
 
-            return $this->reservationController->getByIdTent($id_tent);
+            $reservationList = $this->reservationController->getByIdTent($id_tent);
+
+            foreach($reservationList as $reservation) {
+                if($this->reservationController->checkIsDateReserved($reservation)) {
+                    return true;
+                }
+            }
+            return false;
+        }*/
+
+        public function hasReservation($id_tent) {            
+            /*$reserveList = $this->reservationController->getByIdTent($id_tent);
+            if($reserveList != false){
+                return $this->checkTimeReserve($reserveList);
+            }else{
+                return false;
+            }*/
+            $reserveList = $this->reservationController->getByIdTent($id_tent);
+            $this->checkTimeReserve($reserveList);
+            
+            
+
+        }
+
+        public function checkTimeReserve(Reservation $reservationList) {
+            foreach($reservationList as $reservation) {
+                $this->reservationController->checkIsDateReserved($reservation);
+            }   
         }
 
     }
