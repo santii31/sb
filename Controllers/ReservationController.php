@@ -195,39 +195,6 @@
         }
 
 
-        public function checkIsReserved($id_reservation) {            
-            
-            $today = date("Y-m-d");
-
-            $reservationTemp = new Reservation();
-            $reservationTemp->setId($id_reservation);
-
-            $reservation = $this->reservationDAO->getById($reservationTemp);
-
-            $dateStart =  strtotime( $reservation->getDateStart() ) ;
-            $dateEnd =  strtotime( $reservation->getDateEnd() );
-            $dateToCompare = strtotime( $today );
-
-            // echo '<pre>';
-            // var_dump($dateStart);
-            // echo '<br>';
-            // var_dump($dateEnd);
-            // echo '<br>';
-            // var_dump($dateToCompare);
-            // echo '</pre>';
-
-            if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
-                
-                //$reservation->setIsReserved(true);
-                return true;
-                
-
-            } else {
-                //echo 'no esta entre las fechas';
-                return false;
-            }
-
-        }
 
         public function checkIsDateReserved(Reservation $reservation) {            
             
@@ -237,12 +204,15 @@
             $dateEnd =  strtotime( $reservation->getDateEnd() );
             $dateToCompare = strtotime( $today );
 
-
             if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
-                $reservation->setIsReserved(true);   
+                $reservation->setIsReserved(true);                   
+                return $reservation;
             }
-
+            return false;
         }
+
+
+        // 
 
         public function getByIdTent($id_tent) {
 

@@ -36,7 +36,6 @@
             if ($admin = $this->adminController->isLogged()) {
                 
                 $title = 'Mapa de carpas';		
-
                 $parasolController = new ParasolController();                            
 
                 // parasols
@@ -74,37 +73,22 @@
             }
         }                 
 
-        /*public function hasReservation($id_tent) {
-            
+        public function hasReservation($id_tent) {            
+            $reserveList = $this->reservationController->getByIdTent($id_tent);
+            return sizeof($reserveList);
+        }
 
-            $reservationList = $this->reservationController->getByIdTent($id_tent);
 
-            foreach($reservationList as $reservation) {
-                if($this->reservationController->checkIsDateReserved($reservation)) {
-                    return true;
+        public function reservationToday($id_tent) {
+            $reserveList = $this->reservationController->getByIdTent($id_tent);
+            $reserve = null;
+
+            foreach ($reserveList as $reserve) {
+                if ($reservation = $this->reservationController->checkIsDateReserved($reserve)) {
+                    return $reservation;
                 }
             }
             return false;
-        }*/
-
-        public function hasReservation($id_tent) {            
-            /*$reserveList = $this->reservationController->getByIdTent($id_tent);
-            if($reserveList != false){
-                return $this->checkTimeReserve($reserveList);
-            }else{
-                return false;
-            }*/
-            $reserveList = $this->reservationController->getByIdTent($id_tent);
-            $this->checkTimeReserve($reserveList);
-            
-            
-
-        }
-
-        public function checkTimeReserve(Reservation $reservationList) {
-            foreach($reservationList as $reservation) {
-                $this->reservationController->checkIsDateReserved($reservation);
-            }   
         }
 
     }
