@@ -96,12 +96,13 @@
             }*/
             $reserveList = $this->reservationController->getByIdTent($id_tent);
             $this->checkTimeReserve($reserveList);
-            
-            
-
+            foreach($reserveList as $reserve) {
+                var_dump($reserve);
+            }
+            //return $reserveList;
         }
 
-        public function checkTimeReserve(Reservation $reservationList) {
+        public function checkTimeReserve($reservationList) {
             foreach($reservationList as $reservation) {
                 $this->reservationController->checkIsDateReserved($reservation);
             }   
