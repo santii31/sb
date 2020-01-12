@@ -198,6 +198,18 @@
             return $this->updateProductPath($id ,EMPTY_FIELDS);
         }
 
+
+        // 
+        public function getProducts() {
+            return $this->productDAO->getAll();
+        }
+
+        public function getProviderByProduct(Product $product) {
+            $provider = $this->providerxProductDAO->getProviderByProduct($product);
+            $name = $provider->getProvider()->getName() . ' ' . $provider->getProvider()->getLastname();
+            return $name;
+        }
+
     }
     
 ?>

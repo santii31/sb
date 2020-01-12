@@ -20,10 +20,11 @@
 		
         public function add(Product $product, Admin $registerBy) {								
 			try {													
-				$query = "CALL product_add(?, ?, ?, ?, ?, @lastId)";
+				$query = "CALL product_add(?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["name"] = $product->getName();
 				$parameters["price"] = $product->getPrice();
-				$parameters["quantity"] = $product->getQuantity();				
+				$parameters["quantity"] = $product->getQuantity();
+				$parameters["FK_id_category"] = $product->getCategory()->getId();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();
 				$this->connection = Connection::getInstance();
@@ -68,7 +69,6 @@
 			}
 		}
 
-
 		public function getByCategory($id_category) {
 			try {				
 				$productTemp = null;
@@ -96,7 +96,6 @@
 				return false;
 			}
 		}
-
 
         public function getByName(Product $product) {
 			try {				
@@ -132,28 +131,27 @@
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
-					$productTemp = new Product();
-                    $productTemp->setId($row["id"]);
-                    $productTemp->setName($row["name"]);
-					$productTemp->setPrice($row["price"]);
-					$productTemp->setQuantity($row["quantity"]);
-                    $productTemp->setIsActive($row["is_active"]);
+					$product = new Product();
+                    $product->setId($row["product_id"]);
+                    $product->setName($row["product_name"]);
+					$product->setPrice($row["product_price"]);
+					$product->setQuantity($row["product_quantity"]);
+					$product->setIsActive($row["product_isActive"]);
+					$product->setDateRegister($row["product_date_register"]);
 
                     $category = new Category();
-                    $category->setId($row["id"]);
-                    $category->setName($row["name"]);
-                    $category->setDescription($row["description"]);
+                    $category->setId($row["category_id"]);
+                    $category->setName($row["category_name"]);                    
 
-                    $productTemp->setCategory($category);
+                    $product->setCategory($category);
 					array_push($this->productList, $product);
 				}
 				return $this->productList;	
 			} catch (Exception $e) {
-				return false;
+				// return false;
+				echo $e;
 			}
 		}		
-
-		
 
 		public function checkName(Product $product) {
 			try {
@@ -196,8 +194,7 @@
 			catch (Exception $e) {
 				return false;
 			}
-		}
-		
+		}		
 
 		public function update(Product $product, Admin $updateBy) {
 			try {								
