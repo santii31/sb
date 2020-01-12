@@ -159,16 +159,9 @@ END$$
 
 ----------------------------- CLIENT -----------------------------
 
-<<<<<<< HEAD
-INSERT INTO 'client' (id, name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, is_active,date_register ,register_by)
-VALUES (1, 'bruce', 'wayne', 'qwe', "colon 123", 'gotham', 100, 'bruce@wayne.com', 155121314, "grupo1", "puan 123", 4899999, TRUE, 2020-01-11, 1),
-(2, 'walter', 'white', 'zxc', "albuquerque 123", 'nuevo mexico', 200, 'walter@white.com', 154121314, "grupo2", "crocce 123", 4897777, TRUE, 2020-01-11, 1),
-(3, 'charly', 'garcia', 'uio', "belgrano 123", 'la plata', 300, 'charly@garcia.com', 156121314, "grupo3", "genova 123", 4894444, TRUE, 2020-01-11, 1);
-=======
 INSERT INTO `client` (id, name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, is_active,date_register ,register_by)
 VALUES (1, `bruce`, `wayne`, `qwe`, "colon 123", `gotham`, 100, `bruce@wayne.com`, 155121314, "grupo1", "puan 123", 4899999, TRUE),
 (2, `walter`, `white`, `zxc`, "albuquerque 123", `nuevo mexico`, 200, `walter@white.com`, 154121314, "grupo2", "crocce 123", 4897777, TRUE)
->>>>>>> c6941bd266603be2025640a6def116b2dcbb9a28
 
 CREATE TABLE client (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

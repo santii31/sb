@@ -37,7 +37,8 @@
 			catch (Exception $e) {
 				return false;
 			}			
-        }
+		}
+		
 					
 		public function getById(Reservation $reservation) {
 			try {				
@@ -256,7 +257,7 @@
 
 		public function getByIdTent(BeachTent $tent) {
 			try {
-				$tents = array();
+				$tentReservations = array();
 				$query = "CALL reservation_geByIdTent(?)";
 				$parameters["id"] = $tent->getId();				
 				$this->connection = Connection::GetInstance();
@@ -292,12 +293,12 @@
 					// $beachTent->setHall($hall);
 
 					// $reservation->setBeachTent($beachTent);
-					
+					array_push($tentReservations, $reservation);
 				}
-				return $reservation;	
+				return $tentReservations;	
 			} catch (Exception $e) {
-				// return false;			
-				echo $e;					
+				return false;			
+				//echo $e;					
 			}
 		}		
 		
