@@ -2,7 +2,7 @@
 
     namespace Controllers;    
     
-    use Models\Reservation as Reservation;
+    use Models\Reservation as Reservation;    
     use Models\Admin as Admin;
     use Models\Client as Client;
     use Models\BeachTent as BeachTent;
@@ -30,7 +30,7 @@
             $this->adminController = new AdminController();
         }               
 
-        private function add($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, BeachTent $beach_tent) {
+        private function add($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, $beach_tent) {
             
             $reservation = new Reservation();
             $client = new Client();
@@ -57,31 +57,23 @@
 
             $register_by = $this->adminController->isLogged();
 
-            $lastId = $this->reservationDAO->add($reservation, $register_by);
-
-            if ($lastId == false) {
-                return false;
-            } else {
-                $this->additionalServiceController->addParkingPath($lastId);
+            if ($lastId = $this->reservationDAO->add($reservation, $register_by) ) {
+                $this->additionalServiceController->addParkingPath($lastId, null, null);
                 $this->additionalServiceController->addSelectServicePath($lastId);
+            } else {
+                return false;
             }
-        }
-        
-        private function isServiceNotEmpty(AdditionalService $additional_service) {
-            if (empty($additional_service)) {
-                    return false;
-            }
-            return true;
+
         }
 
-        public function addReservation($date_start, $date_end, $total_price, Client $client, BeachTent $beach_tent, Parking $parking) {
-            if ($this->isFormRegisterNotEmpty($beach_tent, $client, $date_start, $date_end, $total_price, $parking, $additional_service)) {
+        public function addReservation($date_start, $date_end, $total_price, $client, $beach_tent) {
+            if ($this->isFormRegisterNotEmpty($beach_tent, $client, $date_start, $date_end, $total_price)) {
                 
                 $reservationTemp = new Reservation();
-                $reservationTemp->set($);                
+                // $reservationTemp->set($);                
                 
                 if ($this->reservationDAO->getBy($reservationTemp) == null) {                                                            
-                    if ($this->add($beach_tent, $client, $date_start, $date_end, $total_price, $parking, $additional_service)) {            
+                    if ($this->add($beach_tent, $client, $date_start, $date_end, $total_price)) {            
                         return $this->addReservationPath(null, RESERVATION_ADDED);
                     } else {                        
                         return $this->addReservationPath(DB_ERROR, null);        
@@ -92,14 +84,12 @@
             return $this->addReservationPath(EMPTY_FIELDS, null);            
         }
 
-       private function isFormRegisterNotEmpty($date_start, $date_end, $total_price, Client $client, BeachTent $beach_tent, Parking $parking) {
+       private function isFormRegisterNotEmpty($date_start, $date_end, $total_price, $client, $beach_tent) {
             if (empty($beach_tent) || 
                 empty($client) || 
                 empty($date_start) || 
                 empty($date_end) || 
-                empty($total_price) || 
-                empty($parking) || 
-                empty($additional_service)) {
+                empty($total_price)) {
                     return false;
             }
             return true;
@@ -173,7 +163,7 @@
             }           
         }
 
-        public function update($date_start, $date_end, $total_price, Client $client,BeachTent $beach_tent,Parking $parking) {      
+        public function update($date_start, $date_end, $total_price, $client, $beach_tent, $parking) {      
             
             if ($this->isFormRegisterNotEmpty($date_start, $date_end, $total_price, $client, $beach_tent, $parking)) {     
                 
@@ -193,7 +183,6 @@
                     
                     $update_by = $this->adminController->isLogged();
 
-
                     if ($this->reservationDAO->update($reservation, $update_by)) {                                                
                         return $this->listReservationPath(null, RESERVATION_UPDATE);
                     } else {                        
@@ -204,6 +193,49 @@
             }            
             return $this->updatePath($id ,EMPTY_FIELDS);
         }
+
+
+        public function checkIsReserved($id_reservation) {            
+            
+            $today = date("Y-m-d");
+
+            $reservationTemp = new Reservation();
+            $reservationTemp->setId($id_reservation);
+
+            $reservation = $this->reservationDAO->getById($reservationTemp);
+
+            $dateStart =  strtotime( $reservation->getDateStart() ) ;
+            $dateEnd =  strtotime( $reservation->getDateEnd() );
+            $dateToCompare = strtotime( $today );
+
+            // echo '<pre>';
+            // var_dump($dateStart);
+            // echo '<br>';
+            // var_dump($dateEnd);
+            // echo '<br>';
+            // var_dump($dateToCompare);
+            // echo '</pre>';
+
+            if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
+                
+                $reservation->setIsReserved(true);
+                
+                
+
+            } else {
+                echo 'no esta entre las fechas';
+            }
+
+        }
+
+        public function getByIdTent($id_tent) {
+
+            $tent = new BeachTent();
+            $tent->setId($id_tent);
+
+            return $this->reservationDAO->getByIdTent($tent);
+        }
+
 
     }
 

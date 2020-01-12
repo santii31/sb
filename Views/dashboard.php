@@ -52,8 +52,16 @@
                                                                                                             
                                                         <ul id="tabs-swipe-demo" class="tabs">
                                                             <li class="tab col s6">
-                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">
-                                                                    Estado
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>
+                                                                    reservada
+                                                                <?php else: ?>
+                                                                    libre
+                                                                <?php endif; ?>
+                                                                
+                                                                    <!-- verificar si tienen reserva -->
+                                                                    <!-- if (tiene reserva) reservada -->
                                                                 </a>
                                                             </li>
                                                             <li class="tab col s6">

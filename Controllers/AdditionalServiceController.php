@@ -447,10 +447,9 @@
 			}
         }
 
-        public function addParkingPath($alert = "", $success = "", $id_reservation="") {
+        public function addParkingPath($id_reservation = "", $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                                       
-                $title = "Seleccione cochera";
-                
+                $title = "Seleccione cochera";                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-parking.php");
@@ -458,9 +457,7 @@
 			} else {                
                 return $this->adminController->userPath();
 			}
-        }
-
-        
+        }        
 
         public function listServicePath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {

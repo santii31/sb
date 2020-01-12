@@ -4,6 +4,8 @@
 
     use Models\Basic as Basic;
     use Models\Client as Client;    
+    use Models\Parking as Parking;    
+    use Models\BeachTent as BeachTent;    
 
     class Reservation extends Basic {
 
@@ -15,6 +17,7 @@
         private $client;            
         private $beachTent;
         private $parking;
+        private $is_reserved;
         private $is_active;
         
         public function getId() {
@@ -85,6 +88,15 @@
 
         public function setParking(Parking $parking) {
             $this->parking = $parking;
+            return $this;
+        }
+
+        public function getIsReserved() {
+            return $this->is_reserved;
+        }
+
+        public function setIsReserved($is_reserved) {                        
+            $this->is_reserved = $is_reserved;
             return $this;
         }
 

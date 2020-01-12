@@ -11,10 +11,11 @@
         
         private $beachTentDAO;
         private $adminController;
+        private $reservationController;
 
         public function __construct() {
             $this->beachTentDAO = new BeachTentDAO();
-            $this->adminController = new AdminController();
+            $this->adminController = new AdminController();            
         }
 
         public function addReservePath($alert = "", $success = "") {                        
@@ -34,7 +35,7 @@
                 
                 $title = 'Mapa de carpas';		
 
-                $parasolController = new ParasolController();
+                $parasolController = new ParasolController();                            
 
                 // parasols
                 $firtsParasol = $parasolController->getRowParasol(1);
@@ -70,6 +71,12 @@
                 return $this->adminController->userPath();
             }
         }                 
+
+        public function hasReservation($id_tent) {
+            $this->reservationController = new ReservationController();            
+
+            return $this->reservationController->getByIdTent($id_tent);
+        }
 
     }
     

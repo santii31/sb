@@ -53,7 +53,9 @@
 					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
 					$reservationTemp->setDiscount($row["reservation_discount"]);
                     $reservationTemp->setPrice($row["reservation_totalPrice"]);
-					$reservationTemp->setIsActive($row["reservation_isActive"]);
+					$reservationTemp->setIsActive($row["reservation_is_active"]);
+					$reservationTemp->setIsReserved($row["reservation_is_reserved"]);
+					
 					$client = new Client();
 					$client->setId($row["client_id"]);
 					$client->setName($row["client_name"]);
@@ -62,32 +64,27 @@
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
-					$client->setIsPotential($row["client_isPotential"]);
-					$client->setIsActive($row["client_isActive"]);
+
 					$reservationTemp->setClient($client);
 
 					$admin = new Admin();
 					$admin->setId($row["admin_id"]);
 					$admin->setName($row["admin_name"]);
 					$admin->setLastName($row["admin_lastName"]);
-					$admin->setDni($row["admin_dni"]);
-					$admin->setEmail($row["admin_email"]);
-					$admin->setPassword($row["admin_password"]);
-					$admin->setIsActive($row["admin_isActive"]);
-					$reservationTemp->setAdmin($admin);
+					
+					$reservationTemp->setRegisterBy($admin);
 
 					$beachTent = new BeachTent();
 					$beachTent->setId($row["tent_id"]);
 					$beachTent->setNumber($row["tent_number"]);
 					$beachTent->setPrice($row["tent_price"]);
-					$beachTent->setIsActive($row["tent_isActive"]);
-					$reservationTemp->setBeachTent($beachTent);
 
-					
+					$reservationTemp->setBeachTent($beachTent);					
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
-				return false;
+				// return false;
+				echo $e;
 			}
 		}
 
@@ -256,6 +253,53 @@
 				return false;				
 			}
 		}
+
+		public function getByIdTent(BeachTent $tent) {
+			try {
+				$tents = array();
+				$query = "CALL reservation_geByIdTent(?)";
+				$parameters["id"] = $tent->getId();				
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
+				foreach ($results as $row) {		
+					
+					$reservation = new Reservation();
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+
+					$client = new Client();
+					$client->setId($row["client_id"]);
+                    $client->setName($row["client_name"]);
+                    $client->setLastName($row["client_lastName"]);
+                    $client->setEmail($row["client_email"]);
+                    $client->setPhone($row["client_tel"]);
+                    $client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					
+					$reservation->setClient($client);
+					
+					// $beachTent = new BeachTent();
+                    // $beachTent->setId($row["id"]);
+					// $beachTent->setNumber($row["number"]);
+					// $beachTent->setPrice($row["price"]);                    
+					// $beachTent->setPosition($row["position"]);      
+
+					// $hall = new Hall();
+					// $hall->setNumber($row["hall_number"]);
+
+					// $beachTent->setHall($hall);
+
+					// $reservation->setBeachTent($beachTent);
+					
+				}
+				return $reservation;	
+			} catch (Exception $e) {
+				// return false;			
+				echo $e;					
+			}
+		}		
 		
     }
 
