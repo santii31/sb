@@ -99,6 +99,7 @@ a:hover {
 
 .btn-safe:hover {
     background-color: #0e76a7;
+    color: #fff;
 }
 
 .btn-danger {
@@ -240,6 +241,10 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;    
+}
+
+.actions > div {
+    margin-right: 1rem;
 }
 
 .table-container .actions > a {

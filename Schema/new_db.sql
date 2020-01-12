@@ -159,10 +159,16 @@ END$$
 
 ----------------------------- CLIENT -----------------------------
 
+<<<<<<< HEAD
 INSERT INTO 'client' (id, name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, is_active,date_register ,register_by)
 VALUES (1, 'bruce', 'wayne', 'qwe', "colon 123", 'gotham', 100, 'bruce@wayne.com', 155121314, "grupo1", "puan 123", 4899999, TRUE, 2020-01-11, 1),
 (2, 'walter', 'white', 'zxc', "albuquerque 123", 'nuevo mexico', 200, 'walter@white.com', 154121314, "grupo2", "crocce 123", 4897777, TRUE, 2020-01-11, 1),
 (3, 'charly', 'garcia', 'uio', "belgrano 123", 'la plata', 300, 'charly@garcia.com', 156121314, "grupo3", "genova 123", 4894444, TRUE, 2020-01-11, 1);
+=======
+INSERT INTO `client` (id, name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, is_active,date_register ,register_by)
+VALUES (1, `bruce`, `wayne`, `qwe`, "colon 123", `gotham`, 100, `bruce@wayne.com`, 155121314, "grupo1", "puan 123", 4899999, TRUE),
+(2, `walter`, `white`, `zxc`, "albuquerque 123", `nuevo mexico`, 200, `walter@white.com`, 154121314, "grupo2", "crocce 123", 4897777, TRUE)
+>>>>>>> c6941bd266603be2025640a6def116b2dcbb9a28
 
 CREATE TABLE client (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -683,12 +689,12 @@ CREATE TABLE reservation (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `date_start` DATE NOT NULL,
     `date_end` DATE NOT NULL,
-    'discount' FLOAT NOT NULL,
+    `discount` FLOAT NOT NULL,
     `total_price` FLOAT NOT NULL,
     `FK_id_client` INT NOT NULL,    
     `FK_id_tent` INT NOT NULL,
-    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
-    
+    `is_reserved` BOOLEAN NOT NULL,    
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,        
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
     `date_disable` DATE DEFAULT NULL,    
@@ -699,42 +705,13 @@ CREATE TABLE reservation (
     `update_by` INT DEFAULT NULL,
 
     CONSTRAINT `FK_id_client_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),    
-    CONSTRAINT `FK_id_tent_reservation` FOREIGN KEY (`FK_id_tent`) REFERENCES `beach_tent` (`id`),
-    
+    CONSTRAINT `FK_id_tent_reservation` FOREIGN KEY (`FK_id_tent`) REFERENCES `beach_tent` (`id`),    
     CONSTRAINT `FK_reservation_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_reservation_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_reservation_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_reservation_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`)
 
 );
-
-
-/*DROP procedure IF EXISTS `reservation_add`;
-DELIMITER $$
-CREATE PROCEDURE reservation_add (
-                                    IN date_start DATE,
-                                    IN date_end DATE,
-                                    IN total_price FLOAT,
-                                    IN FK_id_client INT,                                    
-                                    IN FK_id_tent INT,
-                                    IN FK_id_parking INT,
-                                    IN date_register DATE,
-                                    IN register_by INT
-                                )
-BEGIN
-	INSERT INTO reservation (
-			reservation.date_start,
-            reservation.date_end,
-            reservation.total_price,
-            reservation.FK_id_client,            
-            reservation.FK_id_tent,
-            reservation.FK_id_parking,
-            reservation.date_register,
-            reservation.register_by            
-	)
-    VALUES
-        (date_start, date_end, total_price, FK_id_client, FK_id_admin, FK_id_tent, FK_id_parking, date_register, register_by);
-END$$*/
 
 
 DROP PROCEDURE IF EXISTS `reservation_add`;
@@ -744,8 +721,9 @@ CREATE PROCEDURE reservation_add(
                                     IN date_end DATE,
                                     IN discount FLOAT,
                                     IN total_price FLOAT,
-                                    IN FK_id_client INT,                                    
+                                    IN FK_id_client INT,                            
                                     IN FK_id_tent INT,
+                                    IN is_reserved BOOLEAN,
                                     IN date_register DATE,
                                     IN register_by INT,
 								    OUT lastId int
@@ -758,10 +736,11 @@ BEGIN
             reservation.total_price,
             reservation.FK_id_client,            
             reservation.FK_id_tent,
+            reservation.is_reserved,
             reservation.date_register,
             reservation.register_by
 	)
-    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_admin, FK_id_tent, date_register, register_by);
+    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_admin, FK_id_tent, is_reserved, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -777,31 +756,24 @@ BEGIN
            reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
+           reservation.is_reserved AS reservation_is_reserved,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_address,
-           client.is_potential AS client_is_potential,
-		   client.is_active AS client_is_active,
+           client.address AS client_address,           		   
            admin.id AS admin_id,
            admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_is_active,
+		   admin.lastname AS admin_lastName,		   
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_is_active
-
+           beach_tent.price AS tent_price
     FROM `reservation`
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.register_by = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
+    INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
     WHERE `reservation`.`id` = id;
 END$$
 
@@ -907,7 +879,7 @@ BEGIN
     SET 
         `reservation`.`date_start` = date_start, 
         `reservation`.`date_end` = date_end,
-        'reservation'.'discount' = discount,
+        `reservation`.`discount` = discount,
         `reservation`.`total_price` = total_price,
         `reservation`.`FK_id_client` = FK_id_client,
         `reservation`.`FK_id_tent` = FK_id_tent,
@@ -915,6 +887,30 @@ BEGIN
         `reservation`.`update_by` = update_by    
     WHERE 
         `reservation`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS reservation_geByIdTent;
+DELIMITER $$
+CREATE PROCEDURE reservation_geByIdTent (IN id INT)
+BEGIN
+    SELECT        
+        reservation.id AS reservation_id,
+        reservation.date_start AS reservation_dateStart,
+        reservation.date_end AS reservation_dateEnd,
+        reservation.discount AS reservation_discount,
+        reservation.total_price AS reservation_totalPrice,
+        client.id AS client_id,
+        client.name AS client_name,
+        client.lastname AS client_lastName,
+        client.email AS client_email,
+        client.tel AS client_tel,
+        client.city AS client_city,
+        client.address AS client_address
+    FROM reservation         
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    WHERE beach_tent.id = id;    
 END$$
 
 
@@ -1159,7 +1155,7 @@ CREATE TABLE product (
 	`name` VARCHAR(255) NOT NULL,
     `price` FLOAT NOT NULL,
     `quantity` INT NOT NULL,
-    -- `FK_id_category` INT NOT NULL,
+    `FK_id_category` INT NOT NULL,
     -- `FK_id_provider` INT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
     
@@ -1172,7 +1168,7 @@ CREATE TABLE product (
     `date_update` DATE DEFAULT NULL, 
     `update_by` INT DEFAULT NULL,
 
-    -- CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
+    CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
     -- CONSTRAINT `FK_id_provider_product` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_product_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
@@ -1187,6 +1183,7 @@ CREATE PROCEDURE product_add(
                                 IN name VARCHAR(255),
                                 IN price INT,
                                 IN quantity INT,
+                                IN FK_id_category INT,
                                 IN date_register DATE,
                                 IN register_by INT,
 								OUT lastId int
@@ -1196,11 +1193,12 @@ BEGIN
 			product.name,
             product.price,
             product.quantity,            
+            product.FK_id_category,         
             product.date_register,
             product.register_by
 	)
     VALUES
-        (name, price, quantity, date_register, register_by);    
+        (name, price, quantity, FK_id_category, date_register, register_by);    
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -1269,9 +1267,9 @@ BEGIN
             product.price AS product_price,
             product.quantity AS product_quantity,
             product.is_active AS product_isActive,
+            product.date_register AS product_date_register,
             category.id AS category_id,
-            category.name AS category_name,
-            category.description AS category_description
+            category.name AS category_name            
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
     ORDER BY product.price ASC;
@@ -1342,10 +1340,6 @@ END$$
 CREATE TABLE providerxproduct (
 	`FK_id_provider` INT NOT NULL,
     `FK_id_product` INT NOT NULL,
-	-- `quantity` INT NOT NULL,
-    -- `total` FLOAT NOT NULL,
-    -- `discount` FLOAT NOT NULL,
-    -- `transaction_date` DATE NOT NULL, 
     CONSTRAINT `FK_id_provider_providerxproduct` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
     CONSTRAINT `FK_id_product_providerxproduct` FOREIGN KEY (`FK_id_product`) REFERENCES `product` (`id`)
 );
@@ -1356,19 +1350,11 @@ DELIMITER $$
 CREATE PROCEDURE providerxproduct_add (
 								IN FK_id_provider INT,
 								IN FK_id_product INT
-                                -- IN quantity INT,
-                                -- IN total FLOAT,
-                                -- IN discount FLOAT,
-                                -- IN transaction_date DATE
 							 )
 BEGIN
 	INSERT INTO providerxproduct (
 			providerxproduct.FK_id_provider,
             providerxproduct.FK_id_product
-    --         providerxproduct.quantity,
-    --         providerxproduct.total,
-    --         providerxproduct.discount,
-    --         providerxproduct.transaction_date
 	)
     VALUES
         (FK_id_provider, FK_id_product);
@@ -1515,11 +1501,11 @@ INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUE
 
 CREATE TABLE locker (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `locker_number` INT NOT NULL UNIQUE,
+    `locker_number` VARCHAR(255) NOT NULL UNIQUE,
     `price` FLOAT NOT NULL
 );
 
-INSERT INTO 'locker' (id, locker_number, price) VALUES (1, "1 (mujeres)", 0),(2, "2 (mujeres)", 0),(3, "3 (mujeres)", 0),(4, "4 (mujeres)", 0),(5, "5 (mujeres)", 0),(6, "6 (mujeres)", 0),(7, "7 (mujeres)", 0),(8, "8 (mujeres)", 0),(9, "9 (mujeres)", 0),(10, "10 (mujeres)", 0),(11, "11 (mujeres)", 0),(12, "12 (mujeres)", 0),(13, "13 (mujeres)", 0),(14, "14 (mujeres)", 0),(15, "15 (mujeres)", 0),(16, "16 (mujeres)", 0),(17, "17 (mujeres)", 0),(18, "18 (mujeres)", 0),(19, "19 (mujeres)", 0),(20, "20 (mujeres)", 0),(21, "21 (mujeres)", 0),(22, "22 (mujeres)", 0),(23, "23 (mujeres)", 0),(24, "24 (mujeres)", 0),(25, "25 (mujeres)", 0),(26, "26 (mujeres)", 0),(27, "27 (mujeres)", 0),(28, "28 (mujeres)", 0),(29, "29 (mujeres)", 0),(30, "30 (mujeres)", 0),(31, "31 (mujeres)", 0),(32, "32 (mujeres)", 0),(33, "33 (mujeres)", 0),(34, "34 (mujeres)", 0),(35, "35 (mujeres)", 0),(36, "36 (mujeres)", 0),(37, "37 (mujeres)", 0),(38, "38 (mujeres)", 0),(39, "39 (mujeres)", 0),(40, "40 (mujeres)", 0),(41, "41 (mujeres)", 0),(42, "42 (mujeres)", 0),(43, "43 (mujeres)", 0),(44, "44 (mujeres)", 0),(45, "45 (mujeres)", 0),(46, "46 (mujeres)", 0),(47, "47 (mujeres)", 0),(48, "48 (mujeres)", 0),(49, "49 (mujeres)", 0),(50, "50 (mujeres)", 0),(51, "51 (mujeres)", 0),(52, "52 (mujeres)", 0),(53, "53 (mujeres)", 0),(54, "54 (mujeres)", 0),(55, "55 (mujeres)", 0),(56, "56 (mujeres)", 0),(57, "57 (mujeres)", 0),(58, "58 (mujeres)", 0),(59, "59 (mujeres)", 0),(60, "60 (mujeres)", 0),(61, "61 (mujeres)", 0),(62, "62 (mujeres)", 0),(63, "63 (mujeres)", 0),(64, "64 (mujeres)", 0),(65, "65 (mujeres)", 0),(66, "66 (mujeres)", 0),(67, "67 (mujeres)", 0),(68, "68 (mujeres)", 0),(69, "69 (mujeres)", 0),(70,"70 (mujeres)", 0),(71,"71 (mujeres)", 0),(72,"72 (mujeres)", 0),(73,"73 (mujeres)", 0),(74,"74 (mujeres)", 0),(75,"75 (mujeres)", 0),(76,"76 (mujeres)", 0),(77,"77 (mujeres)", 0),(78,"78 (mujeres)", 0),(79,"79 (mujeres)", 0),(80,"80 (mujeres)", 0),(81,"81 (mujeres)", 0),(82,"82 (mujeres)", 0),(83,"83 (mujeres)", 0),(84,"84 (mujeres)", 0),(85,"85 (mujeres)", 0),(86,"86 (mujeres)", 0),(87,"87 (mujeres)", 0),(88,"88 (mujeres)", 0),(89,"89 (mujeres)", 0),(90,"90 (mujeres)", 0),(91,"91 (mujeres)", 0),(92,"92 (mujeres)", 0),(93,"93 (mujeres)", 0),(94,"94 (mujeres)", 0),(95,"95 (mujeres)", 0),(96,"96 (mujeres)", 0),(97,"97 (mujeres)", 0),(98,"98 (mujeres)", 0),(99,"99 (mujeres)", 0),(100,"100 (mujeres)", 0),(101,"101 (mujeres)", 0),(102,"102 (mujeres)", 0),(103,"103 (mujeres)", 0),(104,"104 (mujeres)", 0),(105,"105 (mujeres)", 0),(106,"106 (mujeres)", 0),(107,"107 (mujeres)", 0),(108,"108 (mujeres)", 0),(109,"109 (mujeres)", 0),(110,"110 (mujeres)", 0),(111,"111 (mujeres)", 0),(112,"112 (mujeres)", 0),(113,"113 (mujeres)", 0),(114,"114 (mujeres)", 0),(115,"115 (mujeres)", 0),(116,"116 (mujeres)", 0),(117,"117 (mujeres)", 0),(118,"118 (mujeres)", 0),(119,"119 (mujeres)", 0),(120,"120 (mujeres)", 0),(121,"121 (mujeres)", 0),(122,"122 (mujeres)", 0),(123,"123 (mujeres)", 0),(124,"124 (mujeres)", 0),(125,"125 (mujeres)", 0),(126,"126 (mujeres)", 0),(127,"127 (mujeres)", 0),(128,"128 (mujeres)", 0),(129,"129 (mujeres)", 0),(130,"130 (mujeres)", 0),(131,"131 (mujeres)", 0),(132,"132 (mujeres)", 0),(133,"133 (mujeres)", 0),(134,"134 (mujeres)", 0),(135,"135 (mujeres)", 0),(136,"136 (mujeres)", 0),(137,"137 (mujeres)", 0),(138,"1 (hombres)", 0),(139,"2 (hombres)", 0),(140,"3 (hombres)", 0),(141,"4 (hombres)", 0),(142,"5 (hombres)", 0),(143,"6 (hombres)", 0),(144,"7 (hombres)", 0),(145,"8 (hombres)", 0),(146,"9 (hombres)", 0),(147,"10 (hombres)", 0),(148,"11 (hombres)", 0),(149,"12 (hombres)", 0),(150,"13 (hombres)", 0),(151,"14 (hombres)", 0),(152,"15 (hombres)", 0),(153,"16 (hombres)", 0),(154,"17 (hombres)", 0),(155,"18 (hombres)", 0),(156,"19 (hombres)", 0),(157,"20 (hombres)", 0),(158,"21 (hombres)", 0),(159,"22 (hombres)", 0)
+INSERT INTO `locker` (id, locker_number, price) VALUES (1, "1 (mujeres)", 0),(2, "2 (mujeres)", 0),(3, "3 (mujeres)", 0),(4, "4 (mujeres)", 0),(5, "5 (mujeres)", 0),(6, "6 (mujeres)", 0),(7, "7 (mujeres)", 0),(8, "8 (mujeres)", 0),(9, "9 (mujeres)", 0),(10, "10 (mujeres)", 0),(11, "11 (mujeres)", 0),(12, "12 (mujeres)", 0),(13, "13 (mujeres)", 0),(14, "14 (mujeres)", 0),(15, "15 (mujeres)", 0),(16, "16 (mujeres)", 0),(17, "17 (mujeres)", 0),(18, "18 (mujeres)", 0),(19, "19 (mujeres)", 0),(20, "20 (mujeres)", 0),(21, "21 (mujeres)", 0),(22, "22 (mujeres)", 0),(23, "23 (mujeres)", 0),(24, "24 (mujeres)", 0),(25, "25 (mujeres)", 0),(26, "26 (mujeres)", 0),(27, "27 (mujeres)", 0),(28, "28 (mujeres)", 0),(29, "29 (mujeres)", 0),(30, "30 (mujeres)", 0),(31, "31 (mujeres)", 0),(32, "32 (mujeres)", 0),(33, "33 (mujeres)", 0),(34, "34 (mujeres)", 0),(35, "35 (mujeres)", 0),(36, "36 (mujeres)", 0),(37, "37 (mujeres)", 0),(38, "38 (mujeres)", 0),(39, "39 (mujeres)", 0),(40, "40 (mujeres)", 0),(41, "41 (mujeres)", 0),(42, "42 (mujeres)", 0),(43, "43 (mujeres)", 0),(44, "44 (mujeres)", 0),(45, "45 (mujeres)", 0),(46, "46 (mujeres)", 0),(47, "47 (mujeres)", 0),(48, "48 (mujeres)", 0),(49, "49 (mujeres)", 0),(50, "50 (mujeres)", 0),(51, "51 (mujeres)", 0),(52, "52 (mujeres)", 0),(53, "53 (mujeres)", 0),(54, "54 (mujeres)", 0),(55, "55 (mujeres)", 0),(56, "56 (mujeres)", 0),(57, "57 (mujeres)", 0),(58, "58 (mujeres)", 0),(59, "59 (mujeres)", 0),(60, "60 (mujeres)", 0),(61, "61 (mujeres)", 0),(62, "62 (mujeres)", 0),(63, "63 (mujeres)", 0),(64, "64 (mujeres)", 0),(65, "65 (mujeres)", 0),(66, "66 (mujeres)", 0),(67, "67 (mujeres)", 0),(68, "68 (mujeres)", 0),(69, "69 (mujeres)", 0),(70,"70 (mujeres)", 0),(71,"71 (mujeres)", 0),(72,"72 (mujeres)", 0),(73,"73 (mujeres)", 0),(74,"74 (mujeres)", 0),(75,"75 (mujeres)", 0),(76,"76 (mujeres)", 0),(77,"77 (mujeres)", 0),(78,"78 (mujeres)", 0),(79,"79 (mujeres)", 0),(80,"80 (mujeres)", 0),(81,"81 (mujeres)", 0),(82,"82 (mujeres)", 0),(83,"83 (mujeres)", 0),(84,"84 (mujeres)", 0),(85,"85 (mujeres)", 0),(86,"86 (mujeres)", 0),(87,"87 (mujeres)", 0),(88,"88 (mujeres)", 0),(89,"89 (mujeres)", 0),(90,"90 (mujeres)", 0),(91,"91 (mujeres)", 0),(92,"92 (mujeres)", 0),(93,"93 (mujeres)", 0),(94,"94 (mujeres)", 0),(95,"95 (mujeres)", 0),(96,"96 (mujeres)", 0),(97,"97 (mujeres)", 0),(98,"98 (mujeres)", 0),(99,"99 (mujeres)", 0),(100,"100 (mujeres)", 0),(101,"101 (mujeres)", 0),(102,"102 (mujeres)", 0),(103,"103 (mujeres)", 0),(104,"104 (mujeres)", 0),(105,"105 (mujeres)", 0),(106,"106 (mujeres)", 0),(107,"107 (mujeres)", 0),(108,"108 (mujeres)", 0),(109,"109 (mujeres)", 0),(110,"110 (mujeres)", 0),(111,"111 (mujeres)", 0),(112,"112 (mujeres)", 0),(113,"113 (mujeres)", 0),(114,"114 (mujeres)", 0),(115,"115 (mujeres)", 0),(116,"116 (mujeres)", 0),(117,"117 (mujeres)", 0),(118,"118 (mujeres)", 0),(119,"119 (mujeres)", 0),(120,"120 (mujeres)", 0),(121,"121 (mujeres)", 0),(122,"122 (mujeres)", 0),(123,"123 (mujeres)", 0),(124,"124 (mujeres)", 0),(125,"125 (mujeres)", 0),(126,"126 (mujeres)", 0),(127,"127 (mujeres)", 0),(128,"128 (mujeres)", 0),(129,"129 (mujeres)", 0),(130,"130 (mujeres)", 0),(131,"131 (mujeres)", 0),(132,"132 (mujeres)", 0),(133,"133 (mujeres)", 0),(134,"134 (mujeres)", 0),(135,"135 (mujeres)", 0),(136,"136 (mujeres)", 0),(137,"137 (mujeres)", 0),(138,"1 (hombres)", 0),(139,"2 (hombres)", 0),(140,"3 (hombres)", 0),(141,"4 (hombres)", 0),(142,"5 (hombres)", 0),(143,"6 (hombres)", 0),(144,"7 (hombres)", 0),(145,"8 (hombres)", 0),(146,"9 (hombres)", 0),(147,"10 (hombres)", 0),(148,"11 (hombres)", 0),(149,"12 (hombres)", 0),(150,"13 (hombres)", 0),(151,"14 (hombres)", 0),(152,"15 (hombres)", 0),(153,"16 (hombres)", 0),(154,"17 (hombres)", 0),(155,"18 (hombres)", 0),(156,"19 (hombres)", 0),(157,"20 (hombres)", 0),(158,"21 (hombres)", 0),(159,"22 (hombres)", 0)
 
 DROP procedure IF EXISTS `locker_getById`;
 DELIMITER $$
@@ -1539,6 +1525,9 @@ BEGIN
     FROM `locker`
     ORDER BY price ASC;
 END$$
+
+
+INSERT INTO `locker` (id, locker_number, price) VALUES (1, "1 (mujeres)", 0),(2, "2 (mujeres)", 0),(3, "3 (mujeres)", 0),(4, "4 (mujeres)", 0),(5, "5 (mujeres)", 0),(6, "6 (mujeres)", 0),(7, "7 (mujeres)", 0),(8, "8 (mujeres)", 0),(9, "9 (mujeres)", 0),(10, "10 (mujeres)", 0),(11, "11 (mujeres)", 0),(12, "12 (mujeres)", 0),(13, "13 (mujeres)", 0),(14, "14 (mujeres)", 0),(15, "15 (mujeres)", 0),(16, "16 (mujeres)", 0),(17, "17 (mujeres)", 0),(18, "18 (mujeres)", 0),(19, "19 (mujeres)", 0),(20, "20 (mujeres)", 0),(21, "21 (mujeres)", 0),(22, "22 (mujeres)", 0),(23, "23 (mujeres)", 0),(24, "24 (mujeres)", 0),(25, "25 (mujeres)", 0),(26, "26 (mujeres)", 0),(27, "27 (mujeres)", 0),(28, "28 (mujeres)", 0),(29, "29 (mujeres)", 0),(30, "30 (mujeres)", 0),(31, "31 (mujeres)", 0),(32, "32 (mujeres)", 0),(33, "33 (mujeres)", 0),(34, "34 (mujeres)", 0),(35, "35 (mujeres)", 0),(36, "36 (mujeres)", 0),(37, "37 (mujeres)", 0),(38, "38 (mujeres)", 0),(39, "39 (mujeres)", 0),(40, "40 (mujeres)", 0),(41, "41 (mujeres)", 0),(42, "42 (mujeres)", 0),(43, "43 (mujeres)", 0),(44, "44 (mujeres)", 0),(45, "45 (mujeres)", 0),(46, "46 (mujeres)", 0),(47, "47 (mujeres)", 0),(48, "48 (mujeres)", 0),(49, "49 (mujeres)", 0),(50, "50 (mujeres)", 0),(51, "51 (mujeres)", 0),(52, "52 (mujeres)", 0),(53, "53 (mujeres)", 0),(54, "54 (mujeres)", 0),(55, "55 (mujeres)", 0),(56, "56 (mujeres)", 0),(57, "57 (mujeres)", 0),(58, "58 (mujeres)", 0),(59, "59 (mujeres)", 0),(60, "60 (mujeres)", 0),(61, "61 (mujeres)", 0),(62, "62 (mujeres)", 0),(63, "63 (mujeres)", 0),(64, "64 (mujeres)", 0),(65, "65 (mujeres)", 0),(66, "66 (mujeres)", 0),(67, "67 (mujeres)", 0),(68, "68 (mujeres)", 0),(69, "69 (mujeres)", 0),(70,"70 (mujeres)", 0),(71,"71 (mujeres)", 0),(72,"72 (mujeres)", 0),(73,"73 (mujeres)", 0),(74,"74 (mujeres)", 0),(75,"75 (mujeres)", 0),(76,"76 (mujeres)", 0),(77,"77 (mujeres)", 0),(78,"78 (mujeres)", 0),(79,"79 (mujeres)", 0),(80,"80 (mujeres)", 0),(81,"81 (mujeres)", 0),(82,"82 (mujeres)", 0),(83,"83 (mujeres)", 0),(84,"84 (mujeres)", 0),(85,"85 (mujeres)", 0),(86,"86 (mujeres)", 0),(87,"87 (mujeres)", 0),(88,"88 (mujeres)", 0),(89,"89 (mujeres)", 0),(90,"90 (mujeres)", 0),(91,"91 (mujeres)", 0),(92,"92 (mujeres)", 0),(93,"93 (mujeres)", 0),(94,"94 (mujeres)", 0),(95,"95 (mujeres)", 0),(96,"96 (mujeres)", 0),(97,"97 (mujeres)", 0),(98,"98 (mujeres)", 0),(99,"99 (mujeres)", 0),(100,"100 (mujeres)", 0),(101,"101 (mujeres)", 0),(102,"102 (mujeres)", 0),(103,"103 (mujeres)", 0),(104,"104 (mujeres)", 0),(105,"105 (mujeres)", 0),(106,"106 (mujeres)", 0),(107,"107 (mujeres)", 0),(108,"108 (mujeres)", 0),(109,"109 (mujeres)", 0),(110,"110 (mujeres)", 0),(111,"111 (mujeres)", 0),(112,"112 (mujeres)", 0),(113,"113 (mujeres)", 0),(114,"114 (mujeres)", 0),(115,"115 (mujeres)", 0),(116,"116 (mujeres)", 0),(117,"117 (mujeres)", 0),(118,"118 (mujeres)", 0),(119,"119 (mujeres)", 0),(120,"120 (mujeres)", 0),(121,"121 (mujeres)", 0),(122,"122 (mujeres)", 0),(123,"123 (mujeres)", 0),(124,"124 (mujeres)", 0),(125,"125 (mujeres)", 0),(126,"126 (mujeres)", 0),(127,"127 (mujeres)", 0),(128,"128 (mujeres)", 0),(129,"129 (mujeres)", 0),(130,"130 (mujeres)", 0),(131,"131 (mujeres)", 0),(132,"132 (mujeres)", 0),(133,"133 (mujeres)", 0),(134,"134 (mujeres)", 0),(135,"135 (mujeres)", 0),(136,"136 (mujeres)", 0),(137,"137 (mujeres)", 0),(138,"1 (hombres)", 0),(139,"2 (hombres)", 0),(140,"3 (hombres)", 0),(141,"4 (hombres)", 0),(142,"5 (hombres)", 0),(143,"6 (hombres)", 0),(144,"7 (hombres)", 0),(145,"8 (hombres)", 0),(146,"9 (hombres)", 0),(147,"10 (hombres)", 0),(148,"11 (hombres)", 0),(149,"12 (hombres)", 0),(150,"13 (hombres)", 0),(151,"14 (hombres)", 0),(152,"15 (hombres)", 0),(153,"16 (hombres)", 0),(154,"17 (hombres)", 0),(155,"18 (hombres)", 0),(156,"19 (hombres)", 0),(157,"20 (hombres)", 0),(158,"21 (hombres)", 0),(159,"22 (hombres)", 0);
 
 
 

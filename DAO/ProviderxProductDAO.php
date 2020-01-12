@@ -74,17 +74,17 @@
                     $providerxproductTemp = new ProviderxProduct();
 
                     $provider = new Provider();
-					$provider->setId($row["id"]);
-					$provider->setName($row["name"]);
-					$provider->setLastName($row["lastname"]);
-                    $provider->setPhone($row["tel"]);
-                    $provider->setEmail($row["email"]);
-					$provider->setDni($row["dni"]);				
-                    $provider->setAddress($row["address"]);
-                    $provider->setCuilNumber($row["cuil"]);
-                    $provider->setSocialReason($row["social_reason"]);
-                    $provider->setBilling($row["type_billing"]);
-                    $provider->setIsActive($row["is_active"]);
+					$provider->setId($row["provider_id"]);
+					$provider->setName($row["provider_name"]);
+					$provider->setLastName($row["provider_lastName"]);
+                    $provider->setPhone($row["provider_tel"]);
+                    $provider->setEmail($row["provider_email"]);
+					$provider->setDni($row["provider_dni"]);				
+                    $provider->setAddress($row["provider_address"]);
+                    $provider->setCuilNumber($row["provider_cuil"]);
+                    $provider->setSocialReason($row["provider_socialReason"]);
+                    $provider->setBilling($row["provider_typeBilling"]);
+                    $provider->setIsActive($row["provider_isActive"]);
                     $providerxproductTemp->setProvider($provider);                    					
 				}
 				return $providerxproductTemp;
@@ -92,8 +92,6 @@
 				return false;
 			}
 		}
-
-
 		
 		public function getAll() {
 			try {
