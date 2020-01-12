@@ -53,7 +53,7 @@
                                     <option value="" disabled selected>Seleccione su opcion</option>
                                     <?php foreach ($providers as $provider): ?>
                                         <option value="<?= $provider->getId(); ?>">
-                                            <?= ucfirst( $provider->getName() ); ?>
+                                            <?= ucfirst( $provider->getName() ) . ' ' . $provider->getLastName(); ?>
                                         </option>
                                     <?php endforeach; ?> 
                                 </select>
@@ -62,7 +62,7 @@
 
                             <div class="input-field col s4">
                                 <input id="name" type="text" name="name" class="validate" required>
-                                <label for="name">Nombre</label>
+                                <label for="name">Nombre del producto</label>
                             </div>                            
                         </div>
 
