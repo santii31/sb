@@ -18,7 +18,8 @@
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
-    use Controllers\AdminController as AdminController;  
+    use Controllers\AdminController as AdminController;
+    use Controllers\ReservationController as ReservationController;  
 
     class AdditionalServiceController {
 
@@ -30,6 +31,7 @@
         private $clientDAO;
         private $reservationDAO;
         private $adminController;
+        private $reservationController;
 
         public function __construct() {
             $this->additionalServiceDAO = new AdditionalServiceDAO();
@@ -42,6 +44,7 @@
             $this->servicexparkingDAO = new ServicexParkingDAO();
             $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->adminController = new AdminController();
+            $this->reservationController = new ReservationController();
         }
 
         /*private function addServiceWithLocker($description, $locker, $id_reservation) {
@@ -394,11 +397,11 @@
                 $lockers = array();
                 foreach($listLockers as $locker) {
                     foreach($reservations as $reservation) {
-                        if( ($reservation->getAvailability() == true) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
+                        if( ($this->reservationController->checkIsDateReserved($reservation)) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
                             if($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $locker->getNumber()) {
 
                             }
-                        }else if( ($reservation->getAvailability() == false) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
+                        }else if( ($this->reservationController->checkIsDateReserved($reservation)) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
                             if($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $locker->getNumber()) {
                                 if($reserve->getDateEnd() >= $reservation->getDateStart()) {
 

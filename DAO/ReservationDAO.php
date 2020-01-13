@@ -146,7 +146,6 @@
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
 					$reservation->setDiscount($row["reservation_discount"]);
                     $reservation->setPrice($row["reservation_totalPrice"]);
-					$reservation->setIsActive($row["reservation_isActive"]);
 					$client = new Client();
 					$client->setId($row["client_id"]);
 					$client->setName($row["client_name"]);
@@ -155,8 +154,6 @@
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
-					$client->setIsPotential($row["client_isPotential"]);
-					$client->setIsActive($row["client_isActive"]);
 					$reservation->setClient($client);
 
 					$admin = new Admin();
@@ -166,14 +163,11 @@
 					$admin->setDni($row["admin_dni"]);
 					$admin->setEmail($row["admin_email"]);
 					$admin->setPassword($row["admin_password"]);
-					$admin->setIsActive($row["admin_isActive"]);
-					$reservation->setAdmin($admin);
 
 					$beachTent = new BeachTent();
 					$beachTent->setId($row["tent_id"]);
 					$beachTent->setNumber($row["tent_number"]);
 					$beachTent->setPrice($row["tent_price"]);
-					$beachTent->setIsActive($row["tent_isActive"]);
 					$reservation->setBeachTent($beachTent);
 
 					
