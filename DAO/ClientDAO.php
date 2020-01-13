@@ -18,8 +18,8 @@
 
 		
         public function add(Client $client, Admin $registerBy) {								
-			try {					
-				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			try {									
+				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();
 				$parameters["stay"] = $client->getStay();
@@ -34,8 +34,12 @@
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();
 				$this->connection = Connection::getInstance();
-				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
-				return true;
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                
+                foreach ($results as $row) {
+                    $lastId = $row['lastId'];                
+                }
+				return $lastId;
 			}
 			catch (Exception $e) {
 				// return false;

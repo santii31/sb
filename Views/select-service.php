@@ -35,7 +35,7 @@
                         <?php endif; ?>
 
                         <div class="row">
-                        <div class="input-field col s6">
+                            <div class="input-field col s6">
                                 <select name="services">
                                     <option value="" disabled selected>Seleccione una opcion</option>
                                     
@@ -47,10 +47,9 @@
                                 <label>Servicios</label>
                             </div>
 
-                            <input type="hidden" value=<?php $id_reservation ?> name="id_reserve">
-                            
-                                                     
+                            <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">                                               
                         </div>                        
+
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
@@ -58,7 +57,9 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
+                    
                 </div>
             </div>
         </div>

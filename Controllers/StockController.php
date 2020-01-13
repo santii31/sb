@@ -3,8 +3,8 @@
     namespace Controllers;    
     
     use Models\Product as Product;    
-    use Controllers\ProductController as ProductController; 
     use Controllers\AdminController as AdminController; 
+    use Controllers\ProductController as ProductController; 
 
     class StockController {
         

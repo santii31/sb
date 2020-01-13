@@ -21,7 +21,7 @@
 		
         public function add(Reservation $reservation, Admin $registerBy) {								
 			try {					
-				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?, ?, ?)";
+				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();
 				$parameters["discount"] = $reservation->getDiscount();
@@ -31,11 +31,16 @@
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();                
 				$this->connection = Connection::getInstance();
-				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);
-				return true;
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                
+                foreach ($results as $row) {
+                    $lastId = $row['lastId'];                
+                }
+				return $lastId;
 			}
 			catch (Exception $e) {
-				return false;
+				return false;				
+				// echo $e;				
 			}			
 		}
 		

@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>reservation/addReservation" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/addReservation" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -37,13 +37,13 @@
                         <div class="row">
 
                             <div class="input-field col s6">
-                                <input id="name" type="Date" name="date_start" class="validate" required>
-                                <label for="name">Fecha de ingreso</label>
+                                <input id="date_start" type="Date" name="date_start" class="validate" required>
+                                <label for="date_start">Fecha de ingreso</label>
                             </div>
 
                             <div class="input-field col s6">
-                                <input id="name" type="Date" name="date_end" class="validate" required>
-                                <label for="name">Fecha de egreso</label>
+                                <input id="date_end" type="Date" name="date_end" class="validate" required>
+                                <label for="date_end">Fecha de egreso</label>
                             </div>
 
                             <div class="input-field col s6">
@@ -54,8 +54,7 @@
                                 <input id="last_name" type="text" name="lastname" class="validate" required>
                                 <label for="last_name">Apellido</label>
                             </div>                         
-                        </div>
-                        <input type="hidden" name="$beach_tent" value=<?php $id_tent ?>>
+                        </div>                        
                         <div class="row">
                             <div class="input-field col s4">
                                 <input id="estadia" type="text" name="estadia" class="validate" required>
@@ -91,8 +90,7 @@
                                 <input id="grupof" type="text" name="groupF" class="validate" required>
                                 <label for="grupof">Grupo familiar</label>
                             </div>                            
-                        </div>
-                        <div class="divider mb-divider"></div>
+                        </div>                        
                         <div class="row">
                             <div class="input-field col s8">
                                 <input id="domicilioEsta" type="text" name="addressEsta" class="validate">
@@ -103,6 +101,9 @@
                                 <label for="tel2">Telefono de estadia</label>
                             </div>                                  
                         </div>                        
+                                                
+                        <input type="hidden" name="beach_tent" value="<?= $id_tent ?>">
+
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
@@ -110,11 +111,11 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
     

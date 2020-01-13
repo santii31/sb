@@ -3,8 +3,8 @@
     namespace Controllers;    
 
     use Models\Staff as Staff;
-    use Controllers\AdminController as AdminController;  
     use DAO\StaffDAO as StaffDAO;
+    use Controllers\AdminController as AdminController;  
 
     class StaffController {
 

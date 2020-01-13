@@ -80,24 +80,20 @@
             $servicexLocker = new ServicexLocker();
 
             if (!empty($locker)) {
+                
                 $total = $additionalService->getTotal() + $locker->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
                 $servicexlocker->setIdService($additionalService->getId());
                 $servicexlocker->setIdLocker($locker->setId());
+
                 if ($this->servicexlockerDAO->add($servicexlocker)) {
                     return true;
                 }
                 return false;
             }            
             return false;
-
-            // if ($lastId == false) {
-            //     return false;
-            // } else {
-            //     return true;
-            // }
         }
 
 
@@ -132,23 +128,20 @@
             $servicexParasol = new ServicexParasol();
             
             if (!empty($parasol)) {
+                
                 $total = $additionalService->getTotal() + $parasol->getPrice();
                 $additionalService->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $additionalServiceDAO->update($additionalService, $update_by);
                 $servicexparasol->setIdService($additionalService->getId());
                 $servicexparasol->setIdParasol($parasol->setId());
+
                 if ($this->servicexparasolDAO->add($servicexparasol)) {
                     return true;
                 }
                 return false;
             }            
             return false;
-            // if ($lastId == false) {
-            //     return false;
-            // } else {
-            //     return true;
-            // }
         }
 
         private function addServiceWithParking($description, $parking, $id_reservation) {
@@ -158,23 +151,28 @@
             $servicexParking = new ServicexParking();
             $reservationxservice = new ReservationxService();
             $additionalService->setDescription( strtolower($description_s) );
+            
             if (!empty($parking)) {
+                
                 $total = $total + $parking->getPrice();
                 $additionalService->setTotal($total);
                 $register_by = $this->adminController->isLogged();
-                $lastId = $this->additionalServiceDAO->add($additionalService, $register_by);
-                $reservationxservice->setIdReservation($id_reservation);
-                $reservationxservice->setIdService($lastId);
-                $reservationxserviceDAO->add($reservationxservice);
-                $servicexparking->setIdService($lastId);
-                $servicexparking->setIdParking($parking->setId());
-                $this->servicexparkingDAO->add($servicexparking);
-            }
-            if ($lastId == false) {
-                return false;
-            } else {
-                return true;
-            }
+                
+                if ($lastId = $this->additionalServiceDAO->add($additionalService, $register_by)) {
+                    
+                    $reservationxservice->setIdReservation($id_reservation);
+                    $reservationxservice->setIdService($lastId);
+                    $reservationxserviceDAO->add($reservationxservice);
+                    $servicexparking->setIdService($lastId);
+                    $servicexparking->setIdParking($parking->setId());
+
+                    if ($this->servicexparkingDAO->add($servicexparking)) {
+                        return true; 
+                    }
+                } else {
+                    return false;
+                }
+            }            
         }
 
         private function addParking(AdditionalService $additionalService, $parking) {
@@ -193,12 +191,6 @@
                 return false;
             }
             return false;
-            
-            // if ($lastId == false) {
-            //     return false;
-            // } else {
-            //     return true;
-            // }
         }
 
 
@@ -277,33 +269,7 @@
                 return $this->addServicePath(SERVICE_ERROR, null);
             }            
             return $this->addServicePath(EMPTY_FIELDS, null);            
-        }
-
-        public function optionsDistributor($services, $id_client) {
-            var_dump($services);
-            var_dump($id_client);   
-            if($services == "parasol") {
-                $this->addParasolPath(null, $id_client, null, null);
-            }
-            else if($services == "locker") {
-                $this->addLockerPath(null, $id_client, null, null);
-            }
-            else if($services == "parking") {
-                $this->addParkingPath(null, $id_client, null, null);
-            }            
-        }
-
-        public function optionsDistributorWithReserve($service, $id_reserve) {   
-            if($service == "parasol") {
-                $this->addParasolPath($id_reserve, null, null, null);
-            }
-            else if($service == "locker") {
-                $this->addLockerPath($id_reserve, null, null, null);
-            }
-            else if($service == "parking") {
-                $this->addParkingPath($id_reserve, null, null, null);
-            }            
-        }
+        }        
 
         private function isFormRegisterNotEmpty($description, $locker, $parasol, $parking) {            
             if (empty($description) || empty($locker) || empty($parasol) || empty($parking)) {
@@ -312,6 +278,13 @@
             return true;
         }        
 
+        private function isFormUpdateNotEmpty($description, $price) {            
+            if (empty($description) || empty($price)) {
+                return false;
+            }
+            return true;
+        }   
+        
 
         /*public function addServicePath($alert = "", $success = "", $id_reservation=NULL) {
             if ($admin = $this->adminController->isLogged()) {                                       
@@ -536,7 +509,7 @@
         }        
 
         public function update($id, $description, $total) {
-			if ($this->isFormRegisterNotEmpty($total, $description)) {                     
+			if ($this->isFormUpdateNotEmpty($total, $description)) {                     
                                                                              
                 $serviceTemp = new AdditionalService();
                 $serviceTemp->setId($id);                

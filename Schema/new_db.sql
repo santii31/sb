@@ -193,9 +193,9 @@ CREATE TABLE client (
 );
 
 
-DROP procedure IF EXISTS `client_add`;
+DROP PROCEDURE IF EXISTS `client_add`;
 DELIMITER $$
-CREATE PROCEDURE client_add (
+CREATE PROCEDURE client_add(
                                 IN name VARCHAR(255),
                                 IN lastname VARCHAR(255),
                                 IN stay VARCHAR(255),
@@ -208,10 +208,11 @@ CREATE PROCEDURE client_add (
                                 IN stay_address VARCHAR(255),
                                 IN tel_stay INT,                                
                                 IN date_register DATE,
-                                IN register_by INT
-                            )
+                                IN register_by INT,
+                                OUT lastId int
+							)
 BEGIN
-	INSERT INTO client (
+    INSERT INTO client (
 			client.name,
 			client.lastname,
             client.stay,
@@ -226,8 +227,9 @@ BEGIN
             client.date_register,			
             client.register_by
 	)
-    VALUES
-        (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+    VALUES (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 
@@ -686,7 +688,7 @@ CREATE TABLE reservation (
     `total_price` FLOAT NOT NULL,
     `FK_id_client` INT NOT NULL,    
     `FK_id_tent` INT NOT NULL,
-    `is_reserved` BOOLEAN NOT NULL,    
+    `is_reserved` BOOLEAN DEFAULT NULL,    
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,        
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
@@ -710,13 +712,12 @@ CREATE TABLE reservation (
 DROP PROCEDURE IF EXISTS `reservation_add`;
 DELIMITER $$
 CREATE PROCEDURE reservation_add(
-								IN date_start DATE,
+								    IN date_start DATE,
                                     IN date_end DATE,
                                     IN discount FLOAT,
                                     IN total_price FLOAT,
                                     IN FK_id_client INT,                            
-                                    IN FK_id_tent INT,
-                                    IN is_reserved BOOLEAN,
+                                    IN FK_id_tent INT,                              
                                     IN date_register DATE,
                                     IN register_by INT,
 								    OUT lastId int
@@ -728,12 +729,11 @@ BEGIN
             reservation.discount,
             reservation.total_price,
             reservation.FK_id_client,            
-            reservation.FK_id_tent,
-            reservation.is_reserved,
+            reservation.FK_id_tent,            
             reservation.date_register,
             reservation.register_by
 	)
-    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_admin, FK_id_tent, is_reserved, date_register, register_by);
+    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_tent, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$

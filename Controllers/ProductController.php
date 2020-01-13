@@ -3,14 +3,14 @@
     namespace Controllers;    
 
     use Models\Admin as Admin;
-    use Models\Category as Category;
     use Models\Product as Product;
     use Models\Provider as Provider;
+    use Models\Category as Category;
     use Models\ProviderxProduct as ProviderxProduct;
     use DAO\ProductDAO as ProductDAO;
     use DAO\ProviderxProductDAO as ProviderxProductDAO;
-    use Controllers\CategoryController as CategoryController;  
     use Controllers\AdminController as AdminController;  
+    use Controllers\CategoryController as CategoryController;  
 
     class ProductController {
 
