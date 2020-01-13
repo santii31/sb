@@ -38,18 +38,30 @@
 								<div class="beach-tents">									
 									<div class="tent-container">											
                                         <?php foreach ($firstRow as $tent): ?>
-                                            <div>                                                
+                                            <div>                                                                                                
                                                 <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        
+                                                        <!-- ver estadia -->
+                                                        <div class="tent yellow">                                                        
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>
+
+                                                    <?php else: ?>
                                                     <div class="tent">
+                                                    <?php endif; ?>
                                                         <span>
                                                             <?= $tent->getNumber(); ?>
                                                         </span>		
                                                     </div>      
-                                                </a>                                                
+                                                </a>                    
+                                                
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content center-align">
                                                         <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                        <ul id="tabs-swipe-demo" class="tabs">
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
                                                             <li class="tab col s6">
                                                                 <a class="active" href="#status-<?= $tent->getId(); ?>">                         
                                                                     Reserva actual                                                            
@@ -64,44 +76,47 @@
                                                         
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
-                                                                <?php if ($this->hasReservation($tent->getId())): ?>                             
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
                                                                                                                                      
-                                                                        <?php if ($rsv = $this->reservationToday($tent->getId())): ?>
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
-                                                                        <div class="reserve-container">
+                                                                    <div class="reserve-container">
                                                                             
-                                                                        <div class="reserve-title">
+                                                                            <div class="reserve-title">
                                                                                 <i class="material-icons">info_outline</i>
                                                                                 La carpa se encuentra actualmente reservada.                     
                                                                             </div>        
-
+                                                                            
                                                                             <div class="reserve-client">
                                                                                 
-                                                                                <i class="material-icons">person_pin</i>                         
-                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
                                                                                 <div>                                                            
                                                                                     <span>
-                                                                                        Nombre: 
+                                                                                        <span class="title">• Nombre:  </span>
                                                                                         <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
                                                                                     </span>
                                                                                     <span>
-                                                                                        Email: 
+                                                                                        <span class="title">• Email:  </span>
                                                                                         <?= $rsv->getClient()->getEmail(); ?> 
                                                                                     </span>
                                                                                     <span>
-                                                                                        Telefono: 
+                                                                                        <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
                                                                                     </span>
-                                                                                    <span>
-                                                                                        Grupo familiar: 
+                                                                                    <!-- <span>
+                                                                                        <span class="title">• Grupo Familiar:  </span>
                                                                                         <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span>
+                                                                                    </span> -->
                                                                                     <span>
-                                                                                        Fecha inicio: 
+                                                                                        <span class="title">• Fecha inicio:  </span>
                                                                                         <?= $rsv->getDateStart(); ?> 
                                                                                     </span>
                                                                                     <span>
-                                                                                        Fecha fin: 
+                                                                                        <span class="title">• Fecha fin:  </span>
                                                                                         <?= $rsv->getDateEnd(); ?> 
                                                                                     </span>
                                                                                 </div>
@@ -113,7 +128,6 @@
                                                                         <?php else: ?>
                                                                             Reservas futuras
                                                                         <?php endif; ?>                                                          
-                                                                    
 
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.

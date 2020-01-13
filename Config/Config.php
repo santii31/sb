@@ -52,6 +52,8 @@
 	define("PROVIDER_DISABLE", "Proveedor deshabilitado con éxito.");
 	define("PROVIDER_ENABLE", "Proveedor habilitado con éxito.");
 	define("PROVIDER_UPDATE", "Proveedor modificado con éxito.");
+	define("PROVIDER_EMPTY", "No hay proveedores registrados en el sistema.");
+	
 
 	define("CLIENT_ADDED", "Cliente potencial añadido con éxito.");
 	define("CLIENT_ERROR", "El cliente potencial ya se encuentra registrado.");

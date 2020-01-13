@@ -191,10 +191,8 @@
                 }                
                 return $this->updatePath($id, EMAIL_ERROR);
             }            
-            return $this->updatePath($id ,EMPTY_FIELDS);
+            return $this->updatePath($id, EMPTY_FIELDS);
         }
-
-
 
         public function checkIsDateReserved(Reservation $reservation) {            
             
@@ -215,10 +213,8 @@
         // 
 
         public function getByIdTent($id_tent) {
-
             $tent = new BeachTent();
             $tent->setId($id_tent);
-
             return $this->reservationDAO->getByIdTent($tent);
         }
 

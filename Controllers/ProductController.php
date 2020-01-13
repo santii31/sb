@@ -95,6 +95,7 @@
                 $title = "Producto - Añadir";
                 $categories = $this->categoryController->getCategorys();
                 $providers = $this->providerController->getProviders();
+                $alert = sizeof($providers) > 0 ? null : PROVIDER_EMPTY;
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-product.php");
