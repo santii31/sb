@@ -43,9 +43,9 @@
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
 					$locker = new Locker();
-                    $locker->setId($row["locker.id"]);
-                    $locker->setLockerNumber($row["locker.number"]);
-                    $locker->setPrice($row["locker.price"]);
+                    $locker->setId($row["id"]);
+                    $locker->setLockerNumber($row["locker_number"]);
+                    $locker->setPrice($row["price"]);
                     
 					array_push($this->lockerList, $locker);
 				}

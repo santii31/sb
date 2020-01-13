@@ -789,20 +789,16 @@ BEGIN
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_is_potential,
-		   client.is_active AS client_is_active,
+           client.address AS client_address,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_is_active,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_is_active
+           beach_tent.price AS tent_price
 
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
@@ -1984,9 +1980,7 @@ END$$
 CREATE TABLE locker (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `locker_number` INT NOT NULL UNIQUE,
-    `price` FLOAT NOT NULL,
-    `FK_id_service` INT NOT NULL,
-    CONSTRAINT `FK_id_service_locker` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`)
+    `price` FLOAT NOT NULL
 );
 
 
@@ -1994,48 +1988,8 @@ DROP procedure IF EXISTS `locker_getById`;
 DELIMITER $$
 CREATE PROCEDURE locker_getById (IN id INT)
 BEGIN
-	SELECT locker.id AS locker_id,
-           locker.locker_number AS locker_number,
-           locker.price AS locker_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.total AS service_total,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive 
+	SELECT *
     FROM `locker` 
-    INNER JOIN additional_service ON locker.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     WHERE `locker`.`id` = id;
 END$$
 
@@ -2044,45 +1998,8 @@ DROP procedure IF EXISTS `locker_getAll`;
 DELIMITER $$
 CREATE PROCEDURE locker_getAll ()
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
-           additional_service.total AS service_total,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent.is_active AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
+	SELECT *
     FROM `locker`
-    INNER JOIN additional_service ON locker.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY price ASC;
 END$$
 
