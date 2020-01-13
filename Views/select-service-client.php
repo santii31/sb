@@ -39,15 +39,15 @@
                                 <select name="services">
                                     <option value="" disabled selected>Seleccione servicio</option>
                                     
-                                    <option value="$parasol"> Sombrilla </option>
-                                    <option value="$locker"> Locker </option>
-                                    <option value="$parking"> Estacionamiento </option>
+                                    <option value="parasol"> Sombrilla </option>
+                                    <option value="locker"> Locker </option>
+                                    <option value="parking"> Estacionamiento </option>
                                      
                                 </select>
                                 <label>Servicios</label>
                             </div>
                             <div class="input-field col s6">
-                                <select name="services">
+                                <select name="id_client">
                                     <option value="" disabled selected>Seleccione un cliente</option>
                                     
                                     <?php foreach ($clientList as $client): ?>

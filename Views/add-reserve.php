@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>parking/addProvider" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/addReservation" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -55,6 +55,7 @@
                                 <label for="last_name">Apellido</label>
                             </div>                         
                         </div>
+                        <input type="hidden" name="$beach_tent" value=<?php $id_tent ?>>
                         <div class="row">
                             <div class="input-field col s4">
                                 <input id="estadia" type="text" name="estadia" class="validate" required>
