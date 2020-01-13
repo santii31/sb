@@ -70,8 +70,8 @@
             if ($this->isFormRegisterNotEmpty($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, $beach_tent)) {
                 
                 $reservationTemp = new Reservation();
-                $reservationTemp->set($);                
-                
+                // $reservationTemp->set($);               
+                 
                 if ($this->checkInterval($date_start, $date_end, $beach_tent) == 1) {                                                            
                     if ($this->add($date_start, $date_end, $total_price, $name, $lastname, $estadia, $address, $city, $cp, $email, $tel1, $groupF, $addressEsta, $tel2, $discount, $beach_tent)) {            
                         return $this->addReservationPath(null, RESERVATION_ADDED);
@@ -216,8 +216,8 @@
             
             $today = date("Y-m-d");
 
-            $dateStart =  strtotime( $reservation->getDateStart() ) ;
-            $dateEnd =  strtotime( $reservation->getDateEnd() );
+            $dateStart = strtotime( $reservation->getDateStart() ) ;
+            $dateEnd = strtotime( $reservation->getDateEnd() );
             $dateToCompare = strtotime( $today );
 
             if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {

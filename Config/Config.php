@@ -3,8 +3,8 @@
     namespace Config;
     
     define("ROOT", dirname(__DIR__) . "/");
-	//define("FRONT_ROOT", "/SouthBeach/");	
-	define("FRONT_ROOT", "http://localhost/sb/");
+	define("FRONT_ROOT", "/SouthBeach/");	
+	// define("FRONT_ROOT", "http://localhost/sb/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
@@ -54,7 +54,6 @@
 	define("PROVIDER_UPDATE", "Proveedor modificado con éxito.");
 	define("PROVIDER_EMPTY", "No hay proveedores registrados en el sistema.");
 	
-
 	define("CLIENT_ADDED", "Cliente potencial añadido con éxito.");
 	define("CLIENT_ERROR", "El cliente potencial ya se encuentra registrado.");
 	define("CLIENT_DISABLE", "Cliente potencial deshabilitado con éxito.");
@@ -66,6 +65,10 @@
 	define("PRODUCT_DISABLE", "Producto deshabilitado con éxito.");
 	define("PRODUCT_ENABLE", "Producto habilitado con éxito.");
 	define("PRODUCT_UPDATE", "Producto modificado con éxito.");
+	define("STOCK_ADDED", "Stock agregado con exito.");
+	define("STOCK_REMOVE", "Stock removido con exito.");
+	define("STOCK_REMOVE_ERROR", "No puede quitar mas de lo que tiene.");
+	define("STOCK_ZERO", "Ingrese un valor mayor a 0.");
 		
 	define("STAFF_ADDED", "Empleado añadido con éxito.");
 	define("STAFF_ERROR", "El Empleado ya se encuentra registrado.");

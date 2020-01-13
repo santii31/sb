@@ -50,22 +50,22 @@
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
 					$productTemp = new Product();
-                    $productTemp->setId($row["id"]);
-                    $productTemp->setName($row["name"]);
-					$productTemp->setPrice($row["price"]);
-					$productTemp->setQuantity($row["quantity"]);
-                    $productTemp->setIsActive($row["is_active"]);
+                    $productTemp->setId($row["product_id"]);
+                    $productTemp->setName($row["product_name"]);
+					$productTemp->setPrice($row["product_price"]);
+					$productTemp->setQuantity($row["product_quantity"]);
+                    $productTemp->setIsActive($row["product_isActive"]);
 
                     $category = new Category();
-                    $category->setId($row["id"]);
-                    $category->setName($row["name"]);
-                    $category->setDescription($row["description"]);
+                    $category->setId($row["category_id"]);
+                    $category->setName($row["category_name"]);                    
 
                     $productTemp->setCategory($category);
 				}
 				return $productTemp;
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}
 
@@ -148,8 +148,8 @@
 				}
 				return $this->productList;	
 			} catch (Exception $e) {
-				// return false;
-				echo $e;
+				return false;
+				// echo $e;
 			}
 		}		
 
@@ -205,6 +205,35 @@
 				$parameters["FK_id_category"] = $product->getCategory()->getId();
 				$parameters["update_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId(); 	
+				$parameters["id"] = $product->getId(); 	
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function addQuantity(Product $product, Admin $addedBy) {
+			try {								
+				$query = "CALL product_add_quantity(?, ?, ?, ?)";						
+				$parameters["quantity"] = $product->getQuantity();				
+				$parameters["date_add"] = date("Y-m-d");
+				$parameters["add_by"] = $addedBy->getId(); 	
+				$parameters["id"] = $product->getId(); 	
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function removeQuantity(Product $product, Admin $removeBy) {
+			try {								
+				$query = "CALL product_remove_quantity(?, ?, ?, ?)";						
+				$parameters["quantity"] = $product->getQuantity();				
+				$parameters["date_remove"] = date("Y-m-d");
+				$parameters["remove_by"] = $removeBy->getId(); 	
+				$parameters["id"] = $product->getId(); 	
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

@@ -78,7 +78,6 @@
             return sizeof($reserveList);
         }
 
-
         public function reservationToday($id_tent) {
             $reserveList = $this->reservationController->getByIdTent($id_tent);
             $reserve = null;

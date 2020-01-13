@@ -1184,10 +1184,14 @@ CREATE TABLE product (
 	`name` VARCHAR(255) NOT NULL,
     `price` FLOAT NOT NULL,
     `quantity` INT NOT NULL,
-    `FK_id_category` INT NOT NULL,
-    -- `FK_id_provider` INT NOT NULL,
+    `FK_id_category` INT NOT NULL,    
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
     
+    `date_add` DATE DEFAULT NULL,
+    `add_by` INT DEFAULT NULL, 
+    `date_remove` DATE DEFAULT NULL,    
+    `remove_by` INT DEFAULT NULL,
+
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
     `date_disable` DATE DEFAULT NULL,    
@@ -1197,8 +1201,10 @@ CREATE TABLE product (
     `date_update` DATE DEFAULT NULL, 
     `update_by` INT DEFAULT NULL,
 
-    CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
-    -- CONSTRAINT `FK_id_provider_product` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
+    CONSTRAINT `FK_product_add_by` FOREIGN KEY (`add_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_product_remove_by` FOREIGN KEY (`remove_by`) REFERENCES `admin` (`id`),
+
+    CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),    
     CONSTRAINT `FK_product_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
@@ -1243,8 +1249,7 @@ BEGIN
             product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
-            category.name AS category_name,
-            category.description AS category_description
+            category.name AS category_name
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
     WHERE `product`.`id` = id;
@@ -1347,7 +1352,8 @@ CREATE PROCEDURE product_update (
                                     IN quantity INT,
                                     IN FK_id_category INT,
                                     IN date_update DATE,
-                                    IN update_by INT
+                                    IN update_by INT,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `product` 
@@ -1358,6 +1364,44 @@ BEGIN
         `product`.`FK_id_category` = FK_id_category,    
         `product`.`date_update` = date_update,
         `product`.`update_by` = update_by
+    WHERE 
+        `product`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `product_add_quantity`;
+DELIMITER $$
+CREATE PROCEDURE product_add_quantity (
+                                    IN quantity INT,                                    
+                                    IN date_add DATE,
+                                    IN add_by INT,
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `product` 
+    SET         
+        `product`.`quantity` = quantity,        
+        `product`.`date_add` = date_add,
+        `product`.`add_by` = add_by
+    WHERE 
+        `product`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `product_remove_quantity`;
+DELIMITER $$
+CREATE PROCEDURE product_remove_quantity (
+                                    IN quantity INT,                                    
+                                    IN date_remove DATE,
+                                    IN remove_by INT,
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `product` 
+    SET         
+        `product`.`quantity` = quantity,        
+        `product`.`date_remove` = date_remove,
+        `product`.`remove_by` = remove_by
     WHERE 
         `product`.`id` = id;	
 END$$

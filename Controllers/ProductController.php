@@ -2,6 +2,7 @@
 
     namespace Controllers;    
 
+    use Models\Admin as Admin;
     use Models\Category as Category;
     use Models\Product as Product;
     use Models\Provider as Provider;
@@ -152,7 +153,8 @@
                 $title = "Producto - Modificar informacion";       
                 $productTemp = new Product();
                 $productTemp->setId($id_product);                
-                $product = $this->productDAO->getById($productTemp);                    
+                $product = $this->productDAO->getById($productTemp);
+                $alert = sizeof($providers) > 0 ? null : PROVIDER_EMPTY;                    
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "update-product.php");
@@ -201,6 +203,18 @@
 
 
         // 
+        public function getById(Product $product) {
+            return $this->productDAO->getById($product);
+        }
+
+        public function addQuantity(Product $product, Admin $admin) {
+            return $this->productDAO->addQuantity($product, $admin);
+        }
+
+        public function removeQuantity(Product $product, Admin $admin) {
+            return $this->productDAO->removeQuantity($product, $admin);
+        }
+
         public function getProducts() {
             return $this->productDAO->getAll();
         }

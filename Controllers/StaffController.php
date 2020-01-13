@@ -45,17 +45,21 @@
             }
         }
 
-        public function addStaff($name, $lastName, $position, $salary, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {
+        public function addStaff($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
+                                 $address, $phone, $shirt_size, $pant_size) {
            
             if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
-                                                $address, $phone, $shirt_size, $pant_size)) {
+                                              $address, $phone, $shirt_size, $pant_size)) {
 
                 $staffTemp = new Staff();
                 $staffTemp->setDni($dni);                
                 
 				if ($this->staffDAO->getByDni($staffTemp) == null) {                                                            
-                    if ($this->add($name, $lastName, $position, $salary, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size)) {      
+                    if ($this->add($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
+                                   $address, $phone, $shirt_size, $pant_size)) {      
+
                         return $this->addStaffPath(null, STAFF_ADDED);
+
                     } else {                        
                         return $this->addStaffPath(DB_ERROR, null);        
                     }
@@ -152,10 +156,11 @@
             }           
         }        
 
-        public function update($id, $name, $lastName, $position, $salary, $date_start, $date_end, $dni, $address, $phone, $shirt_size, $pant_size) {      
+        public function update($id, $name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
+                               $address, $phone, $shirt_size, $pant_size) {      
             
             if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
-                                                $address, $phone, $shirt_size, $pant_size)) {     
+                                              $address, $phone, $shirt_size, $pant_size)) {     
                 
                 $staffTemp = new Staff();
                 $staffTemp->setId($id);                
