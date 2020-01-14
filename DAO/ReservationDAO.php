@@ -140,6 +140,7 @@
 		
 		public function getAll() {
 			try {
+				$reservList = array();
 				$query = "CALL reservation_getAll()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
@@ -176,9 +177,9 @@
 
 					
                     
-					array_push($this->reservationList, $reservation);
+					array_push($reservList, $reservation);
 				}
-				return $this->reservationList;	
+				return $reservList;	
 			} catch (Exception $e) {
 				return false;
 			}

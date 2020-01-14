@@ -1656,7 +1656,7 @@ CREATE PROCEDURE locker_getAll ()
 BEGIN
 	SELECT *
     FROM `locker`
-    ORDER BY price ASC;
+    ORDER BY id ASC;
 END$$
 
 
