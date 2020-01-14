@@ -445,7 +445,7 @@
                 $title = "Seleccione cochera";                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "add-parking.php");
+                require_once(VIEWS_PATH . "parking.php");
                 require_once(VIEWS_PATH . "footer.php");                    
 			} else {                
                 return $this->adminController->userPath();

@@ -75,10 +75,9 @@
 	define("STAFF_DISABLE", "Empleado deshabilitado con éxito.");
 	define("STAFF_ENABLE", "Empleado habilitado con éxito.");
 	define("STAFF_UPDATE", "Empleado modificado con éxito.");
-
-	// Reservas
+	
 	define("RESERVATION_ADDED", "Reserva añadida con éxito.");
-	define("RESERVATION_ERROR", "La carpa se encuentra reservada.");		
+	define("RESERVATION_ERROR", "Carpa reservada durante estas fechas.");		
 		
 
 ?>

@@ -135,16 +135,37 @@
                                                             </div>
                                                         </div>
                                                         
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
                                                         <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div>                                                                
-                                                                <ol>
-                                                                    <li>
-                                                                        15/1/2020
-                                                                    </li>                                                          
-                                                                </ol>
+                                                            <div class="future-container">                                                        
+                                                                <?php foreach ($rsvList as $rsv): ?>
+                                                                <div class="future-item">
+                                                                    <div class="client">
+                                                                        <i class="material-icons">person_pin</i>
+                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                            $rsv->getClient()->getLastName(); ?>
+                                                                    </div>
+                                                                    <div class="date">
+                                                                        <div>
+                                                                            <span class="title-2">• Fecha inicio: </span>
+                                                                            <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                        </div>
+
+                                                                        <div>
+                                                                            <span class="title-2">• Fecha fin: </span>
+                                                                            <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                        </div>
+
+                                                                        <div>
+                                                                            <span class="title-2">• Telefono: </span>
+                                                                            <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <?php endforeach; ?>                                                              
                                                             </div>    
                                                         </div>
-                                                                                             
+                                                        <?php endif; ?>                 
                                                     </div>
 
                                                     <div class="modal-footer">
@@ -737,12 +758,10 @@
 
 							</div>	
 
-						</div>
-                        
+						</div>                        
                     </div>
     			</div>
 			</div>
 		</div>
 	</div>
-
-	</div>
+</div>
