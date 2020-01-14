@@ -2,14 +2,11 @@
 
     namespace Controllers;    
     
-    use Models\Reservation as Reservation;    
-    use Models\Admin as Admin;
+    use Models\Reservation as Reservation;  
     use Models\Client as Client;
     use Models\BeachTent as BeachTent;
-    use Models\Parking as Parking;
     use Models\ReservationxService as ReservationxService;
     use DAO\ReservationDAO as ReservationDAO;
-    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\AdditionalServiceController as AdditionalServiceController;
@@ -17,15 +14,11 @@
     class ReservationController {
 
         private $reservationDAO;
-        private $reservationxserviceDAO;
         private $adminController;
-        private $clientController;
         private $additionalServiceController;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();
-            $this->reservationxserviceDAO = new ReservationxServiceDAO();
-            $this->clientController = new ClientController();
             $this->additionalServiceController = new AdditionalServiceController();
             $this->adminController = new AdminController();
         }               

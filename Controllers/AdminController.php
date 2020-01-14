@@ -3,16 +3,15 @@
     namespace Controllers;
     
     use Models\Admin as Admin;
-	use DAO\AdminDAO as AdminDAO;
-    use Controllers\HomeController as HomeController;    
+	use DAO\AdminDAO as AdminDAO;   
     use Controllers\BeachTentController as BeachTentController;        
     
     class AdminController {
 
         private $adminDAO;
-        private $homeController;
 
         public function __construct() {
+            
             $this->adminDAO = new AdminDAO();
         }
         
