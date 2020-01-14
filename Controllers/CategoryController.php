@@ -11,6 +11,7 @@
         public function __construct() {        
             $this->categoryDAO = new CategoryDAO();
         }
+        
 
         public function getCategorys() {        
             return $this->categoryDAO->getAll();

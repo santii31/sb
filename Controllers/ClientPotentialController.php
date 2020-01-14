@@ -14,7 +14,8 @@
         public function __construct() {
             $this->clientPotentialDAO = new ClientPotentialDAO();
             $this->adminController = new AdminController();
-        }       
+        }     
+          
         
         private function add($name, $lastName, $address, $city, $email, $phone, $num_tent) {
 

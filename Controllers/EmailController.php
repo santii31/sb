@@ -23,6 +23,7 @@
         public function __construct() {            
             $this->adminController = new AdminController();
         }   
+        
 
         public function sendEmailPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {

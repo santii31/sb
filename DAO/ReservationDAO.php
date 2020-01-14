@@ -45,11 +45,11 @@
 		}
 		
 					
-		public function getById($id) {
+		public function getById(Reservation $reservation) {
 			try {				
 				$reservationTemp = null;
 				$query = "CALL reservation_getById(?)";
-				$parameters["id"] = $id;
+				$parameters["id"] = $reservation->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
@@ -73,9 +73,8 @@
 					$admin->setId($row["admin_id"]);
 					$admin->setName($row["admin_name"]);
 					$admin->setLastName($row["admin_lastName"]);
-					$admin->setDni($row["admin_dni"]);
-					$admin->setEmail($row["admin_email"]);
-					$admin->setPassword($row["admin_password"]);
+					// $admin->setDni($row["admin_dni"]);
+					// $admin->setEmail($row["admin_email"]);					
 
 					$beachTent = new BeachTent();
 					$beachTent->setId($row["tent_id"]);

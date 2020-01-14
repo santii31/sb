@@ -368,6 +368,8 @@ INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position
 
 
 -- row 7
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('182BB', 100, 176, 0, 7);
+
 INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('182B', 100, 176, 0, 7);
 
 INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('182', 100, 177, 0, 7);

@@ -20,6 +20,7 @@
             $this->reservationController = new ReservationController();           
         }
 
+        
         public function addReservePath($alert = "", $success = "") {                        
             if ($admin = $this->adminController->isLogged()) {
                 $title = 'Añadir reserva';			

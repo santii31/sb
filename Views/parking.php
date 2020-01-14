@@ -42,11 +42,11 @@
                                     </a>                                    
                                     <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                         <div class="modal-content">
-                                            <h4>Estacionamiento nº <?= $parking->getNumber(); ?></h4>
-                                            <p>A bunch of text</p>
+                                            <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
+                                            <p>Actualmente desocupado.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                            <a href="<?= FRONT_ROOT ?>parking/reserve/<?= $id_reservation ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">Reservar</a>
                                         </div>
                                     </div>
                                 </div>

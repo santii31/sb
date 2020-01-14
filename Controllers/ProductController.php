@@ -27,6 +27,7 @@
             $this->categoryController = new CategoryController();
             $this->providerController = new ProviderController();
         }
+        
 
         private function add($id_category, $id_provider, $name, $price, $quantity) {
 

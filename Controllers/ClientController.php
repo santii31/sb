@@ -17,6 +17,7 @@
             $this->adminController = new AdminController();
         }       
         
+        
         private function add($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {
 
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);

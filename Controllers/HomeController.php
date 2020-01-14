@@ -12,6 +12,7 @@
             // $this->adminController = new AdminController();
         }
 
+        
         public function Index($alert = "") {        
             if (!$this->ValidateLoggedAdmin()) {    
                 $title = 'Bienvenido!';			

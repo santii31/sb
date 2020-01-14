@@ -241,6 +241,12 @@
             return $this->reservationDAO->getByIdTent($tent);
         }
 
+        public function getById($id_reservation) {
+            $reservation = new Reservation();
+            $reservation->setId($id_reservation);
+
+            return $this->reservationDAO->getById($reservation);
+        }
     }
 
         

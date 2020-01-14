@@ -159,10 +159,6 @@ END$$
 
 ----------------------------- CLIENT -----------------------------
 
-INSERT INTO `client` (id, name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, is_active,date_register ,register_by)
-VALUES (1, `bruce`, `wayne`, `qwe`, "colon 123", `gotham`, 100, `bruce@wayne.com`, 155121314, "grupo1", "puan 123", 4899999, TRUE),
-(2, `walter`, `white`, `zxc`, "albuquerque 123", `nuevo mexico`, 200, `walter@white.com`, 154121314, "grupo2", "crocce 123", 4897777, TRUE)
-
 CREATE TABLE client (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
@@ -676,10 +672,6 @@ END$$
 
 ----------------------------- RESERVATION -----------------------------
 
-INSERT INTO reservation (id, date_start, date_end, discount, total_price, FK_id_client, FK_id_tent, is_reserved,is_active, date_register, register_by)
-(1, 2020-01-15, 2020-01-20, 20.00, 100.00, 1, 2,FALSE, TRUE, 2020,01,11, 1),
-(2, 2020-01-20, 2020-01-25, 30.00, 200.00, 2, 10,FALSE, TRUE, 2020,01,11, 1)
-
 CREATE TABLE reservation (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `date_start` DATE NOT NULL,
@@ -937,6 +929,78 @@ BEGIN
     INNER JOIN client ON reservation.FK_id_client = client.id
     WHERE beach_tent.id = id;    
 END$$
+
+
+
+------------------------- RESERVATION_X_PARKING ---------------------
+
+CREATE TABLE reservationxparking (
+	`FK_id_reservation` INT NOT NULL,
+    `FK_id_parking` INT NOT NULL,
+    CONSTRAINT `FK_id_reservation_reservationxparking` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`),
+    CONSTRAINT `FK_id_parking_reservationxparking` FOREIGN KEY (`FK_id_parking`) REFERENCES `parking` (`id`)
+);
+
+
+DROP procedure IF EXISTS `reservationxparking_add`;
+DELIMITER $$
+CREATE PROCEDURE reservationxparking_add (
+								IN FK_id_reservation INT,
+								IN FK_id_parking INT
+							 )
+BEGIN
+	INSERT INTO reservationxparking (
+			reservationxparking.FK_id_reservation,
+            reservationxparking.FK_id_parking
+	)
+    VALUES
+        (FK_id_reservation, FK_id_parking);
+END$$
+
+
+DROP procedure IF EXISTS `reservationxparking_getAll`;
+DELIMITER $$
+CREATE PROCEDURE reservationxparking_getAll ()
+BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        client.name as client_name,
+        client.lastname as client_lastname,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`;
+    -- ORDER BY name ASC;
+END$$
+
+
+DROP procedure IF EXISTS `reservationxparking_getByIdParking`;
+DELIMITER $$
+CREATE PROCEDURE reservationxparking_getByIdParking (IN id INT)
+BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        client.name as client_name,
+        client.lastname as client_lastname,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`
+    WHERE `reservationxparking`.`FK_id_parking` = id;
+END$$
+
+
+
 
 
 
@@ -2018,6 +2082,7 @@ BEGIN
 	SELECT *
     FROM `reservationxservice`;
 END$$
+
 
 ---------------------------- LOCKER ---------------------------
 

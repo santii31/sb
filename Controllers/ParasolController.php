@@ -13,6 +13,7 @@
             $this->parasolDAO = new ParasolDAO();            
         }        
 
+        
         public function getRowParasol($n) {
             return $this->parasolDAO->getN_row($n);
         }

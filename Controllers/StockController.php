@@ -15,6 +15,7 @@
             $this->adminController = new AdminController();
             $this->productController = new ProductController();
         }   
+        
 
         public function listStockPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {

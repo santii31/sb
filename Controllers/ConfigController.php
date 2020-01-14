@@ -12,6 +12,7 @@
             $this->adminController = new AdminController();
         }
 
+        
         public function updateValuesPath($alert = "", $success = "") {        
             if ($admin = $this->adminController->isLogged()) {    
                 

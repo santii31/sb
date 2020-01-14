@@ -16,6 +16,7 @@
             $this->adminDAO = new AdminDAO();
         }
         
+        
 		public function addAdminPath($alert = "", $success = "") {
             if ($admin = $this->isLogged()) {                                       
                 $title = "Administrador - Añadir";
