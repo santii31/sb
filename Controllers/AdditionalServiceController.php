@@ -284,28 +284,41 @@
                     }
                 }
                 $reserve = $this->reservationDAO->getById($id_reservation);
-                
-                var_dump($reserve);
                 $reservations = $this->reservationDAO->getAll();
                 $listLockers = $this->lockerDAO->getAll();
+                
                 $lockers = array();
                 foreach($listLockers as $locker) {
                     foreach($reservations as $reservation) {
-                        if( ($this->reservationController->checkIsDateReserved($reservation)) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
-                            if($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $locker->getNumber()) {
-
-                            }
-                        }else if( ($this->reservationController->checkIsDateReserved($reservation)) && ($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
-                            if($this->servicexlockerDAO->getLockerByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $locker->getNumber()) {
-                                if($reserve->getDateEnd() >= $reservation->getDateStart()) {
-
+                        $id_reserve = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId());
+                        if( ($this->reservationController->checkIsDateReserved($reservation)) && ($id_reserve != false) ) {
+                            if($this->servicexlockerDAO->getLockerByService($id_reserve) != false) {
+                                if($this->servicexlockerDAO->getLockerByService($id_reserve)->getId() == $locker->getId() ){ 
+                                    array_push($lockers, $locker);
                                 }
                             }
-                        }else{
-                            array_push($lockers, $locker);       
+                        }else if( ($this->reservationController->checkIsDateReserved($reservation) == false) && ($id_reserve != false)  ) {
+                            if($this->servicexlockerDAO->getLockerByService($id_reserve) != false) {
+                                if($this->servicexlockerDAO->getLockerByService($id_reserve)->getId() == $locker->getId() ){ 
+                                    array_push($lockers, $locker);
+                                }
+                            }
                         }
                     } 
                 }
+                $lockerListFinal = array();
+                $exist=false;
+                foreach($listLockers as $locker){
+                    foreach($lockers as $locker2){
+                        if($locker->getId() == $locker2->getId()){
+                            $exist=true;
+                        }
+                    }
+                    if($exist == false){
+                        array_push($lockerListFinal, $locker);
+                    }
+                }
+                
 
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
@@ -332,24 +345,39 @@
                 }
                 $reserve = $this->reservationDAO->getById($id_reservation);
                 $reservations = $this->reservationDAO->getAll();
-                $listParasol = $this->parasolDAO->getAll();
+                $listParasoles = $this->parasolDAO->getAll();
+                
                 $parasoles = array();
-                foreach($listParasol as $parasol) {
+                foreach($listParasoles as $parasol) {
                     foreach($reservations as $reservation) {
-                        if( ($reservation->getAvailability() == true) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
-                            if($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $parasol->getNumber()) {
-
-                            }
-                        }else if( ($reservation->getAvailability() == false) && ($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId()) != false ) ) {
-                            if($this->servicexparasolDAO->getParasolByService($this->reservationxserviceDAO->getServiceByReservation($reservation->getId())->getId())->getNumber() == $parasol->getNumber()) {
-                                if($reserve->getDateEnd() >= $reservation->getDateStart()) {
-
+                        $id_reserve = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId());
+                        if( ($this->reservationController->checkIsDateReserved($reservation)) && ($id_reserve != false) ) {
+                            if($this->servicexparasolDAO->getParasolByService($id_reserve) != false) {
+                                if($this->servicexparasolDAO->getParasolByService($id_reserve)->getId() == $parasol->getId() ){ 
+                                    array_push($parasoles, $parasol);
                                 }
                             }
-                        }else{
-                            array_push($parasoles, $parasol);       
+                        }else if( ($this->reservationController->checkIsDateReserved($reservation) == false) && ($id_reserve != false)  ) {
+                            if($this->servicexparasolDAO->getParasolByService($id_reserve) != false) {
+                                if($this->servicexparasolDAO->getParasolByService($id_reserve)->getId() == $parasol->getId() ){ 
+                                    array_push($parasoles, $parasol);
+                                }
+                            }
                         }
                     } 
+                }
+
+                $parasolListFinal = array();
+                $exist=false;
+                foreach($listParasoles as $parasol){
+                    foreach($parsoles as $parasol2){
+                        if($parasol->getId() == $parasol2->getId()){
+                            $exist=true;
+                        }
+                    }
+                    if($exist == false){
+                        array_push($parasolListFinal, $parasol);
+                    }
                 }
 
                 require_once(VIEWS_PATH . "head.php");

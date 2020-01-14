@@ -2,14 +2,15 @@
 
     namespace Controllers;    
 
-    use Models\Category as Category;
+    use Models\Admin as Admin;
     use Models\Product as Product;
     use Models\Provider as Provider;
+    use Models\Category as Category;
     use Models\ProviderxProduct as ProviderxProduct;
     use DAO\ProductDAO as ProductDAO;
     use DAO\ProviderxProductDAO as ProviderxProductDAO;
-    use Controllers\CategoryController as CategoryController;  
     use Controllers\AdminController as AdminController;  
+    use Controllers\CategoryController as CategoryController;  
 
     class ProductController {
 
@@ -95,6 +96,7 @@
                 $title = "Producto - Añadir";
                 $categories = $this->categoryController->getCategorys();
                 $providers = $this->providerController->getProviders();
+                $alert = sizeof($providers) > 0 ? null : PROVIDER_EMPTY;
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-product.php");
@@ -151,7 +153,8 @@
                 $title = "Producto - Modificar informacion";       
                 $productTemp = new Product();
                 $productTemp->setId($id_product);                
-                $product = $this->productDAO->getById($productTemp);                    
+                $product = $this->productDAO->getById($productTemp);
+                $alert = sizeof($providers) > 0 ? null : PROVIDER_EMPTY;                    
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "update-product.php");
@@ -200,6 +203,18 @@
 
 
         // 
+        public function getById(Product $product) {
+            return $this->productDAO->getById($product);
+        }
+
+        public function addQuantity(Product $product, Admin $admin) {
+            return $this->productDAO->addQuantity($product, $admin);
+        }
+
+        public function removeQuantity(Product $product, Admin $admin) {
+            return $this->productDAO->removeQuantity($product, $admin);
+        }
+
         public function getProducts() {
             return $this->productDAO->getAll();
         }

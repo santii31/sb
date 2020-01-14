@@ -78,7 +78,6 @@
             return sizeof($reserveList);
         }
 
-
         public function reservationToday($id_tent) {
             $reserveList = $this->reservationController->getByIdTent($id_tent);
             $reserve = null;
@@ -90,6 +89,28 @@
             }
             return false;
         }
+
+        public function hasFutureReservation($id_tent) {
+            
+            $futureReserve = array();
+            $reserveList = $this->reservationController->getByIdTent($id_tent);
+            $today = date("Y-m-d");
+            $dateToCompare = strtotime( $today );
+            foreach ($reserveList as $reserve) {                
+                $reserveDate = strtotime($reserve->getDateStart());
+                if ($reserveDate > $dateToCompare) {
+                    array_push($futureReserve, $reserve);
+                }                
+            }
+            
+            // echo '<pre>';
+            // var_dump($futureReserve);
+            // echo '</pre>';
+
+            return $futureReserve;
+
+        }
+
 
     }
     

@@ -6,6 +6,7 @@
                     <h2>
                         <?= $title ?>
                     </h2>
+                    <h3>Ver proveedores deshabilitados</h3>
                 </div>
                 <div class="divider mb-divider"></div>
 

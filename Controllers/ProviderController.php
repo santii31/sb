@@ -3,8 +3,8 @@
     namespace Controllers;    
 
     use Models\Provider as Provider;
-    use Controllers\AdminController as AdminController;  
     use DAO\ProviderDAO as ProviderDAO;
+    use Controllers\AdminController as AdminController;  
 
     class ProviderController {
 

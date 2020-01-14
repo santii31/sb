@@ -193,13 +193,6 @@
             <div class="sidenav-container">
                 <ul>
 
-                    <!-- <li>
-                        <a href="<?= FRONT_ROOT ?>admin/dashboard" class="valign-wrapper waves-effect">
-                            <i class="material-icons left">dashboard</i>
-                            Dashboard
-                        </a>
-                    </li> -->
-
                     <ul class="collapsible">
                         <li>
                             <div class="collapsible-header"><i class="material-icons">beach_access</i>Carpas</div>
@@ -232,12 +225,39 @@
                         </li>                    
                     </ul>                                                      
 
-                    <li>
-                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                            <i class="material-icons left">attach_money</i>
-                            Contabilidad
-                        </a>
-                    </li>
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons left">attach_money</i>Contabilidad</div>
+                            <div class="collapsible-body">
+                                <ul>                                           
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">map</i>
+                                            Ventas diarias
+                                        </a>
+                                    </li>         
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">map</i>
+                                            Ventas mensuales
+                                        </a>
+                                    </li>   
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">map</i>
+                                            Ventas de carpas por dia
+                                        </a>
+                                    </li>   
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">map</i>
+                                            Ventas por administradores
+                                        </a>
+                                    </li>                                                                                                                                                                                    
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul> 
 
                     <ul class="collapsible">
                         <li>

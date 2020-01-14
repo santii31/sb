@@ -52,7 +52,8 @@
 	define("PROVIDER_DISABLE", "Proveedor deshabilitado con éxito.");
 	define("PROVIDER_ENABLE", "Proveedor habilitado con éxito.");
 	define("PROVIDER_UPDATE", "Proveedor modificado con éxito.");
-
+	define("PROVIDER_EMPTY", "No hay proveedores registrados en el sistema.");
+	
 	define("CLIENT_ADDED", "Cliente potencial añadido con éxito.");
 	define("CLIENT_ERROR", "El cliente potencial ya se encuentra registrado.");
 	define("CLIENT_DISABLE", "Cliente potencial deshabilitado con éxito.");
@@ -64,16 +65,19 @@
 	define("PRODUCT_DISABLE", "Producto deshabilitado con éxito.");
 	define("PRODUCT_ENABLE", "Producto habilitado con éxito.");
 	define("PRODUCT_UPDATE", "Producto modificado con éxito.");
+	define("STOCK_ADDED", "Stock agregado con exito.");
+	define("STOCK_REMOVE", "Stock removido con exito.");
+	define("STOCK_REMOVE_ERROR", "No puede quitar mas de lo que tiene.");
+	define("STOCK_ZERO", "Ingrese un valor mayor a 0.");
 		
 	define("STAFF_ADDED", "Empleado añadido con éxito.");
 	define("STAFF_ERROR", "El Empleado ya se encuentra registrado.");
 	define("STAFF_DISABLE", "Empleado deshabilitado con éxito.");
 	define("STAFF_ENABLE", "Empleado habilitado con éxito.");
 	define("STAFF_UPDATE", "Empleado modificado con éxito.");
-
-	// Reservas
+	
 	define("RESERVATION_ADDED", "Reserva añadida con éxito.");
-	define("RESERVATION_ERROR", "La carpa se encuentra reservada.");		
+	define("RESERVATION_ERROR", "Carpa reservada durante estas fechas.");		
 		
 
 ?>

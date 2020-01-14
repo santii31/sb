@@ -3,6 +3,7 @@
     namespace Controllers;    
     
     use Models\Client as Client;
+    use Models\Admin as Admin;
 	use DAO\ClientDAO as ClientDAO;
     use Controllers\AdminController as AdminController; 
     
@@ -199,13 +200,14 @@
 
         
         // 
-
         public function getEmails() {
             return $this->clientDAO->getEmails();
         }
 
+        public function addObj(Client $client, Admin $admin) {
+            return $this->clientDAO->add($client, $admin);
+        }
 
     }
-
         
 ?>

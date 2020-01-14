@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>reservation/addReservation" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/addReservation" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -37,39 +37,36 @@
                         <div class="row">
 
                             <div class="input-field col s6">
-                                <input id="name" type="Date" name="date_start" class="validate" required>
-                                <label for="name">Fecha de ingreso</label>
+                                <input id="start" type="Date" name="start" class="validate" required>
+                                <label for="start">Fecha de ingreso</label>
                             </div>
 
                             <div class="input-field col s6">
-                                <input id="name" type="Date" name="date_end" class="validate" required>
-                                <label for="name">Fecha de egreso</label>
+                                <input id="end" type="Date" name="end" class="validate" required>
+                                <label for="end">Fecha de egreso</label>
                             </div>
 
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
                                 <input id="name" type="text" name="name" class="validate" required>
                                 <label for="name">Nombre</label>
                             </div>
-                            <div class="input-field col s6">
-                                <input id="last_name" type="text" name="lastname" class="validate" required>
-                                <label for="last_name">Apellido</label>
+                            <div class="input-field col s4">
+                                <input id="l_name" type="text" name="l_name" class="validate" required>
+                                <label for="l_name">Apellido</label>
                             </div>                         
-                        </div>
-                        <input type="hidden" name="$beach_tent" value=<?php $id_tent ?>>
-                        <div class="row">
                             <div class="input-field col s4">
-                                <input id="estadia" type="text" name="estadia" class="validate" required>
-                                <label for="estadia">Estadia</label>
+                                <input id="stay" type="text" name="stay" class="validate" required>
+                                <label for="stay">Estadia</label>
                             </div>                                                   
-                        </div>                        
+                        </div>                                                               
                         <div class="row">
                             <div class="input-field col s4">
-                                <input id="domicilio" type="text" name="address" class="validate" required>
-                                <label for="domicilio">Domicilio</label>
+                                <input id="addr" type="text" name="addr" class="validate" required>
+                                <label for="addr">Domicilio</label>
                             </div>
                             <div class="input-field col s4">
-                                <input id="ciudad" type="text" name="city" class="validate" required>
-                                <label for="ciudad">Ciudad</label>
+                                <input id="city" type="text" name="city" class="validate" required>
+                                <label for="city">Ciudad</label>
                             </div>
                             <div class="input-field col s4">
                                 <input id="cp" type="number" name="cp" class="validate" required>
@@ -82,27 +79,27 @@
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s4">
-                                <input id="tel1" type="number" name="tel1" class="validate" required>
-                                <label for="tel1">Telefono</label>
+                                <input id="phone" type="number" name="phone" class="validate" required>
+                                <label for="phone">Telefono</label>
                             </div>                            
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="grupof" type="text" name="groupF" class="validate" required>
-                                <label for="grupof">Grupo familiar</label>
+                            <div class="input-field col s4">
+                                <input id="fam" type="text" name="fam" class="validate" required>
+                                <label for="fam">Grupo familiar</label>
                             </div>                            
-                        </div>
-                        <div class="divider mb-divider"></div>
-                        <div class="row">
-                            <div class="input-field col s8">
-                                <input id="domicilioEsta" type="text" name="addressEsta" class="validate">
-                                <label for="domicilioEsta">Domicilio de estadia</label>
+                            <div class="input-field col s4">
+                                <input id="addrStay" type="text" name="addrStay" class="validate">
+                                <label for="addrStay">Domicilio de estadia</label>
                             </div>
                             <div class="input-field col s4">
-                                <input id="tel2" type="number" name="tel2" class="validate">
-                                <label for="tel2">Telefono de estadia</label>
+                                <input id="phone2" type="number" name="phone2" class="validate">
+                                <label for="phone2">Telefono de estadia</label>
                             </div>                                  
-                        </div>                        
+                        </div>                                                                
+                                                
+                        <input type="hidden" name="tent" value="<?= $id_tent ?>">
+
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
@@ -110,11 +107,11 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
     

@@ -16,8 +16,9 @@
             $this->adminController = new AdminController();
         }        
 
-        public function parkingMap() {
+        public function parkingMap($id_reservation = "") {
             if ($admin = $this->adminController->isLogged()) {
+                
                 $title = "Plano de cocheras";       
                 
                 // parkings
@@ -36,6 +37,7 @@
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "parking.php");
                 require_once(VIEWS_PATH . "footer.php"); 
+                
             } else {
                 return $this->adminController->userPath();
             }

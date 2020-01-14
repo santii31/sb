@@ -3,17 +3,14 @@
     namespace Controllers;    
     
     use Models\Parasol as Parasol;
-	use DAO\ParasolDAO as ParasolDAO;
-    // use Controllers\AdminController as AdminController;  
+	use DAO\ParasolDAO as ParasolDAO;    
 
     class ParasolController {
 
-        private $parasolDAO;
-        // private $adminController;
+        private $parasolDAO;        
 
         public function __construct() {
-            $this->parasolDAO = new ParasolDAO();
-            // $this->adminController = new AdminController();
+            $this->parasolDAO = new ParasolDAO();            
         }        
 
         public function getRowParasol($n) {
@@ -21,9 +18,5 @@
         }
 
     }
-
-
-
-
 
 ?>

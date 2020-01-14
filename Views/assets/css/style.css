@@ -1,7 +1,6 @@
 html {
     font-family: "Rubik", sans-serif;
-    overflow-x: hidden;
-    /* background-color: #22252e; */
+    overflow-x: hidden;    
 }
 
 /* Login section */
@@ -598,6 +597,7 @@ nav .input-field label.active i {
     justify-content: flex-end;
 }
 
+
 /* List paths */
 .collapsible-body > ul {    
     text-align: left;
@@ -653,6 +653,8 @@ nav .input-field label.active i {
     align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .reserve-client {
@@ -661,21 +663,70 @@ nav .input-field label.active i {
     align-items: center;    
 }
 
-.reserve-client > i {
+.reserve-client > .client-subinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.reserve-client > .client-subinfo i {
     font-size: 5rem;
     color: rgba(106, 86, 165, .5);
+    margin-left: .5rem;
 }
 
 .reserve-client > div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .reserve-client > div > span {
     margin-bottom: .5rem;
 }
+
+.reserve-client span .title {    
+    color: #6a56a5;        
+}
+
+.title-2 {
+    color: #6a56a5;        
+}
+
+.future-container {    
+    display: flex;
+    flex-direction: column;        
+}
+
+.future-item {    
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+}
+
+.future-item > .client {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.future-item > .date {
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+
 
 /* Mail page */
 .mail-filter {    

@@ -193,9 +193,9 @@ CREATE TABLE client (
 );
 
 
-DROP procedure IF EXISTS `client_add`;
+DROP PROCEDURE IF EXISTS `client_add`;
 DELIMITER $$
-CREATE PROCEDURE client_add (
+CREATE PROCEDURE client_add(
                                 IN name VARCHAR(255),
                                 IN lastname VARCHAR(255),
                                 IN stay VARCHAR(255),
@@ -208,10 +208,11 @@ CREATE PROCEDURE client_add (
                                 IN stay_address VARCHAR(255),
                                 IN tel_stay INT,                                
                                 IN date_register DATE,
-                                IN register_by INT
-                            )
+                                IN register_by INT,
+                                OUT lastId int
+							)
 BEGIN
-	INSERT INTO client (
+    INSERT INTO client (
 			client.name,
 			client.lastname,
             client.stay,
@@ -226,8 +227,9 @@ BEGIN
             client.date_register,			
             client.register_by
 	)
-    VALUES
-        (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+    VALUES (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 
@@ -686,7 +688,7 @@ CREATE TABLE reservation (
     `total_price` FLOAT NOT NULL,
     `FK_id_client` INT NOT NULL,    
     `FK_id_tent` INT NOT NULL,
-    `is_reserved` BOOLEAN NOT NULL,    
+    `is_reserved` BOOLEAN DEFAULT NULL,    
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,        
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
@@ -710,13 +712,12 @@ CREATE TABLE reservation (
 DROP PROCEDURE IF EXISTS `reservation_add`;
 DELIMITER $$
 CREATE PROCEDURE reservation_add(
-								IN date_start DATE,
+								    IN date_start DATE,
                                     IN date_end DATE,
                                     IN discount FLOAT,
                                     IN total_price FLOAT,
                                     IN FK_id_client INT,                            
-                                    IN FK_id_tent INT,
-                                    IN is_reserved BOOLEAN,
+                                    IN FK_id_tent INT,                              
                                     IN date_register DATE,
                                     IN register_by INT,
 								    OUT lastId int
@@ -728,12 +729,11 @@ BEGIN
             reservation.discount,
             reservation.total_price,
             reservation.FK_id_client,            
-            reservation.FK_id_tent,
-            reservation.is_reserved,
+            reservation.FK_id_tent,            
             reservation.date_register,
             reservation.register_by
 	)
-    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_admin, FK_id_tent, is_reserved, date_register, register_by);
+    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_tent, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -1180,10 +1180,14 @@ CREATE TABLE product (
 	`name` VARCHAR(255) NOT NULL,
     `price` FLOAT NOT NULL,
     `quantity` INT NOT NULL,
-    `FK_id_category` INT NOT NULL,
-    -- `FK_id_provider` INT NOT NULL,
+    `FK_id_category` INT NOT NULL,    
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE, 
     
+    `date_add` DATE DEFAULT NULL,
+    `add_by` INT DEFAULT NULL, 
+    `date_remove` DATE DEFAULT NULL,    
+    `remove_by` INT DEFAULT NULL,
+
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
     `date_disable` DATE DEFAULT NULL,    
@@ -1193,8 +1197,10 @@ CREATE TABLE product (
     `date_update` DATE DEFAULT NULL, 
     `update_by` INT DEFAULT NULL,
 
-    CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
-    -- CONSTRAINT `FK_id_provider_product` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`),
+    CONSTRAINT `FK_product_add_by` FOREIGN KEY (`add_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_product_remove_by` FOREIGN KEY (`remove_by`) REFERENCES `admin` (`id`),
+
+    CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),    
     CONSTRAINT `FK_product_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_product_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
@@ -1239,8 +1245,7 @@ BEGIN
             product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
-            category.name AS category_name,
-            category.description AS category_description
+            category.name AS category_name
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
     WHERE `product`.`id` = id;
@@ -1343,7 +1348,8 @@ CREATE PROCEDURE product_update (
                                     IN quantity INT,
                                     IN FK_id_category INT,
                                     IN date_update DATE,
-                                    IN update_by INT
+                                    IN update_by INT,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `product` 
@@ -1354,6 +1360,44 @@ BEGIN
         `product`.`FK_id_category` = FK_id_category,    
         `product`.`date_update` = date_update,
         `product`.`update_by` = update_by
+    WHERE 
+        `product`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `product_add_quantity`;
+DELIMITER $$
+CREATE PROCEDURE product_add_quantity (
+                                    IN quantity INT,                                    
+                                    IN date_add DATE,
+                                    IN add_by INT,
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `product` 
+    SET         
+        `product`.`quantity` = quantity,        
+        `product`.`date_add` = date_add,
+        `product`.`add_by` = add_by
+    WHERE 
+        `product`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `product_remove_quantity`;
+DELIMITER $$
+CREATE PROCEDURE product_remove_quantity (
+                                    IN quantity INT,                                    
+                                    IN date_remove DATE,
+                                    IN remove_by INT,
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `product` 
+    SET         
+        `product`.`quantity` = quantity,        
+        `product`.`date_remove` = date_remove,
+        `product`.`remove_by` = remove_by
     WHERE 
         `product`.`id` = id;	
 END$$
@@ -1548,7 +1592,7 @@ CREATE PROCEDURE locker_getAll ()
 BEGIN
 	SELECT *
     FROM `locker`
-    ORDER BY price ASC;
+    ORDER BY id ASC;
 END$$
 
 

@@ -74,11 +74,12 @@
                                             <div id="remove" class="modal">
                                                 <div class="modal-content">
                                                     <h4>Quitar stock</h4>       
+
                                                     <form action="<?= FRONT_ROOT ?>stock/removeStock" method="post">
                                                         <input type="hidden" name="id_product" value="<?= $product->getId(); ?>">
                                                         <div class="row">
                                                             <div class="input-field col s12">
-                                                                <input id="quantity_r" type="number" name="quantity_r" class="validate" required>
+                                                                <input id="quantity_r" type="number" name="quantity" class="validate" required>
                                                                 <label for="quantity_r">Ingrese cantidad a quitar</label>
                                                             </div>                                                                               
                                                         </div>
@@ -90,6 +91,7 @@
                                                             </div>
                                                         </div>
                                                     </form>
+
                                                 </div>                                                
                                             </div>
                                         </div>                                                                            
@@ -98,8 +100,10 @@
                                             
                                             <div id="add" class="modal">
                                                 <div class="modal-content">
-                                                    <h4>Agregar stock</h4>       
+                                                    <h4>Agregar stock</h4>    
+
                                                     <form action="<?= FRONT_ROOT ?>stock/addStock" method="post">
+                                                        <input type="hidden" name="id_product" value="<?= $product->getId(); ?>">
                                                         <div class="row">
                                                             <div class="input-field col s12">
                                                                 <input id="quantity" type="number" name="quantity" class="validate" required>
@@ -114,6 +118,7 @@
                                                             </div>
                                                         </div>
                                                     </form>
+
                                                 </div>                                                
                                             </div>
                                         </div>
