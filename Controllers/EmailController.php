@@ -65,7 +65,6 @@
             }
             return $this->sendEmailPath(EMAIL_ERROR, null);             
         }
-
         
         private function send($recipients, $subject, $msg) {
             

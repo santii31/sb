@@ -9,6 +9,7 @@
     use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
     use Controllers\AdminController as AdminController;  
     use Controllers\ReservationController as ReservationController;  
+    use Controllers\AdditionalServiceController as AdditionalServiceController;  
 
     class ParkingController {
 
@@ -16,6 +17,7 @@
         private $reservationxParkingDAO;
         private $adminController;
         private $reservationController;
+        private $additionalController;
 
         public function __construct() {
             $this->parkingDAO = new ParkingDAO();
@@ -24,11 +26,10 @@
         }        
 
 
-        public function parkingMap($id_reservation = "") {
-            if ($admin = $this->adminController->isLogged()) {
+        public function parkingMap($id_reservation = null, $alert = "") {
+            if ($admin = $this->adminController->isLogged()) {                
                 
                 $title = "Plano de cocheras";       
-                
                 // parkings
                 $firstRow = $this->parkingDAO->getN_row(1);
                 $secondRow = $this->parkingDAO->getN_row(2);
@@ -51,14 +52,14 @@
             }
         }
 
-        public function checkInterval($date_start, $date_end, $id_parking) {
+        private function checkInterval($date_start, $date_end, $id_parking) {
             $parking = new Parking();
             $parking->setId($id_parking);
 			$existance = $this->reservationxParkingDAO->getAllByParkingId($parking);			
 			$flag = 1;
 			if ($existance != null) {                
 				foreach ($existance as $reserve) {                       
-					if ( ($date_end < $reserve->getReservation()->getDateStart()) xor ($date_start > $reserve->getReservation()->getDateEnd())  ) {
+					if ( ($date_end < $reserve->getReservation()->getDateStart()) xor ($date_start > $reserve->getReservation()->getDateEnd())) {
 						$flag *= 1;	
 					} else {
 						$flag *= 0;
@@ -83,9 +84,10 @@
                 $reservationxParking->setReservation($reservationTemp);
                 $reservationxParking->setParking($parking);
 
-                if ($this->reservationxParkingDAO->add($reservationxParking)) {
-                    echo 'agregado exito';
-                    return ;
+                if ($this->reservationxParkingDAO->add($reservationxParking)) {                    
+                    // enviar a form de servicios adicionales
+                    $this->additionalController = new AdditionalServiceController();
+                    return $this->additionalController->addSelectServicePath($reservation, null, null);                        
                 }
 
             } else {            
@@ -102,18 +104,53 @@
                     $reservationxParking->setReservation($reservationTemp);
                     $reservationxParking->setParking($parking);
 
-                    if ($this->reservationxParkingDAO->add($reservationxParking)) {
-                        echo 'agregado exito';
-                        return ;
+                    if ($this->reservationxParkingDAO->add($reservationxParking)) {                        
+                        // enviar a form de servicios adicionales      
+                        $this->additionalController = new AdditionalServiceController();                  
+                        return $this->additionalController->addSelectServicePath($reservation, null, null);                        
                     }
 
-                } else {
-                    echo 'estacionamiento ocupado durante estas fechas';
+                } else {                                 
+                    return $this->parkingMap($reservation, "El estacionamiento seleccionado se encuentra reservado.");
                 }                
             }
-
         }
 
+        public function hasReservation($id_parking) {     
+            $parking = new Parking();
+            $parking->setId($id_parking);
+            $reserveList = $this->reservationxParkingDAO->getAllByParkingId($parking);
+            return sizeof($reserveList);
+        }
+
+        public function reservationToday($id_parking) {
+            $this->reservationController = new ReservationController();
+            $parking = new Parking();
+            $parking->setId($id_parking);
+            $reserveList = $this->reservationxParkingDAO->getAllByParkingId($parking);            
+            foreach ($reserveList as $reserve) {
+                if ($reservation = $this->reservationController->checkIsDateReserved($reserve->getReservation())) {                    
+                    return $reservation;
+                }
+            }
+            return false;
+        }
+
+        public function hasFutureReservation($id_parking) {            
+            $parking = new Parking();
+            $parking->setId($id_parking);
+            $futureReserve = array();
+            $reserveList = $this->reservationxParkingDAO->getAllByParkingId($parking);            
+            $today = date("Y-m-d");
+            $dateToCompare = strtotime( $today );
+            foreach ($reserveList as $reserve) {                
+                $reserveDateStart = strtotime($reserve->getReservation()->getDateStart());
+                if ($reserveDateStart > $dateToCompare) {
+                    array_push($futureReserve, $reserve);
+                }                
+            }
+            return $futureReserve;
+        }
 
         
     }

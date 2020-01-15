@@ -12,6 +12,7 @@
         private $id;
         private $date_start;
         private $date_end;
+        private $stay;
         private $discount;
         private $price;    
         private $client;            
@@ -45,7 +46,15 @@
             $this->date_end = $date_end;
             return $this;
         }
+        
+        public function getStay() {
+            return $this->stay;
+        }
 
+        public function setStay($stay) {
+            $this->stay = $stay;            
+        }
+        
         public function getDiscount() {
             return $this->discount;
         }

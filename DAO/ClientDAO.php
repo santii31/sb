@@ -19,10 +19,9 @@
 		
         public function add(Client $client, Admin $registerBy) {								
 			try {									
-				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
+				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["name"] = $client->getName();
-				$parameters["lastname"] = $client->getLastName();
-				$parameters["stay"] = $client->getStay();
+				$parameters["lastname"] = $client->getLastName();				
 				$parameters["address"] = $client->getAddress();
 				$parameters["city"] = $client->getCity();
 				$parameters["cp"] = $client->getCp();
@@ -42,8 +41,8 @@
 				return $lastId;
 			}
 			catch (Exception $e) {
-				// return false;
-				echo $e;
+				return false;
+				// echo $e;
 			}			
         }				
 
@@ -58,8 +57,7 @@
 					$userTemp = new Client();
 					$userTemp->setId($row["id"]);
 					$userTemp->setName($row["name"]);
-					$userTemp->setLastName($row["lastname"]);
-					$userTemp->setStay($row["stay"]);
+					$userTemp->setLastName($row["lastname"]);					
 					$userTemp->setAddress($row["address"]);
 					$userTemp->setCity($row["city"]);				
 					$userTemp->setCp($row["cp"]);
@@ -87,8 +85,7 @@
 					$userTemp = new Client();
 					$userTemp->setId($row["id"]);
 					$userTemp->setName($row["name"]);
-					$userTemp->setLastName($row["lastname"]);
-					$userTemp->setStay($row["stay"]);
+					$userTemp->setLastName($row["lastname"]);					
 					$userTemp->setAddress($row["address"]);
 					$userTemp->setCity($row["city"]);				
 					$userTemp->setCp($row["cp"]);
@@ -114,8 +111,7 @@
 					$client = new Client();
 					$client->setId($row["id"]);
 					$client->setName($row["name"]);
-					$client->setLastName($row["lastname"]);
-					$client->setStay($row["stay"]);
+					$client->setLastName($row["lastname"]);					
 					$client->setAddress($row["address"]);
 					$client->setCity($row["city"]);				
 					$client->setCp($row["cp"]);
@@ -178,11 +174,9 @@
 
 		public function update(Client $client, Admin $updateBy) {
 			try {								
-				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-				
+				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";				
 				$parameters["name"] = $client->getName();
-				$parameters["lastname"] = $client->getLastName();
-				$parameters["stay"] = $client->getStay();
+				$parameters["lastname"] = $client->getLastName();				
 				$parameters["address"] = $client->getAddress();
 				$parameters["city"] = $client->getCity();
 				$parameters["cp"] = $client->getCp();

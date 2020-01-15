@@ -107,20 +107,6 @@
 			}
         }
 
-        public function listProductPath($alert = "", $success = "", $id_category) {
-            if ($admin = $this->adminController->isLogged()) {
-                $title = "Productos";
-                // $category = $this->categoryDAO->getAll();
-                $products = $this->productDAO->getByCategory($id_category);
-                require_once(VIEWS_PATH . "head.php");
-                require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "list-products.php");
-                require_once(VIEWS_PATH . "footer.php");
-            } else {
-                return $this->adminController->userPath();
-            }
-        }
-
         public function enable($id) {
             if ($admin = $this->adminController->isLogged()) {
                 $product = new Product();
@@ -149,7 +135,7 @@
             }                
         }
 
-        public function updateProductPath($id_client, $alert = "") {
+        public function updateProductPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {      
                 $title = "Producto - Modificar informacion";       
                 $productTemp = new Product();

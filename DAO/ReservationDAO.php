@@ -21,9 +21,10 @@
 		
         public function add(Reservation $reservation, Admin $registerBy) {								
 			try {					
-				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
+				$query = "CALL reservation_add(?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();
+				$parameters["stay"] = $reservation->getStay();
 				$parameters["discount"] = $reservation->getDiscount();
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["FK_id_client"] = $reservation->getClient()->getId();
@@ -42,8 +43,7 @@
 				return false;				
 				// echo $e;				
 			}			
-		}
-		
+		}		
 					
 		public function getById(Reservation $reservation) {
 			try {				
@@ -57,6 +57,7 @@
 					$reservationTemp->setId($row["reservation_id"]);
 					$reservationTemp->setDateStart($row["reservation_dateStart"]);
 					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+					$reservationTemp->setStay($row["reservation_stay"]);
 					$reservationTemp->setDiscount($row["reservation_discount"]);
                     $reservationTemp->setPrice($row["reservation_totalPrice"]);
 					$client = new Client();
@@ -73,8 +74,6 @@
 					$admin->setId($row["admin_id"]);
 					$admin->setName($row["admin_name"]);
 					$admin->setLastName($row["admin_lastName"]);
-					// $admin->setDni($row["admin_dni"]);
-					// $admin->setEmail($row["admin_email"]);					
 
 					$beachTent = new BeachTent();
 					$beachTent->setId($row["tent_id"]);
@@ -100,6 +99,7 @@
 					$reservation = new Reservation();
 					$reservation->setId($row["reservation_id"]);
 					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setStay($row["reservation_stay"]);
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
 					$reservation->setDiscount($row["reservation_discount"]);
                     $reservation->setPrice($row["reservation_totalPrice"]);
@@ -117,9 +117,6 @@
 					$admin->setId($row["admin_id"]);
 					$admin->setName($row["admin_name"]);
 					$admin->setLastName($row["admin_lastName"]);
-					$admin->setDni($row["admin_dni"]);
-					$admin->setEmail($row["admin_email"]);
-					$admin->setPassword($row["admin_password"]);
 
 					$beachTent = new BeachTent();
 					$beachTent->setId($row["tent_id"]);
@@ -135,8 +132,6 @@
 				//echo $e;
 			}
 		}
-
-
 		
 		public function getAll() {
 			try {
@@ -149,8 +144,10 @@
 					$reservation->setId($row["reservation_id"]);
 					$reservation->setDateStart($row["reservation_dateStart"]);
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
 					$reservation->setDiscount($row["reservation_discount"]);
-                    $reservation->setPrice($row["reservation_totalPrice"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
 					$client = new Client();
 					$client->setId($row["client_id"]);
 					$client->setName($row["client_name"]);
@@ -165,17 +162,12 @@
 					$admin->setId($row["admin_id"]);
 					$admin->setName($row["admin_name"]);
 					$admin->setLastName($row["admin_lastName"]);
-					$admin->setDni($row["admin_dni"]);
-					$admin->setEmail($row["admin_email"]);
-					$admin->setPassword($row["admin_password"]);
 
 					$beachTent = new BeachTent();
 					$beachTent->setId($row["tent_id"]);
 					$beachTent->setNumber($row["tent_number"]);
 					$beachTent->setPrice($row["tent_price"]);
-					$reservation->setBeachTent($beachTent);
-
-					
+					$reservation->setBeachTent($beachTent);					
                     
 					array_push($reservList, $reservation);
 				}
@@ -233,13 +225,13 @@
 				$query = "CALL reservation_update(?, ?, ?, ?, ?)";		
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();
+				$parameters["stay"] = $reservation->getStay();
 				$parameters["discount"] = $reservation->getDiscount();
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();  
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
-
 			} catch (Exception $e) {
 				return false;				
 			}
@@ -257,6 +249,7 @@
 					$reservation = new Reservation();
 					$reservation->setDateStart($row["reservation_dateStart"]);
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
 					$reservation->setDiscount($row["reservation_discount"]);
 					$reservation->setPrice($row["reservation_totalPrice"]);
 
@@ -270,19 +263,7 @@
 					$client->setAddress($row["client_address"]);
 					
 					$reservation->setClient($client);
-					
-					// $beachTent = new BeachTent();
-                    // $beachTent->setId($row["id"]);
-					// $beachTent->setNumber($row["number"]);
-					// $beachTent->setPrice($row["price"]);                    
-					// $beachTent->setPosition($row["position"]);      
-
-					// $hall = new Hall();
-					// $hall->setNumber($row["hall_number"]);
-
-					// $beachTent->setHall($hall);
-
-					// $reservation->setBeachTent($beachTent);
+										
 					array_push($tentReservations, $reservation);
 				}
 				return $tentReservations;	

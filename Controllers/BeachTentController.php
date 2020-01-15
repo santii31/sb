@@ -80,9 +80,7 @@
         }
 
         public function reservationToday($id_tent) {
-            $reserveList = $this->reservationController->getByIdTent($id_tent);
-            $reserve = null;
-
+            $reserveList = $this->reservationController->getByIdTent($id_tent);            
             foreach ($reserveList as $reserve) {
                 if ($reservation = $this->reservationController->checkIsDateReserved($reserve)) {
                     return $reservation;
@@ -91,8 +89,7 @@
             return false;
         }
 
-        public function hasFutureReservation($id_tent) {
-            
+        public function hasFutureReservation($id_tent) {            
             $futureReserve = array();
             $reserveList = $this->reservationController->getByIdTent($id_tent);
             $today = date("Y-m-d");
@@ -103,13 +100,7 @@
                     array_push($futureReserve, $reserve);
                 }                
             }
-            
-            // echo '<pre>';
-            // var_dump($futureReserve);
-            // echo '</pre>';
-
             return $futureReserve;
-
         }
 
 

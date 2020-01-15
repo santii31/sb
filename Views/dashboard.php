@@ -80,7 +80,7 @@
                                                                                                                                      
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
-                                                                    <div class="reserve-container">
+                                                                        <div class="reserve-container">
                                                                             
                                                                             <div class="reserve-title">
                                                                                 <i class="material-icons">info_outline</i>

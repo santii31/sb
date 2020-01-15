@@ -188,8 +188,6 @@
             }
         }
 
-
-
         public function addService($description, $locker, $parasol, $parking) {
             if ($this->isFormRegisterNotEmpty($description, $locker, $parasol, $parking)) {   
                                                                              
@@ -207,8 +205,6 @@
             }            
             return $this->addServicePath(EMPTY_FIELDS, null);            
         }
-
-        
 
         public function optionsDistributor($services, $id_client) {
            
@@ -246,20 +242,16 @@
             return true;
         }        
 
-        
-
-
-
-        public function addSelectServicePath($id_reservation="", $alert = "", $success = "") {
+        public function addSelectServicePath($id_reservation = "", $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione servicio adicional";
-                if(empty($id_reservation)) {
+                if (empty($id_reservation)) {
                     $clientList = $this->clientDAO->getAll();
                     require_once(VIEWS_PATH . "head.php");
                     require_once(VIEWS_PATH . "sidenav.php");
                     require_once(VIEWS_PATH . "select-service-client.php");
                     require_once(VIEWS_PATH . "footer.php");
-                }else{
+                } else {
                     require_once(VIEWS_PATH . "head.php");
                     require_once(VIEWS_PATH . "sidenav.php");
                     require_once(VIEWS_PATH . "select-service.php");
@@ -270,7 +262,7 @@
 			}
         }
 
-        public function addLockerPath($id_reservation="", $id_client="", $alert = "", $success = "") {
+        public function addLockerPath($id_reservation = "", $id_client = "", $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                                                        
                 $title = "Seleccione numero de locker";
@@ -414,11 +406,7 @@
                 return $this->adminController->userPath();
             }
         }
-
-        
-
-                
-
+    
     }
     
 ?>

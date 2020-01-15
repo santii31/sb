@@ -6,6 +6,7 @@
     use Models\Admin as Admin;	    
     use Models\Client as Client;	    
     use Models\Parking as Parking;
+    use Models\BeachTent as BeachTent;	    
     use Models\Reservation as Reservation;    
     use Models\ReservationxParking as ReservationxParking;  
 	use DAO\QueryType as QueryType;
@@ -86,10 +87,18 @@
                     $reservation->setId($row["reservation_id"]);
                     $reservation->setDateStart($row["reservation_date_start"]);
                     $reservation->setDateEnd($row["reservation_date_end"]);
+                    $reservation->setStay($row["reservation_stay"]);
+
+                    $tent = new BeachTent();
+                    $tent->setNumber($row["beach_tent_number"]);
+
+                    $reservation->setBeachTent($tent);
 
                     $client = new Client();
                     $client->setName($row["client_name"]);
                     $client->setLastname($row["client_lastname"]);
+                    $client->setEmail($row["client_email"]);
+                    $client->setPhone($row["client_tel"]);
 
                     $reservation->setClient($client);
 
@@ -108,6 +117,7 @@
 
             } catch (Exception $e) {
                 return false;
+                // echo $e;
             }        
         }
 

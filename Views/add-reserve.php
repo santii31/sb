@@ -35,30 +35,46 @@
                         <?php endif; ?>
 
                         <div class="row">
-
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
+                                <select name="stay">
+                                    <option value="" disabled selected>Seleccione su opcion</option>                                    
+                                        <option value="season">
+                                            Temporada
+                                        </option>                                    
+                                        <option value="period">
+                                            Periodo
+                                        </option>
+                                        <option value="fortnight">
+                                            Quincena
+                                        </option>
+                                </select>
+                                <label>Estadia</label>
+                                
+                                <!-- <input id="stay" type="text" name="stay" class="validate" required>
+                                <label for="stay">Estadia</label> -->
+                            </div>  
+                            <div class="input-field col s4">
                                 <input id="start" type="Date" name="start" class="validate" required>
                                 <label for="start">Fecha de ingreso</label>
                             </div>
 
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
                                 <input id="end" type="Date" name="end" class="validate" required>
                                 <label for="end">Fecha de egreso</label>
-                            </div>
+                            </div>                            
+                        </div>      
 
-                            <div class="input-field col s4">
+                        <div class="row">                        
+                            <div class="input-field col s6">
                                 <input id="name" type="text" name="name" class="validate" required>
                                 <label for="name">Nombre</label>
                             </div>
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                                 <input id="l_name" type="text" name="l_name" class="validate" required>
                                 <label for="l_name">Apellido</label>
-                            </div>                         
-                            <div class="input-field col s4">
-                                <input id="stay" type="text" name="stay" class="validate" required>
-                                <label for="stay">Estadia</label>
-                            </div>                                                   
-                        </div>                                                               
+                            </div>                                                                          
+                        </div>
+
                         <div class="row">
                             <div class="input-field col s4">
                                 <input id="addr" type="text" name="addr" class="validate" required>
@@ -70,7 +86,7 @@
                             </div>
                             <div class="input-field col s4">
                                 <input id="cp" type="number" name="cp" class="validate" required>
-                                <label for="cp">CP</label>
+                                <label for="cp">Codigo Postal</label>
                             </div>                                                        
                         </div>
                         <div class="row">

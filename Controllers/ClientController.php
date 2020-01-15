@@ -68,8 +68,7 @@
             return $this->addClientPath(EMPTY_FIELDS, null);            
         }
 
-
-        private function isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {         
+        private function isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address,                                                $tel_stay) {         
             if (empty($name) || 
                 empty($lastname) || 
                 empty($stay) || 
@@ -156,7 +155,7 @@
 
         public function update($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {      
             
-            if ($this->isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay)) {    
+            if ($this->isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address,                                            $tel_stay)) {    
                 
                 $clientTemp = new Client();
                 $clientTemp->setId($id);                

@@ -8,8 +8,7 @@
 
         private $id;
         private $name;
-        private $lastname;
-        private $stay;
+        private $lastname;        
         private $address;        
         private $city;
         private $cp;
@@ -44,14 +43,6 @@
         public function setLastName($lastname) {
             $this->lastname = $lastname;
             return $this;
-        }
-
-        public function getStay() {
-            return $this->stay;
-        }
-
-        public function setStay($stay) {
-            $this->stay = $stay;            
         }
         
         public function getAddress() {

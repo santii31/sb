@@ -10,8 +10,7 @@
 
         private $adminDAO;
 
-        public function __construct() {
-            
+        public function __construct() {            
             $this->adminDAO = new AdminDAO();
         }
         
@@ -113,11 +112,9 @@
         }       
 
         public function dashboard() {
-            if ($admin = $this->isLogged()) {      
-                
+            if ($admin = $this->isLogged()) {                      
                 $beachTentController = new BeachTentController();                
-                return $beachTentController->showMap();          
-                      
+                return $beachTentController->showMap();                                
             } else {
                 return $this->userPath();
             }
@@ -171,8 +168,6 @@
             return $this->updatePath($id, EMPTY_FIELDS);
         }
 
-
-
         public function userPath($alert = "") {
 			$this->homeController = new HomeController();
 			return $this->homeController->Index($alert);
@@ -225,10 +220,8 @@
             }                
         }
         
-
         
         // 
-
         public function getEmails() {
             return $this->adminDAO->getEmails();
         }

@@ -25,30 +25,21 @@
 
 
         // falta descuento
-        private function add($date_start, $date_end, $name, $lastname, $estadia, $address, $city, $cp, $email, 
-                             $tel1, $groupF, $addressEsta, $tel2, $beach_tent) {
+        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $id_tent) {
                                             
-            $this->clientController = new ClientController();
-            
-            $reservation = new Reservation();
-            $reservation->setDateStart($date_start);
-            $reservation->setDateEnd($date_end);            
-            
-            $tent = new BeachTent();
-            $tent->setId($beach_tent);                        
+            $this->clientController = new ClientController();                              
             
             $client = new Client();
             $client->setName($name);
-            $client->setLastName($lastname);
-            $client->setAddress($address);
-            $client->setStay("test");
+            $client->setLastName($l_name);
+            $client->setAddress($addr);            
             $client->setCity($city);
             $client->setCp($cp);
             $client->setEmail($email);
-            $client->setPhone($tel1);
-            $client->setFamilyGroup($groupF);
-            $client->setStayAddress($addressEsta);
-            $client->setPhoneStay($tel2);                            
+            $client->setPhone($phone);
+            $client->setFamilyGroup($fam);
+            $client->setStayAddress($addrStay);
+            $client->setPhoneStay($phone2);                            
 
             $register_by = $this->adminController->isLogged();
 
@@ -57,8 +48,16 @@
                 $client->setId($clientId);
                 
                 // $reservation->setPrice($beach_tent->getPrice() - $discount);
+                $reservation = new Reservation();
+                $reservation->setDateStart($start);
+                $reservation->setDateEnd($end);            
+                $reservation->setStay($stay);
                 $reservation->setPrice(0);
                 $reservation->setDiscount(0);
+                
+                $tent = new BeachTent();
+                $tent->setId($id_tent);  
+
                 $reservation->setBeachTent($tent);
                 $reservation->setClient($client);
 
@@ -67,12 +66,12 @@
             return false;
         }
 
-        public function addReservation($start, $end, $name, $l_name, $stay, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) { 
+        public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) { 
 
-            if ($this->isFormRegisterNotEmpty($start, $end, $name, $l_name, $stay, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {
+            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {
                 
                 if ($this->checkInterval($start, $end, $tent) == 1) {                                                                                
-                    if ($lastId = $this->add($start, $end, $name, $l_name, $stay, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                             $tent)) {                                                    
+                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                             $tent)) {                                                    
 
                         $this->parkingController = new ParkingController();                    
                         return $this->parkingController->parkingMap($lastId);                                                
@@ -101,12 +100,12 @@
             return $flag;
 		}
 			
-        private function isFormRegisterNotEmpty($start, $end, $name, $l_name, $stay, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                         $tent) {
-            if (empty($start) || 
+        private function isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                         $tent) {
+            if (empty($stay) || 
+                empty($start) || 
                 empty($end) || 
                 empty($name) || 
-                empty($l_name) || 
-                empty($stay) || 
+                empty($l_name) ||                 
                 empty($addr) || 
                 empty($city) || 
                 empty($cp) || 
@@ -189,9 +188,9 @@
             }           
         }
 
-        public function update($id, $start, $end, $name, $l_name, $stay, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) {    
+        public function update($id, $stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) {    
             
-            if ($this->isFormRegisterNotEmpty($start, $end, $name, $l_name, $stay, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {     
+            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {     
                 
                 $reservationTemp = new Reservation();
                 $reservationTemp->setId($id);                
@@ -244,7 +243,6 @@
         public function getById($id_reservation) {
             $reservation = new Reservation();
             $reservation->setId($id_reservation);
-
             return $this->reservationDAO->getById($reservation);
         }
     }

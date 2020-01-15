@@ -48,8 +48,7 @@
         public function addProvider($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
             if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {
                 $providerTemp = new Provider();
-                $providerTemp->setDni($dni);                
-                
+                $providerTemp->setDni($dni);                                
 				if ($this->providerDAO->getByDni($providerTemp) == null) {                                                            
                     if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {            
                         return $this->addProviderPath(null, PROVIDER_ADDED);

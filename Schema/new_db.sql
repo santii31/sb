@@ -162,8 +162,7 @@ END$$
 CREATE TABLE client (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
-    `lastname` VARCHAR(255) NOT NULL,    
-    `stay` VARCHAR(255) NOT NULL, --estadia
+    `lastname` VARCHAR(255) NOT NULL,        
     `address` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     `cp` INT NOT NULL,  -- cp
@@ -172,8 +171,7 @@ CREATE TABLE client (
     `family_group` VARCHAR(255) NOT NULL,   -- grupo familiar
     `stay_address` VARCHAR(255) NOT NULL,      
     `tel_stay` INT NOT NULL,    -- tel estadia
-    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
-    
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
     `date_disable` DATE DEFAULT NULL,    
@@ -193,8 +191,7 @@ DROP PROCEDURE IF EXISTS `client_add`;
 DELIMITER $$
 CREATE PROCEDURE client_add(
                                 IN name VARCHAR(255),
-                                IN lastname VARCHAR(255),
-                                IN stay VARCHAR(255),
+                                IN lastname VARCHAR(255),                                
                                 IN address VARCHAR(255),
                                 IN city VARCHAR(255),
                                 IN cp INT,
@@ -210,8 +207,7 @@ CREATE PROCEDURE client_add(
 BEGIN
     INSERT INTO client (
 			client.name,
-			client.lastname,
-            client.stay,
+			client.lastname,            
             client.address,
             client.city,
             client.cp,
@@ -223,7 +219,7 @@ BEGIN
             client.date_register,			
             client.register_by
 	)
-    VALUES (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+    VALUES (name, lastname, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -310,8 +306,7 @@ DROP procedure IF EXISTS `client_update`;
 DELIMITER $$
 CREATE PROCEDURE client_update (
                                     IN name VARCHAR(255),
-                                    IN lastname VARCHAR(255),
-                                    IN stay VARCHAR(255),
+                                    IN lastname VARCHAR(255),                                    
                                     IN address VARCHAR(255),
                                     IN city VARCHAR(255),
                                     IN cp INT,
@@ -328,8 +323,7 @@ BEGIN
     UPDATE `client` 
     SET 
         `client`.`name` = name, 
-        `client`.`lastname` = lastname,
-        `client`.`stay` = stay,
+        `client`.`lastname` = lastname,        
         `client`.`address` = address,
         `client`.`city` = city,
         `client`.`cp` = cp,
@@ -676,6 +670,7 @@ CREATE TABLE reservation (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `date_start` DATE NOT NULL,
     `date_end` DATE NOT NULL,
+    `stay` VARCHAR(255) NOT NULL,
     `discount` FLOAT NOT NULL,
     `total_price` FLOAT NOT NULL,
     `FK_id_client` INT NOT NULL,    
@@ -690,14 +685,12 @@ CREATE TABLE reservation (
     `enable_by` INT DEFAULT NULL,
     `date_update` DATE DEFAULT NULL, 
     `update_by` INT DEFAULT NULL,
-
     CONSTRAINT `FK_id_client_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),    
     CONSTRAINT `FK_id_tent_reservation` FOREIGN KEY (`FK_id_tent`) REFERENCES `beach_tent` (`id`),    
     CONSTRAINT `FK_reservation_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_reservation_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_reservation_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
     CONSTRAINT `FK_reservation_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`)
-
 );
 
 
@@ -706,6 +699,7 @@ DELIMITER $$
 CREATE PROCEDURE reservation_add(
 								    IN date_start DATE,
                                     IN date_end DATE,
+                                    IN stay VARCHAR(255),
                                     IN discount FLOAT,
                                     IN total_price FLOAT,
                                     IN FK_id_client INT,                            
@@ -718,6 +712,7 @@ BEGIN
     INSERT INTO reservation (
 			reservation.date_start,
             reservation.date_end,
+            reservation.stay,
             reservation.discount,
             reservation.total_price,
             reservation.FK_id_client,            
@@ -725,7 +720,7 @@ BEGIN
             reservation.date_register,
             reservation.register_by
 	)
-    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_tent, date_register, register_by);
+    VALUES (date_start, date_end, stay, discount, total_price, FK_id_client, FK_id_tent, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -738,6 +733,7 @@ BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
            reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
@@ -772,6 +768,7 @@ BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
            reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
@@ -791,7 +788,6 @@ BEGIN
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
-
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
     INNER JOIN admin ON reservation.register_by = admin.id
@@ -806,6 +802,7 @@ BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
            reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
@@ -825,7 +822,6 @@ BEGIN
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
-
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
     INNER JOIN admin ON reservation.register_by = admin.id
@@ -884,6 +880,7 @@ DELIMITER $$
 CREATE PROCEDURE reservation_update (
                                     IN date_start DATE,
                                     IN date_end DATE,
+                                    IN stay VARCHAR(255),
                                     IN discount FLOAT,
                                     IN total_price FLOAT,
                                     IN FK_id_client INT,                                    
@@ -896,6 +893,7 @@ BEGIN
     SET 
         `reservation`.`date_start` = date_start, 
         `reservation`.`date_end` = date_end,
+        `reservation`.`stay` = stay,
         `reservation`.`discount` = discount,
         `reservation`.`total_price` = total_price,
         `reservation`.`FK_id_client` = FK_id_client,
@@ -915,6 +913,7 @@ BEGIN
         reservation.id AS reservation_id,
         reservation.date_start AS reservation_dateStart,
         reservation.date_end AS reservation_dateEnd,
+        reservation.stay AS reservation_stay,
         reservation.discount AS reservation_discount,
         reservation.total_price AS reservation_totalPrice,
         client.id AS client_id,
@@ -987,8 +986,12 @@ BEGIN
         reservation.id as reservation_id,
         reservation.date_start as reservation_date_start,
         reservation.date_end as reservation_date_end,
+        reservation.stay as reservation_stay,
+        beach_tent.number as beach_tent_number,
         client.name as client_name,
         client.lastname as client_lastname,
+        client.email as client_email,
+        client.tel as client_tel,
         parking.id as parking_id,
         parking.number as parking_number,
         parking.price as parking_price        
@@ -996,11 +999,9 @@ BEGIN
     INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
     INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`
+    INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
     WHERE `reservationxparking`.`FK_id_parking` = id;
 END$$
-
-
-
 
 
 

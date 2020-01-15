@@ -179,8 +179,7 @@
         }            
         
 
-        // 
-        
+        //         
         public function getEmails() {
             return $this->clientPotentialDAO->getEmails();
         }
