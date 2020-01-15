@@ -67,7 +67,11 @@
                                                                     Reserva actual                                                            
                                                                 </a>
                                                             </li>
+                                                            <?php if ($this->hasFutureReservation( $tent->getId() )): ?>
                                                             <li class="tab col s6">
+                                                            <?php else: ?>
+                                                            <li class="tab disabled col s6">
+                                                            <?php endif; ?>
                                                                 <a href="#reser-<?= $tent->getId(); ?>">
                                                                     Futuras reservas
                                                                 </a>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-01-2020 a las 04:52:43
+-- Tiempo de generación: 15-01-2020 a las 19:29:40
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -98,11 +98,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `category_getByName` (IN `Name` VARC
 	SELECT * FROM `category` WHERE `category`.`name` = name;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `stay` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `date_register` DATE, IN `register_by` INT)  BEGIN
-	INSERT INTO client (
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `date_register` DATE, IN `register_by` INT, OUT `lastId` INT)  BEGIN
+    INSERT INTO client (
 			client.name,
-			client.lastname,
-            client.stay,
+			client.lastname,            
             client.address,
             client.city,
             client.cp,
@@ -114,8 +113,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255)
             client.date_register,			
             client.register_by
 	)
-    VALUES
-        (name, lastname, stay, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+    VALUES (name, lastname, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_checkEmail` (IN `dni` INT, IN `email` VARCHAR(255))  BEGIN
+    SELECT `client`.`id` FROM `client` WHERE `client`.`email` = email AND `client`.`id` != id;	
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_disableById` (IN `id` INT, IN `date_disable` DATE, IN `disable_by` INT)  BEGIN
@@ -137,7 +141,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_enableById` (IN `id` INT, IN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getAll` ()  BEGIN
-	SELECT * FROM `client` ORDER BY name ASC;
+	SELECT * FROM `client` ORDER BY dni ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getByEmail` (IN `email` VARCHAR(255))  BEGIN
@@ -222,12 +226,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_update` (IN `name`
         `client_potential`.`id` = id;	
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `stay` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
     UPDATE `client` 
     SET 
         `client`.`name` = name, 
-        `client`.`lastname` = lastname,
-        `client`.`stay` = stay,
+        `client`.`lastname` = lastname,        
         `client`.`address` = address,
         `client`.`city` = city,
         `client`.`cp` = cp,
@@ -311,6 +314,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `product_add` (IN `name` VARCHAR(255
 	SELECT lastId;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_add_quantity` (IN `quantity` INT, IN `date_add` DATE, IN `add_by` INT, IN `id` INT)  BEGIN
+    UPDATE `product` 
+    SET         
+        `product`.`quantity` = quantity,        
+        `product`.`date_add` = date_add,
+        `product`.`add_by` = add_by
+    WHERE 
+        `product`.`id` = id;	
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `product_disableById` (IN `id` INT, IN `date_disable` DATE, IN `disable_by` INT)  BEGIN
 	UPDATE `product` 
     SET 
@@ -364,8 +377,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `product_getById` (IN `id` INT)  BEG
             product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
-            category.name AS category_name,
-            category.description AS category_description
+            category.name AS category_name
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
     WHERE `product`.`id` = id;
@@ -385,7 +397,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `product_getByName` (IN `name` VARCH
     WHERE `product`.`name` = name;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `product_update` (IN `name` VARCHAR(255), IN `price` INT, IN `quantity` INT, IN `FK_id_category` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_remove_quantity` (IN `quantity` INT, IN `date_remove` DATE, IN `remove_by` INT, IN `id` INT)  BEGIN
+    UPDATE `product` 
+    SET         
+        `product`.`quantity` = quantity,        
+        `product`.`date_remove` = date_remove,
+        `product`.`remove_by` = remove_by
+    WHERE 
+        `product`.`id` = id;	
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `product_update` (IN `name` VARCHAR(255), IN `price` INT, IN `quantity` INT, IN `FK_id_category` INT, IN `date_update` DATE, IN `update_by` INT, IN `id` INT)  BEGIN
     UPDATE `product` 
     SET 
         `product`.`name` = name, 
@@ -550,6 +572,88 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_update` (IN `name` VARCHAR
         `provider`.`id` = id;	
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `providreservationxparking_add_getAller_getAll` ()  BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        client.name as client_name,
+        client.lastname as client_lastname,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`;
+    -- ORDER BY name ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_add` (IN `FK_id_reservation` INT, IN `FK_id_parking` INT)  BEGIN
+	INSERT INTO reservationxparking (
+			reservationxparking.FK_id_reservation,
+            reservationxparking.FK_id_parking
+	)
+    VALUES
+        (FK_id_reservation, FK_id_parking);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_add_getAll` ()  BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        client.name as client_name,
+        client.lastname as client_lastname,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`;
+    -- ORDER BY name ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_getAll` ()  BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        client.name as client_name,
+        client.lastname as client_lastname,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`;
+    -- ORDER BY name ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_getByIdParking` (IN `id` INT)  BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        reservation.stay as reservation_stay,
+        beach_tent.number as beach_tent_number,
+        client.name as client_name,
+        client.lastname as client_lastname,
+        client.email as client_email,
+        client.tel as client_tel,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`
+    INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
+    WHERE `reservationxparking`.`FK_id_parking` = id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxservice_add` (IN `FK_id_reservation` INT, IN `FK_id_service` INT)  BEGIN
 	INSERT INTO reservationxservice (
 			reservationxservice.FK_id_reservation,
@@ -557,6 +661,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxservice_add` (IN `FK_id
 	)
     VALUES
         (FK_id_reservation, FK_id_service);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxservice_getAll` ()  BEGIN
+	SELECT *
+    FROM `reservationxservice`;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxservice_getReservationByService` (IN `id_service` INT)  BEGIN
@@ -610,21 +719,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxservice_getServiceByRes
 	WHERE (reservationxservice.FK_id_reservation = id_reservation);             
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_add` (IN `date_start` DATE, IN `date_end` DATE, IN `discount` FLOAT, IN `total_price` FLOAT, IN `FK_id_client` INT, IN `FK_id_tent` INT, IN `is_reserved` BOOLEAN, IN `date_register` DATE, IN `register_by` INT, OUT `lastId` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_add` (IN `date_start` DATE, IN `date_end` DATE, IN `stay` VARCHAR(255), IN `discount` FLOAT, IN `total_price` FLOAT, IN `FK_id_client` INT, IN `FK_id_tent` INT, IN `date_register` DATE, IN `register_by` INT, OUT `lastId` INT)  BEGIN
     INSERT INTO reservation (
 			reservation.date_start,
             reservation.date_end,
+            reservation.stay,
             reservation.discount,
             reservation.total_price,
             reservation.FK_id_client,            
-            reservation.FK_id_tent,
-            reservation.is_reserved,
+            reservation.FK_id_tent,            
             reservation.date_register,
             reservation.register_by
 	)
-    VALUES (date_start, date_end, discount, total_price, FK_id_client, FK_id_admin, FK_id_tent, is_reserved, date_register, register_by);
+    VALUES (date_start, date_end, stay, discount, total_price, FK_id_client, FK_id_tent, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_checkDateStart` (IN `date_start` DATE, IN `id` INT)  BEGIN
+    SELECT `reservation`.`id` FROM `reservation` WHERE `reservation`.`date_start` = date_start AND `reservation`.`id` != id;	
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_disableById` (IN `id` INT, IN `date_disable` DATE, IN `disable_by` INT)  BEGIN
@@ -650,6 +763,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_geByIdTent` (IN `id` IN
         reservation.id AS reservation_id,
         reservation.date_start AS reservation_dateStart,
         reservation.date_end AS reservation_dateEnd,
+        reservation.stay AS reservation_stay,
         reservation.discount AS reservation_discount,
         reservation.total_price AS reservation_totalPrice,
         client.id AS client_id,
@@ -669,6 +783,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getAll` ()  BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
+           reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
            client.id AS client_id,
@@ -677,51 +793,75 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getAll` ()  BEGIN
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_is_potential,
-		   client.is_active AS client_is_active,
+           client.address AS client_address,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
 		   admin.password AS admin_password,
-           admin.is_active AS admin_is_active,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_is_active,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_is_active
-
+           beach_tent.price AS tent_price
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
+    INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
     ORDER BY date_start ASC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getById` (IN `id` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getAllByClientId` (IN `client_id` INT)  BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
            reservation.discount AS reservation_discount,
            reservation.total_price AS reservation_totalPrice,
            reservation.is_active AS reservation_is_active,
-           reservation.is_reserved AS reservation_is_reserved,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_address,           		   
+           client.address AS client_address,
            admin.id AS admin_id,
            admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,		   
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price
+    FROM `reservation`
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.register_by = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    WHERE `reservation`.`FK_id_client` = client_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getById` (IN `id` INT)  BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
+           reservation.discount AS reservation_discount,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,
+		   admin.password AS admin_password,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
@@ -730,6 +870,22 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getById` (IN `id` INT) 
     INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
     INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
     WHERE `reservation`.`id` = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_update` (IN `date_start` DATE, IN `date_end` DATE, IN `stay` VARCHAR(255), IN `discount` FLOAT, IN `total_price` FLOAT, IN `FK_id_client` INT, IN `FK_id_tent` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+    UPDATE `reservation` 
+    SET 
+        `reservation`.`date_start` = date_start, 
+        `reservation`.`date_end` = date_end,
+        `reservation`.`stay` = stay,
+        `reservation`.`discount` = discount,
+        `reservation`.`total_price` = total_price,
+        `reservation`.`FK_id_client` = FK_id_client,
+        `reservation`.`FK_id_tent` = FK_id_tent,
+        `reservation`.`date_update` = date_update,
+        `reservation`.`update_by` = update_by    
+    WHERE 
+        `reservation`.`id` = id;	
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexlocker_add` (IN `FK_id_service` INT, IN `FK_id_locker` INT)  BEGIN
@@ -766,8 +922,8 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_add` (IN `FK_id_service` INT, IN `FK_id_parasol` INT)  BEGIN
 	INSERT INTO servicexparasol (
-			servicexlocker.FK_id_service,
-            servicexlocker.FK_id_parasol                   
+			servicexparasol.FK_id_service,
+            servicexparasol.FK_id_parasol                   
 	)
     VALUES
         (FK_id_service, FK_id_parasol);
@@ -793,6 +949,38 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_getServiceByParasol
 	INNER JOIN additional_service ON servicexparasol.FK_id_service = additional_service.id
 	
 	WHERE (servicexparasol.FK_id_parasol = id_parasol)
+	GROUP BY additional_service.id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparking_add` (IN `FK_id_service` INT, IN `FK_id_parking` INT)  BEGIN
+	INSERT INTO servicexparking (
+			servicexparking.FK_id_service,
+            servicexparking.FK_id_parking                   
+	)
+    VALUES
+        (FK_id_service, FK_id_parking);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparking_getParkingByService` (IN `id_service` INT)  BEGIN
+	SELECT parking.id AS parking_id,
+           parking.number AS parking_number,
+           parking.price AS parking_price
+	FROM servicexparking
+	INNER JOIN parking ON servicexparking.FK_id_parking = parking.id
+	
+	WHERE (servicexparking.FK_id_service = id_service)
+	GROUP BY parking.id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparking_getServiceByParking` (IN `id_parking` INT)  BEGIN
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
+	FROM servicexparking
+	INNER JOIN additional_service ON servicexparking.FK_id_service = additional_service.id
+	
+	WHERE (servicexparking.FK_id_parking = id_parking)
 	GROUP BY additional_service.id;
 END$$
 
@@ -997,7 +1185,9 @@ CREATE TABLE `additional_service` (
 --
 
 INSERT INTO `additional_service` (`id`, `description`, `total`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'cofre', 1000, 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+(1, 'cofre', 500, 1, '2020-01-08', 1, '2020-01-13', 1, '2020-01-13', 1, '2020-01-13', 1),
+(2, 'sombrilla', 500, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'estacionamiento', 2000, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1275,7 +1465,7 @@ INSERT INTO `beach_tent` (`id`, `number`, `price`, `position`, `sea`, `FK_id_hal
 (226, '166', 100, 220, 1, 6),
 (227, '167', 100, 221, 1, 6),
 (228, '167B', 100, 222, 1, 6),
-(229, '195B', 100, 223, 1, 7),
+(229, '196B', 100, 223, 1, 7),
 (230, '196', 100, 224, 1, 7),
 (231, '197', 100, 225, 1, 7);
 
@@ -1313,7 +1503,6 @@ CREATE TABLE `client` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `lastname` varchar(255) COLLATE utf8_bin NOT NULL,
-  `stay` varchar(255) COLLATE utf8_bin NOT NULL,
   `address` varchar(255) COLLATE utf8_bin NOT NULL,
   `city` varchar(255) COLLATE utf8_bin NOT NULL,
   `cp` int(11) NOT NULL,
@@ -1337,10 +1526,10 @@ CREATE TABLE `client` (
 -- Volcado de datos para la tabla `client`
 --
 
-INSERT INTO `client` (`id`, `name`, `lastname`, `stay`, `address`, `city`, `cp`, `email`, `tel`, `family_group`, `stay_address`, `tel_stay`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'bruce', 'wayne', 'qwe', 'colon 123', 'gotham', 100, 'bruce@wayne.com', 155121314, 'grupo1', 'puan 123', 4899999, 1, '0000-00-00', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'walter', 'white', 'zxc', 'albuquerque 123', 'nuevo mexico', 200, 'walter@white.com', 154121314, 'grupo2', 'crocce 123', 4897777, 1, '0000-00-00', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'charly', 'garcia', 'uio', 'belgrano 123', 'la plata', 300, 'charly@garcia.com', 156121314, 'grupo3', 'genova 123', 4894444, 1, '0000-00-00', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `client` (`id`, `name`, `lastname`, `address`, `city`, `cp`, `email`, `tel`, `family_group`, `stay_address`, `tel_stay`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'Juan', 'joise', 'Calle 30', 'Mar del plata', 4000, 'juanjjose@mail.com', 4500000, '4', 'calle 55', 45323123, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'pp', 'pp', 'pp', 'pp', 1, 'pppppp@mail.com', 1, 'p', 'p', 1, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'as', 'as', 'as', 'as', 1, 'asddd@mail.com', 123, '123', '123', 123, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1373,7 +1562,7 @@ CREATE TABLE `client_potential` (
 --
 
 INSERT INTO `client_potential` (`id`, `name`, `lastname`, `address`, `city`, `email`, `tel`, `num_tent`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'pepe', 'jose', 'asd', 'asd', 'clientepot@hotmail.com', 43430, 100, 0, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+(1, 'pepe', 'jose', 'calle 3', 'mar del plata', 'clientepot@hotmail.com', 43430, 100, 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-12', 1, '2020-01-12', 1);
 
 -- --------------------------------------------------------
 
@@ -1867,6 +2056,10 @@ CREATE TABLE `product` (
   `quantity` int(11) NOT NULL,
   `FK_id_category` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `date_add` date DEFAULT NULL,
+  `add_by` int(11) DEFAULT NULL,
+  `date_remove` date DEFAULT NULL,
+  `remove_by` int(11) DEFAULT NULL,
   `date_register` date NOT NULL,
   `register_by` int(11) NOT NULL,
   `date_disable` date DEFAULT NULL,
@@ -1881,8 +2074,8 @@ CREATE TABLE `product` (
 -- Volcado de datos para la tabla `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `price`, `quantity`, `FK_id_category`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(3, 'gaseosa', 100, 300, 1, 1, '2020-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` (`id`, `name`, `price`, `quantity`, `FK_id_category`, `is_active`, `date_add`, `add_by`, `date_remove`, `remove_by`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'test', 10, 200, 1, 1, '2020-01-14', 1, '2020-01-13', 1, '2020-01-12', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1917,7 +2110,7 @@ CREATE TABLE `provider` (
 --
 
 INSERT INTO `provider` (`id`, `name`, `lastname`, `tel`, `email`, `dni`, `address`, `cuil`, `social_reason`, `type_billing`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'prov1', 'prov1', 4500000, 'prov1@mail.com', 101010, 'calle 1 mod', 123, 'x', 'a', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1, '2020-01-08', 1);
+(1, 'jose', 'luis', 4500000, 'jose_prov@mail.com', 123132123, 'calle 505', 1234, 'jose s.a', 'a', 1, '2020-01-12', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1935,9 +2128,7 @@ CREATE TABLE `providerxproduct` (
 --
 
 INSERT INTO `providerxproduct` (`FK_id_provider`, `FK_id_product`) VALUES
-(1, 1),
-(1, 2),
-(1, 3);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -1949,11 +2140,12 @@ CREATE TABLE `reservation` (
   `id` int(11) NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
+  `stay` varchar(255) COLLATE utf8_bin NOT NULL,
   `discount` float NOT NULL,
   `total_price` float NOT NULL,
   `FK_id_client` int(11) NOT NULL,
   `FK_id_tent` int(11) NOT NULL,
-  `is_reserved` tinyint(1) NOT NULL,
+  `is_reserved` tinyint(1) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `date_register` date NOT NULL,
   `register_by` int(11) NOT NULL,
@@ -1969,10 +2161,30 @@ CREATE TABLE `reservation` (
 -- Volcado de datos para la tabla `reservation`
 --
 
-INSERT INTO `reservation` (`id`, `date_start`, `date_end`, `discount`, `total_price`, `FK_id_client`, `FK_id_tent`, `is_reserved`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(5, '2020-01-18', '2020-01-31', 20, 100, 1, 9, 1, 1, '2020-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, '2020-01-10', '2020-01-11', 20, 100, 1, 2, 0, 1, '2020-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, '2020-01-20', '2020-01-25', 30, 200, 2, 10, 0, 1, '2020-01-11', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `reservation` (`id`, `date_start`, `date_end`, `stay`, `discount`, `total_price`, `FK_id_client`, `FK_id_tent`, `is_reserved`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, '2020-01-01', '2020-01-31', 'period', 0, 0, 1, 2, NULL, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '2020-02-01', '2020-02-26', 'season', 0, 0, 2, 16, NULL, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, '2020-01-23', '2020-01-22', 'fortnight', 0, 0, 3, 13, NULL, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reservationxparking`
+--
+
+CREATE TABLE `reservationxparking` (
+  `FK_id_reservation` int(11) NOT NULL,
+  `FK_id_parking` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `reservationxparking`
+--
+
+INSERT INTO `reservationxparking` (`FK_id_reservation`, `FK_id_parking`) VALUES
+(1, 3),
+(2, 1),
+(3, 1);
 
 -- --------------------------------------------------------
 
@@ -2005,6 +2217,17 @@ CREATE TABLE `servicexlocker` (
 CREATE TABLE `servicexparasol` (
   `FK_id_service` int(11) NOT NULL,
   `FK_id_parasol` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `servicexparking`
+--
+
+CREATE TABLE `servicexparking` (
+  `FK_id_service` int(11) NOT NULL,
+  `FK_id_parking` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -2043,7 +2266,7 @@ CREATE TABLE `staff` (
 
 INSERT INTO `staff` (`id`, `name`, `lastname`, `position`, `salary`, `date_start`, `date_end`, `dni`, `address`, `tel`, `shirt_size`, `pant_size`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
 (1, 'per1', 'per', 'cargo 1', 20000, '2020-01-08', '2020-01-30', 505052, 'calle 100 mod', 4230000, 5, 5, 1, '2020-01-08', 1, '2020-01-10', 2, '2020-01-10', 2, '2020-01-10', 2),
-(2, 'x', 'x', 'x', 5000, '2020-01-17', '2020-01-31', 4040, 'cal421', 41241, 5, 5, 1, '2020-01-10', 2, NULL, NULL, NULL, NULL, NULL, NULL);
+(2, 'jose', 'pepe', 'administrador', 5000, '2020-01-17', '2020-01-31', 4040, 'calle 5', 41241, 5, 5, 1, '2020-01-10', 2, NULL, NULL, NULL, NULL, '2020-01-12', 1);
 
 --
 -- Índices para tablas volcadas
@@ -2147,6 +2370,8 @@ ALTER TABLE `parking_hall`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_product_add_by` (`add_by`),
+  ADD KEY `FK_product_remove_by` (`remove_by`),
   ADD KEY `FK_id_category_product` (`FK_id_category`),
   ADD KEY `FK_product_register_by` (`register_by`),
   ADD KEY `FK_product_disable_by` (`disable_by`),
@@ -2185,6 +2410,13 @@ ALTER TABLE `reservation`
   ADD KEY `FK_reservation_update_by` (`update_by`);
 
 --
+-- Indices de la tabla `reservationxparking`
+--
+ALTER TABLE `reservationxparking`
+  ADD KEY `FK_id_reservation_reservationxparking` (`FK_id_reservation`),
+  ADD KEY `FK_id_parking_reservationxparking` (`FK_id_parking`);
+
+--
 -- Indices de la tabla `reservationxservice`
 --
 ALTER TABLE `reservationxservice`
@@ -2206,6 +2438,13 @@ ALTER TABLE `servicexparasol`
   ADD KEY `FK_id_parasol_servicexparasol` (`FK_id_parasol`);
 
 --
+-- Indices de la tabla `servicexparking`
+--
+ALTER TABLE `servicexparking`
+  ADD KEY `FK_id_service_servicexparking` (`FK_id_service`),
+  ADD KEY `FK_id_parking_servicexparking` (`FK_id_parking`);
+
+--
 -- Indices de la tabla `staff`
 --
 ALTER TABLE `staff`
@@ -2223,7 +2462,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT de la tabla `additional_service`
 --
 ALTER TABLE `additional_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
@@ -2289,7 +2528,7 @@ ALTER TABLE `parking_hall`
 -- AUTO_INCREMENT de la tabla `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `provider`
@@ -2301,7 +2540,7 @@ ALTER TABLE `provider`
 -- AUTO_INCREMENT de la tabla `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `staff`
@@ -2372,9 +2611,11 @@ ALTER TABLE `parking`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `FK_product_add_by` FOREIGN KEY (`add_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_product_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_product_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_product_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
+  ADD CONSTRAINT `FK_product_remove_by` FOREIGN KEY (`remove_by`) REFERENCES `admin` (`id`),
   ADD CONSTRAINT `FK_product_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
@@ -2405,6 +2646,13 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `FK_reservation_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
+-- Filtros para la tabla `reservationxparking`
+--
+ALTER TABLE `reservationxparking`
+  ADD CONSTRAINT `FK_id_parking_reservationxparking` FOREIGN KEY (`FK_id_parking`) REFERENCES `parking` (`id`),
+  ADD CONSTRAINT `FK_id_reservation_reservationxparking` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`);
+
+--
 -- Filtros para la tabla `reservationxservice`
 --
 ALTER TABLE `reservationxservice`
@@ -2424,6 +2672,13 @@ ALTER TABLE `servicexlocker`
 ALTER TABLE `servicexparasol`
   ADD CONSTRAINT `FK_id_parasol_servicexparasol` FOREIGN KEY (`FK_id_parasol`) REFERENCES `parasol` (`id`),
   ADD CONSTRAINT `FK_id_service_servicexparasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
+
+--
+-- Filtros para la tabla `servicexparking`
+--
+ALTER TABLE `servicexparking`
+  ADD CONSTRAINT `FK_id_parking_servicexparking` FOREIGN KEY (`FK_id_parking`) REFERENCES `parking` (`id`),
+  ADD CONSTRAINT `FK_id_service_servicexparking` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
 -- Filtros para la tabla `staff`

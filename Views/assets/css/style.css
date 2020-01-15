@@ -639,7 +639,12 @@ nav .input-field label.active i {
 .tabs .tab a:focus.active {
     background-color: rgba(95, 46, 110, 0.2);    
 }
-  
+
+.tabs .tab.disabled a, .tabs .tab.disabled a:hover {
+    color: rgba(87, 50, 117, 0.4);
+}
+
+
 /* reserve pop up */
 .reserve-container {
     display: flex;
