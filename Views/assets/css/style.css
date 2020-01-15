@@ -747,6 +747,9 @@ nav .input-field label.active i {
     margin: 0 auto;    
     display: grid;
     grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid rgba(95, 46, 110, 0.2);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
 }
 
 .future-reservation-parking .client,  
