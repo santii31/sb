@@ -28,8 +28,7 @@
                     $lockerTemp->setId($row["id"]);
                     $lockerTemp->setLockerNumber($row["locker_number"]);
 					$lockerTemp->setPrice($row["price"]);
-					$lockerTemp->setSex($row["price"]);
-                    
+					$lockerTemp->setSex($row["price"]);                    
 				}
 				return $lockerTemp;
 			} catch (Exception $e) {

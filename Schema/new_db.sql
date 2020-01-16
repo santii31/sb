@@ -1639,18 +1639,19 @@ INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUE
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (29, 100, 15, 5);
 
 
----------------------------- LOCKER ---------------------------
 
+---------------------------- LOCKER ---------------------------
 
 
 CREATE TABLE locker (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `locker_number` INT NOT NULL,
-    'sex' VARCHAR(255) NOT NULL,
+    `sex` VARCHAR(255) NOT NULL,
     `price` FLOAT NOT NULL
 );
 
 INSERT INTO `locker` (id, locker_number, price, sex) VALUES (1, 1, 0,"mujer"),(2, 2, 0,"mujer"),(3, 3, 0,"mujer"),(4, 4, 0,"mujer"),(5, 5, 0,"mujer"),(6, 6, 0,"mujer"),(7, 7, 0,"mujer"),(8, 8, 0,"mujer"),(9, 9, 0,"mujer"),(10, 10, 0,"mujer"),(11, 11, 0,"mujer"),(12, 12, 0,"mujer"),(13, 13, 0,"mujer"),(14, 14, 0,"mujer"),(15, 15, 0,"mujer"),(16, 16, 0,"mujer"),(17, 17, 0,"mujer"),(18, 18, 0,"mujer"),(19, 19, 0,"mujer"),(20, 20, 0,"mujer"),(21, 21, 0,"mujer"),(22, 22, 0,"mujer"),(23, 23, 0,"mujer"),(24, 24, 0,"mujer"),(25, 25, 0,"mujer"),(26, 26, 0,"mujer"),(27, 27, 0,"mujer"),(28, 28, 0,"mujer"),(29, 29, 0,"mujer"),(30, 30, 0,"mujer"),(31, 31, 0,"mujer"),(32, 32, 0,"mujer"),(33, 33, 0,"mujer"),(34, 34, 0,"mujer"),(35, 35, 0,"mujer"),(36, 36, 0,"mujer"),(37, 37, 0,"mujer"),(38, 38, 0,"mujer"),(39, 39, 0,"mujer"),(40, 40, 0,"mujer"),(41, 41, 0,"mujer"),(42, 42, 0,"mujer"),(43, 43, 0,"mujer"),(44, 44, 0,"mujer"),(45, 45, 0,"mujer"),(46, 46, 0,"mujer"),(47, 47, 0,"mujer"),(48, 48, 0,"mujer"),(49, 49, 0,"mujer"),(50, 50, 0,"mujer"),(51, 51, 0,"mujer"),(52, 52, 0,"mujer"),(53, 53, 0,"mujer"),(54, 54, 0,"mujer"),(55, 55, 0,"mujer"),(56, 56, 0,"mujer"),(57, 57, 0,"mujer"),(58, 58, 0,"mujer"),(59, 59, 0,"mujer"),(60, 60, 0,"mujer"),(61, 61, 0,"mujer"),(62, 62, 0,"mujer"),(63, 63, 0,"mujer"),(64, 64, 0,"mujer"),(65, 65, 0,"mujer"),(66, 66, 0,"mujer"),(67, 67, 0,"mujer"),(68, 68, 0,"mujer"),(69, 69, 0,"mujer"),(70,70, 0,"mujer"),(71,71, 0,"mujer"),(72,72, 0,"mujer"),(73,73, 0,"mujer"),(74,74, 0,"mujer"),(75,75, 0,"mujer"),(76,76, 0,"mujer"),(77,77, 0,"mujer"),(78,78, 0,"mujer"),(79,79, 0,"mujer"),(80,80, 0,"mujer"),(81,81, 0,"mujer"),(82,82, 0,"mujer"),(83,83, 0,"mujer"),(84,84, 0,"mujer"),(85,85, 0,"mujer"),(86,86, 0,"mujer"),(87,87, 0,"mujer"),(88,88, 0,"mujer"),(89,89, 0,"mujer"),(90,90, 0,"mujer"),(91,91, 0,"mujer"),(92,92, 0,"mujer"),(93,93, 0,"mujer"),(94,94, 0,"mujer"),(95,95, 0,"mujer"),(96,96, 0,"mujer"),(97,97, 0,"mujer"),(98,98, 0,"mujer"),(99,99, 0,"mujer"),(100,100, 0,"mujer"),(101,101, 0,"mujer"),(102,102, 0,"mujer"),(103,103, 0,"mujer"),(104,104, 0,"mujer"),(105,105, 0,"mujer"),(106,106, 0,"mujer"),(107,107, 0,"mujer"),(108,108, 0,"mujer"),(109,109, 0,"mujer"),(110,110, 0,"mujer"),(111,111, 0,"mujer"),(112,112, 0,"mujer"),(113,113, 0,"mujer"),(114,114, 0,"mujer"),(115,115, 0,"mujer"),(116,116, 0,"mujer"),(117,117, 0,"mujer"),(118,118, 0,"mujer"),(119,119, 0,"mujer"),(120,120, 0,"mujer"),(121,121, 0,"mujer"),(122,122, 0,"mujer"),(123,123, 0,"mujer"),(124,124, 0,"mujer"),(125,125, 0,"mujer"),(126,126, 0,"mujer"),(127,127, 0,"mujer"),(128,128, 0,"mujer"),(129,129, 0,"mujer"),(130,130, 0,"mujer"),(131,131, 0,"mujer"),(132,132, 0,"mujer"),(133,133, 0,"mujer"),(134,134, 0,"mujer"),(135,135, 0,"mujer"),(136,136, 0,"mujer"),(137,1, 0,"hombres"),(138,2, 0,"hombres"),(139,3, 0,"hombres"),(140,4, 0,"hombres"),(141,5, 0,"hombres"),(142,6, 0,"hombres"),(143,7, 0,"hombres"),(144,8, 0,"hombres"),(145,9, 0,"hombres"),(146,10, 0,"hombres"),(147,11, 0,"hombres"),(148,12, 0,"hombres"),(149,13, 0,"hombres"),(150,14, 0,"hombres"),(151,15, 0,"hombres"),(152,16, 0,"hombres"),(153,17, 0,"hombres"),(154,18, 0,"hombres"),(155,19, 0,"hombres"),(156,20, 0,"hombres"),(157,21, 0,"hombres"),(158,22, 0,"hombres");
+
 
 DROP procedure IF EXISTS `locker_getById`;
 DELIMITER $$
@@ -1670,7 +1671,6 @@ BEGIN
     FROM `locker`
     ORDER BY id ASC;
 END$$
-
 
 
 

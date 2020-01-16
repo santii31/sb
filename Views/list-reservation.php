@@ -1,22 +1,12 @@
-<!-- Main content  -->
-<div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content table-container">
                 <div class="subtitle">
                     <i class="material-icons left">chevron_right</i>
                     <h2>
                         <?= $title ?>
                     </h2>
-                </div>
-            
-                    <div class="row">
-                            <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Filtrar
-                                    <i class="material-icons right">send</i>
-                                </button>
-                            </div>
-                        </div>
-                </form>
-
+                </div>        
 
                 <div class="divider mb-divider"></div>
 
@@ -56,54 +46,65 @@
                 <div class="row">                    
                     <table class="responsive-table centered" id="table-filter">
                         <thead>
-                        <tr>
-                            <th>#</th>
+                        <tr>                            
                             <th>Fecha entrada</th>
                             <th>Fecha salida</th>
-                            <th>Precio final</th>
+                            <th>Precio</th>
                             <th>Cliente</th>
                             <th>Carpa</th>
                             <th>Locker</th>
                             <th>Sombrilla</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
 
                         <tbody>
                             <?php foreach ($reservations as $reservation): ?>
-                                <tr>
-                                    <td> <?= $reservation->getId(); ?> </td>
+                                <tr>                                    
                                     <td> <?= $reservation->getDateStart(); ?> </td>
                                     <td> <?= $reservation->getDateEnd(); ?> </td>
                                     <td> <?= $reservation->getPrice(); ?> </td>
                                     <td> <?= $reservation->getClient()->getName() . " " . $reservation->getClient()->getLastName(); ?> </td>
                                     <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
-                                    <?php if($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())) { ?>
-                                        <?php if($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())){ ?>
-                                            <?php foreach($lockers as $locker){ ?>
-                                               <td> <?php $locker->getLockerNumber(); ?> </td>
-                                            <?php } ?>
-                                        <?php }else{ ?>
-                                            <td> No tiene lockers </td>
-                                        <?php } ?>
-                                    <?php }else{ ?>
-                                        <td> No tiene lockers </td>
-                                    <?php } ?>
+                                    
+                                    <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
+                                        <?php if ($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())): ?>                 
+                                            <td>
+                                                <ul>
+                                                    <?php foreach ($lockers as $locker): ?>
+                                                        <li>
+                                                            • <?= $locker->getLockerNumber(); ?> 
+                                                        </li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            </td>
+                                        <?php else: ?>
+                                            <td> N/A </td>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <td> N/A </td>
+                                    <?php endif; ?>
 
-                                    <?php if($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())) { ?>
-                                        <?php if($parasoles = $this->servicexparasolDAO->getParasolByService($service->getId())){ ?>
-                                            <?php foreach($parasoles as $parasol){ ?>
-                                                <td> <?php $parasol->getLockerNumber(); ?> </td>
-                                            <?php } ?>
-                                            <?php }else{ ?>
-                                            <td> No tiene somnrillas </td>
-                                        <?php } ?>
-                                    <?php }else{ ?>
-                                        <td> No tiene sombrillas </td>
-                                    <?php } ?>
+                                    <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>
+                                        <?php if ($parasoles = $this->servicexparasolDAO->getParasolByService($service->getId())): ?>
+                                            <td>
+                                                <ul>
+                                                    <?php foreach ($parasoles as $parasol): ?>
+                                                        <li>
+                                                            • <?= $parasol->getLockerNumber(); ?> 
+                                                        </li>
+                                                    <?php endforeach; ?>                                            
+                                                </ul>
+                                            </td>
+                                        <?php else: ?>
+                                        <td>N/A</td>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <td>N/A</td>
+                                    <?php endif; ?>
 
                                     <td class="actions">
-                                        
-                                        <a href="<?= FRONT_ROOT ?>additionalService/addLockerPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-danger">
+                                        <a href="<?= FRONT_ROOT ?>additionalService/addLockerPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left"></i>
                                             Agregar locker
                                         </a>
@@ -111,9 +112,9 @@
                                         <a href="<?= FRONT_ROOT ?>additionalService/addParasolPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
                                             <i class="material-icons left"></i>
                                             Agregar sombrilla
-                                        </a>
-                                        
-                                    </td>                    
+                                        </a>                                        
+                                    </td>               
+                                         
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

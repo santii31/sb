@@ -1,5 +1,5 @@
- <!-- Main content  -->
- <div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
                     <form action="<?= FRONT_ROOT ?>additionalService/chose" method="post" class="col s10 form-test">
@@ -34,7 +34,7 @@
                         </div>                
                         <?php endif; ?>
 
-                        <div class="row">
+                        <div class="row center-align">
                             <div class="input-field col s6">
                             <p>
                                 <label>
@@ -58,7 +58,7 @@
 
                         <div class="row">
                             <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Siguiente
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>

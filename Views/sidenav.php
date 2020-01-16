@@ -219,7 +219,13 @@
                                             <i class="material-icons left">add_circle</i>
                                             Ver mapa de reservas
                                         </a>
-                                    </li>                                           
+                                    </li>   
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath" class="valign-wrapper waves-effect">
+                                        <i class="material-icons left">format_list_numbered</i>
+                                            Listar reservas
+                                        </a>
+                                    </li>                                          
                                 </ul>
                             </div>
                         </li>                    
