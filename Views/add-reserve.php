@@ -41,12 +41,21 @@
                                         <option value="season">
                                             Temporada
                                         </option>                                    
+                                        <option value="day">
+                                            Diario
+                                        </option>
+                                        <option value="january">
+                                            Enero
+                                        </option>
+                                        <option value="rest">
+                                            Feriados
+                                        </option>
                                         <option value="period">
                                             Periodo
                                         </option>
-                                        <option value="fortnight">
+                                        <!-- <option value="fortnight">
                                             Quincena
-                                        </option>
+                                        </option> -->
                                 </select>
                                 <label>Estadia</label>
                                 

@@ -404,82 +404,82 @@ INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position
 
 -- CARPAS FRENTE AL MAR (36)
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('1', 100, 190, 1, 1);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('1', 100, 191, 1, 1);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('2', 100, 191, 1, 1);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('2', 100, 192, 1, 1);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('2B', 100, 192, 1, 1);
-
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('31', 100, 193, 1, 2);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('32', 100, 194, 1, 2);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('33', 100, 195, 1, 2);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('34', 100, 196, 1, 2);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('35', 100, 197, 1, 2);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('35B', 100, 198, 1, 2);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('2B', 100, 193, 1, 1);
 
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('64', 100, 199, 1, 3);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('31', 100, 194, 1, 2);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('65', 100, 200, 1, 3);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('32', 100, 195, 1, 2);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('66', 100, 201, 1, 3);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('33', 100, 196, 1, 2);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('67', 100, 202, 1, 3);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('34', 100, 197, 1, 2);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('68', 100, 203, 1, 3);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('35', 100, 198, 1, 2);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('68B', 100, 204, 1, 3);
-
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('97', 100, 205, 1, 4);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('98', 100, 206, 1, 4);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('99', 100, 207, 1, 4);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('100', 100, 208, 1, 4);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('101', 100, 209, 1, 4);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('101B', 100, 210, 1, 4);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('35B', 100, 199, 1, 2);
 
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('130', 100, 211, 1, 5);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('64', 100, 200, 1, 3);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('131', 100, 212, 1, 5);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('65', 100, 201, 1, 3);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('132', 100, 213, 1, 5);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('66', 100, 202, 1, 3);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('133', 100, 214, 1, 5);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('67', 100, 203, 1, 3);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('134', 100, 215, 1, 5);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('68', 100, 204, 1, 3);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('134B', 100, 216, 1, 5);
-
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('163', 100, 217, 1, 6);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('164', 100, 218, 1, 6);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('165', 100, 219, 1, 6);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('166', 100, 220, 1, 6);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('167', 100, 221, 1, 6);
-
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('167B', 100, 222, 1, 6);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('68B', 100, 205, 1, 3);
 
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('195B', 100, 223, 1, 7);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('97', 100, 206, 1, 4);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('196', 100, 224, 1, 7);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('98', 100, 207, 1, 4);
 
-INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('197', 100, 225, 1, 7);
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('99', 100, 208, 1, 4);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('100', 100, 209, 1, 4);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('101', 100, 210, 1, 4);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('101B', 100, 211, 1, 4);
+
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('130', 100, 212, 1, 5);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('131', 100, 213, 1, 5);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('132', 100, 214, 1, 5);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('133', 100, 215, 1, 5);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('134', 100, 216, 1, 5);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('134B', 100, 217, 1, 5);
+
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('163', 100, 218, 1, 6);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('164', 100, 219, 1, 6);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('165', 100, 220, 1, 6);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('166', 100, 221, 1, 6);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('167', 100, 222, 1, 6);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('167B', 100, 223, 1, 6);
+
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('195B', 100, 224, 1, 7);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('196', 100, 225, 1, 7);
+
+INSERT INTO beach_tent (beach_tent.number, beach_tent.price, beach_tent.position, beach_tent.sea, beach_tent.FK_id_hall) VALUES ('197', 100, 226, 1, 7);
 
 

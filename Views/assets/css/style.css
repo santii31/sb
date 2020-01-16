@@ -312,8 +312,7 @@ nav .input-field label.active i {
 }
 
 .fuchsia {
-    /* background-color: fuchsia; */
-    background-color: rgb(184, 153, 184);
+    background-color: fuchsia !important;    
 }
 
 .green {
@@ -495,9 +494,6 @@ nav .input-field label.active i {
     margin: 3.4rem 0 0 0;
 }
 
-.last-hall .beach-tents {    
-    grid-template-columns: repeat(15, 1fr);
-}
 
 /* Parking map */
 .parking-map {            
