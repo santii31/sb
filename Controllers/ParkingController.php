@@ -5,8 +5,14 @@
     use Models\Parking as Parking;
     use Models\Reservation as Reservation;
     use Models\ReservationxParking as ReservationxParking;
+    use Models\AdditionalService as AdditionalService;
+    use Models\ReservationxService as ReservationxService;
+    use Models\ServicexParking as ServicexParking;
     use DAO\ParkingDAO as ParkingDAO;    
     use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
+    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
+    use DAO\ServicexParkingDAO as ServicexParkingDAO;
+    use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
     use Controllers\AdminController as AdminController;  
     use Controllers\ReservationController as ReservationController;  
     use Controllers\AdditionalServiceController as AdditionalServiceController;  
@@ -15,6 +21,9 @@
 
         private $parkingDAO;
         private $reservationxParkingDAO;
+        private $additionalServiceDAO;
+        private $reservationxserviceDAO;
+        private $servicexparkingDAO;
         private $adminController;
         private $reservationController;
         private $additionalController;
@@ -22,6 +31,9 @@
         public function __construct() {
             $this->parkingDAO = new ParkingDAO();
             $this->reservationxParkingDAO = new ReservationxParkingDAO();
+            $this->additionalServiceDAO = new AdditionalServiceDAO();
+            $this->reservationxserviceDAO = new ReservationxServiceDAO();
+            $this->servicexparkingDAO = new ServicexParkingDAO();
             $this->adminController = new AdminController();
         }        
 
@@ -86,8 +98,21 @@
 
                 if ($this->reservationxParkingDAO->add($reservationxParking)) {                    
                     // enviar a form de servicios adicionales
+                    $register_by = $this->adminController->isLogged();
+                    $additionalService = new AdditionalService();
+                    $reservationxservice = new ReservationxService();
+                    $servicexparking = new ServicexParking();
+                    $additionalService->setDescription("descripcion 1 ejemplo");
+                    $additionalService->setTotal(100.00);
+                    $lastId = $this->additionalServiceDAO->add($additionalService,$register_by);
+                    $reservationxservice->setIdReservation($reservation);
+                    $reservationxservice->setIdService($lastId);
+                    $this->reservationxserviceDAO->add($reservationxservice);
+                    $servicexparking->setIdService($lastId);
+                    $servicexparking->setIdParking($parking->getId());
+                    $this->servicexparkingDAO->add($servicexparking);
                     $this->additionalController = new AdditionalServiceController();
-                    return $this->additionalController->addSelectServicePath($reservation, null, null);                        
+                    return $this->additionalController->hasAdditionalService($reservation, null, null);                        
                 }
 
             } else {            
@@ -99,6 +124,7 @@
 
                     $reservationTemp = new Reservation();
                     $reservationTemp->setId($reservation);
+                    $register_by = $this->adminController->isLogged();
     
                     $reservationxParking = new ReservationxParking();
                     $reservationxParking->setReservation($reservationTemp);
@@ -106,8 +132,21 @@
 
                     if ($this->reservationxParkingDAO->add($reservationxParking)) {                        
                         // enviar a form de servicios adicionales      
-                        $this->additionalController = new AdditionalServiceController();                  
-                        return $this->additionalController->addSelectServicePath($reservation, null, null);                        
+                        $register_by = $this->adminController->isLogged();
+                        $additionalService = new AdditionalService();
+                        $reservationxservice = new ReservationxService();
+                        $servicexparking = new ServicexParking();
+                        $additionalService->setDescription("descripcion 1 ejemplo");
+                        $additionalService->setTotal(100.00);
+                        $lastId = $this->additionalServiceDAO->add($additionalService,$register_by);
+                        $reservationxservice->setIdReservation($reservation);
+                        $reservationxservice->setIdService($lastId);
+                        $this->reservationxserviceDAO->add($reservationxservice);
+                        $servicexparking->setIdService($lastId);
+                        $servicexparking->setIdParking($parking->getId());
+                        $this->servicexparkingDAO->add($servicexparking);
+                        $this->additionalController = new AdditionalServiceController();
+                        return $this->additionalController->hasAdditionalService($reservation, null, null);                        
                     }
 
                 } else {                                 

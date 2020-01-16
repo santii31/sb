@@ -67,9 +67,9 @@
                     $locker->setLockerNumber($row["locker_number"]);
                     $locker->setPrice($row["locker_price"]);
                     
-                    array_push($lockerList, $locker);
+                    array_push($this->lockerList, $locker);
 				}
-				return $lockerList;
+				return $this->lockerList;
 			} catch (Exception $e) {
 				return false;
             }

@@ -39,7 +39,7 @@
 					
 		public function getReservationByService($id) {
 			try {				
-				$query = "CALL providerxproduct_getReservationByService(?)";
+				$query = "CALL reservationxservice_getReservationByService(?)";
 				$parameters["id"] = $id;
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
@@ -98,22 +98,21 @@
 
         public function getServiceByReservation($id) {
 			try {				
-				$query = "CALL providerxproduct_getProductByProvider(?)";
+				$query = "CALL reservationxservice_getServiceByReservation(?)";
+				$additionalService = new AdditionalService();
 				$parameters["id"] = $id;
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-                    $additionalService = new AdditionalService();
                     $additionalService->setId($row["service_id"]);
                     $additionalService->setDescription($row["service_description"]);
-                    $additionalService->setPrice($row["service_total"]);
-                    
-                    array_push($serviceList, $additionalService);
+                    $additionalService->setTotal($row["service_total"]);
 				}
-				return $serviceList;
+				return $additionalService;
 			} catch (Exception $e) {
-				return false;
-            }
+				//return false;
+				echo $e;
+			}
 		}
 
 		public function getAll() {

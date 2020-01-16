@@ -1,8 +1,8 @@
-        <!-- Main content  -->
-        <div class="col s12 m8 l10">
+ <!-- Main content  -->
+ <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>additionalService/optionsDistributor" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>additionalService/chose" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -36,15 +36,21 @@
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <select name="service">
-                                    <option value="" disabled selected>Seleccione una opcion</option>
-                                    
-                                    <option value="parasol"> Sombrilla </option>
-                                    <option value="locker"> Locker </option>
-                                    <option value="parking"> Estacionamiento </option>
-                                     
-                                </select>
-                                <label>Servicios</label>
+                            <p>
+                                <label>
+                                    <input id="last_name" type="radio" name="answer" class="with-gap" value="yes">
+                                    <span>Si</span>
+                                </label>
+                            </p>
+                                
+                            </div>
+                            <div class="input-field col s6">
+                            <p>
+                                <label>
+                                    <input id="last_name" type="radio" name="answer" class="with-gap" value="no">
+                                    <span>No</span>
+                                </label>
+                            </p>
                             </div>
 
                             <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">                                               

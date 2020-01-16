@@ -24,10 +24,11 @@
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-					$lockerTemp = new Chest();
-                    $lockerTemp->setId($row["locker.id"]);
-                    $lockerTemp->setChestNumber($row["locker.number"]);
-                    $lockerTemp->setPrice($row["locker.price"]);
+					$lockerTemp = new Locker();
+                    $lockerTemp->setId($row["id"]);
+                    $lockerTemp->setLockerNumber($row["locker_number"]);
+					$lockerTemp->setPrice($row["price"]);
+					$lockerTemp->setSex($row["price"]);
                     
 				}
 				return $lockerTemp;
@@ -45,7 +46,8 @@
 					$locker = new Locker();
                     $locker->setId($row["id"]);
                     $locker->setLockerNumber($row["locker_number"]);
-                    $locker->setPrice($row["price"]);
+					$locker->setPrice($row["price"]);
+					$locker->setSex($row["sex"]);
                     
 					array_push($this->lockerList, $locker);
 				}

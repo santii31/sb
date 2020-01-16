@@ -7,6 +7,9 @@
     use Models\BeachTent as BeachTent;
     use Models\Reservation as Reservation;        
     use DAO\ReservationDAO as ReservationDAO;    
+    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
+    use DAO\ServicexLockerDAO as ServicexLockerDAO;
+    use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\ParkingController as ParkingController;    
@@ -16,11 +19,17 @@
         private $reservationDAO;
         private $adminController;
         private $clientController;          
-        private $parkingController;      
+        private $parkingController;
+        private $reservationxserviceDAO;
+        private $servicexlockerDAO;
+        private $servicexparasolDAO;      
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();                                    
             $this->adminController = new AdminController();
+            $this->reservationxserviceDAO = new ReservationxServiceDAO();
+            $this->servicexlockerDAO = new ServicexLockerDAO();
+            $this->servicexparasolDAO = new ServicexParasolDAO();
         }               
 
 
@@ -135,10 +144,10 @@
         public function listReservationPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Reservas";
-                $reservation = $this->reservationDAO->getAll();
+                $reservations = $this->reservationDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "list-resevation.php");
+                require_once(VIEWS_PATH . "list-reservation.php");
                 require_once(VIEWS_PATH . "footer.php");
             } else {
                 return $this->adminController->userPath();
@@ -246,6 +255,7 @@
             return $this->reservationDAO->getById($reservation);
         }
     }
+
 
         
 ?>

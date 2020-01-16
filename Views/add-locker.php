@@ -1,8 +1,8 @@
-        <!-- Main content  -->
-        <div class="col s12 m8 l10">
+ <!-- Main content  -->
+ <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>additionalService/optionsDistributor" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>additionalService/addLocker" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -35,21 +35,38 @@
                         <?php endif; ?>
 
                         <div class="row">
+                        
                             <div class="input-field col s6">
-                                <select name="service">
-                                    <option value="" disabled selected>Seleccione una opcion</option>
+                                <select name="id_locker_man">
+                                    <option value="">Seleccione un locker</option>
                                     
-                                    <option value="parasol"> Sombrilla </option>
-                                    <option value="locker"> Locker </option>
-                                    <option value="parking"> Estacionamiento </option>
+                                    <?php foreach ($lockerManList as $locker): ?>
+                                        <option value="<?= $locker->getId(); ?>">
+                                            <?= $locker->getLockerNumber(); ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                      
                                 </select>
-                                <label>Servicios</label>
+                                <label>Lockers de hombres</label>
                             </div>
 
-                            <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">                                               
+                            <div class="input-field col s6">
+                                <select name="id_locker_woman">
+                                    <option value="" >Seleccione un locker</option>
+                                    
+                                    <?php foreach ($lockerWomanList as $locker): ?>
+                                        <option value="<?= $locker->getId(); ?>">
+                                            <?= $locker->getLockerNumber(); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                     
+                                </select>
+                                <label>Lockers de mujeres</label>
+                            </div>
+                            
+                        <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
+                                                     
                         </div>                        
-
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
@@ -57,11 +74,9 @@
                                 </button>
                             </div>
                         </div>
-
                     </form>
-                    
                 </div>
             </div>
         </div>
     </div>
-</div>    
+</div>
