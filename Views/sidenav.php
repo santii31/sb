@@ -69,6 +69,22 @@
 
             <ul class="collapsible">
                 <li>
+                    <div class="collapsible-header"><i class="material-icons">beach_access</i>Reservas</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>reservation/listReservationPath" class="valign-wrapper waves-effect">
+                                <i class="material-icons left">format_list_numbered</i>
+                                    Listar reservas
+                                </a>
+                            </li>                                           
+                        </ul>
+                    </div>
+                </li>                    
+            </ul>  
+
+            <ul class="collapsible">
+                <li>
                     <div class="collapsible-header"><i class="material-icons">directions_car</i>Estacionamiento</div>
                     <div class="collapsible-body">
                         <ul>

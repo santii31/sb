@@ -7,6 +7,7 @@
         private $id;
         private $locker_number;
         private $price;
+        private $sex;
         
         public function getId() {
             return $this->id;
@@ -31,6 +32,14 @@
 
         public function setPrice($price) {
             $this->price = $price;            
+        }
+
+        public function getSex() {
+            return $this->sex;
+        }
+
+        public function setSex($sex) {
+            $this->sex = $sex;            
         }
 
     }

@@ -46,9 +46,9 @@
                     $additionalService->setDescription($row["service_description"]);
                     $additionalService->setPrice($row["service_total"]);
                     
-                    array_push($serviceList, $additionalService);
+                    array_push($this->serviceList, $additionalService);
 				}
-				return $serviceList;
+				return $this->serviceList;
 			} catch (Exception $e) {
 				return false;
             }
@@ -67,9 +67,9 @@
                     $parasol->setChestNumber($row["parasol_number"]);
                     $parasol->setPrice($row["parasol_price"]);
                     
-                    array_push($parasolList, $parasol);
+                    array_push($this->parasolList, $parasol);
 				}
-				return $parasolList;
+				return $this->parasolList;
 			} catch (Exception $e) {
 				return false;
             }
