@@ -49,12 +49,17 @@
             if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {
                 $providerTemp = new Provider();
                 $providerTemp->setDni($dni);                                
-				if ($this->providerDAO->getByDni($providerTemp) == null) {                                                            
-                    if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {            
-                        return $this->addProviderPath(null, PROVIDER_ADDED);
-                    } else {                        
-                        return $this->addProviderPath(DB_ERROR, null);        
+                $providerTemp->setEmail($email);      
+				if ($this->providerDAO->getByDni($providerTemp) == null) {     
+                    if ($this->providerDAO->getByEmail($providerTemp) == null) { 
+                        if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {            
+                            return $this->addProviderPath(null, PROVIDER_ADDED);
+                        } else {                        
+                            return $this->addProviderPath(DB_ERROR, null);        
+                        }
                     }
+                    return $this->addProviderPath(REGISTER_ERROR, null);        
+
                 }                
                 return $this->addProviderPath(PROVIDER_ERROR, null);
             }            

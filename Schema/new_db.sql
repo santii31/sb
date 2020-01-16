@@ -1086,6 +1086,14 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `provider_getByEmail`;
+DELIMITER $$
+CREATE PROCEDURE provider_getByEmail (IN email VARCHAR(255))
+BEGIN
+	SELECT * FROM `provider` WHERE `provider`.`email` = email;
+END$$
+
+
 DROP procedure IF EXISTS `provider_getAll`;
 DELIMITER $$
 CREATE PROCEDURE provider_getAll ()

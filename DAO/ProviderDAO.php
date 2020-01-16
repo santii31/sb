@@ -36,7 +36,8 @@
 				return true;
 			}
 			catch (Exception $e) {
-				return false;				
+				return false;		
+				// echo $e;		
 			}			
         }
 					
@@ -114,10 +115,10 @@
                     $providerTemp->setSocialReason($row["social_reason"]);
                     $providerTemp->setBilling($row["type_billing"]);
                     $providerTemp->setIsActive($row["is_active"]);
-				}
+				}				
 				return $providerTemp;
 			} catch (Exception $e) {
-				return false;
+				return false;				
 			}
 		}
 
