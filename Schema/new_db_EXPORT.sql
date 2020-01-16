@@ -2,10 +2,10 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 15-01-2020 a las 19:29:40
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.3.9
+-- Host: 127.0.0.1
+-- Generation Time: Jan 16, 2020 at 09:23 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,12 +19,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `southbeach`
+-- Database: `southbeach`
 --
 
 DELIMITER $$
 --
--- Procedimientos
+-- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `dni` VARCHAR(255), IN `email` VARCHAR(255), IN `password` VARCHAR(255), IN `date_register` DATE, IN `register_by` INT)  BEGIN
 	INSERT INTO admin (
@@ -248,7 +248,7 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `locker_getAll` ()  BEGIN
 	SELECT *
     FROM `locker`
-    ORDER BY price ASC;
+    ORDER BY id ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `locker_getById` (IN `id` INT)  BEGIN
@@ -548,6 +548,10 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getByDni` (IN `dni` INT)  BEGIN
 	SELECT * FROM `provider` WHERE `provider`.`dni` = dni;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getByEmail` (IN `email` VARCHAR(255))  BEGIN
+	SELECT * FROM `provider` WHERE `provider`.`email` = email;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getById` (IN `id` INT)  BEGIN
@@ -1162,7 +1166,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `additional_service`
+-- Table structure for table `additional_service`
 --
 
 CREATE TABLE `additional_service` (
@@ -1181,18 +1185,22 @@ CREATE TABLE `additional_service` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `additional_service`
+-- Dumping data for table `additional_service`
 --
 
 INSERT INTO `additional_service` (`id`, `description`, `total`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
 (1, 'cofre', 500, 1, '2020-01-08', 1, '2020-01-13', 1, '2020-01-13', 1, '2020-01-13', 1),
 (2, 'sombrilla', 500, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'estacionamiento', 2000, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(3, 'estacionamiento', 2000, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'descripcion 1 ejemplo', 100, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'descripcion 1 ejemplo', 100, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, '2020-01-16', 1),
+(6, 'descripcion 1 ejemplo', 100, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, '2020-01-16', 1),
+(7, 'descripcion 1 ejemplo', 100, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -1214,7 +1222,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `lastname`, `dni`, `email`, `password`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
@@ -1225,7 +1233,7 @@ INSERT INTO `admin` (`id`, `name`, `lastname`, `dni`, `email`, `password`, `is_a
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `beach_tent`
+-- Table structure for table `beach_tent`
 --
 
 CREATE TABLE `beach_tent` (
@@ -1238,241 +1246,242 @@ CREATE TABLE `beach_tent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `beach_tent`
+-- Dumping data for table `beach_tent`
 --
 
 INSERT INTO `beach_tent` (`id`, `number`, `price`, `position`, `sea`, `FK_id_hall`) VALUES
-(2, '16B', 100, 0, 0, 1),
-(3, '16', 100, 1, 0, 1),
-(4, '15', 100, 2, 0, 1),
-(5, '14', 100, 3, 0, 1),
-(6, '13', 100, 4, 0, 1),
-(7, '12', 100, 5, 0, 1),
-(8, '11', 100, 6, 0, 1),
-(9, '10', 100, 7, 0, 1),
-(10, '9', 100, 8, 0, 1),
-(11, '8', 100, 9, 0, 1),
-(12, '7', 100, 10, 0, 1),
-(13, '6', 100, 11, 0, 1),
-(14, '5', 100, 12, 0, 1),
-(15, '4', 100, 13, 0, 1),
-(16, '3', 100, 14, 0, 1),
-(17, '17B', 100, 15, 0, 2),
-(18, '17', 100, 16, 0, 2),
-(19, '18', 100, 17, 0, 2),
-(20, '19', 100, 18, 0, 2),
-(21, '20', 100, 19, 0, 2),
-(22, '21', 100, 20, 0, 2),
-(23, '22', 100, 21, 0, 2),
-(24, '23', 100, 22, 0, 2),
-(25, '24', 100, 23, 0, 2),
-(26, '25', 100, 24, 0, 2),
-(27, '26', 100, 25, 0, 2),
-(28, '27', 100, 26, 0, 2),
-(29, '28', 100, 27, 0, 2),
-(30, '29', 100, 28, 0, 2),
-(31, '30', 100, 29, 0, 2),
-(32, '30B', 100, 30, 0, 2),
-(33, '49B', 100, 31, 0, 2),
-(34, '49', 100, 32, 0, 2),
-(35, '48', 100, 33, 0, 2),
-(36, '47', 100, 34, 0, 2),
-(37, '46', 100, 35, 0, 2),
-(38, '45', 100, 36, 0, 2),
-(39, '44', 100, 37, 0, 2),
-(40, '43', 100, 38, 0, 2),
-(41, '42', 100, 39, 0, 2),
-(42, '41', 100, 40, 0, 2),
-(43, '40', 100, 41, 0, 2),
-(44, '39', 100, 42, 0, 2),
-(45, '38', 100, 43, 0, 2),
-(46, '37', 100, 44, 0, 2),
-(47, '36', 100, 45, 0, 2),
-(48, '36B', 100, 46, 0, 2),
-(49, '50B', 100, 47, 0, 3),
-(50, '50', 100, 48, 0, 3),
-(51, '51', 100, 49, 0, 3),
-(52, '52', 100, 50, 0, 3),
-(53, '53', 100, 51, 0, 3),
-(54, '54', 100, 52, 0, 3),
-(55, '55', 100, 53, 0, 3),
-(56, '56', 100, 54, 0, 3),
-(57, '57', 100, 55, 0, 3),
-(58, '58', 100, 56, 0, 3),
-(59, '59', 100, 57, 0, 3),
-(60, '60', 100, 58, 0, 3),
-(61, '61', 100, 59, 0, 3),
-(62, '62', 100, 60, 0, 3),
-(63, '63', 100, 61, 0, 3),
-(64, '63B', 100, 62, 0, 3),
-(65, '82B', 100, 63, 0, 3),
-(66, '82', 100, 64, 0, 3),
-(67, '81', 100, 65, 0, 3),
-(68, '80', 100, 66, 0, 3),
-(69, '79', 100, 67, 0, 3),
-(70, '78', 100, 68, 0, 3),
-(71, '77', 100, 69, 0, 3),
-(72, '76', 100, 70, 0, 3),
-(73, '75', 100, 71, 0, 3),
-(74, '74', 100, 72, 0, 3),
-(75, '73', 100, 73, 0, 3),
-(76, '72', 100, 74, 0, 3),
-(77, '71', 100, 75, 0, 3),
-(78, '70', 100, 76, 0, 3),
-(79, '69', 100, 77, 0, 3),
-(80, '69B', 100, 78, 0, 3),
-(81, '83B', 100, 79, 0, 4),
-(82, '83', 100, 80, 0, 4),
-(83, '84', 100, 81, 0, 4),
-(84, '85', 100, 82, 0, 4),
-(85, '86', 100, 83, 0, 4),
-(86, '87', 100, 84, 0, 4),
-(87, '88', 100, 85, 0, 4),
-(88, '89', 100, 86, 0, 4),
-(89, '90', 100, 87, 0, 4),
-(90, '91', 100, 88, 0, 4),
-(91, '92', 100, 89, 0, 4),
-(92, '93', 100, 90, 0, 4),
-(93, '94', 100, 91, 0, 4),
-(94, '95', 100, 92, 0, 4),
-(95, '96', 100, 93, 0, 4),
-(96, '96B', 100, 94, 0, 4),
-(97, '115B', 100, 95, 0, 4),
-(98, '115', 100, 96, 0, 4),
-(99, '114', 100, 97, 0, 4),
-(100, '113', 100, 98, 0, 4),
-(101, '112', 100, 99, 0, 4),
-(102, '111', 100, 100, 0, 4),
-(103, '110', 100, 101, 0, 4),
-(104, '109', 100, 102, 0, 4),
-(105, '108', 100, 103, 0, 4),
-(106, '107', 100, 104, 0, 4),
-(107, '106', 100, 105, 0, 4),
-(108, '105', 100, 106, 0, 4),
-(109, '104', 100, 107, 0, 4),
-(110, '103', 100, 108, 0, 4),
-(111, '102', 100, 109, 0, 4),
-(112, '102B', 100, 110, 0, 4),
-(113, '116B', 100, 111, 0, 5),
-(114, '116', 100, 112, 0, 5),
-(115, '117', 100, 113, 0, 5),
-(116, '118', 100, 114, 0, 5),
-(117, '119', 100, 115, 0, 5),
-(118, '120', 100, 116, 0, 5),
-(119, '121', 100, 117, 0, 5),
-(120, '122', 100, 118, 0, 5),
-(121, '123', 100, 119, 0, 5),
-(122, '124', 100, 120, 0, 5),
-(123, '125', 100, 121, 0, 5),
-(124, '126', 100, 122, 0, 5),
-(125, '127', 100, 123, 0, 5),
-(126, '128', 100, 124, 0, 5),
-(127, '129', 100, 125, 0, 5),
-(128, '129B', 100, 126, 0, 5),
-(129, '148B', 100, 127, 0, 5),
-(130, '148', 100, 128, 0, 5),
-(131, '147', 100, 129, 0, 5),
-(132, '146', 100, 130, 0, 5),
-(133, '145', 100, 131, 0, 5),
-(134, '144', 100, 132, 0, 5),
-(135, '143', 100, 133, 0, 5),
-(136, '142', 100, 134, 0, 5),
-(137, '141', 100, 135, 0, 5),
-(138, '140', 100, 136, 0, 5),
-(139, '139', 100, 137, 0, 5),
-(140, '138', 100, 138, 0, 5),
-(141, '137', 100, 139, 0, 5),
-(142, '136', 100, 140, 0, 5),
-(143, '135', 100, 141, 0, 5),
-(144, '135B', 100, 142, 0, 5),
-(145, '149B', 100, 143, 0, 6),
-(146, '149', 100, 144, 0, 6),
-(147, '150', 100, 145, 0, 6),
-(148, '151', 100, 146, 0, 6),
-(149, '152', 100, 147, 0, 6),
-(150, '153', 100, 148, 0, 6),
-(151, '154', 100, 149, 0, 6),
-(152, '155', 100, 150, 0, 6),
-(153, '156', 100, 151, 0, 6),
-(154, '157', 100, 152, 0, 6),
-(155, '158', 100, 153, 0, 6),
-(156, '159', 100, 154, 0, 6),
-(157, '160', 100, 155, 0, 6),
-(158, '161', 100, 156, 0, 6),
-(161, '162', 100, 157, 0, 6),
-(163, '162B', 100, 158, 0, 6),
-(164, '181B', 100, 160, 0, 6),
-(165, '181', 100, 161, 0, 6),
-(166, '180', 100, 162, 0, 6),
-(167, '179', 100, 163, 0, 6),
-(168, '178', 100, 164, 0, 6),
-(169, '177', 100, 165, 0, 6),
-(170, '176', 100, 166, 0, 6),
-(171, '175', 100, 167, 0, 6),
-(172, '174', 100, 168, 0, 6),
-(173, '173', 100, 169, 0, 6),
-(174, '172', 100, 170, 0, 6),
-(175, '171', 100, 171, 0, 6),
-(176, '170', 100, 172, 0, 6),
-(177, '169', 100, 173, 0, 6),
-(178, '168', 100, 174, 0, 6),
-(179, '168B', 100, 175, 0, 6),
-(180, '182B', 100, 176, 0, 7),
-(181, '182', 100, 177, 0, 7),
-(182, '183', 100, 178, 0, 7),
-(183, '184', 100, 179, 0, 7),
-(184, '185', 100, 180, 0, 7),
-(185, '186', 100, 181, 0, 7),
-(186, '187', 100, 182, 0, 7),
-(187, '188', 100, 183, 0, 7),
-(188, '189', 100, 184, 0, 7),
-(189, '190', 100, 185, 0, 7),
-(190, '191', 100, 186, 0, 7),
-(191, '192', 100, 187, 0, 7),
-(192, '193', 100, 188, 0, 7),
-(193, '194', 100, 189, 0, 7),
-(194, '195', 100, 190, 0, 7),
-(196, '1', 100, 190, 1, 1),
-(197, '2', 100, 191, 1, 1),
-(198, '2B', 100, 192, 1, 1),
-(199, '31', 100, 193, 1, 2),
-(200, '32', 100, 194, 1, 2),
-(201, '33', 100, 195, 1, 2),
-(202, '34', 100, 196, 1, 2),
-(203, '35', 100, 197, 1, 2),
-(204, '35B', 100, 198, 1, 2),
-(205, '64', 100, 199, 1, 3),
-(206, '65', 100, 200, 1, 3),
-(207, '66', 100, 201, 1, 3),
-(208, '67', 100, 202, 1, 3),
-(209, '68', 100, 203, 1, 3),
-(210, '68B', 100, 204, 1, 3),
-(211, '97', 100, 205, 1, 4),
-(212, '98', 100, 206, 1, 4),
-(213, '99', 100, 207, 1, 4),
-(214, '100', 100, 208, 1, 4),
-(215, '101', 100, 209, 1, 4),
-(216, '101B', 100, 210, 1, 4),
-(217, '130', 100, 211, 1, 5),
-(218, '131', 100, 212, 1, 5),
-(219, '132', 100, 213, 1, 5),
-(220, '133', 100, 214, 1, 5),
-(221, '134', 100, 215, 1, 5),
-(222, '134B', 100, 216, 1, 5),
-(223, '163', 100, 217, 1, 6),
-(224, '164', 100, 218, 1, 6),
-(225, '165', 100, 219, 1, 6),
-(226, '166', 100, 220, 1, 6),
-(227, '167', 100, 221, 1, 6),
-(228, '167B', 100, 222, 1, 6),
-(229, '196B', 100, 223, 1, 7),
-(230, '196', 100, 224, 1, 7),
-(231, '197', 100, 225, 1, 7);
+(1, '16B', 100, 0, 0, 1),
+(2, '16', 100, 1, 0, 1),
+(3, '15', 100, 2, 0, 1),
+(4, '14', 100, 3, 0, 1),
+(5, '13', 100, 4, 0, 1),
+(6, '12', 100, 5, 0, 1),
+(7, '11', 100, 6, 0, 1),
+(8, '10', 100, 7, 0, 1),
+(9, '9', 100, 8, 0, 1),
+(10, '8', 100, 9, 0, 1),
+(11, '7', 100, 10, 0, 1),
+(12, '6', 100, 11, 0, 1),
+(13, '5', 100, 12, 0, 1),
+(14, '4', 100, 13, 0, 1),
+(15, '3', 100, 14, 0, 1),
+(16, '17B', 100, 15, 0, 2),
+(17, '17', 100, 16, 0, 2),
+(18, '18', 100, 17, 0, 2),
+(19, '19', 100, 18, 0, 2),
+(20, '20', 100, 19, 0, 2),
+(21, '21', 100, 20, 0, 2),
+(22, '22', 100, 21, 0, 2),
+(23, '23', 100, 22, 0, 2),
+(24, '24', 100, 23, 0, 2),
+(25, '25', 100, 24, 0, 2),
+(26, '26', 100, 25, 0, 2),
+(27, '27', 100, 26, 0, 2),
+(28, '28', 100, 27, 0, 2),
+(29, '29', 100, 28, 0, 2),
+(30, '30', 100, 29, 0, 2),
+(31, '30B', 100, 30, 0, 2),
+(32, '49B', 100, 31, 0, 2),
+(33, '49', 100, 32, 0, 2),
+(34, '48', 100, 33, 0, 2),
+(35, '47', 100, 34, 0, 2),
+(36, '46', 100, 35, 0, 2),
+(37, '45', 100, 36, 0, 2),
+(38, '44', 100, 37, 0, 2),
+(39, '43', 100, 38, 0, 2),
+(40, '42', 100, 39, 0, 2),
+(41, '41', 100, 40, 0, 2),
+(42, '40', 100, 41, 0, 2),
+(43, '39', 100, 42, 0, 2),
+(44, '38', 100, 43, 0, 2),
+(45, '37', 100, 44, 0, 2),
+(46, '36', 100, 45, 0, 2),
+(47, '36B', 100, 46, 0, 2),
+(48, '50B', 100, 47, 0, 3),
+(49, '50', 100, 48, 0, 3),
+(50, '51', 100, 49, 0, 3),
+(51, '52', 100, 50, 0, 3),
+(52, '53', 100, 51, 0, 3),
+(53, '54', 100, 52, 0, 3),
+(54, '55', 100, 53, 0, 3),
+(55, '56', 100, 54, 0, 3),
+(56, '57', 100, 55, 0, 3),
+(57, '58', 100, 56, 0, 3),
+(58, '59', 100, 57, 0, 3),
+(59, '60', 100, 58, 0, 3),
+(60, '61', 100, 59, 0, 3),
+(61, '62', 100, 60, 0, 3),
+(62, '63', 100, 61, 0, 3),
+(63, '63B', 100, 62, 0, 3),
+(64, '82B', 100, 63, 0, 3),
+(65, '82', 100, 64, 0, 3),
+(66, '81', 100, 65, 0, 3),
+(67, '80', 100, 66, 0, 3),
+(68, '79', 100, 67, 0, 3),
+(69, '78', 100, 68, 0, 3),
+(70, '77', 100, 69, 0, 3),
+(71, '76', 100, 70, 0, 3),
+(72, '75', 100, 71, 0, 3),
+(73, '74', 100, 72, 0, 3),
+(74, '73', 100, 73, 0, 3),
+(75, '72', 100, 74, 0, 3),
+(76, '71', 100, 75, 0, 3),
+(77, '70', 100, 76, 0, 3),
+(78, '69', 100, 77, 0, 3),
+(79, '69B', 100, 78, 0, 3),
+(80, '83B', 100, 79, 0, 4),
+(81, '83', 100, 80, 0, 4),
+(82, '84', 100, 81, 0, 4),
+(83, '85', 100, 82, 0, 4),
+(84, '86', 100, 83, 0, 4),
+(85, '87', 100, 84, 0, 4),
+(86, '88', 100, 85, 0, 4),
+(87, '89', 100, 86, 0, 4),
+(88, '90', 100, 87, 0, 4),
+(89, '91', 100, 88, 0, 4),
+(90, '92', 100, 89, 0, 4),
+(91, '93', 100, 90, 0, 4),
+(92, '94', 100, 91, 0, 4),
+(93, '95', 100, 92, 0, 4),
+(94, '96', 100, 93, 0, 4),
+(95, '96B', 100, 94, 0, 4),
+(96, '115B', 100, 95, 0, 4),
+(97, '115', 100, 96, 0, 4),
+(98, '114', 100, 97, 0, 4),
+(99, '113', 100, 98, 0, 4),
+(100, '112', 100, 99, 0, 4),
+(101, '111', 100, 100, 0, 4),
+(102, '110', 100, 101, 0, 4),
+(103, '109', 100, 102, 0, 4),
+(104, '108', 100, 103, 0, 4),
+(105, '107', 100, 104, 0, 4),
+(106, '106', 100, 105, 0, 4),
+(107, '105', 100, 106, 0, 4),
+(108, '104', 100, 107, 0, 4),
+(109, '103', 100, 108, 0, 4),
+(110, '102', 100, 109, 0, 4),
+(111, '102B', 100, 110, 0, 4),
+(112, '116B', 100, 111, 0, 5),
+(113, '116', 100, 112, 0, 5),
+(114, '117', 100, 113, 0, 5),
+(115, '118', 100, 114, 0, 5),
+(116, '119', 100, 115, 0, 5),
+(117, '120', 100, 116, 0, 5),
+(118, '121', 100, 117, 0, 5),
+(119, '122', 100, 118, 0, 5),
+(120, '123', 100, 119, 0, 5),
+(121, '124', 100, 120, 0, 5),
+(122, '125', 100, 121, 0, 5),
+(123, '126', 100, 122, 0, 5),
+(124, '127', 100, 123, 0, 5),
+(125, '128', 100, 124, 0, 5),
+(126, '129', 100, 125, 0, 5),
+(127, '129B', 100, 126, 0, 5),
+(128, '148B', 100, 127, 0, 5),
+(129, '148', 100, 128, 0, 5),
+(130, '147', 100, 129, 0, 5),
+(131, '146', 100, 130, 0, 5),
+(132, '145', 100, 131, 0, 5),
+(133, '144', 100, 132, 0, 5),
+(134, '143', 100, 133, 0, 5),
+(135, '142', 100, 134, 0, 5),
+(136, '141', 100, 135, 0, 5),
+(137, '140', 100, 136, 0, 5),
+(138, '139', 100, 137, 0, 5),
+(139, '138', 100, 138, 0, 5),
+(140, '137', 100, 139, 0, 5),
+(141, '136', 100, 140, 0, 5),
+(142, '135', 100, 141, 0, 5),
+(143, '135B', 100, 142, 0, 5),
+(144, '149B', 100, 143, 0, 6),
+(145, '149', 100, 144, 0, 6),
+(146, '150', 100, 145, 0, 6),
+(147, '151', 100, 146, 0, 6),
+(148, '152', 100, 147, 0, 6),
+(149, '153', 100, 148, 0, 6),
+(150, '154', 100, 149, 0, 6),
+(151, '155', 100, 150, 0, 6),
+(152, '156', 100, 151, 0, 6),
+(153, '157', 100, 152, 0, 6),
+(154, '158', 100, 153, 0, 6),
+(155, '159', 100, 154, 0, 6),
+(156, '160', 100, 155, 0, 6),
+(157, '161', 100, 156, 0, 6),
+(158, '162', 100, 157, 0, 6),
+(159, '162B', 100, 158, 0, 6),
+(160, '181B', 100, 160, 0, 6),
+(161, '181', 100, 161, 0, 6),
+(162, '180', 100, 162, 0, 6),
+(163, '179', 100, 163, 0, 6),
+(164, '178', 100, 164, 0, 6),
+(165, '177', 100, 165, 0, 6),
+(166, '176', 100, 166, 0, 6),
+(167, '175', 100, 167, 0, 6),
+(168, '174', 100, 168, 0, 6),
+(169, '173', 100, 169, 0, 6),
+(170, '172', 100, 170, 0, 6),
+(171, '171', 100, 171, 0, 6),
+(172, '170', 100, 172, 0, 6),
+(173, '169', 100, 173, 0, 6),
+(174, '168', 100, 174, 0, 6),
+(175, '168B', 100, 175, 0, 6),
+(176, '182BB', 100, 176, 0, 7),
+(177, '182B', 100, 176, 0, 7),
+(178, '182', 100, 177, 0, 7),
+(179, '183', 100, 178, 0, 7),
+(180, '184', 100, 179, 0, 7),
+(181, '185', 100, 180, 0, 7),
+(182, '186', 100, 181, 0, 7),
+(183, '187', 100, 182, 0, 7),
+(184, '188', 100, 183, 0, 7),
+(185, '189', 100, 184, 0, 7),
+(186, '190', 100, 185, 0, 7),
+(187, '191', 100, 186, 0, 7),
+(188, '192', 100, 187, 0, 7),
+(189, '193', 100, 188, 0, 7),
+(190, '194', 100, 189, 0, 7),
+(191, '195', 100, 190, 0, 7),
+(192, '1', 100, 191, 1, 1),
+(193, '2', 100, 192, 1, 1),
+(194, '2B', 100, 193, 1, 1),
+(195, '31', 100, 194, 1, 2),
+(196, '32', 100, 195, 1, 2),
+(197, '33', 100, 196, 1, 2),
+(198, '34', 100, 197, 1, 2),
+(199, '35', 100, 198, 1, 2),
+(200, '35B', 100, 199, 1, 2),
+(201, '64', 100, 200, 1, 3),
+(202, '65', 100, 201, 1, 3),
+(203, '66', 100, 202, 1, 3),
+(204, '67', 100, 203, 1, 3),
+(205, '68', 100, 204, 1, 3),
+(206, '68B', 100, 205, 1, 3),
+(207, '97', 100, 206, 1, 4),
+(208, '98', 100, 207, 1, 4),
+(209, '99', 100, 208, 1, 4),
+(210, '100', 100, 209, 1, 4),
+(211, '101', 100, 210, 1, 4),
+(212, '101B', 100, 211, 1, 4),
+(213, '130', 100, 212, 1, 5),
+(214, '131', 100, 213, 1, 5),
+(215, '132', 100, 214, 1, 5),
+(216, '133', 100, 215, 1, 5),
+(217, '134', 100, 216, 1, 5),
+(218, '134B', 100, 217, 1, 5),
+(219, '163', 100, 218, 1, 6),
+(220, '164', 100, 219, 1, 6),
+(221, '165', 100, 220, 1, 6),
+(222, '166', 100, 221, 1, 6),
+(223, '167', 100, 222, 1, 6),
+(224, '167B', 100, 223, 1, 6),
+(225, '195B', 100, 224, 1, 7),
+(226, '196', 100, 225, 1, 7),
+(227, '197', 100, 226, 1, 7);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -1481,7 +1490,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `name`) VALUES
@@ -1496,7 +1505,7 @@ INSERT INTO `category` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `client`
+-- Table structure for table `client`
 --
 
 CREATE TABLE `client` (
@@ -1523,18 +1532,17 @@ CREATE TABLE `client` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `client`
+-- Dumping data for table `client`
 --
 
 INSERT INTO `client` (`id`, `name`, `lastname`, `address`, `city`, `cp`, `email`, `tel`, `family_group`, `stay_address`, `tel_stay`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'Juan', 'joise', 'Calle 30', 'Mar del plata', 4000, 'juanjjose@mail.com', 4500000, '4', 'calle 55', 45323123, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'pp', 'pp', 'pp', 'pp', 1, 'pppppp@mail.com', 1, 'p', 'p', 1, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'as', 'as', 'as', 'as', 1, 'asddd@mail.com', 123, '123', '123', 123, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 'Juan ', 'jose', 'Calle 30', 'Mar del plata', 4000, 'juanjose@mail.com', 4502323, '5', 'calle 1330', 4502323, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'Pepe', 'Pipo', 'Calle 9', 'Mar del plata', 5000, 'pepepipo@mail.com', 4110000, '2', 'calle x', 410000, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `client_potential`
+-- Table structure for table `client_potential`
 --
 
 CREATE TABLE `client_potential` (
@@ -1558,7 +1566,7 @@ CREATE TABLE `client_potential` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `client_potential`
+-- Dumping data for table `client_potential`
 --
 
 INSERT INTO `client_potential` (`id`, `name`, `lastname`, `address`, `city`, `email`, `tel`, `num_tent`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
@@ -1567,7 +1575,7 @@ INSERT INTO `client_potential` (`id`, `name`, `lastname`, `address`, `city`, `em
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `hall`
+-- Table structure for table `hall`
 --
 
 CREATE TABLE `hall` (
@@ -1576,7 +1584,7 @@ CREATE TABLE `hall` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `hall`
+-- Dumping data for table `hall`
 --
 
 INSERT INTO `hall` (`id`, `number`) VALUES
@@ -1592,183 +1600,184 @@ INSERT INTO `hall` (`id`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `locker`
+-- Table structure for table `locker`
 --
 
 CREATE TABLE `locker` (
   `id` int(11) NOT NULL,
-  `locker_number` varchar(255) COLLATE utf8_bin NOT NULL,
+  `locker_number` int(11) NOT NULL,
+  `sex` varchar(255) COLLATE utf8_bin NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `locker`
+-- Dumping data for table `locker`
 --
 
-INSERT INTO `locker` (`id`, `locker_number`, `price`) VALUES
-(1, '1 (mujeres)', 0),
-(2, '2 (mujeres)', 0),
-(3, '3 (mujeres)', 0),
-(4, '4 (mujeres)', 0),
-(5, '5 (mujeres)', 0),
-(6, '6 (mujeres)', 0),
-(7, '7 (mujeres)', 0),
-(8, '8 (mujeres)', 0),
-(9, '9 (mujeres)', 0),
-(10, '10 (mujeres)', 0),
-(11, '11 (mujeres)', 0),
-(12, '12 (mujeres)', 0),
-(13, '13 (mujeres)', 0),
-(14, '14 (mujeres)', 0),
-(15, '15 (mujeres)', 0),
-(16, '16 (mujeres)', 0),
-(17, '17 (mujeres)', 0),
-(18, '18 (mujeres)', 0),
-(19, '19 (mujeres)', 0),
-(20, '20 (mujeres)', 0),
-(21, '21 (mujeres)', 0),
-(22, '22 (mujeres)', 0),
-(23, '23 (mujeres)', 0),
-(24, '24 (mujeres)', 0),
-(25, '25 (mujeres)', 0),
-(26, '26 (mujeres)', 0),
-(27, '27 (mujeres)', 0),
-(28, '28 (mujeres)', 0),
-(29, '29 (mujeres)', 0),
-(30, '30 (mujeres)', 0),
-(31, '31 (mujeres)', 0),
-(32, '32 (mujeres)', 0),
-(33, '33 (mujeres)', 0),
-(34, '34 (mujeres)', 0),
-(35, '35 (mujeres)', 0),
-(36, '36 (mujeres)', 0),
-(37, '37 (mujeres)', 0),
-(38, '38 (mujeres)', 0),
-(39, '39 (mujeres)', 0),
-(40, '40 (mujeres)', 0),
-(41, '41 (mujeres)', 0),
-(42, '42 (mujeres)', 0),
-(43, '43 (mujeres)', 0),
-(44, '44 (mujeres)', 0),
-(45, '45 (mujeres)', 0),
-(46, '46 (mujeres)', 0),
-(47, '47 (mujeres)', 0),
-(48, '48 (mujeres)', 0),
-(49, '49 (mujeres)', 0),
-(50, '50 (mujeres)', 0),
-(51, '51 (mujeres)', 0),
-(52, '52 (mujeres)', 0),
-(53, '53 (mujeres)', 0),
-(54, '54 (mujeres)', 0),
-(55, '55 (mujeres)', 0),
-(56, '56 (mujeres)', 0),
-(57, '57 (mujeres)', 0),
-(58, '58 (mujeres)', 0),
-(59, '59 (mujeres)', 0),
-(60, '60 (mujeres)', 0),
-(61, '61 (mujeres)', 0),
-(62, '62 (mujeres)', 0),
-(63, '63 (mujeres)', 0),
-(64, '64 (mujeres)', 0),
-(65, '65 (mujeres)', 0),
-(66, '66 (mujeres)', 0),
-(67, '67 (mujeres)', 0),
-(68, '68 (mujeres)', 0),
-(69, '69 (mujeres)', 0),
-(70, '70 (mujeres)', 0),
-(71, '71 (mujeres)', 0),
-(72, '72 (mujeres)', 0),
-(73, '73 (mujeres)', 0),
-(74, '74 (mujeres)', 0),
-(75, '75 (mujeres)', 0),
-(76, '76 (mujeres)', 0),
-(77, '77 (mujeres)', 0),
-(78, '78 (mujeres)', 0),
-(79, '79 (mujeres)', 0),
-(80, '80 (mujeres)', 0),
-(81, '81 (mujeres)', 0),
-(82, '82 (mujeres)', 0),
-(83, '83 (mujeres)', 0),
-(84, '84 (mujeres)', 0),
-(85, '85 (mujeres)', 0),
-(86, '86 (mujeres)', 0),
-(87, '87 (mujeres)', 0),
-(88, '88 (mujeres)', 0),
-(89, '89 (mujeres)', 0),
-(90, '90 (mujeres)', 0),
-(91, '91 (mujeres)', 0),
-(92, '92 (mujeres)', 0),
-(93, '93 (mujeres)', 0),
-(94, '94 (mujeres)', 0),
-(95, '95 (mujeres)', 0),
-(96, '96 (mujeres)', 0),
-(97, '97 (mujeres)', 0),
-(98, '98 (mujeres)', 0),
-(99, '99 (mujeres)', 0),
-(100, '100 (mujeres)', 0),
-(101, '101 (mujeres)', 0),
-(102, '102 (mujeres)', 0),
-(103, '103 (mujeres)', 0),
-(104, '104 (mujeres)', 0),
-(105, '105 (mujeres)', 0),
-(106, '106 (mujeres)', 0),
-(107, '107 (mujeres)', 0),
-(108, '108 (mujeres)', 0),
-(109, '109 (mujeres)', 0),
-(110, '110 (mujeres)', 0),
-(111, '111 (mujeres)', 0),
-(112, '112 (mujeres)', 0),
-(113, '113 (mujeres)', 0),
-(114, '114 (mujeres)', 0),
-(115, '115 (mujeres)', 0),
-(116, '116 (mujeres)', 0),
-(117, '117 (mujeres)', 0),
-(118, '118 (mujeres)', 0),
-(119, '119 (mujeres)', 0),
-(120, '120 (mujeres)', 0),
-(121, '121 (mujeres)', 0),
-(122, '122 (mujeres)', 0),
-(123, '123 (mujeres)', 0),
-(124, '124 (mujeres)', 0),
-(125, '125 (mujeres)', 0),
-(126, '126 (mujeres)', 0),
-(127, '127 (mujeres)', 0),
-(128, '128 (mujeres)', 0),
-(129, '129 (mujeres)', 0),
-(130, '130 (mujeres)', 0),
-(131, '131 (mujeres)', 0),
-(132, '132 (mujeres)', 0),
-(133, '133 (mujeres)', 0),
-(134, '134 (mujeres)', 0),
-(135, '135 (mujeres)', 0),
-(136, '136 (mujeres)', 0),
-(137, '1 (hombres)', 0),
-(138, '2 (hombres)', 0),
-(139, '3 (hombres)', 0),
-(140, '4 (hombres)', 0),
-(141, '5 (hombres)', 0),
-(142, '6 (hombres)', 0),
-(143, '7 (hombres)', 0),
-(144, '8 (hombres)', 0),
-(145, '9 (hombres)', 0),
-(146, '10 (hombres)', 0),
-(147, '11 (hombres)', 0),
-(148, '12 (hombres)', 0),
-(149, '13 (hombres)', 0),
-(150, '14 (hombres)', 0),
-(151, '15 (hombres)', 0),
-(152, '16 (hombres)', 0),
-(153, '17 (hombres)', 0),
-(154, '18 (hombres)', 0),
-(155, '19 (hombres)', 0),
-(156, '20 (hombres)', 0),
-(157, '21 (hombres)', 0),
-(158, '22 (hombres)', 0);
+INSERT INTO `locker` (`id`, `locker_number`, `sex`, `price`) VALUES
+(1, 1, 'mujer', 0),
+(2, 2, 'mujer', 0),
+(3, 3, 'mujer', 0),
+(4, 4, 'mujer', 0),
+(5, 5, 'mujer', 0),
+(6, 6, 'mujer', 0),
+(7, 7, 'mujer', 0),
+(8, 8, 'mujer', 0),
+(9, 9, 'mujer', 0),
+(10, 10, 'mujer', 0),
+(11, 11, 'mujer', 0),
+(12, 12, 'mujer', 0),
+(13, 13, 'mujer', 0),
+(14, 14, 'mujer', 0),
+(15, 15, 'mujer', 0),
+(16, 16, 'mujer', 0),
+(17, 17, 'mujer', 0),
+(18, 18, 'mujer', 0),
+(19, 19, 'mujer', 0),
+(20, 20, 'mujer', 0),
+(21, 21, 'mujer', 0),
+(22, 22, 'mujer', 0),
+(23, 23, 'mujer', 0),
+(24, 24, 'mujer', 0),
+(25, 25, 'mujer', 0),
+(26, 26, 'mujer', 0),
+(27, 27, 'mujer', 0),
+(28, 28, 'mujer', 0),
+(29, 29, 'mujer', 0),
+(30, 30, 'mujer', 0),
+(31, 31, 'mujer', 0),
+(32, 32, 'mujer', 0),
+(33, 33, 'mujer', 0),
+(34, 34, 'mujer', 0),
+(35, 35, 'mujer', 0),
+(36, 36, 'mujer', 0),
+(37, 37, 'mujer', 0),
+(38, 38, 'mujer', 0),
+(39, 39, 'mujer', 0),
+(40, 40, 'mujer', 0),
+(41, 41, 'mujer', 0),
+(42, 42, 'mujer', 0),
+(43, 43, 'mujer', 0),
+(44, 44, 'mujer', 0),
+(45, 45, 'mujer', 0),
+(46, 46, 'mujer', 0),
+(47, 47, 'mujer', 0),
+(48, 48, 'mujer', 0),
+(49, 49, 'mujer', 0),
+(50, 50, 'mujer', 0),
+(51, 51, 'mujer', 0),
+(52, 52, 'mujer', 0),
+(53, 53, 'mujer', 0),
+(54, 54, 'mujer', 0),
+(55, 55, 'mujer', 0),
+(56, 56, 'mujer', 0),
+(57, 57, 'mujer', 0),
+(58, 58, 'mujer', 0),
+(59, 59, 'mujer', 0),
+(60, 60, 'mujer', 0),
+(61, 61, 'mujer', 0),
+(62, 62, 'mujer', 0),
+(63, 63, 'mujer', 0),
+(64, 64, 'mujer', 0),
+(65, 65, 'mujer', 0),
+(66, 66, 'mujer', 0),
+(67, 67, 'mujer', 0),
+(68, 68, 'mujer', 0),
+(69, 69, 'mujer', 0),
+(70, 70, 'mujer', 0),
+(71, 71, 'mujer', 0),
+(72, 72, 'mujer', 0),
+(73, 73, 'mujer', 0),
+(74, 74, 'mujer', 0),
+(75, 75, 'mujer', 0),
+(76, 76, 'mujer', 0),
+(77, 77, 'mujer', 0),
+(78, 78, 'mujer', 0),
+(79, 79, 'mujer', 0),
+(80, 80, 'mujer', 0),
+(81, 81, 'mujer', 0),
+(82, 82, 'mujer', 0),
+(83, 83, 'mujer', 0),
+(84, 84, 'mujer', 0),
+(85, 85, 'mujer', 0),
+(86, 86, 'mujer', 0),
+(87, 87, 'mujer', 0),
+(88, 88, 'mujer', 0),
+(89, 89, 'mujer', 0),
+(90, 90, 'mujer', 0),
+(91, 91, 'mujer', 0),
+(92, 92, 'mujer', 0),
+(93, 93, 'mujer', 0),
+(94, 94, 'mujer', 0),
+(95, 95, 'mujer', 0),
+(96, 96, 'mujer', 0),
+(97, 97, 'mujer', 0),
+(98, 98, 'mujer', 0),
+(99, 99, 'mujer', 0),
+(100, 100, 'mujer', 0),
+(101, 101, 'mujer', 0),
+(102, 102, 'mujer', 0),
+(103, 103, 'mujer', 0),
+(104, 104, 'mujer', 0),
+(105, 105, 'mujer', 0),
+(106, 106, 'mujer', 0),
+(107, 107, 'mujer', 0),
+(108, 108, 'mujer', 0),
+(109, 109, 'mujer', 0),
+(110, 110, 'mujer', 0),
+(111, 111, 'mujer', 0),
+(112, 112, 'mujer', 0),
+(113, 113, 'mujer', 0),
+(114, 114, 'mujer', 0),
+(115, 115, 'mujer', 0),
+(116, 116, 'mujer', 0),
+(117, 117, 'mujer', 0),
+(118, 118, 'mujer', 0),
+(119, 119, 'mujer', 0),
+(120, 120, 'mujer', 0),
+(121, 121, 'mujer', 0),
+(122, 122, 'mujer', 0),
+(123, 123, 'mujer', 0),
+(124, 124, 'mujer', 0),
+(125, 125, 'mujer', 0),
+(126, 126, 'mujer', 0),
+(127, 127, 'mujer', 0),
+(128, 128, 'mujer', 0),
+(129, 129, 'mujer', 0),
+(130, 130, 'mujer', 0),
+(131, 131, 'mujer', 0),
+(132, 132, 'mujer', 0),
+(133, 133, 'mujer', 0),
+(134, 134, 'mujer', 0),
+(135, 135, 'mujer', 0),
+(136, 136, 'mujer', 0),
+(137, 1, 'hombres', 0),
+(138, 2, 'hombres', 0),
+(139, 3, 'hombres', 0),
+(140, 4, 'hombres', 0),
+(141, 5, 'hombres', 0),
+(142, 6, 'hombres', 0),
+(143, 7, 'hombres', 0),
+(144, 8, 'hombres', 0),
+(145, 9, 'hombres', 0),
+(146, 10, 'hombres', 0),
+(147, 11, 'hombres', 0),
+(148, 12, 'hombres', 0),
+(149, 13, 'hombres', 0),
+(150, 14, 'hombres', 0),
+(151, 15, 'hombres', 0),
+(152, 16, 'hombres', 0),
+(153, 17, 'hombres', 0),
+(154, 18, 'hombres', 0),
+(155, 19, 'hombres', 0),
+(156, 20, 'hombres', 0),
+(157, 21, 'hombres', 0),
+(158, 22, 'hombres', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `parasol`
+-- Table structure for table `parasol`
 --
 
 CREATE TABLE `parasol` (
@@ -1780,7 +1789,7 @@ CREATE TABLE `parasol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `parasol`
+-- Dumping data for table `parasol`
 --
 
 INSERT INTO `parasol` (`id`, `parasol_number`, `price`, `position`, `FK_id_hall`) VALUES
@@ -1803,7 +1812,7 @@ INSERT INTO `parasol` (`id`, `parasol_number`, `price`, `position`, `FK_id_hall`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `parking`
+-- Table structure for table `parking`
 --
 
 CREATE TABLE `parking` (
@@ -1815,7 +1824,7 @@ CREATE TABLE `parking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `parking`
+-- Dumping data for table `parking`
 --
 
 INSERT INTO `parking` (`id`, `number`, `price`, `position`, `FK_id_hall`) VALUES
@@ -2019,7 +2028,7 @@ INSERT INTO `parking` (`id`, `number`, `price`, `position`, `FK_id_hall`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `parking_hall`
+-- Table structure for table `parking_hall`
 --
 
 CREATE TABLE `parking_hall` (
@@ -2028,7 +2037,7 @@ CREATE TABLE `parking_hall` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `parking_hall`
+-- Dumping data for table `parking_hall`
 --
 
 INSERT INTO `parking_hall` (`id`, `number`) VALUES
@@ -2046,7 +2055,7 @@ INSERT INTO `parking_hall` (`id`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -2071,16 +2080,16 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`id`, `name`, `price`, `quantity`, `FK_id_category`, `is_active`, `date_add`, `add_by`, `date_remove`, `remove_by`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'test', 10, 200, 1, 1, '2020-01-14', 1, '2020-01-13', 1, '2020-01-12', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 'test', 10, 350, 1, 1, '2020-01-16', 1, '2020-01-16', 1, '2020-01-12', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `provider`
+-- Table structure for table `provider`
 --
 
 CREATE TABLE `provider` (
@@ -2106,16 +2115,16 @@ CREATE TABLE `provider` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `provider`
+-- Dumping data for table `provider`
 --
 
 INSERT INTO `provider` (`id`, `name`, `lastname`, `tel`, `email`, `dni`, `address`, `cuil`, `social_reason`, `type_billing`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'jose', 'luis', 4500000, 'jose_prov@mail.com', 123132123, 'calle 505', 1234, 'jose s.a', 'a', 1, '2020-01-12', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 'jose', 'luis', 4500000, 'jose_prov@mail.com', 123132123, 'calle 505', 1234, 'jose s.a', 'a', 1, '2020-01-12', 1, '2020-01-16', 1, '2020-01-16', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `providerxproduct`
+-- Table structure for table `providerxproduct`
 --
 
 CREATE TABLE `providerxproduct` (
@@ -2124,7 +2133,7 @@ CREATE TABLE `providerxproduct` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `providerxproduct`
+-- Dumping data for table `providerxproduct`
 --
 
 INSERT INTO `providerxproduct` (`FK_id_provider`, `FK_id_product`) VALUES
@@ -2133,7 +2142,7 @@ INSERT INTO `providerxproduct` (`FK_id_provider`, `FK_id_product`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reservation`
+-- Table structure for table `reservation`
 --
 
 CREATE TABLE `reservation` (
@@ -2158,18 +2167,17 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `reservation`
+-- Dumping data for table `reservation`
 --
 
 INSERT INTO `reservation` (`id`, `date_start`, `date_end`, `stay`, `discount`, `total_price`, `FK_id_client`, `FK_id_tent`, `is_reserved`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, '2020-01-01', '2020-01-31', 'period', 0, 0, 1, 2, NULL, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, '2020-02-01', '2020-02-26', 'season', 0, 0, 2, 16, NULL, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, '2020-01-23', '2020-01-22', 'fortnight', 0, 0, 3, 13, NULL, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, '2020-01-01', '2020-01-31', 'january', 0, 0, 1, 1, NULL, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '2020-01-01', '2020-01-31', 'january', 0, 0, 2, 8, NULL, 1, '2020-01-16', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reservationxparking`
+-- Table structure for table `reservationxparking`
 --
 
 CREATE TABLE `reservationxparking` (
@@ -2178,18 +2186,17 @@ CREATE TABLE `reservationxparking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `reservationxparking`
+-- Dumping data for table `reservationxparking`
 --
 
 INSERT INTO `reservationxparking` (`FK_id_reservation`, `FK_id_parking`) VALUES
-(1, 3),
-(2, 1),
-(3, 1);
+(1, 47),
+(2, 124);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reservationxservice`
+-- Table structure for table `reservationxservice`
 --
 
 CREATE TABLE `reservationxservice` (
@@ -2197,10 +2204,18 @@ CREATE TABLE `reservationxservice` (
   `FK_id_service` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `reservationxservice`
+--
+
+INSERT INTO `reservationxservice` (`FK_id_reservation`, `FK_id_service`) VALUES
+(1, 6),
+(2, 7);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `servicexlocker`
+-- Table structure for table `servicexlocker`
 --
 
 CREATE TABLE `servicexlocker` (
@@ -2208,10 +2223,18 @@ CREATE TABLE `servicexlocker` (
   `FK_id_locker` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `servicexlocker`
+--
+
+INSERT INTO `servicexlocker` (`FK_id_service`, `FK_id_locker`) VALUES
+(6, 137),
+(6, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `servicexparasol`
+-- Table structure for table `servicexparasol`
 --
 
 CREATE TABLE `servicexparasol` (
@@ -2222,7 +2245,7 @@ CREATE TABLE `servicexparasol` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `servicexparking`
+-- Table structure for table `servicexparking`
 --
 
 CREATE TABLE `servicexparking` (
@@ -2230,10 +2253,18 @@ CREATE TABLE `servicexparking` (
   `FK_id_parking` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `servicexparking`
+--
+
+INSERT INTO `servicexparking` (`FK_id_service`, `FK_id_parking`) VALUES
+(6, 47),
+(7, 124);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `staff`
+-- Table structure for table `staff`
 --
 
 CREATE TABLE `staff` (
@@ -2261,7 +2292,7 @@ CREATE TABLE `staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `staff`
+-- Dumping data for table `staff`
 --
 
 INSERT INTO `staff` (`id`, `name`, `lastname`, `position`, `salary`, `date_start`, `date_end`, `dni`, `address`, `tel`, `shirt_size`, `pant_size`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
@@ -2269,11 +2300,11 @@ INSERT INTO `staff` (`id`, `name`, `lastname`, `position`, `salary`, `date_start
 (2, 'jose', 'pepe', 'administrador', 5000, '2020-01-17', '2020-01-31', 4040, 'calle 5', 41241, 5, 5, 1, '2020-01-10', 2, NULL, NULL, NULL, NULL, '2020-01-12', 1);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `additional_service`
+-- Indexes for table `additional_service`
 --
 ALTER TABLE `additional_service`
   ADD PRIMARY KEY (`id`),
@@ -2283,7 +2314,7 @@ ALTER TABLE `additional_service`
   ADD KEY `FK_additional_service_update_by` (`update_by`);
 
 --
--- Indices de la tabla `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`),
@@ -2295,7 +2326,7 @@ ALTER TABLE `admin`
   ADD KEY `FK_admin_update_by` (`update_by`);
 
 --
--- Indices de la tabla `beach_tent`
+-- Indexes for table `beach_tent`
 --
 ALTER TABLE `beach_tent`
   ADD PRIMARY KEY (`id`),
@@ -2303,13 +2334,13 @@ ALTER TABLE `beach_tent`
   ADD KEY `FK_id_hall_beach_tent` (`FK_id_hall`);
 
 --
--- Indices de la tabla `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `client`
+-- Indexes for table `client`
 --
 ALTER TABLE `client`
   ADD PRIMARY KEY (`id`),
@@ -2320,7 +2351,7 @@ ALTER TABLE `client`
   ADD KEY `FK_client_update_by` (`update_by`);
 
 --
--- Indices de la tabla `client_potential`
+-- Indexes for table `client_potential`
 --
 ALTER TABLE `client_potential`
   ADD PRIMARY KEY (`id`),
@@ -2331,20 +2362,19 @@ ALTER TABLE `client_potential`
   ADD KEY `FK_client_potential_update_by` (`update_by`);
 
 --
--- Indices de la tabla `hall`
+-- Indexes for table `hall`
 --
 ALTER TABLE `hall`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `locker`
+-- Indexes for table `locker`
 --
 ALTER TABLE `locker`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `locker_number` (`locker_number`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `parasol`
+-- Indexes for table `parasol`
 --
 ALTER TABLE `parasol`
   ADD PRIMARY KEY (`id`),
@@ -2352,7 +2382,7 @@ ALTER TABLE `parasol`
   ADD KEY `FK_id_hall_parasol` (`FK_id_hall`);
 
 --
--- Indices de la tabla `parking`
+-- Indexes for table `parking`
 --
 ALTER TABLE `parking`
   ADD PRIMARY KEY (`id`),
@@ -2360,13 +2390,13 @@ ALTER TABLE `parking`
   ADD KEY `FK_id_hall_parking` (`FK_id_hall`);
 
 --
--- Indices de la tabla `parking_hall`
+-- Indexes for table `parking_hall`
 --
 ALTER TABLE `parking_hall`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
@@ -2379,7 +2409,7 @@ ALTER TABLE `product`
   ADD KEY `FK_product_update_by` (`update_by`);
 
 --
--- Indices de la tabla `provider`
+-- Indexes for table `provider`
 --
 ALTER TABLE `provider`
   ADD PRIMARY KEY (`id`),
@@ -2391,14 +2421,14 @@ ALTER TABLE `provider`
   ADD KEY `FK_provider_update_by` (`update_by`);
 
 --
--- Indices de la tabla `providerxproduct`
+-- Indexes for table `providerxproduct`
 --
 ALTER TABLE `providerxproduct`
   ADD KEY `FK_id_provider_providerxproduct` (`FK_id_provider`),
   ADD KEY `FK_id_product_providerxproduct` (`FK_id_product`);
 
 --
--- Indices de la tabla `reservation`
+-- Indexes for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`id`),
@@ -2410,42 +2440,42 @@ ALTER TABLE `reservation`
   ADD KEY `FK_reservation_update_by` (`update_by`);
 
 --
--- Indices de la tabla `reservationxparking`
+-- Indexes for table `reservationxparking`
 --
 ALTER TABLE `reservationxparking`
   ADD KEY `FK_id_reservation_reservationxparking` (`FK_id_reservation`),
   ADD KEY `FK_id_parking_reservationxparking` (`FK_id_parking`);
 
 --
--- Indices de la tabla `reservationxservice`
+-- Indexes for table `reservationxservice`
 --
 ALTER TABLE `reservationxservice`
   ADD KEY `FK_id_reservation_reservationxservice` (`FK_id_reservation`),
   ADD KEY `FK_id_service_reservationxservice` (`FK_id_service`);
 
 --
--- Indices de la tabla `servicexlocker`
+-- Indexes for table `servicexlocker`
 --
 ALTER TABLE `servicexlocker`
   ADD KEY `FK_id_service_servicexlocker` (`FK_id_service`),
   ADD KEY `FK_id_locker_servicexlocker` (`FK_id_locker`);
 
 --
--- Indices de la tabla `servicexparasol`
+-- Indexes for table `servicexparasol`
 --
 ALTER TABLE `servicexparasol`
   ADD KEY `FK_id_service_servicexparasol` (`FK_id_service`),
   ADD KEY `FK_id_parasol_servicexparasol` (`FK_id_parasol`);
 
 --
--- Indices de la tabla `servicexparking`
+-- Indexes for table `servicexparking`
 --
 ALTER TABLE `servicexparking`
   ADD KEY `FK_id_service_servicexparking` (`FK_id_service`),
   ADD KEY `FK_id_parking_servicexparking` (`FK_id_parking`);
 
 --
--- Indices de la tabla `staff`
+-- Indexes for table `staff`
 --
 ALTER TABLE `staff`
   ADD PRIMARY KEY (`id`),
@@ -2455,105 +2485,105 @@ ALTER TABLE `staff`
   ADD KEY `FK_staff_update_by` (`update_by`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `additional_service`
+-- AUTO_INCREMENT for table `additional_service`
 --
 ALTER TABLE `additional_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `beach_tent`
+-- AUTO_INCREMENT for table `beach_tent`
 --
 ALTER TABLE `beach_tent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
 
 --
--- AUTO_INCREMENT de la tabla `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `client`
+-- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `client_potential`
+-- AUTO_INCREMENT for table `client_potential`
 --
 ALTER TABLE `client_potential`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `hall`
+-- AUTO_INCREMENT for table `hall`
 --
 ALTER TABLE `hall`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `locker`
+-- AUTO_INCREMENT for table `locker`
 --
 ALTER TABLE `locker`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 
 --
--- AUTO_INCREMENT de la tabla `parasol`
+-- AUTO_INCREMENT for table `parasol`
 --
 ALTER TABLE `parasol`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT de la tabla `parking`
+-- AUTO_INCREMENT for table `parking`
 --
 ALTER TABLE `parking`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
 
 --
--- AUTO_INCREMENT de la tabla `parking_hall`
+-- AUTO_INCREMENT for table `parking_hall`
 --
 ALTER TABLE `parking_hall`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `provider`
+-- AUTO_INCREMENT for table `provider`
 --
 ALTER TABLE `provider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT de la tabla `reservation`
+-- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `staff`
+-- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `additional_service`
+-- Constraints for table `additional_service`
 --
 ALTER TABLE `additional_service`
   ADD CONSTRAINT `FK_additional_service_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
@@ -2562,7 +2592,7 @@ ALTER TABLE `additional_service`
   ADD CONSTRAINT `FK_additional_service_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
--- Filtros para la tabla `admin`
+-- Constraints for table `admin`
 --
 ALTER TABLE `admin`
   ADD CONSTRAINT `FK_admin_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
@@ -2571,13 +2601,13 @@ ALTER TABLE `admin`
   ADD CONSTRAINT `FK_admin_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
--- Filtros para la tabla `beach_tent`
+-- Constraints for table `beach_tent`
 --
 ALTER TABLE `beach_tent`
   ADD CONSTRAINT `FK_id_hall_beach_tent` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`);
 
 --
--- Filtros para la tabla `client`
+-- Constraints for table `client`
 --
 ALTER TABLE `client`
   ADD CONSTRAINT `FK_client_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
@@ -2586,7 +2616,7 @@ ALTER TABLE `client`
   ADD CONSTRAINT `FK_client_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
--- Filtros para la tabla `client_potential`
+-- Constraints for table `client_potential`
 --
 ALTER TABLE `client_potential`
   ADD CONSTRAINT `FK_client_potential_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
@@ -2595,19 +2625,19 @@ ALTER TABLE `client_potential`
   ADD CONSTRAINT `FK_client_potential_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
--- Filtros para la tabla `parasol`
+-- Constraints for table `parasol`
 --
 ALTER TABLE `parasol`
   ADD CONSTRAINT `FK_id_hall_parasol` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`);
 
 --
--- Filtros para la tabla `parking`
+-- Constraints for table `parking`
 --
 ALTER TABLE `parking`
   ADD CONSTRAINT `FK_id_hall_parking` FOREIGN KEY (`FK_id_hall`) REFERENCES `parking_hall` (`id`);
 
 --
--- Filtros para la tabla `product`
+-- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `FK_id_category_product` FOREIGN KEY (`FK_id_category`) REFERENCES `category` (`id`),
@@ -2619,7 +2649,7 @@ ALTER TABLE `product`
   ADD CONSTRAINT `FK_product_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
--- Filtros para la tabla `provider`
+-- Constraints for table `provider`
 --
 ALTER TABLE `provider`
   ADD CONSTRAINT `FK_provider_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
@@ -2628,14 +2658,14 @@ ALTER TABLE `provider`
   ADD CONSTRAINT `FK_provider_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
--- Filtros para la tabla `providerxproduct`
+-- Constraints for table `providerxproduct`
 --
 ALTER TABLE `providerxproduct`
   ADD CONSTRAINT `FK_id_product_providerxproduct` FOREIGN KEY (`FK_id_product`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `FK_id_provider_providerxproduct` FOREIGN KEY (`FK_id_provider`) REFERENCES `provider` (`id`);
 
 --
--- Filtros para la tabla `reservation`
+-- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `FK_id_client_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),
@@ -2646,42 +2676,42 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `FK_reservation_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`);
 
 --
--- Filtros para la tabla `reservationxparking`
+-- Constraints for table `reservationxparking`
 --
 ALTER TABLE `reservationxparking`
   ADD CONSTRAINT `FK_id_parking_reservationxparking` FOREIGN KEY (`FK_id_parking`) REFERENCES `parking` (`id`),
   ADD CONSTRAINT `FK_id_reservation_reservationxparking` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`);
 
 --
--- Filtros para la tabla `reservationxservice`
+-- Constraints for table `reservationxservice`
 --
 ALTER TABLE `reservationxservice`
   ADD CONSTRAINT `FK_id_reservation_reservationxservice` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`id`),
   ADD CONSTRAINT `FK_id_service_reservationxservice` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
--- Filtros para la tabla `servicexlocker`
+-- Constraints for table `servicexlocker`
 --
 ALTER TABLE `servicexlocker`
   ADD CONSTRAINT `FK_id_locker_servicexlocker` FOREIGN KEY (`FK_id_locker`) REFERENCES `locker` (`id`),
   ADD CONSTRAINT `FK_id_service_servicexlocker` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
--- Filtros para la tabla `servicexparasol`
+-- Constraints for table `servicexparasol`
 --
 ALTER TABLE `servicexparasol`
   ADD CONSTRAINT `FK_id_parasol_servicexparasol` FOREIGN KEY (`FK_id_parasol`) REFERENCES `parasol` (`id`),
   ADD CONSTRAINT `FK_id_service_servicexparasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
--- Filtros para la tabla `servicexparking`
+-- Constraints for table `servicexparking`
 --
 ALTER TABLE `servicexparking`
   ADD CONSTRAINT `FK_id_parking_servicexparking` FOREIGN KEY (`FK_id_parking`) REFERENCES `parking` (`id`),
   ADD CONSTRAINT `FK_id_service_servicexparking` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`);
 
 --
--- Filtros para la tabla `staff`
+-- Constraints for table `staff`
 --
 ALTER TABLE `staff`
   ADD CONSTRAINT `FK_staff_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
