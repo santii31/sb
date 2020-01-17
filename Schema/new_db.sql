@@ -1604,7 +1604,7 @@ CREATE PROCEDURE parasol_getAll ()
 BEGIN
 	SELECT *
     FROM `parasol` 
-    ORDER BY price ASC;
+    ORDER BY parasol_number ASC;
 END$$
 
 
