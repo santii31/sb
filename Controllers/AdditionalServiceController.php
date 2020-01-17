@@ -160,7 +160,6 @@
         }*/
 
         public function addParasol($id_parasol = "",$id_reserve) {
-            
             if (!empty($id_parasol)) {
                 $total = 0;
                 $flag=0;
