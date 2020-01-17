@@ -253,7 +253,7 @@ DROP procedure IF EXISTS `client_getAll`;
 DELIMITER $$
 CREATE PROCEDURE client_getAll ()
 BEGIN
-	SELECT * FROM `client` ORDER BY dni ASC;
+	SELECT * FROM `client` ORDER BY id ASC;
 END$$
 
 

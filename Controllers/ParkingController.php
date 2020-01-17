@@ -154,7 +154,7 @@
                     }
 
                 } else {                                 
-                    return $this->parkingMap($reservation, "El estacionamiento seleccionado se encuentra reservado.");
+                    return $this->parkingMap($reservation, PARKING_ERROR);
                 }                
             }
         }

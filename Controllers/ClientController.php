@@ -208,6 +208,87 @@
             return $this->clientDAO->add($client, $admin);
         }
 
+        // prueba ajax
+        public function getAllNames() {            
+            $clients = $this->clientDAO->getAll();
+            $fullName_list = array();
+
+            $c = new Client();
+
+            foreach ($clients as $client) {
+                $c->setName($client->getName());
+                $c->setLastName($client->getLastName());
+                // $fullName = $client->getName() . ' ' . $client->getLastName();
+                array_push($fullName_list, $c);                
+            }
+  
+            $jsonFullNames = json_encode($fullName_list, JSON_PRETTY_PRINT);
+
+            echo '<pre>';
+            var_dump($jsonFullNames);
+            echo '</pre>';
+
+            return $jsonFullNames;
+        }
+
+        public function ajaxPath($alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {                       
+                $title = "ajax test";
+                require_once(VIEWS_PATH . "head.php");                
+                require_once(VIEWS_PATH . "ajax.php");
+                require_once(VIEWS_PATH . "footer.php");                
+			} else {
+				return $this->adminController->userPath();
+			}
+        }
+
+        public function searchFullNames($query) {                    
+            $clients = $this->clientDAO->getAll();            
+
+            // echo '<pre>';
+            // var_dump($clients);
+            // echo '</pre>';
+
+            $hint = "";
+
+            if ($query !== "") {
+            
+                $query = strtolower($query);
+                $len = strlen($query);
+                                
+                foreach ($clients as $client) {      
+                    
+                    // echo '<pre>';
+                    // echo '------<br>';
+                    // var_dump($client);
+                    // echo '------';
+                    // echo '</pre>';                    
+                    // var_dump($f_name_temp);
+                    // $f_name = $client->getName() . ' ' . $client->getLastName();                                        
+
+                    $f_name_temp = $client->getName() . ' ' . $client->getLastName();
+
+                    echo '<pre>';
+                    var_dump($f_name_temp);
+                    echo '<br>-----<br>';
+                    var_dump($query);
+                    echo '</pre>';
+
+                    if (stristr($query, substr($f_name_temp, 0, $len))) {
+                        // if ($hint === "") {
+                        //     $hint = $f_name_temp;
+                        // } else {
+                        //     $hint .= ", $f_name_temp";
+                        // }
+                    }
+
+                }
+            }
+
+            // Output "no suggestion" if no hint was found or output correct values
+            echo $hint === "" ? "no suggestion" : $hint;
+        }
+
     }
         
 ?>

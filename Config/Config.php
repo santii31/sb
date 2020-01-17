@@ -65,6 +65,7 @@
 	define("PRODUCT_DISABLE", "Producto deshabilitado con éxito.");
 	define("PRODUCT_ENABLE", "Producto habilitado con éxito.");
 	define("PRODUCT_UPDATE", "Producto modificado con éxito.");
+	
 	define("STOCK_ADDED", "Stock agregado con exito.");
 	define("STOCK_REMOVE", "Stock removido con exito.");
 	define("STOCK_REMOVE_ERROR", "No puede quitar mas de lo que tiene.");
@@ -79,5 +80,6 @@
 	define("RESERVATION_ADDED", "Reserva añadida con éxito.");
 	define("RESERVATION_ERROR", "Carpa reservada durante estas fechas.");		
 		
+	define("PARKING_ERROR", "El estacionamiento seleccionado se encuentra reservado.");		
 
 ?>

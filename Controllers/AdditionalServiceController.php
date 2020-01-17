@@ -253,6 +253,7 @@
 			}
         }
 
+        // 
         public function chose($answer, $id_reserve){
             if (!empty($answer) && !empty($id_reserve)){
                 if($answer == "yes"){

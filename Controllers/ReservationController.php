@@ -38,16 +38,27 @@
                                             
             $this->clientController = new ClientController();                              
             
+            $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+            $l_name_s = filter_var($l_name, FILTER_SANITIZE_STRING);
+            $addr_s = filter_var($addr, FILTER_SANITIZE_STRING);
+            $city_s = filter_var($city, FILTER_SANITIZE_STRING);
+            $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);            
+            
+            // esto es un string? preguntar
+            // $fam_s = filter_var($fam, FILTER_SANITIZE_STRING);        
+            
+            $addrStayl_s = filter_var($addrStay, FILTER_SANITIZE_STRING);
+
             $client = new Client();
-            $client->setName($name);
-            $client->setLastName($l_name);
-            $client->setAddress($addr);            
-            $client->setCity($city);
+            $client->setName( strtolower($name_s) );
+            $client->setLastName( strtolower($l_name_s) );
+            $client->setAddress( strtolower($addr_s) );            
+            $client->setCity( strtolower($city_s) );
             $client->setCp($cp);
-            $client->setEmail($email);
+            $client->setEmail($email_s);
             $client->setPhone($phone);
-            $client->setFamilyGroup($fam);
-            $client->setStayAddress($addrStay);
+            $client->setFamilyGroup( strtolower($fam) );                
+            $client->setStayAddress( strtolower($addrStayl_s) );
             $client->setPhoneStay($phone2);                            
 
             $register_by = $this->adminController->isLogged();
