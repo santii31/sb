@@ -64,8 +64,8 @@
                     
                     $parasol = new Parasol();
                     $parasol->setId($row["parasol_id"]);
-                    $parasol->setChestNumber($row["parasol_number"]);
-                    $parasol->setPrice($row["parasol_price"]);
+                    $parasol->setParasolNumber($row["parasol_number"]);
+					$parasol->setPrice($row["parasol_price"]);
                     
                     array_push($this->parasolList, $parasol);
 				}

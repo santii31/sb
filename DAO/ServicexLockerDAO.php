@@ -65,7 +65,8 @@
                     $locker = new Locker();
                     $locker->setId($row["locker_id"]);
                     $locker->setLockerNumber($row["locker_number"]);
-                    $locker->setPrice($row["locker_price"]);
+					$locker->setPrice($row["locker_price"]);
+					$locker->setSex($row["locker_sex"]);
                     
                     array_push($this->lockerList, $locker);
 				}

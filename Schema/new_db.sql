@@ -1991,7 +1991,8 @@ CREATE PROCEDURE servicexlocker_getLockerByService (IN id_service INT)
 BEGIN
 	SELECT locker.id AS locker_id,
            locker.locker_number AS locker_number,
-           locker.price AS locker_price
+           locker.price AS locker_price,
+           locker.sex AS locker_sex
 	FROM servicexlocker
 	INNER JOIN locker ON servicexlocker.FK_id_locker = locker.id
 	

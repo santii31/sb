@@ -54,6 +54,7 @@
                             <th>Carpa</th>
                             <th>Locker</th>
                             <th>Sombrilla</th>
+                            <th>Cochera</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
@@ -68,12 +69,13 @@
                                     <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
                                     
                                     <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
+                                        <?php echo $service->getId(); ?>
                                         <?php if ($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())): ?>                 
                                             <td>
                                                 <ul>
                                                     <?php foreach ($lockers as $locker): ?>
                                                         <li>
-                                                            • <?= $locker->getLockerNumber(); ?> 
+                                                            • <?= $locker->getLockerNumber() . "(" .$locker->getSex() . ")" ; ?> 
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
@@ -91,7 +93,7 @@
                                                 <ul>
                                                     <?php foreach ($parasoles as $parasol): ?>
                                                         <li>
-                                                            • <?= $parasol->getLockerNumber(); ?> 
+                                                            • <?= $parasol->getParasolNumber(); ?> 
                                                         </li>
                                                     <?php endforeach; ?>                                            
                                                 </ul>
@@ -103,6 +105,24 @@
                                         <td>N/A</td>
                                     <?php endif; ?>
 
+                                    <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
+                                        <?php if ($parkings = $this->servicexparkingDAO->getParkingByService($service->getId())): ?>                 
+                                            <td>
+                                                <ul>
+                                                    <?php foreach ($parkings as $parking): ?>
+                                                        <li>
+                                                            • <?= $parking->getNumber(); ?> 
+                                                        </li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            </td>
+                                        <?php else: ?>
+                                            <td> N/A </td>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <td> N/A </td>
+                                    <?php endif; ?>
+
                                     <td class="actions">
                                         <a href="<?= FRONT_ROOT ?>additionalService/addLockerPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left"></i>
@@ -112,6 +132,10 @@
                                         <a href="<?= FRONT_ROOT ?>additionalService/addParasolPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
                                             <i class="material-icons left"></i>
                                             Agregar sombrilla
+                                        </a>  
+                                        <a href="<?= FRONT_ROOT ?>reservation/parkingMap/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                            <i class="material-icons left"></i>
+                                            Agregar cochera
                                         </a>                                        
                                     </td>               
                                          
