@@ -25,10 +25,10 @@
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
 					$parasolTemp = new Parasol();
-                    $parasol->setId($row["id"]);
-                    $parasol->setParasolNumber($row["parasol_number"]);
-                    $parasol->setPrice($row["price"]);                                    					
-					$parasol->setPosition($row["position"]);
+                    $parasolTemp->setId($row["id"]);
+                    $parasolTemp->setParasolNumber($row["parasol_number"]);
+                    $parasolTemp->setPrice($row["price"]);                                    					
+					$parasolTemp->setPosition($row["position"]);
                     
 				}
 				return $parasolTemp;

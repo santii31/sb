@@ -10,6 +10,7 @@
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
+    use DAO\ServicexParkingDAO as ServicexParkingDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\ParkingController as ParkingController;    
@@ -23,6 +24,7 @@
         private $reservationxserviceDAO;
         private $servicexlockerDAO;
         private $servicexparasolDAO;      
+        private $servicexparkingDAO;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();                                    
@@ -30,6 +32,7 @@
             $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
+            $this->servicexparkingDAO = new ServicexParkingDAO();
         }               
 
 
@@ -155,6 +158,8 @@
         public function listReservationPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Reservas";
+                $flag1=0;
+                $flag2=0;
                 $reservations = $this->reservationDAO->getAll();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");

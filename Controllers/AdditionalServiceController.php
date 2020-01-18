@@ -155,8 +155,12 @@
             }
         }*/
 
+<<<<<<< HEAD
         public function addParasol($id_parasol = "", $id_reserve) {
             
+=======
+        public function addParasol($id_parasol = "",$id_reserve) {
+>>>>>>> c4aa6e748157aa4c2c151fd11a9d02fb78d708d7
             if (!empty($id_parasol)) {
                 $total = 0;
                 $flag=0;
