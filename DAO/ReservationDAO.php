@@ -83,11 +83,10 @@
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
-				return false;
-				//echo $e;
+				// return false;
+				echo $e;
 			}
 		}
-
 
 		public function getAllByClientId($client_id) {
 			try {
@@ -197,7 +196,7 @@
 				$query = "CALL reservation_disableById(?)";
 				$parameters["id"] = $reservation->getId();
 				$parameters["date_register"] = date("Y-m-d");
-				$parameters["disable_by"] = $registerBy->getId();
+				$parameters["disable_by"] = $disableBy->getId();
 				$this->connection = Connection::GetInstance();
 				$this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 				return true;
@@ -230,6 +229,7 @@
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();  
+				$parameters["id"] = $reservation->getId();  
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
 			} catch (Exception $e) {
@@ -247,6 +247,7 @@
 				foreach ($results as $row) {		
 					
 					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
 					$reservation->setDateStart($row["reservation_dateStart"]);
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
 					$reservation->setStay($row["reservation_stay"]);

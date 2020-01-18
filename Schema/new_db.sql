@@ -130,16 +130,39 @@ BEGIN
     WHERE `admin`.`id` = id;	
 END$$
 
+
+DROP procedure IF EXISTS `admin_checkEmail`;
+DELIMITER $$
+CREATE PROCEDURE admin_checkEmail (
+                                        IN id INT,
+                                        IN email VARCHAR(255)
+                                    )
+BEGIN
+    SELECT `admin`.`id` FROM `admin` WHERE `admin`.`email` = email AND `admin`.`id` != id;	
+END$$
+
+
+DROP procedure IF EXISTS `admin_checkDni`;
+DELIMITER $$
+CREATE PROCEDURE admin_checkDni (
+                                        IN id INT,
+                                        IN dni INT
+                                    )
+BEGIN
+    SELECT `admin`.`id` FROM `admin` WHERE `admin`.`dni` = dni AND `admin`.`id` != id;	
+END$$
+
+
 DROP procedure IF EXISTS `admin_update`;
 DELIMITER $$
 CREATE PROCEDURE admin_update (
                                     IN name VARCHAR(255),
                                     IN lastname VARCHAR(255),
-                                    IN dni VARCHAR(255),
-                                    IN email VARCHAR(255),
-                                    IN password VARCHAR(255),
+                                    IN dni INT,
+                                    IN email VARCHAR(255),                                    
                                     IN date_update DATE,
-                                    IN update_by INT
+                                    IN update_by INT,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `admin` 
@@ -147,8 +170,7 @@ BEGIN
         `admin`.`name` = name, 
         `admin`.`lastname` = lastname,
         `admin`.`dni` = dni,
-        `admin`.`email` = email,
-        `admin`.`password` = password,
+        `admin`.`email` = email,        
         `admin`.`date_update` = date_update,
         `admin`.`update_by` = update_by    
     WHERE 
@@ -486,7 +508,8 @@ CREATE PROCEDURE client_potential_update (
                                             IN tel INT, 
                                             IN num_tent INT,                                                           
                                             IN date_update DATE,
-                                            IN update_by INT
+                                            IN update_by INT,
+                                            IN id INT
                                         )
 BEGIN
     UPDATE `client_potential` 

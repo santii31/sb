@@ -126,7 +126,7 @@
                                                     <p class="no-reservation z-depth-4">
                                                         <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                             <i class="material-icons">info_outline</i>
-                                                            El Estacionamiento tiene futuras reservas
+                                                            El estacionamiento tiene futuras reservas
                                                             <div class="future-reservation-parking">
                                                                 <?php foreach ($f_rsv as $rsv): ?>
                                                                 <div>
@@ -272,7 +272,7 @@
                                                         <p class="no-reservation z-depth-4">
                                                             <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                 <i class="material-icons">info_outline</i>
-                                                                El Estacionamiento tiene futuras reservas
+                                                                El estacionamiento tiene futuras reservas
                                                                 <div class="future-reservation-parking">
                                                                     <?php foreach ($f_rsv as $rsv): ?>
                                                                     <div>
@@ -414,7 +414,7 @@
                                                             <p class="no-reservation z-depth-4">
                                                                 <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                     <i class="material-icons">info_outline</i>
-                                                                    El Estacionamiento tiene futuras reservas
+                                                                    El estacionamiento tiene futuras reservas
                                                                     <div class="future-reservation-parking">
                                                                         <?php foreach ($f_rsv as $rsv): ?>
                                                                         <div>
@@ -561,7 +561,7 @@
                                                                 <p class="no-reservation z-depth-4">
                                                                     <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                         <i class="material-icons">info_outline</i>
-                                                                        El Estacionamiento tiene futuras reservas
+                                                                        El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
                                                                             <div>
@@ -701,7 +701,7 @@
                                                                 <p class="no-reservation z-depth-4">
                                                                     <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                         <i class="material-icons">info_outline</i>
-                                                                        El Estacionamiento tiene futuras reservas
+                                                                        El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
                                                                             <div>
@@ -844,7 +844,7 @@
                                                             <p class="no-reservation z-depth-4">
                                                                 <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                     <i class="material-icons">info_outline</i>
-                                                                    El Estacionamiento tiene futuras reservas
+                                                                    El estacionamiento tiene futuras reservas
                                                                     <div class="future-reservation-parking">
                                                                         <?php foreach ($f_rsv as $rsv): ?>
                                                                         <div>
@@ -987,7 +987,7 @@
                                                                 <p class="no-reservation z-depth-4">
                                                                     <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                         <i class="material-icons">info_outline</i>
-                                                                        El Estacionamiento tiene futuras reservas
+                                                                        El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
                                                                             <div>
@@ -1128,7 +1128,7 @@
                                                                 <p class="no-reservation z-depth-4">
                                                                     <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                         <i class="material-icons">info_outline</i>
-                                                                        El Estacionamiento tiene futuras reservas
+                                                                        El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
                                                                             <div>
@@ -1271,7 +1271,7 @@
                                                             <p class="no-reservation z-depth-4">
                                                                 <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                                     <i class="material-icons">info_outline</i>
-                                                                    El Estacionamiento tiene futuras reservas
+                                                                    El estacionamiento tiene futuras reservas
                                                                     <div class="future-reservation-parking">
                                                                         <?php foreach ($f_rsv as $rsv): ?>
                                                                         <div>
@@ -1416,7 +1416,7 @@
                                                     <p class="no-reservation z-depth-4">
                                                         <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
                                                             <i class="material-icons">info_outline</i>
-                                                            El Estacionamiento tiene futuras reservas
+                                                            El estacionamiento tiene futuras reservas
                                                             <div class="future-reservation-parking">
                                                                 <?php foreach ($f_rsv as $rsv): ?>
                                                                 <div>

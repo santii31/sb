@@ -93,9 +93,10 @@
             $futureReserve = array();
             $reserveList = $this->reservationController->getByIdTent($id_tent);
             $today = date("Y-m-d");
-            $dateToCompare = strtotime( $today );
+            $dateToCompare = strtotime( $today );            
+            
             foreach ($reserveList as $reserve) {                
-                $reserveDate = strtotime($reserve->getDateStart());
+                $reserveDate = strtotime( $reserve->getDateStart() );
                 if ($reserveDate > $dateToCompare) {
                     array_push($futureReserve, $reserve);
                 }                

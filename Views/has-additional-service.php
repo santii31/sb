@@ -36,21 +36,21 @@
 
                         <div class="row center-align">
                             <div class="input-field col s6">
-                            <p>
-                                <label>
-                                    <input id="last_name" type="radio" name="answer" class="with-gap" value="yes">
-                                    <span>Si</span>
-                                </label>
-                            </p>
-                                
-                            </div>
-                            <div class="input-field col s6">
-                            <p>
-                                <label>
-                                    <input id="last_name" type="radio" name="answer" class="with-gap" value="no">
-                                    <span>No</span>
-                                </label>
-                            </p>
+                                <p>
+                                    <label>
+                                        <input id="last_name" type="radio" name="answer" class="with-gap" value="yes">
+                                        <span>Si</span>
+                                    </label>
+                                </p>
+                                    
+                                </div>
+                                <div class="input-field col s6">
+                                <p>
+                                    <label>
+                                        <input id="last_name" type="radio" name="answer" class="with-gap" value="no">
+                                        <span>No</span>
+                                    </label>
+                                </p>
                             </div>
 
                             <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">                                               

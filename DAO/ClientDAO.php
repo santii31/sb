@@ -188,6 +188,7 @@
 				$parameters["tel_stay"] = $client->getPhoneStay();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();	
+				$parameters["id"] = $client->getId();	
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

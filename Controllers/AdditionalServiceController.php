@@ -82,9 +82,7 @@
             }
             
         }*/
-
-        
-        
+                
 
         public function addLocker($id_locker_man = "", $id_locker_woman = "",$id_reserve) {
             
@@ -121,9 +119,7 @@
                     $servicexlocker->setIdLocker($locker->getId());
                     $this->servicexlockerDAO->add($servicexlocker);
                     $flag++;
-                }
-                
-                
+                }                                
             }
             if ($flag > 0) {
                 return false;
@@ -159,18 +155,18 @@
             }
         }*/
 
-        public function addParasol($id_parasol = "",$id_reserve) {
+        public function addParasol($id_parasol = "", $id_reserve) {
             
             if (!empty($id_parasol)) {
                 $total = 0;
                 $flag=0;
                 $service = $this->reservationxserviceDAO->getServiceByReservation($id_reserve);
-                 
+                    
                 $parasolTemp = new Parasol();
                 $servicexparasol = new ServicexParasol();
                 $parasolTemp->setId($id_parasol);
                 $parasol = $this->parasolDAO->getById($parasolTemp);
-                     
+                        
                 $total = $service->getTotal() + $parasol->getPrice();
                 $service->setTotal($total);
                 $update_by = $this->adminController->isLogged();
@@ -178,19 +174,15 @@
                 $servicexparasol->setIdService($service->getId());
                 $servicexparasol->setIdParasol($parasol->getId());
                 $this->servicexparasolDAO->add($servicexparasol);
-                $flag++;
-                 
-             }
-             if ($flag > 0) {
-                 return false;
-             } else {
-                 return true;
-             }
-         }
-        
-
-        
-
+                $flag++;                
+            }
+            if ($flag > 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+            
         public function hasAdditionalService($id_reservation, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {                                       
                 if (!empty($id_reservation)){ 
@@ -208,9 +200,11 @@
         // 
         public function chose($answer, $id_reserve){
             if (!empty($answer) && !empty($id_reserve)){
-                if($answer == "yes"){
+                if ($answer == "yes"){
                     $this->addSelectServicePath($id_reserve, null, null);
-                }else{}
+                } else {
+                    // vista a pagar
+                }
             }
         }
 
@@ -226,9 +220,7 @@
             }
 
         }
-
              
-
         public function addSelectServicePath($id_reservation = "", $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione servicio adicional";
@@ -314,8 +306,6 @@
                 return $this->adminController->userPath();
 			}
         }
-
-
 
         public function addParasolPath($id_reservation = "", $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {

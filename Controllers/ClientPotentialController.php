@@ -157,6 +157,7 @@
                     $city_s = filter_var($city, FILTER_SANITIZE_STRING);            
         
                     $client = new ClientPotential();            
+                    $client->setId($id);
                     $client->setName( strtolower($name_s) );
                     $client->setLastName( strtolower($lastname_s) );
                     $client->setAddress( strtolower($address_s) );

@@ -316,20 +316,21 @@ nav .input-field label.active i {
 }
 
 .green {
-    background-color: seagreen;
+    background-color: seagreen !important;
 }
 
 .yellow {
-    background-color: yellow;
+    background-color: yellow !important;
 }
 
 .orange {
-    background-color: orange;
+    background-color: orange !important;
 }
 
 .blue {
-    background-color: dodgerblue;
+    background-color: dodgerblue !important;
 }
+
 
 /* Beach map container */
 .beach-map {                

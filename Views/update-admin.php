@@ -44,13 +44,7 @@
                                 <input id="dni" type="number" name="dni" class="validate" value="<?= $adm->getDni(); ?>" required>
                                 <label for="dni">DNI</label>
                             </div>                                                         
-                        </div>                        
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="contraseña" type="password" name="password" class="validate" required>
-                                <label for="contraseña">Contraseña</label>
-                            </div>                                                             
-                        </div>                     
+                        </div>                                           
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Modificar

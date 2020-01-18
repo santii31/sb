@@ -193,21 +193,22 @@
             }                
         }       
 
-        public function updatePath($id_reservation, $alert = "") {
-            if ($reservation = $this->reservationController->isLogged()) {      
+        public function updatePath($id_reservation, $alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {      
                 $title = "Reserva - Modificar informacion";       
                 $reservationTemp = new Reservation();
                 $reservationTemp->setId($id_reservation);                
-                $reservation = $this->reservationDAO->getById($reservationTemp);                    
+                $reservation = $this->reservationDAO->getById($reservationTemp);               
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "update-reservation.php");
+                require_once(VIEWS_PATH . "update-reserve.php");
                 require_once(VIEWS_PATH . "footer.php");                
             } else {
                 return $this->adminController->userPath();
             }           
         }
 
+        // aca
         public function update($id, $stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) {    
             
             if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {     
@@ -218,7 +219,8 @@
 
 				if ($this->reservationDAO->checkDateStart($reservationTemp) == null) {                                                           
                     
-                    $reservation = new Reservation();            
+                    $reservation = new Reservation();  
+                    $reservation->setId($id);
                     $reservation->setDateStart($date_start);
                     $reservation->setDateEnd($date_end);
                     $reservation->setPrice($total_price);
@@ -246,9 +248,9 @@
             $dateToCompare = strtotime( $today );
 
             if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
-                $reservation->setIsReserved(true);                   
+                $reservation->setIsReserved(true);                                   
                 return $reservation;
-            }
+            }            
             return false;
         }
 

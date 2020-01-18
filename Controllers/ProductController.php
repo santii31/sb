@@ -151,7 +151,7 @@
             }           
         }
 
-        public function update($id_category, $name, $price, $quantity) {      
+        public function update($id, $id_category, $name, $price, $quantity) {      
             
             if ($this->isFormRegisterNotEmpty($id_category, $name, $price, $quantity)) {     
                 

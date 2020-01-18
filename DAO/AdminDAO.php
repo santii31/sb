@@ -158,22 +158,51 @@
 			catch (Exception $e) {
 				return false;
 			}
-		}		
+		}	
+		
+		public function checkEmail(Admin $admin) {
+			try {
+				$query = "CALL admin_checkEmail(?, ?)";
+				$parameters["email"] = $admin->getEmail();
+				$parameters["id"] = $admin->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
 
-		public function update(Provider $provider, Admin $updateBy) {
+		public function checkDni(Admin $admin) {
+			try {
+				$query = "CALL admin_checkDni(?, ?)";
+				$parameters["dni"] = $admin->getDni();
+				$parameters["id"] = $admin->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
+		public function update(Admin $admin, Admin $updateBy) {
 			try {								
 				$query = "CALL admin_update(?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $admin->getName();
 				$parameters["lastname"] = $admin->getLastName();
 				$parameters["dni"] = $admin->getDni();
-				$parameters["email"] = $admin->getEmail();
-                $parameters["password"] = $admin->getPassword();	
+				$parameters["email"] = $admin->getEmail();                	
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();
+				$parameters["id"] = $admin->getId();
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}
 		

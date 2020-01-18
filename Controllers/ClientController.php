@@ -153,7 +153,7 @@
             }           
         }
 
-        public function update($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {      
+        public function update($id, $name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {      
             
             if ($this->isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address,                                            $tel_stay)) {    
                 
@@ -171,7 +171,8 @@
                     $family_group_s = filter_var($family_group, FILTER_SANITIZE_STRING);
                     $stay_address_s = filter_var($stay_address, FILTER_SANITIZE_STRING);
         
-                    $client = new Client();            
+                    $client = new Client();    
+                    $client->setId($Id);
                     $client->setName( strtolower($name_s) );
                     $client->setLastName( strtolower($lastname_s) );
                     $client->setStay( strtolower($stay_s) );

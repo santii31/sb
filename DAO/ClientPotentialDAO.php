@@ -158,7 +158,7 @@
 
 		public function update(ClientPotential $client, Admin $updateBy) {
 			try {								
-				$query = "CALL client_potential_update(?, ?, ?, ?, ?, ?, ?, ?, ?)";		
+				$query = "CALL client_potential_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();
 				$parameters["address"] = $client->getAddress();
@@ -168,6 +168,7 @@
 				$parameters["num_tent"] = $client->getNumTent();            		
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();	
+				$parameters["id"] = $client->getId();
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

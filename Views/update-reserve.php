@@ -60,65 +60,15 @@
                                 <label>Estadia</label>  
                             </div>  
                             <div class="input-field col s4">
-                                <input id="start" type="Date" name="start" class="validate" required>
+                                <input id="start" type="Date" name="start" class="validate" value="<?= $reservation->getDateStart(); ?>" required>
                                 <label for="start">Fecha de ingreso</label>
                             </div>
 
                             <div class="input-field col s4">
-                                <input id="end" type="Date" name="end" class="validate" required>
+                                <input id="end" type="Date" name="end" class="validate" value="<?= $reservation->getDateEnd(); ?>" required>
                                 <label for="end">Fecha de egreso</label>
                             </div>                            
-                        </div>      
-
-                        <div class="row">                        
-                            <div class="input-field col s6">
-                                <input id="name" type="text" name="name" class="validate" required>
-                                <label for="name">Nombre</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input id="l_name" type="text" name="l_name" class="validate" required>
-                                <label for="l_name">Apellido</label>
-                            </div>                                                                          
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s4">
-                                <input id="addr" type="text" name="addr" class="validate" required>
-                                <label for="addr">Domicilio</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="city" type="text" name="city" class="validate" required>
-                                <label for="city">Ciudad</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="cp" type="number" name="cp" class="validate" required>
-                                <label for="cp">Codigo Postal</label>
-                            </div>                                                        
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s8">
-                                <input id="email" type="email" name="email" class="validate" required>
-                                <label for="email">Email</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="phone" type="number" name="phone" class="validate" required>
-                                <label for="phone">Telefono</label>
-                            </div>                            
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s4">
-                                <input id="fam" type="text" name="fam" class="validate" required>
-                                <label for="fam">Grupo familiar</label>
-                            </div>                            
-                            <div class="input-field col s4">
-                                <input id="addrStay" type="text" name="addrStay" class="validate">
-                                <label for="addrStay">Domicilio de estadia</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="phone2" type="number" name="phone2" class="validate">
-                                <label for="phone2">Telefono de estadia</label>
-                            </div>                                  
-                        </div>                                                                
+                        </div>                                                                   
                                                 
                         <input type="hidden" name="tent" value="<?= $id_tent ?>">
 
