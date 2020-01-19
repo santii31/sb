@@ -61,24 +61,55 @@
 
 		public function getAll() {
 			try {
-				$query = "CALL reservation_getAll()";
+				$list = array();
+				$query = "CALL tent_getAll()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
                     $beachTent = new BeachTent();
                     $beachTent->setId($row["id"]);
 					$beachTent->setNumber($row["number"]);
-					$beachTent->setPrice($row["price"]);
-                    $beachTent->setIsActive($row["is_active"]);
-                    
-					array_push($this->beachTentList, $beachTent);
+					$beachTent->setPrice($row["price"]);                                        
+					array_push($list, $beachTent);
 				}
-				return $this->beachTentList;	
+				return $list;	
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}		
+
+		public function getAllWithActualReservation($today) {
+			try {
+				$query = "CALL tent_getAllWithActualReservation(?)";
+				$parameters["today"] = $today;		
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);	
+				foreach ($results as $row) {
+					return $row["total"];
+				}
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}	
 		
+		// no use...
+		public function getAllWithoutReservation($today) {
+			try {
+				$query = "CALL tent_getAllWithoutReservation(?)";
+				$parameters["today"] = $today;		
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);	
+				foreach ($results as $row) {
+					return $row["total"];
+				}
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
  		public function getN_row($row) {
 			try {
 				$tents = array();

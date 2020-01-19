@@ -104,6 +104,49 @@
             return $futureReserve;
         }
 
+        public function stock() {
+            if ($admin = $this->adminController->isLogged()) {
+                $title = 'Carpas - Stock';
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "stock-tents.php");
+                require_once(VIEWS_PATH . "footer.php");
+
+            } else {
+                return $this->adminController->userPath();
+            }
+        }
+
+        private function getAllTents() {                       
+            return sizeof( $this->beachTentDAO->getAll() );
+        }
+
+        private function getAllTentsFreePercentage() {
+            $all = $this->getAllTents();
+            $free = $this->getAllTentsFree();
+
+            return  round ((100 * $free) / $all);
+        }
+
+        private function getAllTentsFree() {            
+            $all = $this->getAllTents();
+            $rsv = $this->getAllTentsWithReservation();            
+            $frees = $all - $rsv;
+            
+            return (int)$frees;
+        }
+
+        private function getAllTentsWithReservationPercentage() {
+            $all = $this->getAllTents();
+            $rsv = $this->getAllTentsWithReservation();
+
+            return  round ((100 * $rsv) / $all);
+        }
+
+        private function getAllTentsWithReservation() {
+            $today = date("Y-m-d");            
+            return $this->beachTentDAO->getAllWithActualReservation($today);
+        }
 
     }
     

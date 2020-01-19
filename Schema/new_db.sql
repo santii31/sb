@@ -637,8 +637,29 @@ DROP procedure IF EXISTS `tent_getAll`;
 DELIMITER $$
 CREATE PROCEDURE tent_getAll ()
 BEGIN
-	SELECT * FROM `beach_tent` ORDER BY number ASC;
-    
+	SELECT * FROM `beach_tent` ORDER BY number ASC;    
+END$$
+
+
+DROP procedure IF EXISTS `tent_getAllWithActualReservation`;
+DELIMITER $$
+CREATE PROCEDURE tent_getAllWithActualReservation (IN today DATE)
+BEGIN
+	SELECT count(*) AS total
+    FROM `beach_tent` 
+    INNER JOIN `reservation` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
+    WHERE today BETWEEN `reservation`.`date_start` AND `reservation`.`date_end`;
+END$$
+
+-- fix
+DROP procedure IF EXISTS `tent_getAllWithoutReservation`;
+DELIMITER $$
+CREATE PROCEDURE tent_getAllWithoutReservation (IN today DATE)
+BEGIN
+	SELECT count(*) AS total
+    FROM `beach_tent` 
+    INNER JOIN `reservation` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
+    WHERE today NOT BETWEEN `reservation`.`date_start` AND `reservation`.`date_end`;
 END$$
 
 

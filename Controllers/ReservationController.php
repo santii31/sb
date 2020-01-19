@@ -272,8 +272,9 @@
             $reservation->setId($id_reservation);
             return $this->reservationDAO->getById($reservation);
         }
+
+        public function getAllReservations() {
+            return $this->reservationDAO->getAll();
+        }
     }
-
-
-        
 ?>
