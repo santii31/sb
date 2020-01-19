@@ -5,10 +5,27 @@
                     <i class="material-icons left">chevron_right</i>
                     <h2>
                         <?= $title ?>
-                    </h2>
-                    <h3>Ver proveedores deshabilitados</h3>
+                    </h2>                
                 </div>
                 <div class="divider mb-divider"></div>
+
+                <div class="more-list">
+                    <?php if (isset($showAll)): ?>
+                    <a href="<?= FRONT_ROOT ?>provider/listProviderPath">                    
+                        <i class="material-icons left">arrow_forward</i>
+                        <span>
+                            Mostrar solo activos
+                        </span>    
+                    </a>
+                    <?php else: ?>
+                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath/all">                    
+                        <i class="material-icons left">arrow_forward</i>
+                        <span>
+                            Mostrar lista completa (Incluyendo los deshabilitados)
+                        </span>    
+                    </a>
+                    <?php endif; ?>
+                </div> 
 
                 <?php if ($success != null): ?>
                 <div class="row">

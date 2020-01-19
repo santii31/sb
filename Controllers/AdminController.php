@@ -130,10 +130,14 @@
             }
         }   
 
-        public function listAdminPath($alert = "", $success = "") {
+        public function listAdminPath($showAll = null, $alert = "", $success = "") {
             if ($admin = $this->isLogged()) {      
                 $title = "Administradores";
-                $admins = $this->adminDAO->getAll();
+                if ($showAll != null) {
+                    $admins = $this->adminDAO->getAll();
+                } else {
+                    $admins = $this->adminDAO->getAllActives();                    
+                }
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-admins.php");
@@ -183,9 +187,9 @@
                     $update_by = $this->isLogged();
 
                     if ($this->adminDAO->update($admin, $update_by)) {
-                        return $this->listAdminPath(null, ADMIN_UPDATE);
+                        return $this->listAdminPath(null, null, ADMIN_UPDATE);
                     } else {
-                        return $this->listAdminPath(DB_ERROR, null);        
+                        return $this->listAdminPath(null, DB_ERROR, null);        
                     }                                        
                 }                
                 return $this->updatePath($id, REGISTER_ERROR);
@@ -217,9 +221,9 @@
                 $admin_enable = new Admin();
                 $admin_enable->setId($id);
                 if ($this->adminDAO->enableById($admin_enable, $admin)) {
-                    return $this->listAdminPath(null, ADMIN_ENABLE);
+                    return $this->listAdminPath(null, null, ADMIN_ENABLE);
                 } else {
-                    return $this->listAdminPath(DB_ERROR, null);
+                    return $this->listAdminPath(null, DB_ERROR, null);
                 }
             } else {
                 return $this->userPath();
@@ -230,14 +234,14 @@
             if ($admin = $this->isLogged()) {
                 $admin = $_SESSION["loggedAdmin"];
                 if ($admin->getId() == $id) {                
-                    return $this->listAdminPath(DISABLE_YOURSELF, null);
+                    return $this->listAdminPath(null, DISABLE_YOURSELF, null);
                 } else {
                     $admin_disable = new Admin();
                     $admin_disable->setId($id);           
                     if ($this->adminDAO->disableById($admin_disable, $admin)) {
-                        return $this->listAdminPath(null, ADMIN_DISABLE);
+                        return $this->listAdminPath(null, null, ADMIN_DISABLE);
                     } else {
-                        return $this->listAdminPath(DB_ERROR, null);
+                        return $this->listAdminPath(null, DB_ERROR, null);
                     }                     
                 }
             } else {

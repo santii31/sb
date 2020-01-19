@@ -4,6 +4,21 @@ CREATE DATABASE southbeach;
 
 USE southbeach;
 
+
+----------------------------- CONFIG -----------------------------
+
+CREATE TABLE config {
+    `date_end_season` DATE NOT NULL,
+    `price_tent_season` FLOAT NOT NULL,
+    `price_tent_day` FLOAT NOT NULL,
+    `price_tent_january` FLOAT NOT NULL,
+    `price_tent_rest` FLOAT NOT NULL,   -- feriados
+    `price_tent_period` FLOAT NOT NULL, -- periodo
+    `price_tent_fortnigh` FLOAT NOT NULL -- quincena
+}
+
+
+
 ----------------------------- ADMIN -----------------------------
 
 CREATE TABLE admin (
@@ -94,6 +109,14 @@ DELIMITER $$
 CREATE PROCEDURE admin_getAll ()
 BEGIN
 	SELECT * FROM `admin` ORDER BY name ASC;
+END$$
+
+
+DROP procedure IF EXISTS `admin_getAllActives`;
+DELIMITER $$
+CREATE PROCEDURE admin_getAllActives ()
+BEGIN
+	SELECT * FROM `admin` WHERE `admin`.`is_active` = true ORDER BY name ASC;
 END$$
 
 
@@ -449,6 +472,14 @@ DELIMITER $$
 CREATE PROCEDURE client_potential_getAll ()
 BEGIN
 	SELECT * FROM `client_potential` ORDER BY name ASC;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getAllActives`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getAllActives ()
+BEGIN
+	SELECT * FROM `client_potential` WHERE `client_potential`.`is_active` = true ORDER BY name ASC;
 END$$
 
 
@@ -1117,6 +1148,20 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `provider_getAllActives`;
+DELIMITER $$
+CREATE PROCEDURE provider_getAllActives ()
+BEGIN
+    SELECT `provider`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname
+    FROM `provider` 
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`
+    WHERE `provider`.`is_active` = true
+    ORDER BY name ASC;
+END$$
+
+
 DROP procedure IF EXISTS `provider_getAll`;
 DELIMITER $$
 CREATE PROCEDURE provider_getAll ()
@@ -1125,7 +1170,7 @@ BEGIN
         `admin`.`name` AS admin_name,
         `admin`.`lastname` AS admin_lastname
     FROM `provider` 
-    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`    
     ORDER BY name ASC;
 END$$
 
@@ -1398,6 +1443,7 @@ BEGIN
             category.name AS category_name            
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
+    WHERE `product`.`is_active` = true
     ORDER BY product.price ASC;
 END$$
 
@@ -1763,9 +1809,9 @@ BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.total AS service_total,
-           additional_service.is_active AS service_is_active
-        
-    FROM `additional_service` ;
+           additional_service.is_active AS service_is_active        
+    FROM `additional_service` 
+    WHERE `additional_service`.`is_active` = true;
 END$$
 
 
@@ -2349,6 +2395,20 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `staff_getAllActives`;
+DELIMITER $$
+CREATE PROCEDURE staff_getAllActives ()
+BEGIN
+	SELECT `staff`.*,
+            `admin`.`name` AS admin_name,
+            `admin`.`lastname` AS admin_lastname
+    FROM `staff` 
+    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
+    WHERE `staff`.`is_active` = true
+    ORDER BY name ASC;
+END$$
+
+
 DROP procedure IF EXISTS `staff_getAll`;
 DELIMITER $$
 CREATE PROCEDURE staff_getAll ()
@@ -2357,7 +2417,7 @@ BEGIN
             `admin`.`name` AS admin_name,
             `admin`.`lastname` AS admin_lastname
     FROM `staff` 
-    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
+    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`    
     ORDER BY name ASC;
 END$$
 

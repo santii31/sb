@@ -14,20 +14,29 @@
 
         
         public function updateValuesPath($alert = "", $success = "") {        
-            if ($admin = $this->adminController->isLogged()) {    
-                
+            if ($admin = $this->adminController->isLogged()) {                    
                 $title = "Configuracion - Actualizar";                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "config.php");
                 require_once(VIEWS_PATH . "footer.php");
-
             } else {
                 return $this->adminController->userPath();
             }
         }
 
+        public function update($date_end_season, $price_day) {
 
-    }
-    
+        }
+
+        private function isFormUpdateNotEmpty() {
+            // if () {
+
+            //     return ;
+            // }
+            // return ;
+        }
+
+        
+    }    
 ?>

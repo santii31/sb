@@ -129,7 +129,30 @@
 				return false;
 			}
 		}		
-				
+		
+		public function getAllActives() {
+			try {
+				$list = array();
+				$query = "CALL admin_getAllActives()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$admin = new Admin();
+					$admin->setId($row["id"]);
+					$admin->setName($row["name"]);
+					$admin->setLastName($row["lastname"]);
+					$admin->setEmail($row["email"]);
+					$admin->setDni($row["dni"]);
+					$admin->setPassword($row["password"]);				
+					$admin->setIsActive($row["is_active"]);
+					array_push($list, $admin);
+				}
+				return $list;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
 		public function enableById(Admin $admin, Admin $enableBy) {
 			try {
 				$query = "CALL admin_enableById(?, ?, ?)";

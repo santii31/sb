@@ -85,10 +85,14 @@
 			}
         }
         
-        public function listPotentialClientPath($alert = "", $success = "") {
+        public function listPotentialClientPath($showAll = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Clientes Potenciales";
-                $clients = $this->clientPotentialDAO->getAll();
+                if ($showAll != null) {
+                    $clients = $this->clientPotentialDAO->getAll();
+                } else {
+                    $clients = $this->clientPotentialDAO->getAllActives();
+                }                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-potential-client.php");
@@ -103,9 +107,9 @@
                 $client = new ClientPotential();
                 $client->setId($id);
                 if ($this->clientPotentialDAO->enableById($client, $admin)) {
-                    return $this->listPotentialClientPath(null, CLIENT_ENABLE);
+                    return $this->listPotentialClientPath(null, null, CLIENT_ENABLE);
                 } else {
-                    return $this->listPotentialClientPath(DB_ERROR, null);
+                    return $this->listPotentialClientPath(null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -117,9 +121,9 @@
                 $client = new ClientPotential();
                 $client->setId($id);
                 if ($this->clientPotentialDAO->disableById($client, $admin)) {
-                    return $this->listPotentialClientPath(null, CLIENT_DISABLE);
+                    return $this->listPotentialClientPath(null, null, CLIENT_DISABLE);
                 } else {
-                    return $this->listPotentialClientPath(DB_ERROR, null);
+                    return $this->listPotentialClientPath(null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -169,9 +173,9 @@
                     $update_by = $this->adminController->isLogged();
 
                     if ($this->clientPotentialDAO->update($client, $update_by)) {                                                
-                        return $this->listPotentialClientPath(null, CLIENT_UPDATE);
+                        return $this->listPotentialClientPath(null, null, CLIENT_UPDATE);
                     } else {                        
-                        return $this->listPotentialClientPath(DB_ERROR, null);        
+                        return $this->listPotentialClientPath(null, DB_ERROR, null);        
                     }
                 }                
                 return $this->updatePotentialPath($id, EMAIL_ERROR);

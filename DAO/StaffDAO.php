@@ -135,6 +135,42 @@
                 return false;
             }
         }		
+
+        public function getAllActives() {
+            try {
+                $list = array();
+                $query = "CALL staff_getAllActives()";
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                foreach ($results as $row) {
+                    $staff = new Staff();
+                    $staff->setId($row["id"]);
+                    $staff->setName($row["name"]);
+                    $staff->setLastName($row["lastname"]);
+                    $staff->setPosition($row["position"]);
+                    $staff->setSalary($row["salary"]);
+                    $staff->setDateStart($row["date_start"]);
+                    $staff->setDateEnd($row["date_end"]);
+                    $staff->setDni($row["dni"]);
+                    $staff->setAddress($row["address"]);
+                    $staff->setPhone($row["tel"]);
+                    $staff->setShirtSize($row["shirt_size"]);
+                    $staff->setPantSize($row["pant_size"]);
+                    $staff->setIsActive($row["is_active"]);
+                    
+                    $admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+                    $staff->setRegisterBy($admin);
+
+                    array_push($list, $staff);
+                }
+                return $list;	
+            } catch (Exception $e) {
+                return false;
+            }
+        }	
                 
         public function enableById(Staff $staff, Admin $enableBy) {
             try {

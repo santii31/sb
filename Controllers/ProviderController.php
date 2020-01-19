@@ -93,10 +93,14 @@
 			}
 		}
 
-        public function listProviderPath($alert = "", $success = "") {
+        public function listProviderPath($showAll = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Proveedores";
-                $providers = $this->providerDAO->getAll();
+                if ($showAll != null) {
+                    $providers = $this->providerDAO->getAll();
+                } else {
+                    $providers = $this->providerDAO->getAllActives();                    
+                }                   
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-providers.php");
@@ -111,9 +115,9 @@
                 $provider = new Provider();
                 $provider->setId($id);
                 if ($this->providerDAO->enableById($provider, $admin)) {
-                    return $this->listProviderPath(null, PROVIDER_ENABLE);
+                    return $this->listProviderPath(null, null, PROVIDER_ENABLE);
                 } else {
-                    return $this->listProviderPath(DB_ERROR, null);
+                    return $this->listProviderPath(null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -125,9 +129,9 @@
                 $provider = new Provider();
                 $provider->setId($id);
                 if ($this->providerDAO->disableById($provider, $admin)) {
-                    return $this->listProviderPath(null, PROVIDER_DISABLE);
+                    return $this->listProviderPath(null, null, PROVIDER_DISABLE);
                 } else {
-                    return $this->listProviderPath(DB_ERROR, null);
+                    return $this->listProviderPath(null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -185,9 +189,9 @@
                         $update_by = $this->adminController->isLogged();
 
                         if ($this->providerDAO->update($provider, $update_by)) {                                                
-                            return $this->listProviderPath(null, PROVIDER_UPDATE);
+                            return $this->listProviderPath(null, null, PROVIDER_UPDATE);
                         } else {                        
-                            return $this->listProviderPath(DB_ERROR, null);        
+                            return $this->listProviderPath(null, DB_ERROR, null);        
                         }
                     }
                     return $this->updatePath($id, DNI_ERROR);
@@ -200,7 +204,7 @@
 
         // 
         public function getProviders() {
-            return $this->providerDAO->getAll();
+            return $this->providerDAO->getAllActives();
         }
                 
     }

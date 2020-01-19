@@ -112,6 +112,31 @@
 				return false;				
 			}
 		}
+
+		public function getAllActives() {
+			try {
+				$list = array();
+				$query = "CALL client_potential_getAllActives()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$clientP = new ClientPotential();
+					$clientP->setId($row["id"]);
+					$clientP->setName($row["name"]);
+					$clientP->setLastName($row["lastname"]);
+					$clientP->setAddress($row["address"]);
+					$clientP->setCity($row["city"]);				
+					$clientP->setEmail($row["email"]);
+					$clientP->setPhone($row["tel"]);
+					$clientP->setNumTent($row["num_tent"]);
+                    $clientP->setIsActive($row["is_active"]); 
+					array_push($list, $clientP);
+				}
+				return $list;	
+			} catch (Exception $e) {
+				return false;				
+			}
+		}
 		
 		public function checkEmail(ClientPotential $client) {
 			try {

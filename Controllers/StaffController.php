@@ -101,10 +101,14 @@
 			}
 		}
 
-        public function listStaffPath($alert = "", $success = "") {
+        public function listStaffPath($showAll = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Personal";
-                $staffs = $this->staffDAO->getAll();
+                if ($showAll != null) {
+                    $staffs = $this->staffDAO->getAll();
+                } else {
+                    $staffs = $this->staffDAO->getAllActives();                    
+                }                 
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-staff.php");
@@ -119,9 +123,9 @@
                 $staff = new Staff();
                 $staff->setId($id);
                 if ($this->staffDAO->enableById($staff, $admin)) {
-                    return $this->listStaffPath(null, STAFF_ENABLE);
+                    return $this->listStaffPath(null, null, STAFF_ENABLE);
                 } else {
-                    return $this->listStaffPath(DB_ERROR, null);
+                    return $this->listStaffPath(null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -133,9 +137,9 @@
                 $staff = new Staff();
                 $staff->setId($id);
                 if ($this->staffDAO->disableById($staff, $admin)) {
-                    return $this->listStaffPath(null, STAFF_DISABLE);
+                    return $this->listStaffPath(null, null, STAFF_DISABLE);
                 } else {
-                    return $this->listStaffPath(DB_ERROR, null);
+                    return $this->listStaffPath(null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -191,9 +195,9 @@
                     $update_by = $this->adminController->isLogged();
 
                     if ($this->staffDAO->update($staff, $update_by)) {                                                
-                        return $this->listStaffPath(null, STAFF_UPDATE);
+                        return $this->listStaffPath(null, null, STAFF_UPDATE);
                     } else {                        
-                        return $this->listStaffPath(DB_ERROR, null);        
+                        return $this->listStaffPath(null, DB_ERROR, null);        
                     }
                 }                
                 return $this->updatePath($id, DNI_ERROR);

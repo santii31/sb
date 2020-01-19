@@ -121,7 +121,6 @@
 				return false;				
 			}
 		}
-
 		
 		public function getAll() {
 			try {
@@ -156,6 +155,40 @@
 			}
 		}		
 				
+		public function getAllActives() {
+			try {
+				$list = array();
+				$query = "CALL provider_getAllActives()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$providerTemp = new Provider();
+					$providerTemp->setId($row["id"]);
+					$providerTemp->setName($row["name"]);
+					$providerTemp->setLastName($row["lastname"]);
+                    $providerTemp->setPhone($row["tel"]);
+                    $providerTemp->setEmail($row["email"]);
+					$providerTemp->setDni($row["dni"]);				
+                    $providerTemp->setAddress($row["address"]);
+                    $providerTemp->setCuilNumber($row["cuil"]);
+                    $providerTemp->setSocialReason($row["social_reason"]);
+                    $providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setIsActive($row["is_active"]);
+					
+					$admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+					$providerTemp->setRegisterBy($admin);
+					
+					array_push($list, $providerTemp);
+				}
+				return $list;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
 		public function enableById(Provider $provider, Admin $enableBy) {
 			try {
 				$query = "CALL provider_enableById(?, ?, ?)";

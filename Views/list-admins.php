@@ -8,6 +8,24 @@
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
+                
+                <div class="more-list">
+                    <?php if (isset($showAll)): ?>
+                    <a href="<?= FRONT_ROOT ?>admin/listAdminPath">                    
+                        <i class="material-icons left">arrow_forward</i>
+                        <span>
+                            Mostrar solo activos
+                        </span>    
+                    </a>
+                    <?php else: ?>
+                    <a href="<?= FRONT_ROOT ?>admin/listAdminPath/all">                    
+                        <i class="material-icons left">arrow_forward</i>
+                        <span>
+                            Mostrar lista completa (Incluyendo los deshabilitados)
+                        </span>    
+                    </a>
+                    <?php endif; ?>
+                </div>                
 
                 <?php if ($success != null): ?>
                 <div class="row">
