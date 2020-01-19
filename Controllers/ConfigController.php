@@ -25,16 +25,28 @@
             }
         }
 
-        public function update($date_end_season, $price_day) {
+        public function update($date_f, $season, $day, $january, $rest, $period, $fortnigh, $parasol, $parking) {
+            if ($this->isFormUpdateNotEmpty($date_f, $season, $day, $january, $rest, $period, $fortnigh, $parasol, $parking)) {
+                
+                // sanatize 
 
+            } 
+            return $this->updateValuesPath("", null);
         }
 
-        private function isFormUpdateNotEmpty() {
-            // if () {
-
-            //     return ;
-            // }
-            // return ;
+        private function isFormUpdateNotEmpty($date_f, $season, $day, $january, $rest, $period, $fortnigh, $parasol, $parking) {
+            if (empty($date_f) || 
+                empty($season) || 
+                empty($day) || 
+                empty($january) || 
+                empty($rest) || 
+                empty($period) || 
+                empty($fortnigh) || 
+                empty($parasol) || 
+                empty($parking)) {
+                    return false;
+            }
+            return true;
         }
 
         

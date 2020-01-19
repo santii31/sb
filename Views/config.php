@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>config/update" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -37,24 +37,53 @@
                         <div class="row">                            
                             <div class="input-field col s6">
                                 <input id="date_f" type="date" name="date_f" class="validate" required>
-                                <label for="date_f">Fecha fin de temporada: </label>                                 
+                                <label for="date_f">Fecha fin de temporada</label>                                 
                             </div>
                             <div class="input-field col s6">
-                                <input id="beach_t" type="number" name="beach_t" class="validate" required>
-                                <label for="beach_t">Valor carpa por temporada: </label>
-                            </div>                                                                                                             
-                        </div>                        
+                                <input id="season" type="number" name="season" class="validate" required>
+                                <label for="season">Valor carpa por temporada</label>
+                            </div>                                                   
+                        </div>           
+
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="beach_d" type="number" name="beach_d" class="validate" required>
-                                <label for="beach_d">Valor carpa por dia: </label>                                 
+                                <input id="day" type="number" name="day" class="validate" required>
+                                <label for="day">Valor carpa por dia</label>                                 
                             </div>
              
                             <div class="input-field col s6">
-                                <input id="beach_d" type="number" name="beach_d" class="validate" required>
-                                <label for="beach_d">Valor carpa por quincena: </label>
-                            </div>                                                        
+                                <input id="january" type="number" name="january" class="validate" required>
+                                <label for="january">Valor carpa enero</label>
+                            </div>                                                   
                         </div>
+
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <input id="rest" type="number" name="rest" class="validate" required>
+                                <label for="rest">Valor carpa feriados</label>                                 
+                            </div>
+                            <div class="input-field col s4">
+                                <input id="period" type="number" name="period" class="validate" required>
+                                <label for="period">Valor carpa periodos</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <input id="fortnigh" type="number" name="fortnigh" class="validate" required>
+                                <label for="fortnigh">Valor carpa quincena</label>
+                            </div>                                       
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="parasol" type="number" name="parasol" class="validate" required>
+                                <label for="parasol">Valor sombrilla</label>                                 
+                            </div>
+             
+                            <div class="input-field col s6">
+                                <input id="parking" type="number" name="parking" class="validate" required>
+                                <label for="parking">Valor estacionamiento</label>
+                            </div>                                                   
+                        </div>
+
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Modificar

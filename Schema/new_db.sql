@@ -9,12 +9,16 @@ USE southbeach;
 
 CREATE TABLE config {
     `date_end_season` DATE NOT NULL,
+    
     `price_tent_season` FLOAT NOT NULL,
     `price_tent_day` FLOAT NOT NULL,
     `price_tent_january` FLOAT NOT NULL,
     `price_tent_rest` FLOAT NOT NULL,   -- feriados
     `price_tent_period` FLOAT NOT NULL, -- periodo
     `price_tent_fortnigh` FLOAT NOT NULL -- quincena
+
+    `price_parasol` FLOAT NOT NULL, -- sombrilla
+    `price_parking` FLOAT NOT NULL, -- estacionamiento    
 }
 
 
