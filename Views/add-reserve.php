@@ -109,16 +109,40 @@
                             <div class="input-field col s4">
                                 <input id="fam" type="text" name="fam" class="validate" required>
                                 <label for="fam">Grupo familiar</label>
-                            </div>                            
+                            </div>                         
                             <div class="input-field col s4">
-                                <input id="addrStay" type="text" name="addrStay" class="validate">
-                                <label for="addrStay">Domicilio de estadia</label>
-                            </div>
-                            <div class="input-field col s4">
-                                <input id="phone2" type="number" name="phone2" class="validate">
-                                <label for="phone2">Telefono de estadia</label>
+                                <input id="phone2" type="number" name="auxiliary_phone" class="validate">
+                                <label for="phone2">Telefono auxiliar</label>
                             </div>                                  
-                        </div>                                                                
+                        </div>
+
+                        <div class="row center-align">
+                            <div class="input-field col s6">
+                            <label for="phone2">Tipo de vehiculo:</label>
+                                <p>
+                                    <label>
+                                        <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
+                                        <span>Auto</span>
+                                    </label>
+                                </p>
+                                    
+                                </div>
+                                <div class="input-field col s6">
+                                <p>
+                                    <label>
+                                        <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="van">
+                                        <span>Camioneta</span>
+                                    </label>
+                                </p>
+                            </div>
+                            <div class="input-field col s6">
+                                <p>
+                                    <label>
+                                        <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="motorcycle">
+                                        <span>Moto</span>
+                                    </label>
+                                </p>
+                            </div>                                                                
                                                 
                         <input type="hidden" name="tent" value="<?= $id_tent ?>">
 
