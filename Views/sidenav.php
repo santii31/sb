@@ -355,6 +355,22 @@
 
                     <ul class="collapsible">
                         <li>
+                            <div class="collapsible-header"><i class="material-icons">person_pin</i>Clientes</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>client/listClientPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">format_list_numbered</i>
+                                            Listar clientes
+                                        </a>
+                                    </li>                                                                     
+                                </ul>
+                            </div>
+                        </li>                    
+                    </ul> 
+
+                    <ul class="collapsible">
+                        <li>
                             <div class="collapsible-header"><i class="material-icons">directions_walk</i>Clientes Potenciales</div>
                             <div class="collapsible-body">
                                 <ul>

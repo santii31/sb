@@ -292,5 +292,14 @@
             return $futureReserve;
         }
 
+        // count
+        public function getRsvClientsCount() {
+            return $this->reservationDAO->getCount();
+        }
+
+        public function getAllReservationsWithClients($start) {
+            return $this->reservationDAO->getAllRsvWithClientsWithLimit($start);
+        }
+
     }
 ?>
