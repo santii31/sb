@@ -55,7 +55,8 @@
 		}
 
         public function getParkingByService($id) {
-			try {				
+			try {
+				$parkings = array();				
 				$query = "CALL servicexparking_getParkingByService(?)";
 				$parameters["id_service"] = $id;
 				$this->connection = Connection::GetInstance();
@@ -67,9 +68,9 @@
                     $parking->setNumber($row["parking_number"]);
                     $parking->setPrice($row["parking_price"]);
                     
-                    array_push($parkingList, $parking);
+                    array_push($parkings, $parking);
 				}
-				return $parkingList;
+				return $parkings;
 			} catch (Exception $e) {
 				return false;
             }

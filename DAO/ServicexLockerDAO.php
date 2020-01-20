@@ -56,6 +56,7 @@
 
         public function getLockerByService($id) {
 			try {				
+				$lockers = array();
 				$query = "CALL servicexlocker_getLockerByService(?)";
 				$parameters["id_service"] = $id;
 				$this->connection = Connection::GetInstance();
@@ -68,9 +69,9 @@
 					$locker->setPrice($row["locker_price"]);
 					$locker->setSex($row["locker_sex"]);
                     
-                    array_push($this->lockerList, $locker);
+                    array_push($lockers, $locker);
 				}
-				return $this->lockerList;
+				return $lockers;
 			} catch (Exception $e) {
 				return false;
             }

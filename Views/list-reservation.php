@@ -67,15 +67,17 @@
                                     <td> <?= $reservation->getPrice(); ?> </td>
                                     <td> <?= $reservation->getClient()->getName() . " " . $reservation->getClient()->getLastName(); ?> </td>
                                     <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
-                                    
+                                    <?php $service=null; ?>
+                                    <?php $lockers=null; ?>
                                     <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
                                         <?php echo $service->getId(); ?>
                                         <?php if ($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())): ?>                 
                                             <td>
-                                                <ul>
+                                                <ul> 
                                                     <?php foreach ($lockers as $locker): ?>
                                                         <li>
                                                             • <?= $locker->getLockerNumber() . "(" .$locker->getSex() . ")" ; ?> 
+                                                            
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
@@ -133,7 +135,7 @@
                                             <i class="material-icons left"></i>
                                             Agregar sombrilla
                                         </a>  
-                                        <a href="<?= FRONT_ROOT ?>reservation/parkingMap/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                        <a href="<?= FRONT_ROOT ?>parking/parkingMap/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
                                             <i class="material-icons left"></i>
                                             Agregar cochera
                                         </a>                                        

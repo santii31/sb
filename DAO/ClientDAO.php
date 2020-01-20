@@ -28,8 +28,9 @@
 				$parameters["email"] = $client->getEmail();
 				$parameters["tel"] = $client->getPhone();
 				$parameters["family_group"] = $client->getFamilyGroup();
-				$parameters["stay_address"] = $client->getStayAddress();             
-				$parameters["tel_stay"] = $client->getPhoneStay();
+				$parameters["auxiliary_phone"] = $client->getAuxiliaryPhone();
+				$parameters["payment_method"] = $client->getPaymentMethod();
+				$parameters["vehicle_type"] = $client->getVehicleType();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();
 				$this->connection = Connection::getInstance();
@@ -64,8 +65,9 @@
 					$userTemp->setEmail($row["email"]);
 					$userTemp->setPhone($row["tel"]);
 					$userTemp->setFamilyGroup($row["family_group"]);
-					$userTemp->setStayAddress($row["stay_address"]);
-					$userTemp->setPhoneStay($row["tel_stay"]);
+					$userTemp->setAuxiliaryPhone($row["auxiliary_phone"]);
+					$userTemp->setPaymentMethod($row["payment_method"]);
+					$userTemp->setVehicleType($row["vehicle_type"]);
                     $userTemp->setIsActive($row["is_active"]);                    
 				}
 				return $userTemp;
@@ -92,8 +94,9 @@
 					$userTemp->setEmail($row["email"]);
 					$userTemp->setPhone($row["tel"]);
 					$userTemp->setFamilyGroup($row["family_group"]);
-					$userTemp->setStayAddress($row["stay_address"]);
-					$userTemp->setPhoneStay($row["tel_stay"]);
+					$userTemp->setAuxiliaryPhone($row["auxiliary_phone"]);
+					$userTemp->setPaymentMethod($row["payment_method"]);
+					$userTemp->setVehicleType($row["vehicle_type"]);
                     $userTemp->setIsActive($row["is_active"]);
 				}
 				return $userTemp;
@@ -118,8 +121,9 @@
 					$client->setEmail($row["email"]);
 					$client->setPhone($row["tel"]);
 					$client->setFamilyGroup($row["family_group"]);
-					$client->setStayAddress($row["stay_address"]);
-					$client->setPhoneStay($row["tel_stay"]);
+					$client->setAuxiliaryPhone($row["auxiliary_phone"]);
+					$client->setPaymentMethod($row["payment_method"]);
+					$client->setVehicleType($row["vehicle_type"]);
                     $client->setIsActive($row["is_active"]);
 					array_push($this->clientList, $client);
 				}
@@ -184,8 +188,9 @@
 				$parameters["email"] = $client->getEmail();
 				$parameters["tel"] = $client->getPhone();
 				$parameters["family_group"] = $client->getFamilyGroup();
-				$parameters["stay_address"] = $client->getStayAddress();             
-				$parameters["tel_stay"] = $client->getPhoneStay();
+				$parameters["auxiliary_phone"] = $client->getAuxiliaryPhone();             
+				$parameters["payment_method"] = $client->getPaymentMethod();
+				$parameters["vehicle_type"] = $client->getVehicleType();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();	
 				$parameters["id"] = $client->getId();	

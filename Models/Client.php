@@ -15,8 +15,9 @@
         private $email;
         private $phone;
         private $family_group;
-        private $stayAddress; 
-        private $phone_stay;
+        private $auxiliary_phone;
+        private $payment_method;
+        private $vehicle_type;
         private $is_active;
 
         public function getId() {
@@ -99,22 +100,30 @@
             return $this;
         }
 
-        public function getStayAddress() {
-            return $this->stayAddress;
+        public function getAuxiliaryPhone() {
+            return $this->auxiliary_phone;
         }
 
-        public function setStayAddress($stayAddress) {
-            $this->stayAddress = $stayAddress;
+        public function setAuxiliaryPhone($auxiliary_phone) {
+            $this->auxiliary_phone = $auxiliary_phone;
             return $this;
         }
 
-        
-        public function getPhoneStay() {
-            return $this->phone_stay;
+        public function getPaymentMethod() {
+            return $this->payment_method;
         }
 
-        public function setPhoneStay($phone_stay) {
-            $this->phone_stay = $phone_stay;
+        public function setPaymentMethod($payment_method) {
+            $this->payment_method = $payment_method;
+            return $this;
+        }
+
+        public function getVehicleType() {
+            return $this->vehicle_type;
+        }
+
+        public function setVehicleType($vehicle_type) {
+            $this->vehicle_type = $vehicle_type;
             return $this;
         }
 
