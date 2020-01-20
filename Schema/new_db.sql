@@ -220,6 +220,7 @@ CREATE TABLE client (
     `family_group` VARCHAR(255) NOT NULL,   -- grupo familiar
     'auxiliary_phone' INT NOT NULL,
     'payment_method' VARCHAR(255) NOT NULL,
+    'vehicle_type' VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
@@ -248,7 +249,8 @@ CREATE PROCEDURE client_add(
                                 IN tel INT,
                                 IN family_group VARCHAR(255),
                                 IN auxiliary_phone INT,
-                                IN payment_method VARCHAR(255),                                
+                                IN payment_method VARCHAR(255),
+                                IN vehicle_type VARCHAR(255),                                
                                 IN date_register DATE,
                                 IN register_by INT,
                                 OUT lastId int
@@ -265,10 +267,11 @@ BEGIN
             client.family_group,
             client.auxiliary_phone,
             client.payment_method,
+            client.vehicle_type,
             client.date_register,			
             client.register_by
 	)
-    VALUES (name, lastname, address, city, cp, email, tel, family_group, auxiliary_phone, payment_method, date_register, register_by);
+    VALUES (name, lastname, address, city, cp, email, tel, family_group, auxiliary_phone, payment_method, vehicle_type, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -364,6 +367,7 @@ CREATE PROCEDURE client_update (
                                     IN family_group VARCHAR(255),
                                     IN auxiliary_phone INT,
                                     IN payment_method VARCHAR(255),
+                                    IN vehicle_type VARCHAR(255),
                                     IN id INT,                              
                                     IN date_update DATE,
                                     IN update_by INT
@@ -381,6 +385,7 @@ BEGIN
         `client`.`family_group` = family_group,
         `client`.`auxiliary_phone` = auxiliary_phone,
         'client'.'payment_method' = payment_method,
+        'client'.'vehicle_type' = vehicle_type,
         `client`.`date_update` = date_update,
         `client`.`update_by` = update_by    
     WHERE 

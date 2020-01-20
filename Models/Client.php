@@ -16,7 +16,8 @@
         private $phone;
         private $family_group;
         private $auxiliary_phone;
-        private $payment_method
+        private $payment_method;
+        private $vehicle_type;
         private $is_active;
 
         public function getId() {
@@ -114,6 +115,15 @@
 
         public function setPaymentMethod($payment_method) {
             $this->payment_method = $payment_method;
+            return $this;
+        }
+
+        public function getVehicleType() {
+            return $this->vehicle_type;
+        }
+
+        public function setVehicleType($vehicle_type) {
+            $this->vehicle_type = $vehicle_type;
             return $this;
         }
 

@@ -30,6 +30,7 @@
 				$parameters["family_group"] = $client->getFamilyGroup();
 				$parameters["auxiliary_phone"] = $client->getAuxiliaryPhone();
 				$parameters["payment_method"] = $client->getPaymentMethod();
+				$parameters["vehicle_type"] = $client->getVehicleType();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();
 				$this->connection = Connection::getInstance();
@@ -66,6 +67,7 @@
 					$userTemp->setFamilyGroup($row["family_group"]);
 					$userTemp->setAuxiliaryPhone($row["auxiliary_phone"]);
 					$userTemp->setPaymentMethod($row["payment_method"]);
+					$userTemp->setVehicleType($row["vehicle_type"]);
                     $userTemp->setIsActive($row["is_active"]);                    
 				}
 				return $userTemp;
@@ -94,6 +96,7 @@
 					$userTemp->setFamilyGroup($row["family_group"]);
 					$userTemp->setAuxiliaryPhone($row["auxiliary_phone"]);
 					$userTemp->setPaymentMethod($row["payment_method"]);
+					$userTemp->setVehicleType($row["vehicle_type"]);
                     $userTemp->setIsActive($row["is_active"]);
 				}
 				return $userTemp;
@@ -120,6 +123,7 @@
 					$client->setFamilyGroup($row["family_group"]);
 					$client->setAuxiliaryPhone($row["auxiliary_phone"]);
 					$client->setPaymentMethod($row["payment_method"]);
+					$client->setVehicleType($row["vehicle_type"]);
                     $client->setIsActive($row["is_active"]);
 					array_push($this->clientList, $client);
 				}
@@ -186,6 +190,7 @@
 				$parameters["family_group"] = $client->getFamilyGroup();
 				$parameters["auxiliary_phone"] = $client->getAuxiliaryPhone();             
 				$parameters["payment_method"] = $client->getPaymentMethod();
+				$parameters["vehicle_type"] = $client->getVehicleType();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();	
 				$parameters["id"] = $client->getId();	
