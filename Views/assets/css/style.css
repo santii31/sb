@@ -802,3 +802,12 @@ nav .input-field label.active i {
 .mail-filter > span {
     font-size: 1.3rem;
 }
+
+/* pagination */
+.pagination {
+    margin-top: 3rem;
+}
+
+.pagination li.active {
+    background-color: #6a56a5;
+}

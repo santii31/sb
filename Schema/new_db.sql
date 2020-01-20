@@ -874,6 +874,71 @@ BEGIN
     ORDER BY date_start ASC;
 END$$
 
+
+DROP procedure IF EXISTS `reservation_getAllWithClients`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllWithClients ()
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,                                 
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,           
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number           
+    FROM `reservation`
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.register_by = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    ORDER BY date_start ASC;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getAllRsvWithClientsWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllRsvWithClientsWithLimit (
+                                                                IN start INT,
+                                                                IN max_items INT
+                                                            )
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,                                 
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,           
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number           
+    FROM `reservation`
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.register_by = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    ORDER BY date_start ASC
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getAllRsvWithClientsCount`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllRsvWithClientsCount ()
+BEGIN
+	SELECT count(reservation.id) AS total
+    FROM `reservation`
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.register_by = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id;    
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getAllByClientId`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getAllByClientId(IN client_id INT)

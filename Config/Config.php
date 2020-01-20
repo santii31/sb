@@ -9,6 +9,7 @@
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
 	define("IMG_PATH", FRONT_ROOT . VIEWS_PATH . "assets/img/");	
+	define("MAX_ITEMS_PAGE", 6);
 	
 	// EMAIL {COMPLETAR}
 	define("SB_EMAIL", "");

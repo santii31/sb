@@ -6,11 +6,13 @@
     use Models\Admin as Admin;
 	use DAO\ClientDAO as ClientDAO;
     use Controllers\AdminController as AdminController; 
+    use Controllers\ReservationController as ReservationController; 
     
     class ClientController {
 
         private $clientDAO;
         private $adminController;
+        private $reservationController;
 
         public function __construct() {
             $this->clientDAO = new ClientDAO();
@@ -87,7 +89,7 @@
         
         public function addClientPath($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                       
-                $title = "Clientes - Añadir";
+                $title = "Clientes - Añadir";                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-client.php");
@@ -97,13 +99,29 @@
 			}
         }
         
-        public function listClientPath($alert = "", $success = "") {
+        // seguir con paginacion
+        public function listClientPath($page = 1, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Clientes";
-                $clients = $this->clientDAO->getAll();
+                $title = "Clientes";                
+                
+                $this->reservationController = new ReservationController();                                
+                $rsvClientsCount = $this->reservationController->getRsvClientsCount();         
+
+                $pages = ceil ($rsvClientsCount / MAX_ITEMS_PAGE);  
+                
+                // This variable will contain the number of the current page
+                $current = 0;                  
+
+                if ($page == 1) {                                        
+                    $rsv = $this->reservationController->getAllReservationsWithClients(0);
+                } else {
+                    $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                    $rsv = $this->reservationController->getAllReservationsWithClients($startFrom);
+                }
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "list-client.php");
+                require_once(VIEWS_PATH . "list-clients.php");
                 require_once(VIEWS_PATH . "footer.php");
             } else {
                 return $this->adminController->userPath();
@@ -115,9 +133,9 @@
                 $client = new Client();
                 $client->setId($id);
                 if ($this->clientDAO->enableById($client, $admin)) {
-                    return $this->listClientPath(null, CLIENT_ENABLE);
+                    return $this->listClientPath(null, null, CLIENT_ENABLE);
                 } else {
-                    return $this->listClientPath(DB_ERROR, null);
+                    return $this->listClientPath(null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -129,9 +147,9 @@
                 $client = new Client();
                 $client->setId($id);
                 if ($this->clientDAO->disableById($client, $admin)) {
-                    return $this->listClientPath(null, CLIENT_DISABLE);
+                    return $this->listClientPath(null, null, CLIENT_DISABLE);
                 } else {
-                    return $this->listClientPath(DB_ERROR, null);
+                    return $this->listClientPath(null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -188,9 +206,9 @@
                     $update_by = $this->adminController->isLogged();
 
                     if ($this->clientDAO->update($client, $update_by)) {                                                
-                        return $this->listClientPath(null, CLIENT_UPDATE);
+                        return $this->listClientPath(null, null, CLIENT_UPDATE);
                     } else {                        
-                        return $this->listClientPath(DB_ERROR, null);        
+                        return $this->listClientPath(null, DB_ERROR, null);        
                     }
                 }                
                 return $this->updatePath($id, EMAIL_ERROR);
@@ -209,6 +227,9 @@
             return $this->clientDAO->add($client, $admin);
         }
 
+
+
+        
         // prueba ajax
         public function getAllNames() {            
             $clients = $this->clientDAO->getAll();
