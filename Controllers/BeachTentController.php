@@ -107,11 +107,11 @@
         public function stock() {
             if ($admin = $this->adminController->isLogged()) {
                 $title = 'Carpas - Stock';
+                $rsvFuture = $this->getAllFutureReservation();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "stock-tents.php");
                 require_once(VIEWS_PATH . "footer.php");
-
             } else {
                 return $this->adminController->userPath();
             }
@@ -133,7 +133,7 @@
             $rsv = $this->getAllTentsWithReservation();            
             $frees = $all - $rsv;
             
-            return (int)$frees;
+            return (int) $frees;
         }
 
         private function getAllTentsWithReservationPercentage() {
@@ -146,6 +146,10 @@
         private function getAllTentsWithReservation() {
             $today = date("Y-m-d");            
             return $this->beachTentDAO->getAllWithActualReservation($today);
+        }
+
+        private function getAllFutureReservation() {
+            return $this->reservationController->futureReservations();
         }
 
     }

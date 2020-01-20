@@ -260,25 +260,25 @@
                                 <ul>                                           
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">map</i>
+                                            <i class="material-icons left">date_range</i>
                                             Ventas diarias
                                         </a>
                                     </li>         
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">map</i>
+                                            <i class="material-icons left">description</i>
                                             Ventas mensuales
                                         </a>
                                     </li>   
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">map</i>
+                                            <i class="material-icons left">event_available</i>
                                             Ventas de carpas por dia
                                         </a>
                                     </li>   
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">map</i>
+                                            <i class="material-icons left">folder_shared</i>
                                             Ventas por administradores
                                         </a>
                                     </li>                                                                                                                                                                                    
@@ -355,7 +355,7 @@
 
                     <ul class="collapsible">
                         <li>
-                            <div class="collapsible-header"><i class="material-icons">directions_walk</i>Clientes</div>
+                            <div class="collapsible-header"><i class="material-icons">directions_walk</i>Clientes Potenciales</div>
                             <div class="collapsible-body">
                                 <ul>
                                     <li>

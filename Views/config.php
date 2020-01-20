@@ -86,7 +86,7 @@
 
                         <div class="row">
                             <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Modificar
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Actualizar
                                     <i class="material-icons right">update</i>
                                 </button>
                             </div>

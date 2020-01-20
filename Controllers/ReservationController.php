@@ -213,7 +213,7 @@
             }           
         }
 
-        // aca
+        // falta? probar?
         public function update($id, $stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) {    
             
             if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {     
@@ -276,5 +276,21 @@
         public function getAllReservations() {
             return $this->reservationDAO->getAll();
         }
+
+        public function futureReservations() {
+            $futureReserve = array();
+            $reserveList = $this->reservationDAO->getAll();
+            $today = date("Y-m-d");
+            $dateToCompare = strtotime( $today );            
+            
+            foreach ($reserveList as $reserve) {                
+                $reserveDate = strtotime( $reserve->getDateStart() );
+                if ($reserveDate > $dateToCompare) {
+                    array_push($futureReserve, $reserve);
+                }                
+            }
+            return $futureReserve;
+        }
+
     }
 ?>

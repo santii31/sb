@@ -31,6 +31,47 @@
                         </tbody>
                     </table>
                 </div>
+
+                <br>
+                <br>
+                        
+                <div class="subtitle">
+                    <i class="material-icons left">chevron_right</i>
+                    <h2>
+                        Futuras reservas
+                    </h2>
+                </div>
+                
+                <div class="divider mb-divider"></div>             
+                
+                <div class="row">    
+                    <div class="col s12">
+                    
+                    <table class="responsive-table centered" id="table-filter">
+                        <thead>
+                        <tr>                       
+                            <th>Fecha inicio</th>
+                            <th>Fecha fin</th>
+                            <th>Nº Carpa</th>     
+                            <th>Cliente</th>
+                            <th>Telefono</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>       
+                            <?php foreach ($rsvFuture as $rsv): ?>
+                                <tr>
+                                    <td> <?= $rsv->getDateStart(); ?></td>
+                                    <td> <?= $rsv->getDateEnd(); ?></td>
+                                    <td> <?= $rsv->getBeachTent()->getNumber(); ?></td>
+                                    <td> <?= ucfirst( $rsv->getClient()->getName() ) . ' ' . $rsv->getClient()->getLastName(); ?></td>
+                                    <td> <?= $rsv->getClient()->getPhone(); ?> </td>
+                                </tr>                                 
+                            <?php endforeach; ?>                
+                        </tbody>
+                    </table>
+                    </div>                
+                </div>
             </div>
 
         </div>
