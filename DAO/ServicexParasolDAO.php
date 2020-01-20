@@ -56,6 +56,7 @@
 
         public function getParasolByService($id) {
 			try {				
+				$parasoles = array();
 				$query = "CALL servicexparasol_getParasolByService(?)";
 				$parameters["id_service"] = $id;
 				$this->connection = Connection::GetInstance();
@@ -67,9 +68,9 @@
                     $parasol->setParasolNumber($row["parasol_number"]);
 					$parasol->setPrice($row["parasol_price"]);
                     
-                    array_push($this->parasolList, $parasol);
+                    array_push($parasoles, $parasol);
 				}
-				return $this->parasolList;
+				return $parasoles;
 			} catch (Exception $e) {
 				return false;
             }

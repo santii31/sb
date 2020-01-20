@@ -218,8 +218,8 @@ CREATE TABLE client (
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `tel` INT NOT NULL,
     `family_group` VARCHAR(255) NOT NULL,   -- grupo familiar
-    `stay_address` VARCHAR(255) NOT NULL,      
-    `tel_stay` INT NOT NULL,    -- tel estadia
+    'auxiliary_phone' INT NOT NULL,
+    'payment_method' VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
@@ -247,8 +247,8 @@ CREATE PROCEDURE client_add(
                                 IN email VARCHAR(255),
                                 IN tel INT,
                                 IN family_group VARCHAR(255),
-                                IN stay_address VARCHAR(255),
-                                IN tel_stay INT,                                
+                                IN auxiliary_phone INT,
+                                IN payment_method VARCHAR(255),                                
                                 IN date_register DATE,
                                 IN register_by INT,
                                 OUT lastId int
@@ -263,12 +263,12 @@ BEGIN
 			client.email,
             client.tel,
             client.family_group,
-            client.stay_address,
-            client.tel_stay,            
+            client.auxiliary_phone,
+            client.payment_method,
             client.date_register,			
             client.register_by
 	)
-    VALUES (name, lastname, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+    VALUES (name, lastname, address, city, cp, email, tel, family_group, auxiliary_phone, payment_method, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -362,8 +362,8 @@ CREATE PROCEDURE client_update (
                                     IN email VARCHAR(255),
                                     IN tel INT,
                                     IN family_group VARCHAR(255),
-                                    IN stay_address VARCHAR(255),
-                                    IN tel_stay INT,  
+                                    IN auxiliary_phone INT,
+                                    IN payment_method VARCHAR(255),
                                     IN id INT,                              
                                     IN date_update DATE,
                                     IN update_by INT
@@ -379,8 +379,8 @@ BEGIN
         `client`.`email` = email,
         `client`.`tel` = tel,
         `client`.`family_group` = family_group,
-        `client`.`stay_address` = stay_address,
-        `client`.`tel_stay` = tel_stay,
+        `client`.`auxiliary_phone` = auxiliary_phone,
+        'client'.'payment_method' = payment_method,
         `client`.`date_update` = date_update,
         `client`.`update_by` = update_by    
     WHERE 
