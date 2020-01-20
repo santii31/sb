@@ -83,4 +83,6 @@
 		
 	define("PARKING_ERROR", "El estacionamiento seleccionado se encuentra reservado.");		
 
+	define("CONFIG_UPDATE", "Configuracion actualizada con éxito.");
+
 ?>

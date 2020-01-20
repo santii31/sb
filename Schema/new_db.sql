@@ -7,19 +7,68 @@ USE southbeach;
 
 ----------------------------- CONFIG -----------------------------
 
-CREATE TABLE config {
-    `date_end_season` DATE NOT NULL,
-    
-    `price_tent_season` FLOAT NOT NULL,
-    `price_tent_day` FLOAT NOT NULL,
+CREATE TABLE config (    
+    `date_start_season` DATE NOT NULL,    
+    `date_end_season` DATE NOT NULL,    
+    `price_tent_season` FLOAT NOT NULL,    
     `price_tent_january` FLOAT NOT NULL,
-    `price_tent_rest` FLOAT NOT NULL,   -- feriados
-    `price_tent_period` FLOAT NOT NULL, -- periodo
-    `price_tent_fortnigh` FLOAT NOT NULL -- quincena
+    `price_tent_january_day` FLOAT NOT NULL,
+    `price_tent_january_fortnigh` FLOAT NOT NULL,
+    `price_tent_february` FLOAT NOT NULL,
+    `price_tent_february_day` FLOAT NOT NULL,
+    `price_tent_february_first_fortnigh` FLOAT NOT NULL,    
+    `price_tent_february_second_fortnigh` FLOAT NOT NULL,    
+    `price_parasol` FLOAT NOT NULL,
 
-    `price_parasol` FLOAT NOT NULL, -- sombrilla
-    `price_parking` FLOAT NOT NULL, -- estacionamiento    
-}
+    `date_update` DATE DEFAULT NULL,    
+    `update_by` INT DEFAULT NULL,
+    
+    CONSTRAINT `FK_config_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`)
+)
+
+
+DROP procedure IF EXISTS `config_get`;
+DELIMITER $$
+CREATE PROCEDURE config_get ()
+BEGIN
+	SELECT * FROM `config`;
+END$$
+
+
+DROP procedure IF EXISTS `config_update`;
+DELIMITER $$
+CREATE PROCEDURE config_update (
+                                    IN date_start_season DATE,
+                                    IN date_end_season DATE,
+                                    IN price_tent_season FLOAT,                                   
+                                    IN price_tent_january FLOAT,                                   
+                                    IN price_tent_january_day FLOAT,                                   
+                                    IN price_tent_january_fortnigh FLOAT,                                   
+                                    IN price_tent_february FLOAT,                                   
+                                    IN price_tent_february_day FLOAT,                                   
+                                    IN price_tent_february_first_fortnigh FLOAT,                                   
+                                    IN price_tent_february_second_fortnigh FLOAT,                                   
+                                    IN price_parasol FLOAT,     
+                                    IN date_update DATE,
+                                    IN update_by INT
+                                )
+BEGIN
+    UPDATE `config` 
+    SET 
+        `config`.`date_start_season` = date_start_season,   
+        `config`.`date_end_season` = date_end_season,
+        `config`.`price_tent_season` = price_tent_season,
+        `config`.`price_tent_january` = price_tent_january,
+        `config`.`price_tent_january_day` = price_tent_january_day,
+        `config`.`price_tent_january_fortnigh` = price_tent_january_fortnigh,
+        `config`.`price_tent_february` = price_tent_february,
+        `config`.`price_tent_february_day` = price_tent_february_day,
+        `config`.`price_tent_february_first_fortnigh` = price_tent_february_first_fortnigh,
+        `config`.`price_tent_february_second_fortnigh` = price_tent_february_second_fortnigh,
+        `config`.`price_parasol` = price_parasol,
+        `config`.`date_update` = date_update,
+        `config`.`update_by` = update_by;        
+END$$
 
 
 
@@ -1776,26 +1825,27 @@ BEGIN
     WHERE `parasol`.`FK_id_hall` = start
     ORDER BY `parasol`.`position` ASC;
 END$$
+    
 
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (1, 100, 1, 1);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (3, 100, 2, 1);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (5, 100, 3, 1);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (2, 100, 2, 1);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (3, 100, 3, 1);
 
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (7, 100, 4, 2);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (9, 100, 5, 2);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (11, 100, 6, 2);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (4, 100, 4, 2);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (5, 100, 5, 2);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (6, 100, 6, 2);
 
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (13, 100, 7, 3);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (15, 100, 8, 3);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (17, 100, 9, 3);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (7, 100, 7, 3);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (8, 100, 8, 3);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (9, 100, 9, 3);
 
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (19, 100, 10, 4);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (21, 100, 11, 4);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (23, 100, 12, 4);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (10, 100, 10, 4);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (11, 100, 11, 4);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (12, 100, 12, 4);
 
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (25, 100, 13, 5);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (27, 100, 14, 5);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (29, 100, 15, 5);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (13, 100, 13, 5);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (14, 100, 14, 5);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (15, 100, 15, 5);
 
 
 
