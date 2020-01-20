@@ -109,7 +109,17 @@
                             <div class="input-field col s4">
                                 <input id="fam" type="text" name="fam" class="validate" required>
                                 <label for="fam">Grupo familiar</label>
-                            </div>                         
+                            </div>       
+
+                            <div class="input-field col s4">
+                                <select name="payment_method">
+                                    <option value="" disabled selected>Seleccione su opcion</option>
+                                    <option value="cash" ?> Efectivo </option>
+                                    <option value="check" ?> Cheque </option>
+                                </select>
+                                <label>Metodo de pago</label>
+                            </div>
+
                             <div class="input-field col s4">
                                 <input id="phone2" type="number" name="auxiliary_phone" class="validate">
                                 <label for="phone2">Telefono auxiliar</label>
