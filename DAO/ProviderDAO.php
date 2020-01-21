@@ -19,7 +19,7 @@
 		
         public function add(Provider $provider, Admin $registerBy) {								
 			try {					
-				$query = "CALL provider_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$query = "CALL provider_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				$parameters["name"] = $provider->getName();
 				$parameters["lastname"] = $provider->getLastName();
 				$parameters["tel"] = $provider->getPhone();
@@ -29,6 +29,7 @@
                 $parameters["cuil"] = $provider->getCuilNumber();
                 $parameters["social_reason"] = $provider->getSocialReason();
 				$parameters["type_billing"] = $provider->getBilling();     
+				$parameters["item"] = $provider->getItem();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();           
 				$this->connection = Connection::getInstance();
@@ -59,7 +60,8 @@
                     $providerTemp->setAddress($row["address"]);
                     $providerTemp->setCuilNumber($row["cuil"]);
                     $providerTemp->setSocialReason($row["social_reason"]);
-                    $providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setItem($row["item"]);
                     $providerTemp->setIsActive($row["is_active"]);
 				}
 				return $providerTemp;
@@ -86,7 +88,8 @@
                     $providerTemp->setAddress($row["address"]);
                     $providerTemp->setCuilNumber($row["cuil"]);
                     $providerTemp->setSocialReason($row["social_reason"]);
-                    $providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setItem($row["item"]);
                     $providerTemp->setIsActive($row["is_active"]);
 				}
 				return $providerTemp;
@@ -113,7 +116,8 @@
                     $providerTemp->setAddress($row["address"]);
                     $providerTemp->setCuilNumber($row["cuil"]);
                     $providerTemp->setSocialReason($row["social_reason"]);
-                    $providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setItem($row["item"]);
                     $providerTemp->setIsActive($row["is_active"]);
 				}				
 				return $providerTemp;
@@ -138,7 +142,8 @@
                     $providerTemp->setAddress($row["address"]);
                     $providerTemp->setCuilNumber($row["cuil"]);
                     $providerTemp->setSocialReason($row["social_reason"]);
-                    $providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setItem($row["item"]);
 					$providerTemp->setIsActive($row["is_active"]);
 					
 					$admin = new Admin();
@@ -172,7 +177,8 @@
                     $providerTemp->setAddress($row["address"]);
                     $providerTemp->setCuilNumber($row["cuil"]);
                     $providerTemp->setSocialReason($row["social_reason"]);
-                    $providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setItem($row["item"]);
 					$providerTemp->setIsActive($row["is_active"]);
 					
 					$admin = new Admin();
@@ -256,7 +262,8 @@
                 $parameters["address"] = $provider->getAddress();
                 $parameters["cuil"] = $provider->getCuilNumber();
                 $parameters["social_reason"] = $provider->getSocialReason();
-				$parameters["type_billing"] = $provider->getBilling(); 			
+				$parameters["type_billing"] = $provider->getBilling();
+				$parameters["item"] = $provider->getItem(); 			
 				$parameters["id"] = $provider->getId(); 	
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();

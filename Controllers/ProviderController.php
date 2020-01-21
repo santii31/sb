@@ -17,13 +17,14 @@
         }     
         
         
-        private function add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+        private function add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item) {
 
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);
             $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
             $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
             $social_reason_s = filter_var($social_reason, FILTER_SANITIZE_STRING);
             $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+            $item_s = filter_var($item, FILTER_SANITIZE_STRING);
 
             $provider = new Provider();            
             $provider->setName( strtolower($name_s) );
@@ -34,7 +35,8 @@
             $provider->setBilling( strtolower($billing) );
             $provider->setCuilNumber($cuil_number);
             $provider->setSocialReason( strtolower($social_reason_s) );
-            $provider->setAddress( strtolower($address_s) );         
+            $provider->setAddress( strtolower($address_s) );
+            $provider->setItem( strtolower($item_s) );         
             
             $register_by = $this->adminController->isLogged();
 
@@ -45,14 +47,14 @@
             }
         }
 
-        public function addProvider($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {
+        public function addProvider($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item) {
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item)) {
                 $providerTemp = new Provider();
                 $providerTemp->setDni($dni);                                
                 $providerTemp->setEmail($email);      
 				if ($this->providerDAO->getByDni($providerTemp) == null) {     
                     if ($this->providerDAO->getByEmail($providerTemp) == null) { 
-                        if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address)) {            
+                        if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item)) {            
                             return $this->addProviderPath(null, PROVIDER_ADDED);
                         } else {                        
                             return $this->addProviderPath(DB_ERROR, null);        
@@ -66,7 +68,7 @@
             return $this->addProviderPath(EMPTY_FIELDS, null);            
         }
 
-        private function isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+        private function isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item) {
             if (empty($name) || 
                 empty($lastName) || 
                 empty($phone) || 
@@ -75,6 +77,7 @@
                 empty($billing) || 
                 empty($cuil_number) || 
                 empty($social_reason) || 
+                empty($item) ||
                 empty($address)) {
                     return false;
             }
@@ -153,9 +156,9 @@
             }           
         }        
 
-        public function update($id, $name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) {
+        public function update($id, $name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item) {
                         
-            if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address) 
+            if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item) 
                 && $this->adminController->validateEmailForm($email)) {     
                 
                 $providerTemp = new Provider();
@@ -173,6 +176,7 @@
                         $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
                         $social_reason_s = filter_var($social_reason, FILTER_SANITIZE_STRING);
                         $address_s = filter_var($address, FILTER_SANITIZE_STRING);
+                        $item_s = filter_var($item, FILTER_SANITIZE_STRING);
 
                         $provider = new Provider();
                         $provider->setId($id);
@@ -184,7 +188,8 @@
                         $provider->setBilling( strtolower($billing) );
                         $provider->setCuilNumber($cuil_number);
                         $provider->setSocialReason( strtolower($social_reason_s) );
-                        $provider->setAddress( strtolower($address_s) );   
+                        $provider->setAddress( strtolower($address_s) );
+                        $provider->setItem( strtolower($item_s) );   
 
                         $update_by = $this->adminController->isLogged();
 
