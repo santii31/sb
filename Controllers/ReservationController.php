@@ -37,7 +37,7 @@
 
 
         // falta descuento
-        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $id_tent) {
+        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent) {
                                             
             $this->clientController = new ClientController();                              
             
@@ -45,7 +45,9 @@
             $l_name_s = filter_var($l_name, FILTER_SANITIZE_STRING);
             $addr_s = filter_var($addr, FILTER_SANITIZE_STRING);
             $city_s = filter_var($city, FILTER_SANITIZE_STRING);
-            $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);            
+            $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);   
+            $payment_method_s = filter_var($payment_method, FILTER_SANITIZE_EMAIL);    
+            $vehicle_s = filter_var($vehicle, FILTER_SANITIZE_EMAIL);     
             
             // esto es un string? preguntar
             // $fam_s = filter_var($fam, FILTER_SANITIZE_STRING);        
@@ -60,9 +62,10 @@
             $client->setCp($cp);
             $client->setEmail($email_s);
             $client->setPhone($phone);
-            $client->setFamilyGroup( strtolower($fam) );                
-            $client->setStayAddress( strtolower($addrStayl_s) );
-            $client->setPhoneStay($phone2);                            
+            $client->setFamilyGroup( strtolower($fam) );
+            $client->setPaymentMethod( strtolower($payment_method_s) );
+            $client->setAuxiliaryPhone($auxiliary_phone);
+            $client->setVehicleType( strtolower($vehicle_s) );       
 
             $register_by = $this->adminController->isLogged();
 
@@ -89,12 +92,12 @@
             return false;
         }
 
-        public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) { 
+        public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent) { 
 
-            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {
+            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent)) {
                 
                 if ($this->checkInterval($start, $end, $tent) == 1) {                                                                                
-                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                             $tent)) {                                                    
+                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent)) {                                                    
 
                         $this->parkingController = new ParkingController();                    
                         return $this->parkingController->parkingMap($lastId);                                                
@@ -123,7 +126,7 @@
             return $flag;
 		}
 			
-        private function isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                         $tent) {
+        private function isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent) {
             if (empty($stay) || 
                 empty($start) || 
                 empty($end) || 
@@ -135,8 +138,9 @@
                 empty($email) || 
                 empty($phone) || 
                 empty($fam) || 
-                empty($addrStay) || 
-                empty($phone2) || 
+                empty($payment_method) ||
+                empty($auxiliary_phone) ||
+                empty($vehicle) || 
                 empty($tent)) {
                     return false;
             }

@@ -68,6 +68,9 @@
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
 					$reservationTemp->setClient($client);
 
 					$admin = new Admin();
@@ -110,6 +113,9 @@
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
 					$reservation->setClient($client);
 
 					$admin = new Admin();
@@ -155,6 +161,9 @@
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
 					$reservation->setClient($client);
 
 					$admin = new Admin();
@@ -196,6 +205,9 @@
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
 					$reservation->setClient($client);
 
 					$beachTent = new BeachTent();
@@ -247,6 +259,9 @@
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
 					$reservation->setClient($client);
 
 					$beachTent = new BeachTent();
@@ -350,6 +365,9 @@
                     $client->setPhone($row["client_tel"]);
                     $client->setCity($row["client_city"]);
 					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
 					
 					$reservation->setClient($client);
 										

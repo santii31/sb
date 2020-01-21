@@ -68,6 +68,7 @@
                                 <th>Apellido</th>
                                 <th>Telefono</th>
                                 <th>Email</th>
+                                <th>Rubro</th>
                                 <th>Domicilio</th>
                                 <th>Mas información</th>
                                 <th>Acciones</th>
@@ -82,6 +83,7 @@
                                 <td> <?= ucfirst( $provider->getLastName() ); ?> </td>
                                 <td> <?= $provider->getPhone(); ?> </td>
                                 <td> <?= $provider->getEmail(); ?> </td>
+                                <td> <?= $provider->getItem(); ?> </td>
                                 <td> <?= ucfirst( $provider->getAddress() ); ?> </td>
                                 <td>
                                     <ul class="collapsible">

@@ -83,7 +83,8 @@
                     $provider->setAddress($row["provider_address"]);
                     $provider->setCuilNumber($row["provider_cuil"]);
                     $provider->setSocialReason($row["provider_socialReason"]);
-                    $provider->setBilling($row["provider_typeBilling"]);
+					$provider->setBilling($row["provider_typeBilling"]);
+					$provider->setItem($row["item"]);
                     $provider->setIsActive($row["provider_isActive"]);
                     $providerxproductTemp->setProvider($provider);                    					
 				}
@@ -109,7 +110,8 @@
                     $providerTemp->setAddress($row["address"]);
                     $providerTemp->setCuilNumber($row["cuil"]);
                     $providerTemp->setSocialReason($row["social_reason"]);
-                    $providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setBilling($row["type_billing"]);
+					$providerTemp->setItem($row["item"]);
                     $providerTemp->setIsActive($row["is_active"]);
 					array_push($this->providerxproductList, $providerxproduct);
 				}

@@ -16,6 +16,7 @@
         private $cuil_number;
         private $social_reason;
         private $billing;
+        private $item;
         private $is_active;
         
         public function getId() {
@@ -105,7 +106,16 @@
         public function setBilling($billing) {
             $this->billing = $billing;
             return $this;
-        }  
+        }
+        
+        public function getItem() {
+            return $this->item;
+        }
+
+        public function setItem($item) {
+            $this->item = $item;
+            return $this;
+        }
  
 
         public function getIsActive() {

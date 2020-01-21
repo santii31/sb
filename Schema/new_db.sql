@@ -877,6 +877,9 @@ BEGIN
            client.tel AS client_tel,
            client.city AS client_city,
            client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -912,6 +915,9 @@ BEGIN
            client.tel AS client_tel,
            client.city AS client_city,
            client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -942,7 +948,10 @@ BEGIN
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_address,           
+           client.address AS client_address,         
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,  
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number           
     FROM `reservation`
@@ -969,7 +978,10 @@ BEGIN
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_address,           
+           client.address AS client_address,         
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,  
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number           
     FROM `reservation`
@@ -1011,6 +1023,9 @@ BEGIN
            client.tel AS client_tel,
            client.city AS client_city,
            client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -1121,6 +1136,9 @@ BEGIN
         client.tel AS client_tel,
         client.city AS client_city,
         client.address AS client_address
+        client.payment_method AS client_paymentMethod,
+        client.auxiliary_phone AS client_auxiliaryPhone,
+        client.vehicle_type AS client_vehicleType,
     FROM reservation         
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN client ON reservation.FK_id_client = client.id
@@ -1215,7 +1233,8 @@ CREATE TABLE provider (
     `address` VARCHAR(255) NOT NULL,
     `cuil` INT NOT NULL,
     `social_reason` VARCHAR(255) NOT NULL,
-    `type_billing` VARCHAR(255) NOT NULL,    
+    `type_billing` VARCHAR(255) NOT NULL,  
+    `item` VARCHAR(255) NOT NULL, 
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
     
     `date_register` DATE NOT NULL,
@@ -1246,6 +1265,7 @@ CREATE PROCEDURE provider_add (
                                 IN cuil int,
                                 IN social_reason VARCHAR(255),
                                 IN type_billing VARCHAR(255),
+                                IN item VARCHAR(255),
                                 IN date_register DATE,
                                 IN register_by INT
                             )
@@ -1260,11 +1280,12 @@ BEGIN
             provider.cuil,
             provider.social_reason,
             provider.type_billing,
+            provider.item,
             provider.date_register,
             provider.register_by
 	)
     VALUES
-        (name, lastname, tel, email, dni, address, cuil, social_reason, type_billing, date_register, register_by);
+        (name, lastname, tel, email, dni, address, cuil, social_reason, type_billing, item, date_register, register_by);
 END$$
 
 
@@ -1387,6 +1408,7 @@ CREATE PROCEDURE provider_update (
                                     IN cuil INT,
                                     IN social_reason VARCHAR(255),
                                     IN type_billing VARCHAR(255),
+                                    IN item VARCHAR(255),
                                     IN id INT,
                                     IN date_update DATE,
                                     IN update_by INT
@@ -1403,6 +1425,7 @@ BEGIN
         `provider`.`cuil` = cuil,
         `provider`.`social_reason` = social_reason,
         `provider`.`type_billing` = type_billing,
+        `provider`.`item` = item,
         `provider`.`date_update` = date_update,
         `provider`.`update_by` = update_by    
     WHERE 
