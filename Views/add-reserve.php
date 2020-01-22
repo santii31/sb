@@ -36,36 +36,26 @@
 
                         <div class="row">
                             <div class="input-field col s4">
-                                <select name="stay">
+                                <select name="stay" id="stay-select">
                                     <option value="" disabled selected>Seleccione su opcion</option>                                    
-                                        <option value="season">
-                                            Temporada
-                                        </option>                                    
-                                        <option value="day">
-                                            Diario
-                                        </option>
-                                        <option value="january">
-                                            Enero
-                                        </option>
-                                        <option value="rest">
-                                            Feriados
-                                        </option>
-                                        <option value="period">
-                                            Periodo
-                                        </option>
-                                        <!-- <option value="fortnight">
-                                            Quincena
-                                        </option> -->
+                                    <option value="season">Temporada</option>                                    
+                                    <option value="january">Enero</option>
+                                    <option value="january_day">Enero - Dia</option>
+                                    <option value="january_fortnigh">Enero - Quincena</option>
+                                    <option value="february">Febrero</option>
+                                    <option value="february_day">Febrero - Dia</option>
+                                    <option value="february_first_fortnigh">Febrero - Primer quincena</option>
+                                    <option value="february_second_fortnigh">Febrero - Segunda quincena</option>
                                 </select>
                                 <label>Estadia</label>  
                             </div>  
                             <div class="input-field col s4">
-                                <input id="start" type="Date" name="start" class="validate" required>
+                                <input id="start" type="date" name="start" class="validate" required>
                                 <label for="start">Fecha de ingreso</label>
                             </div>
 
                             <div class="input-field col s4">
-                                <input id="end" type="Date" name="end" class="validate" required>
+                                <input id="end" type="date" name="end" class="validate" required>
                                 <label for="end">Fecha de egreso</label>
                             </div>                            
                         </div>      
@@ -114,8 +104,8 @@
                             <div class="input-field col s4">
                                 <select name="payment_method">
                                     <option value="" disabled selected>Seleccione su opcion</option>
-                                    <option value="cash" ?> Efectivo </option>
-                                    <option value="check" ?> Cheque </option>
+                                    <option value="cash">Efectivo</option>
+                                    <option value="check">Cheque</option>
                                 </select>
                                 <label>Metodo de pago</label>
                             </div>
@@ -126,18 +116,20 @@
                             </div>                                  
                         </div>
 
-                        <div class="row center-align">
-                            <div class="input-field col s6">
-                            <label for="phone2">Tipo de vehiculo:</label>
-                                <p>
-                                    <label>
-                                        <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
-                                        <span>Auto</span>
-                                    </label>
-                                </p>
-                                    
-                                </div>
-                                <div class="input-field col s6">
+                        <div class="row">
+                            <div class="input-field col s3">
+                                <label>Tipo de vehiculo:</label>
+                            </div>
+                            <div class="input-field col s3">
+                                    <p>
+                                        <label>
+                                            <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
+                                            <span>Auto</span>
+                                        </label>
+                                    </p>                                        
+                            </div>
+                            
+                            <div class="input-field col s3">
                                 <p>
                                     <label>
                                         <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="van">
@@ -145,7 +137,8 @@
                                     </label>
                                 </p>
                             </div>
-                            <div class="input-field col s6">
+                            
+                            <div class="input-field col s3">
                                 <p>
                                     <label>
                                         <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="motorcycle">
@@ -153,7 +146,9 @@
                                     </label>
                                 </p>
                             </div>                                                                
-                                                
+
+                        </div>
+
                         <input type="hidden" name="tent" value="<?= $id_tent ?>">
 
                         <div class="row">
@@ -205,3 +200,45 @@
     </div>
 </div>
     
+<script>
+    
+    const selectStay = document.getElementById('stay-select');    
+    const dateStart = document.getElementById('start'); 
+    const dateEnd = document.getElementById('end'); 
+
+    selectStay.addEventListener('change', (e)=> {
+        if (selectStay.value === 'january' ) {
+            
+            const date = new Date();
+            date.setMonth(0);
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);                               
+            
+            const f_day = firstDay.toISOString().slice(0,10);            
+            const l_day = lastDay.toISOString().slice(0,10);            
+
+            dateStart.value = f_day;            
+            dateEnd.value = l_day;            
+
+        } else if (selectStay.value == 'february' ) {
+            
+            const date = new Date();
+            date.setMonth(1);
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);                               
+            
+            const f_day = firstDay.toISOString().slice(0,10);            
+            const l_day = lastDay.toISOString().slice(0,10);            
+
+            dateStart.value = f_day;            
+            dateEnd.value = l_day; 
+
+        } else {
+
+            dateStart.value = 0;            
+            dateEnd.value = 0; 
+            
+        }
+    });    
+
+</script>

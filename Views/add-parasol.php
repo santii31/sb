@@ -37,15 +37,11 @@
                         <div class="row">
                         
                             <div class="input-field col s6">
-                                <select name="id_mobileParasol">
-                                    <option value="">Seleccione una sombrilla movil</option>
-                                    
-                                    <?php foreach ($mobileParasolFinalList as $mobileParasol): ?>
-                                        <option value="<?= $mobileParasol->getId(); ?>">
-                                            <?= $mobileParasol->getMobileParasolNumber(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                     
+                                <select name="id_locker_man">
+                                    <option value="">Seleccione una sombrilla</option>                                    
+                                    <?php foreach ($parasolFinalList as $parasol): ?>
+                                        <option value="<?= $parasol->getId(); ?>"><?= $parasol->getParasolNumber(); ?></option>
+                                    <?php endforeach; ?>                                     
                                 </select>
                                 <label>Sombrillas moviles</label>
                             </div>

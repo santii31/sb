@@ -107,6 +107,54 @@
 			}
         }
 
+        public function searchPath($alert = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Producto - Buscar por categoria";     
+                $categories = $this->categoryController->getCategorys();
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "search-product.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->adminController->userPath();
+            }   
+        }
+
+        public function search($value) {                              
+            if ($admin = $this->adminController->isLogged()) { 
+                if (!empty($value)) {
+                    return $this->searchByCategory($value);                    
+                }
+                return $this->searchPath(EMPTY_FIELDS);
+            } else {
+                return $this->adminController->userPath();
+            }           
+        }
+
+        private function searchByCategory($id_category) {
+            if ($admin = $this->adminController->isLogged()) {     
+                $title = "Producto - Buscar por categoria";
+                
+                $category = new Category();
+                $category->setId($id_category);
+                
+                $product = new Product();
+                $product->setCategory($category);                      
+
+                $products = $this->productDAO->getByCategory($product);
+                if (sizeof($products) > 0) {
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "list-search-product.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                } else {
+                    return $this->searchPath(SEARCH_PRODUCT_EMPTY);
+                }                
+            } else {
+                return $this->adminController->userPath();
+            } 
+        }
+
         public function enable($id) {
             if ($admin = $this->adminController->isLogged()) {
                 $product = new Product();

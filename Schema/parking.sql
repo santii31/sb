@@ -329,82 +329,84 @@ INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK
 
 INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('113', 100, 158, 8);
 
-
--- row
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('188', 100, 159, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('189', 100, 160, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('190', 100, 161, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('191', 100, 162, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('192', 100, 163, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('193', 100, 164, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('194', 100, 165, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('195', 100, 166, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('196', 100, 167, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('197', 100, 168, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('198', 100, 169, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('199', 100, 170, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('200', 100, 171, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('135', 100, 172, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('136', 100, 173, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('137', 100, 174, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('138', 100, 175, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('139', 100, 176, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('140', 100, 177, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('141', 100, 178, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('142', 100, 179, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('143', 100, 180, 9);
-
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('144', 100, 181, 9);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('113B', 100, 159, 8);
 
 
 -- row
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('159', 100, 182, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('188', 100, 160, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('158', 100, 183, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('189', 100, 161, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('157', 100, 184, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('190', 100, 162, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('156', 100, 185, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('191', 100, 163, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('155', 100, 186, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('192', 100, 164, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('154', 100, 187, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('193', 100, 165, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('153', 100, 188, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('194', 100, 166, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('152', 100, 189, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('195', 100, 167, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('151', 100, 190, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('196', 100, 168, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('150', 100, 191, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('197', 100, 169, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('149', 100, 192, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('198', 100, 170, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('148', 100, 193, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('199', 100, 171, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('147', 100, 194, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('200', 100, 172, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('146', 100, 195, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('135', 100, 173, 9);
 
-INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('145', 100, 196, 10);
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('136', 100, 174, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('137', 100, 175, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('138', 100, 176, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('139', 100, 177, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('140', 100, 178, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('141', 100, 179, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('142', 100, 180, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('143', 100, 181, 9);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('144', 100, 182, 9);
+
+
+-- row
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('159', 100, 183, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('158', 100, 184, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('157', 100, 185, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('156', 100, 186, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('155', 100, 187, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('154', 100, 188, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('153', 100, 189, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('152', 100, 190, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('151', 100, 191, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('150', 100, 192, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('149', 100, 193, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('148', 100, 194, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('147', 100, 195, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('146', 100, 196, 10);
+
+INSERT INTO parking (parking.number, parking.price, parking.position, parking.FK_id_hall) VALUES ('145', 100, 197, 10);

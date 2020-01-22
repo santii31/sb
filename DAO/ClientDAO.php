@@ -3,8 +3,10 @@
     namespace DAO;
 
 	use \Exception as Exception;
-	use Models\Client as Client;
 	use Models\Admin as Admin;	
+	use Models\Client as Client;	
+	use Models\BeachTent as BeachTent;
+	use Models\Reservation as Reservation;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -19,7 +21,7 @@
 		
         public function add(Client $client, Admin $registerBy) {								
 			try {									
-				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
+				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();				
 				$parameters["address"] = $client->getAddress();
@@ -105,6 +107,100 @@
 			}
 		}
 		
+		public function getByName(Client $client) {
+			try {
+				$clientsList = array();
+				$query = "CALL client_getByName(?)";
+				$parameters ["name"] = $client->getName();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
+				foreach ($results as $row) {	
+					
+					$reservation = new Reservation();					
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+                    $reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$client->setAddress($row["client_address"]);
+					$client->setCity($row["client_city"]);									
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);					
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setVehicleType($row["client_vehicleType"]);                    
+					$reservation->setClient($client);
+
+					$admin = new Admin();					
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();					
+					$beachTent->setNumber($row["tent_number"]);					
+
+					$reservation->setBeachTent($beachTent);					
+
+					array_push($clientsList, $reservation);
+				}
+				return $clientsList;
+			}
+			catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
+		public function getByTentNumber(BeachTent $tent) {
+			try {
+				$clientsRsv = array();
+				$query = "CALL client_getByTentNumber(?)";
+				$parameters ["number"] = $tent->getNumber();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
+				foreach ($results as $row) {	
+					
+					$reservation = new Reservation();					
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+                    $reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$client->setAddress($row["client_address"]);
+					$client->setCity($row["client_city"]);									
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);					
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setVehicleType($row["client_vehicleType"]);                    
+					$reservation->setClient($client);
+
+					$admin = new Admin();					
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();					
+					$beachTent->setNumber($row["tent_number"]);					
+
+					$reservation->setBeachTent($beachTent);					
+
+					array_push($clientsRsv, $reservation);
+				}
+				return $clientsRsv;
+			}
+			catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
 		public function getAll() {
 			try {
 				$query = "CALL client_getAll()";

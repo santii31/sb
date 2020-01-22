@@ -3,8 +3,8 @@
     namespace DAO;
 
 	use \Exception as Exception;
-	use Models\Provider as Provider;
 	use Models\Admin as Admin;	
+	use Models\Provider as Provider;
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -67,6 +67,43 @@
 				return $providerTemp;
 			} catch (Exception $e) {
 				return false;
+			}
+		}
+
+		public function getByItem(Provider $provider) {
+			try {				
+				$providerList = array();
+				$query = "CALL provider_getByItem(?)";
+				$parameters["item"] = $provider->getItem();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$provider = new Provider();
+					$provider->setId($row["id"]);
+					$provider->setName($row["name"]);
+					$provider->setLastName($row["lastname"]);
+                    $provider->setPhone($row["tel"]);
+                    $provider->setEmail($row["email"]);
+					$provider->setDni($row["dni"]);				
+                    $provider->setAddress($row["address"]);
+                    $provider->setCuilNumber($row["cuil"]);
+                    $provider->setSocialReason($row["social_reason"]);
+					$provider->setBilling($row["type_billing"]);
+					$provider->setItem($row["item"]);
+					$provider->setIsActive($row["is_active"]);
+
+					$admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+					$provider->setRegisterBy($admin);
+
+					array_push($providerList, $provider);
+				}
+				return $providerList;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
 			}
 		}
 

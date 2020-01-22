@@ -4,87 +4,105 @@
     
     class Config {
         
+        private $date_start_season;
         private $date_end_season;
-        private $price_tent_season;
-        private $price_tent_day;
+        private $price_tent_season;        
         private $price_tent_january;
-        private $price_tent_rest;
-        private $price_tent_period;
-        private $price_tent_fortnigh;
+        private $price_tent_january_day;
+        private $price_tent_january_fortnigh;        
+        private $price_tent_february;
+        private $price_tent_february_day;
+        private $price_tent_february_first_fortnigh;
+        private $price_tent_february_second_fortnigh;
         private $price_parasol;
-        private $price_parking;
+                        
 
+        public function getDateStartSeason() {
+            return $this->date_start_season;
+        }
 
-        public getDateEndSeason() {
+        public function setDateStartSeason($date_start_season) {
+            $this->date_start_season = $date_start_season;
+        }
+
+        public function getDateEndSeason() {
             return $this->date_end_season;
         }
 
-        public setDateEndSeason($date_end_season) {
+        public function setDateEndSeason($date_end_season) {
             $this->date_end_season = $date_end_season;
         }
 
-        public getPriceTentSeason() {
+        public function getPriceTentSeason() {
             return $this->price_tent_season;
         }
 
-        public setPriceTentSeason($price_tent_season) {
+        public function setPriceTentSeason($price_tent_season) {
             $this->price_tent_season = $price_tent_season;
         }
 
-        public getPriceTentDay() {
-            return $this->price_tent_day;
-        }
-
-        public setPriceTentDay($price_tent_day) {
-            $this->price_tent_day = $price_tent_day;
-        }
-
-        public getPriceTentJanuary() {
+        public function getPriceTentJanuary() {
             return $this->price_tent_january;
         }
 
-        public setPriceTentJanuary($price_tent_january) {
+        public function setPriceTentJanuary($price_tent_january) {
             $this->price_tent_january = $price_tent_january;
         }
 
-        public getPriceTentRest() {
-            return $this->price_tent_rest;
+        public function getPriceTentJanuaryDay() {
+            return $this->price_tent_january_day;
         }
 
-        public setPriceTentRest($price_tent_rest) {
-            $this->price_tent_rest = $price_tent_rest;
+        public function setPriceTentJanuaryDay($price_tent_january_day) {
+            $this->price_tent_january_day = $price_tent_january_day;
         }
 
-        public getPriceTentPeriod() {
-            return $this->price_tent_period;
+        public function getPriceTentJanuaryFortnigh() {
+            return $this->price_tent_january_fortnigh;
         }
 
-        public setPriceTentPeriod($price_tent_period) {
-            $this->price_tent_period = $price_tent_period;
+        public function setPriceTentJanuaryFortnigh($price_tent_january_fortnigh) {
+            $this->price_tent_january_fortnigh = $price_tent_january_fortnigh;
+        }                                    
+        
+        public function getPriceTentFebruary() {
+            return $this->price_tent_february;
         }
 
-        public getPriceTentFortnigh() {
-            return $this->price_tent_fortnigh;
+        public function setPriceTentFebruary($price_tent_february) {
+            $this->price_tent_february = $price_tent_february;
         }
 
-        public setPriceTentFortnigh($price_tent_fortnigh) {
-            $this->price_tent_fortnigh = $price_tent_fortnigh;
+        public function getPriceTentFebruaryDay() {
+            return $this->price_tent_february_day;
         }
 
-        public getPriceParasol() {
+        public function setPriceTentFebruaryDay($price_tent_february_day) {
+            $this->price_tent_february_day = $price_tent_february_day;
+        }
+
+        public function getPriceTentFebruaryFirstFortnigh() {
+            return $this->price_tent_february_first_fortnigh;
+        }
+
+        public function setPriceTentFebruaryFirstFortnigh($price_tent_february_first_fortnigh) {
+            $this->price_tent_february_first_fortnigh = $price_tent_february_first_fortnigh;
+        }
+
+        public function getPriceTentFebruarySecondFortnigh() {
+            return $this->price_tent_february_first_fortnigh;
+        }
+
+        public function setPriceTentFebruarySecondFortnigh($price_tent_february_second_fortnigh) {
+            $this->price_tent_february_second_fortnigh = $price_tent_february_second_fortnigh;
+        }
+        
+        public function getPriceParasol() {
             return $this->price_parasol;
         }
 
-        public setPriceParasol($price_parasol) {
+        public function setPriceParasol($price_parasol) {
             $this->price_parasol = $price_parasol;
-        }
-
-        public getPriceParking() {
-            return $this->price_parking;
-        }
-
-        public setPriceParking($price_parking) {
-            $this->price_parking = $price_parking;
         }
 
     }

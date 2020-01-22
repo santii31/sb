@@ -102,6 +102,48 @@
             }
         }
         
+        public function searchPath($alert = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Clientes Potenciales - Buscar";                       
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "search-client-potential.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->adminController->userPath();
+            }   
+        }
+
+        public function search($value) {                              
+            if ($admin = $this->adminController->isLogged()) { 
+                if (!empty($value)) {
+                    return $this->searchByName($value);                    
+                }
+                return $this->searchPath(EMPTY_FIELDS);
+            } else {
+                return $this->adminController->userPath();
+            }           
+        }
+
+        private function searchByName($name) {
+            if ($admin = $this->adminController->isLogged()) {     
+                $title = "Clientes Potenciales - Buscar por nombre";
+                $clientTemp = new ClientPotential();
+                $clientTemp->setName( strtolower($name) );                       
+                $clients = $this->clientPotentialDAO->getByName($clientTemp);
+                if (sizeof($clients) > 0) {
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "list-search-client-potential.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                } else {
+                    return $this->searchPath(SEARCH_EMPTY);
+                }                
+            } else {
+                return $this->adminController->userPath();
+            } 
+        }
+
         public function enable($id) {
             if ($admin = $this->adminController->isLogged()) {
                 $client = new ClientPotential();

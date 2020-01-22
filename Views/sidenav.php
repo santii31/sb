@@ -298,6 +298,12 @@
                                             Añadir producto
                                         </a>
                                     </li>
+                                    <li>            
+                                        <a href="<?= FRONT_ROOT ?>product/searchPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">search</i>
+                                            Buscar productos
+                                        </a>
+                                    </li> 
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>stock/listStockPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
@@ -320,6 +326,12 @@
                                             Añadir proveedor
                                         </a>
                                     </li>
+                                    <li>            
+                                        <a href="<?= FRONT_ROOT ?>provider/searchPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">search</i>
+                                            Buscar proveedores
+                                        </a>
+                                    </li> 
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>provider/listProviderPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
@@ -331,7 +343,7 @@
                         </li>                    
                     </ul>
 
-                    <ul class="collapsible">
+                    <!-- <ul class="collapsible">
                         <li>
                             <div class="collapsible-header"><i class="material-icons">room_service</i>Servicio adicional</div>
                             <div class="collapsible-body">
@@ -351,13 +363,19 @@
                                 </ul>
                             </div>
                         </li>                    
-                    </ul>                    
+                    </ul>                     -->
 
                     <ul class="collapsible">
                         <li>
-                            <div class="collapsible-header"><i class="material-icons">person_pin</i>Clientes</div>
+                            <div class="collapsible-header"><i class="material-icons">person_pin_circle</i>Clientes</div>
                             <div class="collapsible-body">
                                 <ul>
+                                    <li>            
+                                        <a href="<?= FRONT_ROOT ?>client/searchPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">search</i>
+                                            Buscar clientes
+                                        </a>
+                                    </li> 
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>client/listClientPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
@@ -380,6 +398,12 @@
                                             Añadir cliente potencial
                                         </a>
                                     </li>
+                                    <li>            
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/searchPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">search</i>
+                                            Buscar clientes potenciales
+                                        </a>
+                                    </li> 
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>
@@ -402,6 +426,12 @@
                                             Añadir personal
                                         </a>
                                     </li>
+                                    <li>            
+                                        <a href="<?= FRONT_ROOT ?>staff/searchPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">search</i>
+                                            Buscar personal
+                                        </a>
+                                    </li> 
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>staff/listStaffPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">format_list_numbered</i>

@@ -69,31 +69,34 @@
 			}
 		}
 
-		public function getByCategory($id_category) {
+		public function getByCategory(Product $product) {
 			try {				
-				$productTemp = null;
+				$productList = array();
 				$query = "CALL product_getByCategory(?)";
-				$parameters["FK_id_category"] = $id_category;
+				$parameters["FK_id_category"] = $product->getCategory()->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-					$productTemp = new Product();
-                    $productTemp->setId($row["id"]);
-                    $productTemp->setName($row["name"]);
-					$productTemp->setPrice($row["price"]);
-					$productTemp->setQuantity($row["quantity"]);
-                    $productTemp->setIsActive($row["is_active"]);
+					
+					$product = new Product();
+                    $product->setId($row["product_id"]);
+                    $product->setName($row["product_name"]);
+					$product->setPrice($row["product_price"]);
+					$product->setQuantity($row["product_quantity"]);
+                    $product->setIsActive($row["product_isActive"]);
 
                     $category = new Category();
-                    $category->setId($row["id"]);
-                    $category->setName($row["name"]);
-                    $category->setDescription($row["description"]);
+                    $category->setId($row["category_id"]);
+                    $category->setName($row["category_name"]);                    
 
-                    $productTemp->setCategory($category);
+					$product->setCategory($category);
+					
+					array_push($productList, $product);
 				}
-				return $productTemp;
+				return $productList;
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}
 
@@ -114,8 +117,7 @@
 
                     $category = new Category();
                     $category->setId($row["id"]);
-                    $category->setName($row["name"]);
-                    $category->setDescription($row["description"]);
+                    $category->setName($row["name"]);                    
 
                     $productTemp->setCategory($category);
 				}

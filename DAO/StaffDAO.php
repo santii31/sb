@@ -72,6 +72,43 @@
             }
         }
 
+        public function getByName(Staff $staff) {
+            try {				
+                $staffList = array();
+                $query = "CALL staff_getByName(?)";
+                $parameters["name"] = $staff->getName();
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    $staff = new Staff();
+                    $staff->setId($row["id"]);
+                    $staff->setName($row["name"]);
+                    $staff->setLastName($row["lastname"]);
+                    $staff->setPosition($row["position"]);
+                    $staff->setSalary($row["salary"]);
+                    $staff->setDateStart($row["date_start"]);
+                    $staff->setDateEnd($row["date_end"]);
+                    $staff->setDni($row["dni"]);
+                    $staff->setAddress($row["address"]);
+                    $staff->setPhone($row["tel"]);
+                    $staff->setShirtSize($row["shirt_size"]);
+                    $staff->setPantSize($row["pant_size"]);    
+                    $staff->setIsActive($row["is_active"]);     
+                    
+                    $admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+                    $staff->setRegisterBy($admin);
+                    
+                    array_push($staffList, $staff);
+                }
+                return $staffList;
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+
         public function getByDni(Staff $staff) {
             try {				
                 $staffTemp = null;

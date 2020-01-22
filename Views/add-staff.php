@@ -58,8 +58,7 @@
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="date_start" type="date" name="date_start" class="validate" required>
-                                <!-- <input type="text" class="datepicker"> -->
+                                <input id="date_start" type="date" name="date_start" class="validate" required>                                
                                 <label for="date_start">Fecha de inicio</label>
                             </div>                         
                             <div class="input-field col s6">

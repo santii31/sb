@@ -38,40 +38,27 @@
                         
                             <div class="input-field col s6">
                                 <select name="id_locker_man">
-                                    <option value="">Seleccione un locker</option>
-                                    
+                                    <option value="">Seleccione un locker</option>                                    
                                     <?php foreach ($lockerManList as $locker): ?>
-                                        <option value="<?= $locker->getId(); ?>">
-                                            <?= $locker->getLockerNumber(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                     
+                                        <option value="<?= $locker->getId(); ?>"><?= $locker->getLockerNumber(); ?></option>
+                                    <?php endforeach; ?>                                     
                                 </select>
                                 <label>Lockers de hombres</label>
                             </div>
 
                             <div class="input-field col s6">
                                 <select name="id_locker_woman">
-                                    <option value="" >Seleccione un locker</option>
-                                    
+                                    <option value="" >Seleccione un locker</option>                                    
                                     <?php foreach ($lockerWomanList as $locker): ?>
-                                        <option value="<?= $locker->getId(); ?>">
-                                            <?= $locker->getLockerNumber(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                     
+                                        <option value="<?= $locker->getId(); ?>"><?= $locker->getLockerNumber(); ?></option>
+                                    <?php endforeach; ?>                                     
                                 </select>
                                 <label>Lockers de mujeres</label>
-                            </div>
+                            </div>                                                                                 
+                        </div>    
 
-                            <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate">
-                                <label for="price">Precio</label>
-                            </div>
-                            
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
-                                                     
-                        </div>                        
+                        
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir

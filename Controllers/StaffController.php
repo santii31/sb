@@ -118,6 +118,48 @@
             }
         } 
 
+        public function searchPath($alert = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Personal - Buscar";                       
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "search-staff.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->adminController->userPath();
+            }   
+        }
+
+        public function search($value) {                              
+            if ($admin = $this->adminController->isLogged()) { 
+                if (!empty($value)) {
+                    return $this->searchByName($value);                    
+                }
+                return $this->searchPath(EMPTY_FIELDS);
+            } else {
+                return $this->adminController->userPath();
+            }           
+        }
+
+        private function searchByName($name) {
+            if ($admin = $this->adminController->isLogged()) {     
+                $title = "Personal - Buscar por nombre";
+                $staff = new Staff();
+                $staff->setName( strtolower($name) );                       
+                $staffs = $this->staffDAO->getByName($staff);
+                if (sizeof($staffs) > 0) {
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "list-search-staff.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                } else {
+                    return $this->searchPath(SEARCH_STAFF_EMPTY);
+                }                
+            } else {
+                return $this->adminController->userPath();
+            } 
+        }
+
         public function enable($id) {
             if ($admin = $this->adminController->isLogged()) {
                 $staff = new Staff();

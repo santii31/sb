@@ -811,3 +811,14 @@ nav .input-field label.active i {
 .pagination li.active {
     background-color: #6a56a5;
 }
+
+.fut-rsv-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fut-rsv-alert i {
+    margin-right: .5rem;
+    color: #d50000;
+}
