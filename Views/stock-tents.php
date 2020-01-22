@@ -23,7 +23,7 @@
 
                         <tbody>                            
                             <tr>
-                                <td> <?= date("Y-m-d"); ?></td>
+                                <td> <?= date("d-m-Y"); ?></td>
                                 <td> <?= $this->getAllTents() ; ?> (100%)</td>
                                 <td> <?= $this->getAllTentsWithReservation(); ?> (<?= $this->getAllTentsWithReservationPercentage(); ?>%) </td>   
                                 <td> <?= $this->getAllTentsFree(); ?> (<?= $this->getAllTentsFreePercentage(); ?>%)</td>    
@@ -61,8 +61,8 @@
                         <tbody>       
                             <?php foreach ($rsvFuture as $rsv): ?>
                                 <tr>
-                                    <td> <?= $rsv->getDateStart(); ?></td>
-                                    <td> <?= $rsv->getDateEnd(); ?></td>
+                                    <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
+                                    <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                    
                                     <td> <?= $rsv->getBeachTent()->getNumber(); ?></td>
                                     <td> <?= ucfirst( $rsv->getClient()->getName() ) . ' ' . $rsv->getClient()->getLastName(); ?></td>
                                     <td> <?= $rsv->getClient()->getPhone(); ?> </td>

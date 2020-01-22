@@ -36,8 +36,8 @@
                                 <td> <?= $rsv->getClient()->getPhone(); ?> </td>
                                 <td> <?= $rsv->getBeachTent()->getNumber(); ?> </td>
                                 <td> <?= ucfirst( $rsv->getStay() ); ?> </td>
-                                <td> <?= $rsv->getDateStart(); ?> </td>
-                                <td> <?= $rsv->getDateEnd(); ?> </td>
+                                <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
+                                <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                
                                 <td>
                                     <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" class="waves-effect waves-light btn-small">
                                         <i class="material-icons left">attach_money</i>

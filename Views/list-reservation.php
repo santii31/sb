@@ -48,8 +48,8 @@
                         <thead>
                         <tr>                     
                             <th>Estadia</th>       
-                            <th>Fecha entrada</th>
-                            <th>Fecha salida</th>
+                            <th>Fecha inicio</th>
+                            <th>Fecha fin</th>
                             <th>Precio</th>
                             <th>Cliente</th>
                             <th>Carpa</th>
@@ -64,22 +64,22 @@
                             <?php foreach ($reservations as $reservation): ?>
                                 <tr>                                    
                                     <td> <?= $reservation->getStay(); ?> </td>
-                                    <td> <?= $reservation->getDateStart(); ?> </td>
-                                    <td> <?= $reservation->getDateEnd(); ?> </td>
+                                    <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
+                                    <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>                                    
                                     <td> <?= $reservation->getPrice(); ?> </td>
                                     <td> <?= $reservation->getClient()->getName() . " " . $reservation->getClient()->getLastName(); ?> </td>
                                     <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
+                                    
                                     <?php $service=null; ?>
                                     <?php $lockers=null; ?>
+                                    
                                     <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
-                                        <?php echo $service->getId(); ?>
                                         <?php if ($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())): ?>                 
                                             <td>
                                                 <ul> 
                                                     <?php foreach ($lockers as $locker): ?>
                                                         <li>
                                                             • <?= $locker->getLockerNumber() . "(" .$locker->getSex() . ")" ; ?> 
-                                                            
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
@@ -110,7 +110,7 @@
                                     <?php endif; ?>
 
                                     <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
-                                        <?php if ($parkings = $this->servicexparkingDAO->getParkingByService($service->getId())): ?>                 
+                                        <?php if ($parkings = $this->servicexparkingDAO->getParkingByService($service->getId())): ?>              
                                             <td>
                                                 <ul>
                                                     <?php foreach ($parkings as $parking): ?>
