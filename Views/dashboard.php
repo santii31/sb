@@ -115,11 +115,9 @@
                                                                         
                                                                         <div class="reserve-container">
                                                                             
-                                                                            <div class="reserve-title">
-                                                                                <!-- aca voy -->
+                                                                            <div class="reserve-title">                                          
                                                                                 <i class="material-icons">info_outline</i>
                                                                                 La carpa se encuentra actualmente reservada.
-
                                                                             </div>        
                                                                             
                                                                             <div class="reserve-client">
@@ -144,11 +142,11 @@
                                                                                     </span>  
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -184,12 +182,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -330,18 +328,14 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>                                                                   
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -374,12 +368,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -431,46 +425,86 @@
                                         <?php $i = 1; ?>   
                                         <?php foreach ($secondRow as $tent): ?>
                                             <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
-                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
-                                                            
-                                                            <?php $stay = $rsv->getStay(); ?>
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                    
+                                                    <?php if ($i <= 16): ?>
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent tent-inverse yellow">                                                
+                                                                    <?php break; ?> 
                                                                 
-                                                            <?php switch ($stay): 
-                                                                case "season": ?>
-                                                                    <div class="tent yellow">                                                
-                                                                <?php break; ?> 
-                                                            
-                                                                <?php case "day": ?>
-                                                                    <div class="tent green">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="tent fuchsia">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="tent orange">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="tent blue">                                                
-                                                                <?php break; ?>
-                                                                
-                                                            <?php endswitch; ?>    
-                                                                                                                            
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent tent-inverse green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent tent-inverse fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent tent-inverse orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent tent-inverse blue">                                     
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent tent-inverse">
+                                                            <?php endif; ?>
+
                                                         <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>
+                                                        <div class="tent tent-inverse">
+                                                        <?php endif; ?> 
 
                                                     <?php else: ?>
-                                                    <div class="tent">
-                                                    <?php endif; ?>
+                                                    
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent yellow">                                                
+                                                                    <?php break; ?> 
+                                                                
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent blue">                                                  
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent">
+                                                            <?php endif; ?>
+
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>                                                     
+                                                    
+                                                    <?php endif?>     
                                                         <span>
                                                             <?= $tent->getNumber(); ?>
-                                                        </span>		
-                                                    </div>      
+                                                        </span>
+                                                    </div>                                                   
                                                 </a>                    
                                                 
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
@@ -507,11 +541,9 @@
                                                                         
                                                                         <div class="reserve-container">
                                                                             
-                                                                            <div class="reserve-title">
-                                                                                <!-- aca voy -->
+                                                                            <div class="reserve-title">                                                                              
                                                                                 <i class="material-icons">info_outline</i>
                                                                                 La carpa se encuentra actualmente reservada.
-
                                                                             </div>        
                                                                             
                                                                             <div class="reserve-client">
@@ -536,11 +568,11 @@
                                                                                     </span>  
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -576,12 +608,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -614,7 +646,7 @@
                                                     </div>
                                                 </div> 
                                             </div>
-                                        <?php $i++; ?>                                            
+                                        <?php $i++; ?>                                                  
                                         <?php endforeach; ?> 
 									</div>
 								</div>
@@ -723,18 +755,14 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>                                                                   
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -767,12 +795,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -972,46 +1000,86 @@
                                         <?php $i = 1; ?>   
                                         <?php foreach ($thirdRow as $tent): ?>
                                             <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
-                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
-                                                            
-                                                            <?php $stay = $rsv->getStay(); ?>
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                    
+                                                    <?php if ($i <= 16): ?>
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent tent-inverse yellow">                                                
+                                                                    <?php break; ?> 
                                                                 
-                                                            <?php switch ($stay): 
-                                                                case "season": ?>
-                                                                    <div class="tent yellow">                                                
-                                                                <?php break; ?> 
-                                                            
-                                                                <?php case "day": ?>
-                                                                    <div class="tent green">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="tent fuchsia">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="tent orange">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="tent blue">                                                
-                                                                <?php break; ?>
-                                                                
-                                                            <?php endswitch; ?>    
-                                                                                                                            
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent tent-inverse green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent tent-inverse fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent tent-inverse orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent tent-inverse blue">                                     
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent tent-inverse">
+                                                            <?php endif; ?>
+
                                                         <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>
+                                                        <div class="tent tent-inverse">
+                                                        <?php endif; ?> 
 
                                                     <?php else: ?>
-                                                    <div class="tent">
-                                                    <?php endif; ?>
+                                                    
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent yellow">                                                
+                                                                    <?php break; ?> 
+                                                                
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent blue">                                                  
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent">
+                                                            <?php endif; ?>
+
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>                                                     
+                                                    
+                                                    <?php endif?>     
                                                         <span>
                                                             <?= $tent->getNumber(); ?>
-                                                        </span>		
-                                                    </div>      
+                                                        </span>
+                                                    </div>                                                   
                                                 </a>                    
                                                 
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
@@ -1048,11 +1116,9 @@
                                                                         
                                                                         <div class="reserve-container">
                                                                             
-                                                                            <div class="reserve-title">
-                                                                                <!-- aca voy -->
+                                                                            <div class="reserve-title">                                                                              
                                                                                 <i class="material-icons">info_outline</i>
                                                                                 La carpa se encuentra actualmente reservada.
-
                                                                             </div>        
                                                                             
                                                                             <div class="reserve-client">
@@ -1077,11 +1143,11 @@
                                                                                     </span>  
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -1117,12 +1183,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -1264,18 +1330,14 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>                                                                   
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -1308,12 +1370,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -1390,46 +1452,86 @@
                                         <?php $i = 1; ?>   
                                         <?php foreach ($fourthRow as $tent): ?>
                                             <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
-                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
-                                                            
-                                                            <?php $stay = $rsv->getStay(); ?>
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                    
+                                                    <?php if ($i <= 16): ?>
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent tent-inverse yellow">                                                
+                                                                    <?php break; ?> 
                                                                 
-                                                            <?php switch ($stay): 
-                                                                case "season": ?>
-                                                                    <div class="tent yellow">                                                
-                                                                <?php break; ?> 
-                                                            
-                                                                <?php case "day": ?>
-                                                                    <div class="tent green">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="tent fuchsia">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="tent orange">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="tent blue">                                                
-                                                                <?php break; ?>
-                                                                
-                                                            <?php endswitch; ?>    
-                                                                                                                            
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent tent-inverse green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent tent-inverse fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent tent-inverse orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent tent-inverse blue">                                     
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent tent-inverse">
+                                                            <?php endif; ?>
+
                                                         <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>
+                                                        <div class="tent tent-inverse">
+                                                        <?php endif; ?> 
 
                                                     <?php else: ?>
-                                                    <div class="tent">
-                                                    <?php endif; ?>
+                                                    
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent yellow">                                                
+                                                                    <?php break; ?> 
+                                                                
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent blue">                                                  
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent">
+                                                            <?php endif; ?>
+
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>                                                     
+                                                    
+                                                    <?php endif?>     
                                                         <span>
                                                             <?= $tent->getNumber(); ?>
-                                                        </span>		
-                                                    </div>      
+                                                        </span>
+                                                    </div>                                                   
                                                 </a>                    
                                                 
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
@@ -1466,11 +1568,9 @@
                                                                         
                                                                         <div class="reserve-container">
                                                                             
-                                                                            <div class="reserve-title">
-                                                                                <!-- aca voy -->
+                                                                            <div class="reserve-title">                                                                              
                                                                                 <i class="material-icons">info_outline</i>
                                                                                 La carpa se encuentra actualmente reservada.
-
                                                                             </div>        
                                                                             
                                                                             <div class="reserve-client">
@@ -1495,11 +1595,11 @@
                                                                                     </span>  
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -1535,12 +1635,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -1682,18 +1782,14 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>                                                                   
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -1726,12 +1822,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -1808,46 +1904,86 @@
                                         <?php $i = 1; ?>   
                                         <?php foreach ($fifthRow as $tent): ?>
                                             <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
-                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
-                                                            
-                                                            <?php $stay = $rsv->getStay(); ?>
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                    
+                                                    <?php if ($i <= 16): ?>
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent tent-inverse yellow">                                                
+                                                                    <?php break; ?> 
                                                                 
-                                                            <?php switch ($stay): 
-                                                                case "season": ?>
-                                                                    <div class="tent yellow">                                                
-                                                                <?php break; ?> 
-                                                            
-                                                                <?php case "day": ?>
-                                                                    <div class="tent green">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="tent fuchsia">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="tent orange">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="tent blue">                                                
-                                                                <?php break; ?>
-                                                                
-                                                            <?php endswitch; ?>    
-                                                                                                                            
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent tent-inverse green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent tent-inverse fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent tent-inverse orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent tent-inverse blue">                                     
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent tent-inverse">
+                                                            <?php endif; ?>
+
                                                         <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>
+                                                        <div class="tent tent-inverse">
+                                                        <?php endif; ?> 
 
                                                     <?php else: ?>
-                                                    <div class="tent">
-                                                    <?php endif; ?>
+                                                    
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent yellow">                                                
+                                                                    <?php break; ?> 
+                                                                
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent blue">                                                  
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent">
+                                                            <?php endif; ?>
+
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>                                                     
+                                                    
+                                                    <?php endif?>     
                                                         <span>
                                                             <?= $tent->getNumber(); ?>
-                                                        </span>		
-                                                    </div>      
+                                                        </span>
+                                                    </div>                                                   
                                                 </a>                    
                                                 
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
@@ -1884,11 +2020,9 @@
                                                                         
                                                                         <div class="reserve-container">
                                                                             
-                                                                            <div class="reserve-title">
-                                                                                <!-- aca voy -->
+                                                                            <div class="reserve-title">                                                                              
                                                                                 <i class="material-icons">info_outline</i>
                                                                                 La carpa se encuentra actualmente reservada.
-
                                                                             </div>        
                                                                             
                                                                             <div class="reserve-client">
@@ -1913,11 +2047,11 @@
                                                                                     </span>  
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -1953,12 +2087,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -2100,18 +2234,14 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>                                                                   
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -2144,12 +2274,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -2226,46 +2356,86 @@
                                         <?php $i = 1; ?>   
                                         <?php foreach ($sixthRow as $tent): ?>
                                             <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
-                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
-                                                            
-                                                            <?php $stay = $rsv->getStay(); ?>
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                    
+                                                    <?php if ($i <= 16): ?>
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent tent-inverse yellow">                                                
+                                                                    <?php break; ?> 
                                                                 
-                                                            <?php switch ($stay): 
-                                                                case "season": ?>
-                                                                    <div class="tent yellow">                                                
-                                                                <?php break; ?> 
-                                                            
-                                                                <?php case "day": ?>
-                                                                    <div class="tent green">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="tent fuchsia">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="tent orange">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="tent blue">                                                
-                                                                <?php break; ?>
-                                                                
-                                                            <?php endswitch; ?>    
-                                                                                                                            
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent tent-inverse green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent tent-inverse fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent tent-inverse orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent tent-inverse blue">                                     
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent tent-inverse">
+                                                            <?php endif; ?>
+
                                                         <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>
+                                                        <div class="tent tent-inverse">
+                                                        <?php endif; ?> 
 
                                                     <?php else: ?>
-                                                    <div class="tent">
-                                                    <?php endif; ?>
+                                                    
+                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        
+                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        
+                                                                <?php $stay = $rsv->getStay(); ?>                                                                
+                                                                <?php switch ($stay): 
+                                                                    case "season": ?>
+                                                                        <div class="tent yellow">                                                
+                                                                    <?php break; ?> 
+                                                                
+                                                                    <?php case "day": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "january": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "rest": ?>
+                                                                        <div class="tent orange">                                                
+                                                                    <?php break; ?>
+                                                                    
+                                                                    <?php case "period": ?>
+                                                                        <div class="tent blue">                                                  
+                                                                    <?php break; ?>
+                                                                    
+                                                                <?php endswitch; ?> 
+
+                                                            <?php else: ?>
+                                                                <div class="tent">
+                                                            <?php endif; ?>
+
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>                                                     
+                                                    
+                                                    <?php endif?>     
                                                         <span>
                                                             <?= $tent->getNumber(); ?>
-                                                        </span>		
-                                                    </div>      
+                                                        </span>
+                                                    </div>                                                   
                                                 </a>                    
                                                 
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
@@ -2302,11 +2472,9 @@
                                                                         
                                                                         <div class="reserve-container">
                                                                             
-                                                                            <div class="reserve-title">
-                                                                                <!-- aca voy -->
+                                                                            <div class="reserve-title">                                                                              
                                                                                 <i class="material-icons">info_outline</i>
                                                                                 La carpa se encuentra actualmente reservada.
-
                                                                             </div>        
                                                                             
                                                                             <div class="reserve-client">
@@ -2331,11 +2499,11 @@
                                                                                     </span>  
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -2371,12 +2539,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -2518,18 +2686,14 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>                                                                   
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -2562,12 +2726,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>
@@ -2934,18 +3098,14 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>                                                                   
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
-                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                     </span>
                                                                                     <span>
                                                                                         <span class="title">• Fecha fin:  </span>
-                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                     </span>
                                                                                 </div>
 
@@ -2978,12 +3138,12 @@
                                                                             <div class="date">
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha inicio: </span>
-                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
 
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
-                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                    <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
 
                                                                                 <div>

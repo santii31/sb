@@ -13,16 +13,12 @@
                     <table class="responsive-table centered" id="table-filter">
                         <thead>                            
                             <tr>                                
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Domicilio</th>                                
-                                <th>Email</th>
-                                <th>Telefono</th>
-                                <th>Nº Carpa</th>
-                                <th>Estadia</th>
-                                <th>Fecha inicio</th>
-                                <th>Fecha fin</th>
-                                <th>Acciones</th>
+                                <th>Fecha</th>
+                                <th>Concepto</th>
+                                <th>Nº Recibo</th>                                
+                                <th>Debe</th>
+                                <th>Haber</th>
+                                <th>Saldo</th>                                
                             </tr>
                         </thead>
                                                
@@ -39,7 +35,7 @@
                                 <td> <?= $rsv->getDateStart(); ?> </td>
                                 <td> <?= $rsv->getDateEnd(); ?> </td>
                                 <td>
-                                    <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" class="waves-effect waves-light btn-small">
+                                    <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getClient()->getId(); ?>" class="waves-effect waves-light btn-small">
                                         <i class="material-icons left">attach_money</i>
                                         Saldo
                                     </a>

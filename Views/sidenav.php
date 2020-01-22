@@ -257,27 +257,33 @@
                         <li>
                             <div class="collapsible-header"><i class="material-icons left">attach_money</i>Contabilidad</div>
                             <div class="collapsible-body">
-                                <ul>                                           
+                                <ul>    
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/diary" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">chrome_reader_mode</i>
+                                            Caja diaria
+                                        </a>
+                                    </li>                                         
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">date_range</i>
                                             Ventas diarias
                                         </a>
                                     </li>         
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">description</i>
                                             Ventas mensuales
                                         </a>
                                     </li>   
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">event_available</i>
                                             Ventas de carpas por dia
                                         </a>
                                     </li>   
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">folder_shared</i>
                                             Ventas por administradores
                                         </a>
@@ -370,6 +376,12 @@
                             <div class="collapsible-header"><i class="material-icons">person_pin_circle</i>Clientes</div>
                             <div class="collapsible-body">
                                 <ul>
+                                    <li>            
+                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">add</i>
+                                            Saldo de clientes
+                                        </a>
+                                    </li> 
                                     <li>            
                                         <a href="<?= FRONT_ROOT ?>client/searchPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">search</i>

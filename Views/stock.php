@@ -65,8 +65,8 @@
                                     <td> <?= ucfirst( $this->getProviderByProduct($product) ); ?>   </td>
                                     <td> <?= ucfirst($product->getCategory()->getName() ); ?> </td>
                                     <td> $<?= $product->getPrice(); ?> </td>
-                                    <td> <?= $product->getQuantity(); ?> </td>       
-                                    <td> <?= $product->getDateRegister(); ?> </td>                             
+                                    <td> <?= $product->getQuantity(); ?> </td>                                           
+                                    <td> <?= date("d-m-Y" , strtotime($product->getDateRegister())); ?> </td>                           
                                     <td class="actions">    
                                         <div>                                            
                                             <a class="waves-effect waves-light btn modal-trigger btn-small btn-danger" href="#remove">Quitar</a>

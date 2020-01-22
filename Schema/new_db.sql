@@ -347,11 +347,13 @@ DELIMITER $$
 CREATE PROCEDURE client_getByName (IN name VARCHAR(255))
 BEGIN
 	SELECT             
+            reservation.id AS reservation_id,
             reservation.date_start AS reservation_dateStart,
             reservation.date_end AS reservation_dateEnd,
             reservation.stay AS reservation_stay,
             reservation.discount AS reservation_discount,
-            reservation.total_price AS reservation_totalPrice,                       
+            reservation.total_price AS reservation_totalPrice, 
+            client.id AS client_id,                      
             client.name AS client_name,
             client.lastname AS client_lastName,
             client.email AS client_email,
@@ -377,11 +379,13 @@ DELIMITER $$
 CREATE PROCEDURE client_getByTentNumber (IN number VARCHAR(255))
 BEGIN
 	SELECT             
+            reservation.id AS reservation_id,
             reservation.date_start AS reservation_dateStart,
             reservation.date_end AS reservation_dateEnd,
             reservation.stay AS reservation_stay,
             reservation.discount AS reservation_discount,
             reservation.total_price AS reservation_totalPrice,                       
+            client.id AS client_id,
             client.name AS client_name,
             client.lastname AS client_lastName,
             client.email AS client_email,
@@ -1212,6 +1216,47 @@ BEGIN
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN client ON reservation.FK_id_client = client.id
     WHERE beach_tent.id = id;    
+END$$
+
+
+
+------------------------- BALANCE ---------------------
+
+CREATE table balance (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `date` DATE NOT NULL,
+    `concept` VARCHAR(255) NOT NULL,
+    `number_receipt` VARCHAR(255) NOT NULL,
+    `total` FLOAT NOT NULL,
+    `partial` FLOAT NOT NULL,
+    `remainder` FLOAT NOT NULL,
+    `FK_id_reservation` INT NOT NULL,
+    CONSTRAINT `FK_id_reservation_balance` FOREIGN KEY (`FK_id_reservation`) REFERENCES `reservation` (`FK_id_client`)
+);
+
+
+DROP PROCEDURE IF EXISTS `balance_add`;
+DELIMITER $$
+CREATE PROCEDURE balance_add(
+                                IN date DATE,                                    
+                                IN concept VARCHAR(255),
+                                IN number_receipt VARCHAR(255),
+                                IN total FLOAT,
+                                IN partial FLOAT,
+                                IN remainder FLOAT,
+                                IN FK_id_reservation INT
+							)
+BEGIN
+    INSERT INTO balance (
+            balance.date,
+            balance.concept,
+            balance.number_receipt,
+            balance.total,
+            balance.partial,
+            balance.remainder,
+            balance.FK_id_reservation
+	)
+    VALUES (date, concept, number_receipt, total, partial, remainder, FK_id_reservation);	
 END$$
 
 

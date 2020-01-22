@@ -69,14 +69,15 @@
                                 <td> <?= $reservation->getClient()->getEmail(); ?> </td>
                                 <td> <?= $reservation->getClient()->getPhone(); ?> </td>
                                 <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
-                                <td> <?= ucfirst( $reservation->getStay() ); ?> </td>
-                                <td> <?= $reservation->getDateStart(); ?> </td>
-                                <td> <?= $reservation->getDateEnd(); ?> </td>
+                                <td> <?= ucfirst( $reservation->getStay() ); ?> </td>                                
+                                <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
+                                <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>                                
                             </tr>
                             <?php endforeach; ?>         
                         </tbody>
                     </table>                                          
                     
+                    <?php if (sizeof($rsv) > MAX_ITEMS_PAGE): ?>
                     <ul class="pagination center-align">     
 
                         <?php if ($page > 1): ?>                    
@@ -120,7 +121,7 @@
                             </li>                               
                         <?php endif; ?>                                                
                     </ul>
-
+                    <?php endif; ?>
                 </div>
             </div>
 

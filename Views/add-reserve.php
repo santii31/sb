@@ -121,12 +121,12 @@
                                 <label>Tipo de vehiculo:</label>
                             </div>
                             <div class="input-field col s3">
-                                    <p>
-                                        <label>
-                                            <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
-                                            <span>Auto</span>
-                                        </label>
-                                    </p>                                        
+                                <p>
+                                    <label>
+                                        <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
+                                        <span>Auto</span>
+                                    </label>
+                                </p>                                        
                             </div>
                             
                             <div class="input-field col s3">
@@ -180,8 +180,8 @@
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
             const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);                               
             
-            const f_day = firstDay.toISOString().slice(0,10);            
-            const l_day = lastDay.toISOString().slice(0,10);            
+            const f_day = firstDay.toISOString().slice(0, 10);            
+            const l_day = lastDay.toISOString().slice(0, 10);            
 
             dateStart.value = f_day;            
             dateEnd.value = l_day;            
@@ -193,8 +193,8 @@
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
             const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);                               
             
-            const f_day = firstDay.toISOString().slice(0,10);            
-            const l_day = lastDay.toISOString().slice(0,10);            
+            const f_day = firstDay.toISOString().slice(0, 10);            
+            const l_day = lastDay.toISOString().slice(0, 10);            
 
             dateStart.value = f_day;            
             dateEnd.value = l_day; 

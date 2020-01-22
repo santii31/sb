@@ -82,8 +82,8 @@
                                     <td> <?= ucfirst( $staff->getName() ); ?> </td>
                                     <td> <?= ucfirst( $staff->getLastName() ); ?> </td>
                                     <td> <?= ucfirst( $staff->getPosition() ); ?> </td>
-                                    <td> <?= $staff->getDateStart(); ?> </td>
-                                    <td> <?= $staff->getDateEnd(); ?> </td>
+                                    <td> <?= date("d-m-Y" , strtotime($staff->getDateStart())); ?> </td>
+                                    <td> <?= date("d-m-Y" , strtotime($staff->getDateEnd())); ?> </td>
                                     <td> $<?= $staff->getSalary(); ?> </td>
                                     <td>
                                         <ul class="collapsible">
