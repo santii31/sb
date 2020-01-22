@@ -11,6 +11,7 @@
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
+    use DAO\ConfigDAO as ConfigDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\ParkingController as ParkingController;    
@@ -25,6 +26,7 @@
         private $servicexlockerDAO;
         private $servicexparasolDAO;      
         private $servicexparkingDAO;
+        private $configDAO;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();                                    
@@ -33,11 +35,12 @@
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
             $this->servicexparkingDAO = new ServicexParkingDAO();
+            $this->configDAO = new ConfigDAO();
         }               
 
 
         // falta descuento
-        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent) {
+        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent, $price) {
                                             
             $this->clientController = new ClientController();                              
             
@@ -76,7 +79,7 @@
                 $reservation->setDateStart($start);
                 $reservation->setDateEnd($end);            
                 $reservation->setStay($stay);
-                $reservation->setPrice(0);
+                $reservation->setPrice($price);
                 $reservation->setDiscount(0);
                 
                 $tent = new BeachTent();
@@ -115,6 +118,7 @@
             }            
             return $this->addReservationPath($tent, EMPTY_FIELDS, null);            
         }
+
         
         public function checkInterval($date_start, $date_end, $id_tent) {
 			$existance = $this->getByIdTent($id_tent);			
@@ -153,7 +157,8 @@
         } 
         
         public function addReservationPath($id_tent = "", $alert = "", $success = "") { 
-            if ($admin = $this->adminController->isLogged()) {                         
+            if ($admin = $this->adminController->isLogged()) {
+                $config = $this->configDAO->get();                     
                 $title = "Reserva - Añadir";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
