@@ -159,7 +159,53 @@
                             </div>
                         </div>
 
+                        <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
+                        </div>
+
                     </form>
+                    <div class="row">
+
+                            
+                    <table class="responsive-table centered" id="table-filter">
+                        <thead>                            
+                            <tr>
+                                <th>Fecha inicio de temporada.</th>
+                                <th>Fecha fin de temporada.</th>
+                                <th>Precio de carpa por temporada.</th>
+                                <th>Precio por enero.</th>
+                                <th>Precio por dia en enero.</th>
+                                <th>Precio por quincena en enero.</th>
+                                <th>Precio por febrero.</th>
+                                <th>Precio por dia en febrero.</th>
+                                <th>Precio por primera quincena en febrero.</th>
+                                <th>Precio por segunda quincena en febrero.</th>
+                                <th>Precio sombrilla.</th>
+                            </tr>
+                        </thead>
+                                               
+                        <tbody>
+                            <tr>
+                                <td> <?= "$" . $config->getDateStartSeason(); ?> </td>
+                                <td> <?= "$" . $config->getDateEndSeason(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentSeason(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentJanuary(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentJanuaryDay(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentJanuaryFortnigh(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentFebruary(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentFebruaryDay(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentFebruaryFirstFortnigh(); ?> </td>
+                                <td> <?= "$" . $config->getPriceTentFebruarySecondFortnigh(); ?> </td>
+                                <td> <?= "$" . $config->getPriceParasol(); ?> </td>
+                            </tr>
+                                     
+                        </tbody>
+                    </table>            
+                            
+
+                                                        
+                        </div>
                 </div>
             </div>
         </div>

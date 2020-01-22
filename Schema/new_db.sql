@@ -2002,6 +2002,89 @@ INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUE
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (15, 100, 15, 5);
 
 
+---------------------------- MOBILE PARASOL ---------------------------
+
+CREATE TABLE mobile_parasol (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `mobileParasol_number` INT NOT NULL,
+    `price` FLOAT NOT NULL
+);
+
+DROP procedure IF EXISTS `mobileParasol_getById`;
+DELIMITER $$
+CREATE PROCEDURE mobileParasol_getById (IN id INT)
+BEGIN
+	SELECT * 
+    FROM `mobile_parasol` 
+    WHERE `mobile_parasol`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `mobileParasol_getAll`;
+DELIMITER $$
+CREATE PROCEDURE mobileParasol_getAll ()
+BEGIN
+	SELECT *
+    FROM `mobile_parasol`
+    ORDER BY id ASC;
+END$$
+
+
+---------------------------- SERVICEXMOBILEPARASOL ---------------------------
+
+CREATE TABLE servicexmobileParasol (
+    `FK_id_service` INT NOT NULL,
+    `FK_id_mobileParasol` INT NOT NULL,
+    CONSTRAINT `FK_id_service_servicexmobileParasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`),
+    CONSTRAINT `FK_id_parasol_servicexmobileParasol` FOREIGN KEY (`FK_id_mobileParasol`) REFERENCES `mobile_parasol`(`id`)
+);
+
+
+DROP procedure IF EXISTS `servicexmobileParasol_add`;
+DELIMITER $$
+CREATE PROCEDURE servicexmobileParasol_add (
+                                            IN FK_id_service INT,                                
+                                            IN FK_id_mobileParasol INT
+                                        )
+BEGIN
+	INSERT INTO servicexmobileParasol (
+			servicexmobileParasol.FK_id_service,
+            servicexmobileParasol.FK_id_mobileParasol                   
+	)
+    VALUES
+        (FK_id_service, FK_id_mobileParasol);
+END$$
+
+
+DROP procedure IF EXISTS `servicexmobileParasol_getServiceByMobileParasol`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexmobileParasol_getServiceByMobileParasol (IN id_mobileParasol INT)
+BEGIN
+	SELECT additional_service.id AS service_id,
+           additional_service.description AS service_description,
+           additional_service.total AS service_total,
+           additional_service.is_active AS service_is_active
+	FROM servicexmobileParasol
+	INNER JOIN additional_service ON servicexmobileParasol.FK_id_service = additional_service.id
+	
+	WHERE (servicexmobileParasol.FK_id_mobileParasol = id_mobileParasol)
+	GROUP BY additional_service.id;
+END$$
+
+
+DROP procedure IF EXISTS `servicexmobileParasol_getMobileParasolByService`;					    
+DELIMITER $$
+CREATE PROCEDURE servicexmobileParasol_getMobileParasolByService (IN id_service INT)
+BEGIN
+	SELECT mobile_parasol.id AS mobileParasol_id,
+           mobile_parasol.mobileParasol_number AS mobileParasol_number,
+           mobile_parasol.price AS mobileParasol_price
+	FROM servicexmobileParasol
+	INNER JOIN mobile_parasol ON servicexmobileParasol.FK_id_mobileParasol = mobile_parasol.id
+	
+	WHERE (servicexmobileParasol.FK_id_service = id_service)
+	GROUP BY mobile_parasol.id;
+END$$
 
 ---------------------------- LOCKER ---------------------------
 
