@@ -273,252 +273,6 @@
                                             </a>                    
                                             
                                             <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#status-<?= $tent->getId(); ?>">                         
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <li class="tab col s6">                                              
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
-                                                                <span class="fut-rsv-alert">                                                 
-                                                                    <i class="material-icons">warning</i>
-                                                                    Futuras reservas
-                                                                </span>
-                                                            </a>                                                       
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                            <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                    Futuras reservas                                                         
-                                                            </a>  
-                                                        <?php endif; ?>                                                            
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La carpa se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
-                                                                    <span class="fut-rsv-alert">                                         
-                                                                        <i class="material-icons">warning</i>
-                                                                        Futuras reservas
-                                                                    </span>
-                                                                <?php else: ?>
-                                                                    La carpa no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La carpa no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    <?php endforeach; ?>
-								</div>								
-
-							</div>                
-
-							<!-- 1 Halls -->
-							<div class="beach-hall">
-							
-                                <!-- Normal flow -->
-								<div class="hall-container">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 1
-									</div>
-																	
-									<div class="beach-tents">
-                                        <?php $i = 1; ?>   
-                                        <?php foreach ($secondRow as $tent): ?>
-                                            <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                                                                                        
-                                                    <?php if ($i <= 16): ?>
-
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                           
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue">                                     
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent tent-inverse">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent tent-inverse">
-                                                        <?php endif; ?> 
-
-                                                    <?php else: ?>
-                                                    
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>                                                     
-                                                    
-                                                    <?php endif?>     
-                                                        <span>
-                                                            <?= $tent->getNumber(); ?>
-                                                        </span>
-                                                    </div>                                                   
-                                                </a>                    
-                                                
-                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content center-align">
                                                         <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
                                                         <ul id="tabs-swipe-demo" class="tabs z-depth-1">
@@ -541,13 +295,13 @@
                                                                         Futuras reservas                                                         
                                                                 </a>  
                                                             <?php endif; ?>                                                            
-                                                            </li>                                                     
+                                                            </li>                                                         
                                                         </ul>
                                                         
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                        
+                                                                                                                                     
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -595,10 +349,209 @@
                                                                             </div>                                                               
                                                                         </div>                                                                   
 
+                                                                    <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                        Reservas futuras
+                                                                    <?php else: ?>
+                                                                        La carpa no tiene reservas.    
+                                                                    <?php endif; ?>                                                          
+
+                                                                <?php else: ?>
+                                                                    La carpa no tiene reservas.
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                                <div class="future-container">                                                   
+                                                                    <?php foreach ($rsvList as $rsv): ?>
+                                                                        <div class="future-item">
+                                                                            <div class="client">
+                                                                                <i class="material-icons">person_pin</i>
+                                                                                <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                                    $rsv->getClient()->getLastName(); ?>
+                                                                            </div>
+                                                                            <div class="date">
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha inicio: </span>
+                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha fin: </span>
+                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Telefono: </span>
+                                                                                    <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>                                                         
+                                                                </div>    
+                                                            </div>
+                                                        <?php endif; ?>                 
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Modificar
+                                                            </a>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Deshabilitar
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div> 
+                                        </div>
+                                    <?php endforeach; ?>
+								</div>								
+
+							</div>                
+
+							<!-- 1 Halls -->
+							<div class="beach-hall">
+							
+                                <!-- Normal flow -->
+								<div class="hall-container">
+									<!-- Hall number -->
+									<div class="hall-name">
+										Pasillo 1
+									</div>
+																	
+									<div class="beach-tents">
+                                        <?php $i = 1; ?>   
+                                        <?php foreach ($secondRow as $tent): ?>
+                                            <div>                                                                                                
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
+                                                            
+                                                            <?php $stay = $rsv->getStay(); ?>
+                                                                
+                                                            <?php switch ($stay): 
+                                                                case "season": ?>
+                                                                    <div class="tent yellow">                                                
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "day": ?>
+                                                                    <div class="tent green">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "january": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "rest": ?>
+                                                                    <div class="tent orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "period": ?>
+                                                                    <div class="tent blue">                                                
+                                                                <?php break; ?>
+                                                                
+                                                            <?php endswitch; ?>    
+                                                                                                                            
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>
+
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif; ?>
+                                                        <span>
+                                                            <?= $tent->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                    
+                                                
+                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    Reserva actual                                                            
+                                                                </a>
+                                                            </li>
+                                                            <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <li class="tab col s6">                                              
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    <span class="fut-rsv-alert">                                                 
+                                                                        <i class="material-icons">warning</i>
+                                                                        Futuras reservas
+                                                                    </span>
+                                                                </a>                                                       
+                                                            <?php else: ?>
+                                                            <li class="tab disabled col s6">                                                     
+                                                                <a href="#reser-<?= $tent->getId(); ?>">                                         
+                                                                        Futuras reservas                                                         
+                                                                </a>  
+                                                            <?php endif; ?>                                                            
+                                                            </li>                                                     
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                                                                                                        
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                        
+                                                                        <div class="reserve-container">
+                                                                            
+                                                                            <div class="reserve-title">
+                                                                                <!-- aca voy -->
+                                                                                <i class="material-icons">info_outline</i>
+                                                                                La carpa se encuentra actualmente reservada.
+
+                                                                            </div>        
+                                                                            
+                                                                            <div class="reserve-client">
+                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
+                                                                                <div>                                                            
+                                                                                    <span>
+                                                                                        <span class="title">• Nombre:  </span>
+                                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Email:  </span>
+                                                                                        <?= $rsv->getClient()->getEmail(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Telefono:  </span>
+                                                                                        <?= $rsv->getClient()->getPhone(); ?> 
+                                                                                    </span>  
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha inicio:  </span>
+                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha fin:  </span>
+                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <?php ?>
+                                                                            </div>                                                               
+                                                                        </div>                                                                   
+
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
-                                                                            Futuras reservas
+                                                                            La carpa tiene futuras reservas.
                                                                         </span>
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
@@ -713,147 +666,144 @@
                                             </a>                    
                                             
                                             <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#status-<?= $tent->getId(); ?>">                         
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <li class="tab col s6">                                              
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
-                                                                <span class="fut-rsv-alert">                                                 
-                                                                    <i class="material-icons">warning</i>
-                                                                    Futuras reservas
-                                                                </span>
-                                                            </a>                                                       
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                            <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                    Futuras reservas                                                         
-                                                            </a>  
-                                                        <?php endif; ?>                                                            
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La carpa se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
-                                                                    <span class="fut-rsv-alert">                                         
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    Reserva actual                                                            
+                                                                </a>
+                                                            </li>
+                                                            <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <li class="tab col s6">                                              
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    <span class="fut-rsv-alert">                                                 
                                                                         <i class="material-icons">warning</i>
                                                                         Futuras reservas
                                                                     </span>
-                                                                <?php else: ?>
-                                                                    La carpa no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
+                                                                </a>                                                       
                                                             <?php else: ?>
-                                                                La carpa no tiene reservas.
-                                                            <?php endif; ?>
+                                                            <li class="tab disabled col s6">                                                     
+                                                                <a href="#reser-<?= $tent->getId(); ?>">                                         
+                                                                        Futuras reservas                                                         
+                                                                </a>  
+                                                            <?php endif; ?>                                                            
+                                                            </li>                                                         
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                                                                                                     
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                        
+                                                                        <div class="reserve-container">
+                                                                            
+                                                                            <div class="reserve-title">
+                                                                                <i class="material-icons">info_outline</i>
+                                                                                La carpa se encuentra actualmente reservada.                     
+                                                                            </div>        
+                                                                            
+                                                                            <div class="reserve-client">
+                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
+                                                                                <div>                                                            
+                                                                                    <span>
+                                                                                        <span class="title">• Nombre:  </span>
+                                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Email:  </span>
+                                                                                        <?= $rsv->getClient()->getEmail(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Telefono:  </span>
+                                                                                        <?= $rsv->getClient()->getPhone(); ?> 
+                                                                                    </span>
+                                                                                    <!-- <span>
+                                                                                        <span class="title">• Grupo Familiar:  </span>
+                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
+                                                                                    </span> -->
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha inicio:  </span>
+                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha fin:  </span>
+                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <?php ?>
+                                                                            </div>                                                               
+                                                                        </div>                                                                   
+
+                                                                    <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                        Reservas futuras
+                                                                    <?php else: ?>
+                                                                        La carpa no tiene reservas.    
+                                                                    <?php endif; ?>                                                          
+
+                                                                <?php else: ?>
+                                                                    La carpa no tiene reservas.
+                                                                <?php endif; ?>
+                                                            </div>
                                                         </div>
+                                                        
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                                <div class="future-container">                                                   
+                                                                    <?php foreach ($rsvList as $rsv): ?>
+                                                                        <div class="future-item">
+                                                                            <div class="client">
+                                                                                <i class="material-icons">person_pin</i>
+                                                                                <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                                    $rsv->getClient()->getLastName(); ?>
+                                                                            </div>
+                                                                            <div class="date">
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha inicio: </span>
+                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha fin: </span>
+                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Telefono: </span>
+                                                                                    <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>                                                         
+                                                                </div>    
+                                                            </div>
+                                                        <?php endif; ?>                 
                                                     </div>
-                                                    
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
 
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
                                                         </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div> 
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Modificar
+                                                            </a>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Deshabilitar
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div> 
                                         </div>
                                     <?php endforeach; ?>
                                 </div>   
@@ -1022,89 +972,46 @@
                                         <?php $i = 1; ?>   
                                         <?php foreach ($thirdRow as $tent): ?>
                                             <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                                                                                        
-                                                    <?php if ($i <= 16): ?>
-
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                           
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
+                                                            
+                                                            <?php $stay = $rsv->getStay(); ?>
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue"> 
-                                                                                                                       
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent tent-inverse">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent tent-inverse">
-                                                        <?php endif; ?> 
-
-                                                    <?php else: ?>
-                                                    
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent yellow">                                                
-                                                                    <?php break; ?> 
+                                                            <?php switch ($stay): 
+                                                                case "season": ?>
+                                                                    <div class="tent yellow">                                                
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "day": ?>
+                                                                    <div class="tent green">                                                
+                                                                <?php break; ?>
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent">
-                                                            <?php endif; ?>
-
+                                                                <?php case "january": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "rest": ?>
+                                                                    <div class="tent orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "period": ?>
+                                                                    <div class="tent blue">                                                
+                                                                <?php break; ?>
+                                                                
+                                                            <?php endswitch; ?>    
+                                                                                                                            
                                                         <?php else: ?>
                                                         <div class="tent">
-                                                        <?php endif; ?>                                                     
-                                                    
-                                                    <?php endif?>     
+                                                        <?php endif; ?>
+
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif; ?>
                                                         <span>
                                                             <?= $tent->getNumber(); ?>
-                                                        </span>
-                                                    </div>                                                   
+                                                        </span>		
+                                                    </div>      
                                                 </a>                    
                                                 
                                                 <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
@@ -1142,8 +1049,10 @@
                                                                         <div class="reserve-container">
                                                                             
                                                                             <div class="reserve-title">
+                                                                                <!-- aca voy -->
                                                                                 <i class="material-icons">info_outline</i>
-                                                                                La carpa se encuentra actualmente reservada.                     
+                                                                                La carpa se encuentra actualmente reservada.
+
                                                                             </div>        
                                                                             
                                                                             <div class="reserve-client">
@@ -1165,11 +1074,7 @@
                                                                                     <span>
                                                                                         <span class="title">• Telefono:  </span>
                                                                                         <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                    </span>
-                                                                                    <!-- <span>
-                                                                                        <span class="title">• Grupo Familiar:  </span>
-                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                    </span> -->
+                                                                                    </span>  
                                                                                     <span>
                                                                                         <span class="title">• Fecha inicio:  </span>
                                                                                         <?= $rsv->getDateStart(); ?> 
@@ -1187,7 +1092,7 @@
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
-                                                                            Futuras reservas
+                                                                            La carpa tiene futuras reservas.
                                                                         </span>
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
@@ -1248,7 +1153,7 @@
                                                             </a>
                                                         <?php endif; ?>
                                                     </div>
-                                                </div>  
+                                                </div> 
                                             </div>
                                         <?php $i++; ?>                                            
                                         <?php endforeach; ?>                                                                               		
@@ -1302,278 +1207,6 @@
                                             </a>                    
                                             
                                             <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#status-<?= $tent->getId(); ?>">                         
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <li class="tab col s6">                                              
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
-                                                                <span class="fut-rsv-alert">                                                 
-                                                                    <i class="material-icons">warning</i>
-                                                                    Futuras reservas
-                                                                </span>
-                                                            </a>                                                       
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                            <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                    Futuras reservas                                                         
-                                                            </a>  
-                                                        <?php endif; ?>                                                            
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La carpa se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
-                                                                    <span class="fut-rsv-alert">                                         
-                                                                        <i class="material-icons">warning</i>
-                                                                        Futuras reservas
-                                                                    </span>
-                                                                <?php else: ?>
-                                                                    La carpa no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La carpa no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div> 
-                                
-                                <!-- Parasol -->
-                                <div class="parasol">                        
-                                    <?php foreach ($secondParasol as $parasol): ?>
-                                        <div>
-                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <div class="parasol-item tent-sea">
-                                                    <span>
-                                                        <?= $parasol->getParasolNumber(); ?>
-                                                    </span>		
-                                                </div>      
-                                            </a>
-
-                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content">
-                                                    <h4>sdas</h4>
-                                                    <p>asdasd</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                                </div>
-                                            </div> 	
-                                        </div>                                
-                                    <?php endforeach; ?>                                                                                         
-                                </div>
-
-							</div>																				
-
-							<!-- 3 Halls -->
-							<div class="beach-hall">
-                                
-                                <!-- Normal flow -->
-								<div class="hall-container">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 3
-									</div>
-																	
-									<div class="beach-tents">                                      
-                                        <?php $i = 1; ?>   
-                                        <?php foreach ($fourthRow as $tent): ?>
-                                            <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                                                                                        
-                                                    <?php if ($i <= 16): ?>
-
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                           
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue"> 
-                                                                                                                       
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent tent-inverse">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent tent-inverse">
-                                                        <?php endif; ?> 
-
-                                                    <?php else: ?>
-                                                    
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>                                                     
-                                                    
-                                                    <?php endif?>     
-                                                        <span>
-                                                            <?= $tent->getNumber(); ?>
-                                                        </span>
-                                                    </div>                                                   
-                                                </a>                    
-                                                
-                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content center-align">
                                                         <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
                                                         <ul id="tabs-swipe-demo" class="tabs z-depth-1">
@@ -1596,13 +1229,13 @@
                                                                         Futuras reservas                                                         
                                                                 </a>  
                                                             <?php endif; ?>                                                            
-                                                            </li>                                                     
+                                                            </li>                                                         
                                                         </ul>
                                                         
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                        
+                                                                                                                                     
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -1650,10 +1283,234 @@
                                                                             </div>                                                               
                                                                         </div>                                                                   
 
+                                                                    <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                        Reservas futuras
+                                                                    <?php else: ?>
+                                                                        La carpa no tiene reservas.    
+                                                                    <?php endif; ?>                                                          
+
+                                                                <?php else: ?>
+                                                                    La carpa no tiene reservas.
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                                <div class="future-container">                                                   
+                                                                    <?php foreach ($rsvList as $rsv): ?>
+                                                                        <div class="future-item">
+                                                                            <div class="client">
+                                                                                <i class="material-icons">person_pin</i>
+                                                                                <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                                    $rsv->getClient()->getLastName(); ?>
+                                                                            </div>
+                                                                            <div class="date">
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha inicio: </span>
+                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha fin: </span>
+                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Telefono: </span>
+                                                                                    <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>                                                         
+                                                                </div>    
+                                                            </div>
+                                                        <?php endif; ?>                 
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Modificar
+                                                            </a>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Deshabilitar
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div> 
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div> 
+                                
+                                <!-- Parasol -->
+                                <div class="parasol">                        
+                                    <?php foreach ($secondParasol as $parasol): ?>
+                                        <div>
+                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
+                                                <div class="parasol-item tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+
+                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 	
+                                        </div>                                
+                                    <?php endforeach; ?>                                                                                         
+                                </div>
+
+							</div>																				
+
+							<!-- 3 Halls -->
+							<div class="beach-hall">
+                                
+                                <!-- Normal flow -->
+								<div class="hall-container">
+									<!-- Hall number -->
+									<div class="hall-name">
+										Pasillo 3
+									</div>
+																	
+									<div class="beach-tents">                                      
+                                        <?php $i = 1; ?>   
+                                        <?php foreach ($fourthRow as $tent): ?>
+                                            <div>                                                                                                
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
+                                                            
+                                                            <?php $stay = $rsv->getStay(); ?>
+                                                                
+                                                            <?php switch ($stay): 
+                                                                case "season": ?>
+                                                                    <div class="tent yellow">                                                
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "day": ?>
+                                                                    <div class="tent green">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "january": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "rest": ?>
+                                                                    <div class="tent orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "period": ?>
+                                                                    <div class="tent blue">                                                
+                                                                <?php break; ?>
+                                                                
+                                                            <?php endswitch; ?>    
+                                                                                                                            
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>
+
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif; ?>
+                                                        <span>
+                                                            <?= $tent->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                    
+                                                
+                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    Reserva actual                                                            
+                                                                </a>
+                                                            </li>
+                                                            <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <li class="tab col s6">                                              
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    <span class="fut-rsv-alert">                                                 
+                                                                        <i class="material-icons">warning</i>
+                                                                        Futuras reservas
+                                                                    </span>
+                                                                </a>                                                       
+                                                            <?php else: ?>
+                                                            <li class="tab disabled col s6">                                                     
+                                                                <a href="#reser-<?= $tent->getId(); ?>">                                         
+                                                                        Futuras reservas                                                         
+                                                                </a>  
+                                                            <?php endif; ?>                                                            
+                                                            </li>                                                     
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                                                                                                        
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                        
+                                                                        <div class="reserve-container">
+                                                                            
+                                                                            <div class="reserve-title">
+                                                                                <!-- aca voy -->
+                                                                                <i class="material-icons">info_outline</i>
+                                                                                La carpa se encuentra actualmente reservada.
+
+                                                                            </div>        
+                                                                            
+                                                                            <div class="reserve-client">
+                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
+                                                                                <div>                                                            
+                                                                                    <span>
+                                                                                        <span class="title">• Nombre:  </span>
+                                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Email:  </span>
+                                                                                        <?= $rsv->getClient()->getEmail(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Telefono:  </span>
+                                                                                        <?= $rsv->getClient()->getPhone(); ?> 
+                                                                                    </span>  
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha inicio:  </span>
+                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha fin:  </span>
+                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <?php ?>
+                                                                            </div>                                                               
+                                                                        </div>                                                                   
+
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
-                                                                            Futuras reservas
+                                                                            La carpa tiene futuras reservas.
                                                                         </span>
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
@@ -1768,278 +1625,6 @@
                                             </a>                    
                                             
                                             <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#status-<?= $tent->getId(); ?>">                         
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <li class="tab col s6">                                              
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
-                                                                <span class="fut-rsv-alert">                                                 
-                                                                    <i class="material-icons">warning</i>
-                                                                    Futuras reservas
-                                                                </span>
-                                                            </a>                                                       
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                            <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                    Futuras reservas                                                         
-                                                            </a>  
-                                                        <?php endif; ?>                                                            
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La carpa se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
-                                                                    <span class="fut-rsv-alert">                                         
-                                                                        <i class="material-icons">warning</i>
-                                                                        Futuras reservas
-                                                                    </span>
-                                                                <?php else: ?>
-                                                                    La carpa no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La carpa no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>  
-                                        </div>
-                                    <?php endforeach; ?>
-								</div>
-
-                                <!-- Parasol -->
-                                <div class="parasol">                                    
-                                    <?php foreach ($thirdParasol as $parasol): ?>
-                                        <div>
-                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <div class="parasol-item tent-sea">
-                                                    <span>
-                                                        <?= $parasol->getParasolNumber(); ?>
-                                                    </span>		
-                                                </div>      
-                                            </a>
-
-                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content">
-                                                    <h4>sdas</h4>
-                                                    <p>asdasd</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                                </div>
-                                            </div> 	
-                                        </div>                                
-                                    <?php endforeach; ?>                                                                                         
-                                </div>
-
-							</div>
-
-                            <!-- 4 Halls -->
-							<div class="beach-hall">
-							    
-                                <!-- Normal flow -->
-                                <div class="hall-container">
-                                    <!-- Hall number -->
-                                    <div class="hall-name">
-                                        Pasillo 4
-                                    </div>
-                                                                    
-                                    <div class="beach-tents">                                            
-                                        <?php $i = 1; ?>   
-                                        <?php foreach ($fifthRow as $tent): ?>
-                                            <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                                                                                        
-                                                    <?php if ($i <= 16): ?>
-
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                           
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue"> 
-                                                                                                                       
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent tent-inverse">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent tent-inverse">
-                                                        <?php endif; ?> 
-
-                                                    <?php else: ?>
-                                                    
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>                                                     
-                                                    
-                                                    <?php endif?>     
-                                                        <span>
-                                                            <?= $tent->getNumber(); ?>
-                                                        </span>
-                                                    </div>                                                   
-                                                </a>                    
-                                                
-                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content center-align">
                                                         <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
                                                         <ul id="tabs-swipe-demo" class="tabs z-depth-1">
@@ -2062,13 +1647,13 @@
                                                                         Futuras reservas                                                         
                                                                 </a>  
                                                             <?php endif; ?>                                                            
-                                                            </li>                                                     
+                                                            </li>                                                         
                                                         </ul>
                                                         
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                        
+                                                                                                                                     
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -2116,10 +1701,234 @@
                                                                             </div>                                                               
                                                                         </div>                                                                   
 
+                                                                    <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                        Reservas futuras
+                                                                    <?php else: ?>
+                                                                        La carpa no tiene reservas.    
+                                                                    <?php endif; ?>                                                          
+
+                                                                <?php else: ?>
+                                                                    La carpa no tiene reservas.
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                                <div class="future-container">                                                   
+                                                                    <?php foreach ($rsvList as $rsv): ?>
+                                                                        <div class="future-item">
+                                                                            <div class="client">
+                                                                                <i class="material-icons">person_pin</i>
+                                                                                <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                                    $rsv->getClient()->getLastName(); ?>
+                                                                            </div>
+                                                                            <div class="date">
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha inicio: </span>
+                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha fin: </span>
+                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Telefono: </span>
+                                                                                    <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>                                                         
+                                                                </div>    
+                                                            </div>
+                                                        <?php endif; ?>                 
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Modificar
+                                                            </a>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Deshabilitar
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div> 
+                                        </div>
+                                    <?php endforeach; ?>
+								</div>
+
+                                <!-- Parasol -->
+                                <div class="parasol">                                    
+                                    <?php foreach ($thirdParasol as $parasol): ?>
+                                        <div>
+                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
+                                                <div class="parasol-item tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+
+                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 	
+                                        </div>                                
+                                    <?php endforeach; ?>                                                                                         
+                                </div>
+
+							</div>
+
+                            <!-- 4 Halls -->
+							<div class="beach-hall">
+							    
+                                <!-- Normal flow -->
+                                <div class="hall-container">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 4
+                                    </div>
+                                                                    
+                                    <div class="beach-tents">                                            
+                                        <?php $i = 1; ?>   
+                                        <?php foreach ($fifthRow as $tent): ?>
+                                            <div>                                                                                                
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
+                                                            
+                                                            <?php $stay = $rsv->getStay(); ?>
+                                                                
+                                                            <?php switch ($stay): 
+                                                                case "season": ?>
+                                                                    <div class="tent yellow">                                                
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "day": ?>
+                                                                    <div class="tent green">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "january": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "rest": ?>
+                                                                    <div class="tent orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "period": ?>
+                                                                    <div class="tent blue">                                                
+                                                                <?php break; ?>
+                                                                
+                                                            <?php endswitch; ?>    
+                                                                                                                            
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>
+
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif; ?>
+                                                        <span>
+                                                            <?= $tent->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                    
+                                                
+                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    Reserva actual                                                            
+                                                                </a>
+                                                            </li>
+                                                            <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <li class="tab col s6">                                              
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    <span class="fut-rsv-alert">                                                 
+                                                                        <i class="material-icons">warning</i>
+                                                                        Futuras reservas
+                                                                    </span>
+                                                                </a>                                                       
+                                                            <?php else: ?>
+                                                            <li class="tab disabled col s6">                                                     
+                                                                <a href="#reser-<?= $tent->getId(); ?>">                                         
+                                                                        Futuras reservas                                                         
+                                                                </a>  
+                                                            <?php endif; ?>                                                            
+                                                            </li>                                                     
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                                                                                                        
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                        
+                                                                        <div class="reserve-container">
+                                                                            
+                                                                            <div class="reserve-title">
+                                                                                <!-- aca voy -->
+                                                                                <i class="material-icons">info_outline</i>
+                                                                                La carpa se encuentra actualmente reservada.
+
+                                                                            </div>        
+                                                                            
+                                                                            <div class="reserve-client">
+                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
+                                                                                <div>                                                            
+                                                                                    <span>
+                                                                                        <span class="title">• Nombre:  </span>
+                                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Email:  </span>
+                                                                                        <?= $rsv->getClient()->getEmail(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Telefono:  </span>
+                                                                                        <?= $rsv->getClient()->getPhone(); ?> 
+                                                                                    </span>  
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha inicio:  </span>
+                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha fin:  </span>
+                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <?php ?>
+                                                                            </div>                                                               
+                                                                        </div>                                                                   
+
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
-                                                                            Futuras reservas
+                                                                            La carpa tiene futuras reservas.
                                                                         </span>
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
@@ -2234,278 +2043,6 @@
                                             </a>                    
                                             
                                             <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#status-<?= $tent->getId(); ?>">                         
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <li class="tab col s6">                                              
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
-                                                                <span class="fut-rsv-alert">                                                 
-                                                                    <i class="material-icons">warning</i>
-                                                                    Futuras reservas
-                                                                </span>
-                                                            </a>                                                       
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                            <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                    Futuras reservas                                                         
-                                                            </a>  
-                                                        <?php endif; ?>                                                            
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La carpa se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
-                                                                    <span class="fut-rsv-alert">                                         
-                                                                        <i class="material-icons">warning</i>
-                                                                        Futuras reservas
-                                                                    </span>
-                                                                <?php else: ?>
-                                                                    La carpa no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La carpa no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    <?php endforeach; ?>						
-                                </div>
-
-                                <!-- Parasol -->
-                                <div class="parasol">                                      
-                                    <?php foreach ($fourthParasol as $parasol): ?>
-                                        <div>
-                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <div class="parasol-item tent-sea">
-                                                    <span>
-                                                        <?= $parasol->getParasolNumber(); ?>
-                                                    </span>		
-                                                </div>      
-                                            </a>
-
-                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content">
-                                                    <h4>sdas</h4>
-                                                    <p>asdasd</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                                </div>
-                                            </div> 	
-                                        </div>                                
-                                    <?php endforeach; ?>                                                                                         
-                                </div>
-
-                            </div>
-
-                            <!-- 5 Halls -->
-							<div class="beach-hall">
-							
-                                <!-- Normal flow -->
-                                <div class="hall-container">
-                                    <!-- Hall number -->
-                                    <div class="hall-name">
-                                        Pasillo 5
-                                    </div>
-                                                                    
-                                    <div class="beach-tents">
-                                        <?php $i = 1; ?>   
-                                        <?php foreach ($sixthRow as $tent): ?>
-                                            <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">                                    
-                                                    <?php if ($i <= 16): ?>
-
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                           
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue"> 
-                                                                                                                       
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent tent-inverse">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent tent-inverse">
-                                                        <?php endif; ?> 
-
-                                                    <?php else: ?>
-                                                    
-                                                        <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                            <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        
-                                                                <?php $stay = $rsv->getStay(); ?>                                                                
-                                                                <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent yellow">                                                
-                                                                    <?php break; ?> 
-                                                                
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
-
-                                                            <?php else: ?>
-                                                                <div class="tent">
-                                                            <?php endif; ?>
-
-                                                        <?php else: ?>
-                                                        <div class="tent">
-                                                        <?php endif; ?>                                                     
-                                                    
-                                                    <?php endif?>     
-                                                        <span>
-                                                            <?= $tent->getNumber(); ?>
-                                                        </span>
-                                                    </div>                                                   
-                                                </a>                    
-                                                
-                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content center-align">
                                                         <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
                                                         <ul id="tabs-swipe-demo" class="tabs z-depth-1">
@@ -2528,13 +2065,13 @@
                                                                         Futuras reservas                                                         
                                                                 </a>  
                                                             <?php endif; ?>                                                            
-                                                            </li>                                                     
+                                                            </li>                                                         
                                                         </ul>
                                                         
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                        
+                                                                                                                                     
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -2582,10 +2119,234 @@
                                                                             </div>                                                               
                                                                         </div>                                                                   
 
+                                                                    <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                        Reservas futuras
+                                                                    <?php else: ?>
+                                                                        La carpa no tiene reservas.    
+                                                                    <?php endif; ?>                                                          
+
+                                                                <?php else: ?>
+                                                                    La carpa no tiene reservas.
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                                <div class="future-container">                                                   
+                                                                    <?php foreach ($rsvList as $rsv): ?>
+                                                                        <div class="future-item">
+                                                                            <div class="client">
+                                                                                <i class="material-icons">person_pin</i>
+                                                                                <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                                    $rsv->getClient()->getLastName(); ?>
+                                                                            </div>
+                                                                            <div class="date">
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha inicio: </span>
+                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha fin: </span>
+                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Telefono: </span>
+                                                                                    <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>                                                         
+                                                                </div>    
+                                                            </div>
+                                                        <?php endif; ?>                 
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Modificar
+                                                            </a>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Deshabilitar
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div> 
+                                        </div>
+                                    <?php endforeach; ?>						
+                                </div>
+
+                                <!-- Parasol -->
+                                <div class="parasol">                                      
+                                    <?php foreach ($fourthParasol as $parasol): ?>
+                                        <div>
+                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
+                                                <div class="parasol-item tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+
+                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 	
+                                        </div>                                
+                                    <?php endforeach; ?>                                                                                         
+                                </div>
+
+                            </div>
+
+                            <!-- 5 Halls -->
+							<div class="beach-hall">
+							
+                                <!-- Normal flow -->
+                                <div class="hall-container">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 5
+                                    </div>
+                                                                    
+                                    <div class="beach-tents">
+                                        <?php $i = 1; ?>   
+                                        <?php foreach ($sixthRow as $tent): ?>
+                                            <div>                                                                                                
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
+                                                            
+                                                            <?php $stay = $rsv->getStay(); ?>
+                                                                
+                                                            <?php switch ($stay): 
+                                                                case "season": ?>
+                                                                    <div class="tent yellow">                                                
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "day": ?>
+                                                                    <div class="tent green">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "january": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "rest": ?>
+                                                                    <div class="tent orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "period": ?>
+                                                                    <div class="tent blue">                                                
+                                                                <?php break; ?>
+                                                                
+                                                            <?php endswitch; ?>    
+                                                                                                                            
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>
+
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif; ?>
+                                                        <span>
+                                                            <?= $tent->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                    
+                                                
+                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    Reserva actual                                                            
+                                                                </a>
+                                                            </li>
+                                                            <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <li class="tab col s6">                                              
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    <span class="fut-rsv-alert">                                                 
+                                                                        <i class="material-icons">warning</i>
+                                                                        Futuras reservas
+                                                                    </span>
+                                                                </a>                                                       
+                                                            <?php else: ?>
+                                                            <li class="tab disabled col s6">                                                     
+                                                                <a href="#reser-<?= $tent->getId(); ?>">                                         
+                                                                        Futuras reservas                                                         
+                                                                </a>  
+                                                            <?php endif; ?>                                                            
+                                                            </li>                                                     
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                                                                                                        
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                        
+                                                                        <div class="reserve-container">
+                                                                            
+                                                                            <div class="reserve-title">
+                                                                                <!-- aca voy -->
+                                                                                <i class="material-icons">info_outline</i>
+                                                                                La carpa se encuentra actualmente reservada.
+
+                                                                            </div>        
+                                                                            
+                                                                            <div class="reserve-client">
+                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
+                                                                                <div>                                                            
+                                                                                    <span>
+                                                                                        <span class="title">• Nombre:  </span>
+                                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Email:  </span>
+                                                                                        <?= $rsv->getClient()->getEmail(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Telefono:  </span>
+                                                                                        <?= $rsv->getClient()->getPhone(); ?> 
+                                                                                    </span>  
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha inicio:  </span>
+                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha fin:  </span>
+                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <?php ?>
+                                                                            </div>                                                               
+                                                                        </div>                                                                   
+
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
-                                                                            Futuras reservas
+                                                                            La carpa tiene futuras reservas.
                                                                         </span>
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
@@ -2700,235 +2461,6 @@
                                             </a>                    
                                             
                                             <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#status-<?= $tent->getId(); ?>">                         
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <li class="tab col s6">                                              
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
-                                                                <span class="fut-rsv-alert">                                                 
-                                                                    <i class="material-icons">warning</i>
-                                                                    Futuras reservas
-                                                                </span>
-                                                            </a>                                                       
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                            <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                    Futuras reservas                                                         
-                                                            </a>  
-                                                        <?php endif; ?>                                                            
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La carpa se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
-                                                                    <span class="fut-rsv-alert">                                         
-                                                                        <i class="material-icons">warning</i>
-                                                                        Futuras reservas
-                                                                    </span>
-                                                                <?php else: ?>
-                                                                    La carpa no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La carpa no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    <?php endforeach; ?>	
-                                </div>
-
-                                <!-- Parasol -->
-                                <div class="parasol">                        
-                                    <?php foreach ($fifthParasol as $parasol): ?>
-                                        <div>
-                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <div class="parasol-item tent-sea">
-                                                    <span>
-                                                        <?= $parasol->getParasolNumber(); ?>
-                                                    </span>		
-                                                </div>      
-                                            </a>
-
-                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content">
-                                                    <h4>sdas</h4>
-                                                    <p>asdasd</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
-                                                </div>
-                                            </div> 	
-                                        </div>                                
-                                    <?php endforeach; ?>                                                                                         
-                                </div>
-
-                            </div>
-
-							<!-- 6 Last Hall -->
-							<div class="beach-hall last-hall">
-							
-                                <!-- Normal flow -->
-								<div class="hall-container ">
-                                    <!-- Hall number -->
-                                    <div class="hall-name">
-                                        Pasillo 6
-                                    </div>
-																	
-                                    <div class="beach-tents">                
-                                        <?php foreach ($seventhRow as $tent): ?>
-                                            <div>                                                                                                
-                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
-                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
-                                                        
-                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                       
-                                                            <?php $stay = $rsv->getStay(); ?>                                                                
-                                                            <?php switch ($stay): 
-                                                                case "season": ?>
-                                                                    <div class="tent tent-inverse yellow">                                                
-                                                                <?php break; ?> 
-                                                            
-                                                                <?php case "day": ?>
-                                                                    <div class="tent tent-inverse green">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="tent tent-inverse fuchsia">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="tent tent-inverse orange">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="tent tent-inverse blue"> 
-                                                                                                                   
-                                                                <?php break; ?>
-                                                                
-                                                            <?php endswitch; ?> 
-
-                                                        <?php else: ?>
-                                                            <div class="tent tent-inverse">
-                                                        <?php endif; ?>
-
-                                                    <?php else: ?>
-                                                    <div class="tent tent-inverse">
-                                                    <?php endif; ?> 
-                                                        <span>
-                                                            <?= $tent->getNumber(); ?>
-                                                        </span>		
-                                                    </div>      
-                                                </a>                    
-                                                
-                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content center-align">
                                                         <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
                                                         <ul id="tabs-swipe-demo" class="tabs z-depth-1">
@@ -2951,13 +2483,13 @@
                                                                         Futuras reservas                                                         
                                                                 </a>  
                                                             <?php endif; ?>                                                            
-                                                            </li>                                                     
+                                                            </li>                                                         
                                                         </ul>
                                                         
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                        
+                                                                                                                                     
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -3005,10 +2537,233 @@
                                                                             </div>                                                               
                                                                         </div>                                                                   
 
+                                                                    <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                        Reservas futuras
+                                                                    <?php else: ?>
+                                                                        La carpa no tiene reservas.    
+                                                                    <?php endif; ?>                                                          
+
+                                                                <?php else: ?>
+                                                                    La carpa no tiene reservas.
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                                <div class="future-container">                                                   
+                                                                    <?php foreach ($rsvList as $rsv): ?>
+                                                                        <div class="future-item">
+                                                                            <div class="client">
+                                                                                <i class="material-icons">person_pin</i>
+                                                                                <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                                    $rsv->getClient()->getLastName(); ?>
+                                                                            </div>
+                                                                            <div class="date">
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha inicio: </span>
+                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha fin: </span>
+                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Telefono: </span>
+                                                                                    <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>                                                         
+                                                                </div>    
+                                                            </div>
+                                                        <?php endif; ?>                 
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Modificar
+                                                            </a>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Deshabilitar
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div> 
+                                        </div>
+                                    <?php endforeach; ?>	
+                                </div>
+
+                                <!-- Parasol -->
+                                <div class="parasol">                        
+                                    <?php foreach ($fifthParasol as $parasol): ?>
+                                        <div>
+                                            <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
+                                                <div class="parasol-item tent-sea">
+                                                    <span>
+                                                        <?= $parasol->getParasolNumber(); ?>
+                                                    </span>		
+                                                </div>      
+                                            </a>
+
+                                            <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
+                                                </div>
+                                            </div> 	
+                                        </div>                                
+                                    <?php endforeach; ?>                                                                                         
+                                </div>
+
+                            </div>
+
+							<!-- 6 Last Hall -->
+							<div class="beach-hall last-hall">
+							
+                                <!-- Normal flow -->
+								<div class="hall-container ">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 6
+                                    </div>
+																	
+                                    <div class="beach-tents">                
+                                        <?php foreach ($seventhRow as $tent): ?>
+                                            <div>                                                                                                
+                                                <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
+                                                    <?php if ($this->hasReservation( $tent->getId() )): ?>  
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>                          
+                                                            
+                                                            <?php $stay = $rsv->getStay(); ?>
+                                                                
+                                                            <?php switch ($stay): 
+                                                                case "season": ?>
+                                                                    <div class="tent yellow">                                                
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "day": ?>
+                                                                    <div class="tent green">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "january": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "rest": ?>
+                                                                    <div class="tent orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "period": ?>
+                                                                    <div class="tent blue">                                                
+                                                                <?php break; ?>
+                                                                
+                                                            <?php endswitch; ?>    
+                                                                                                                            
+                                                        <?php else: ?>
+                                                        <div class="tent">
+                                                        <?php endif; ?>
+
+                                                    <?php else: ?>
+                                                    <div class="tent">
+                                                    <?php endif; ?>
+                                                        <span>
+                                                            <?= $tent->getNumber(); ?>
+                                                        </span>		
+                                                    </div>      
+                                                </a>                    
+                                                
+                                                <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    Reserva actual                                                            
+                                                                </a>
+                                                            </li>
+                                                            <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <li class="tab col s6">                                              
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    <span class="fut-rsv-alert">                                                 
+                                                                        <i class="material-icons">warning</i>
+                                                                        Futuras reservas
+                                                                    </span>
+                                                                </a>                                                       
+                                                            <?php else: ?>
+                                                            <li class="tab disabled col s6">                                                     
+                                                                <a href="#reser-<?= $tent->getId(); ?>">                                         
+                                                                        Futuras reservas                                                         
+                                                                </a>  
+                                                            <?php endif; ?>                                                            
+                                                            </li>                                                     
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                                                                                                        
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                        
+                                                                        <div class="reserve-container">
+                                                                            
+                                                                            <div class="reserve-title">
+                                                                                <!-- aca voy -->
+                                                                                <i class="material-icons">info_outline</i>
+                                                                                La carpa se encuentra actualmente reservada.
+
+                                                                            </div>        
+                                                                            
+                                                                            <div class="reserve-client">
+                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
+                                                                                <div>                                                            
+                                                                                    <span>
+                                                                                        <span class="title">• Nombre:  </span>
+                                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Email:  </span>
+                                                                                        <?= $rsv->getClient()->getEmail(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Telefono:  </span>
+                                                                                        <?= $rsv->getClient()->getPhone(); ?> 
+                                                                                    </span>  
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha inicio:  </span>
+                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha fin:  </span>
+                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <?php ?>
+                                                                            </div>                                                               
+                                                                        </div>                                                                   
+
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
-                                                                            Futuras reservas
+                                                                            La carpa tiene futuras reservas.
                                                                         </span>
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
@@ -3122,147 +2877,144 @@
                                             </a>                    
                                             
                                             <div id="modal<?= $tent->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#status-<?= $tent->getId(); ?>">                         
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <li class="tab col s6">                                              
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
-                                                                <span class="fut-rsv-alert">                                                 
-                                                                    <i class="material-icons">warning</i>
-                                                                    Futuras reservas
-                                                                </span>
-                                                            </a>                                                       
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                            <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                    Futuras reservas                                                         
-                                                            </a>  
-                                                        <?php endif; ?>                                                            
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La carpa se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
-                                                                    <span class="fut-rsv-alert">                                         
+                                                    <div class="modal-content center-align">
+                                                        <h4>Carpa Nº <?= $tent->getNumber(); ?></h4>                                             
+                                                        <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+                                                            <li class="tab col s6">
+                                                                <a class="active" href="#status-<?= $tent->getId(); ?>">                         
+                                                                    Reserva actual                                                            
+                                                                </a>
+                                                            </li>
+                                                            <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <li class="tab col s6">                                              
+                                                                <a href="#reser-<?= $tent->getId(); ?>">
+                                                                    <span class="fut-rsv-alert">                                                 
                                                                         <i class="material-icons">warning</i>
                                                                         Futuras reservas
                                                                     </span>
-                                                                <?php else: ?>
-                                                                    La carpa no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
+                                                                </a>                                                       
                                                             <?php else: ?>
-                                                                La carpa no tiene reservas.
-                                                            <?php endif; ?>
+                                                            <li class="tab disabled col s6">                                                     
+                                                                <a href="#reser-<?= $tent->getId(); ?>">                                         
+                                                                        Futuras reservas                                                         
+                                                                </a>  
+                                                            <?php endif; ?>                                                            
+                                                            </li>                                                         
+                                                        </ul>
+                                                        
+                                                        <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                            <div>
+                                                                <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                                                                                                     
+                                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                        
+                                                                        <div class="reserve-container">
+                                                                            
+                                                                            <div class="reserve-title">
+                                                                                <i class="material-icons">info_outline</i>
+                                                                                La carpa se encuentra actualmente reservada.                     
+                                                                            </div>        
+                                                                            
+                                                                            <div class="reserve-client">
+                                                                                
+                                                                                <div class="client-subinfo">
+                                                                                    <i class="material-icons">person_pin</i>                     
+                                                                                    Cliente                                                      
+                                                                                </div>
+
+                                                                                <div>                                                            
+                                                                                    <span>
+                                                                                        <span class="title">• Nombre:  </span>
+                                                                                        <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Email:  </span>
+                                                                                        <?= $rsv->getClient()->getEmail(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Telefono:  </span>
+                                                                                        <?= $rsv->getClient()->getPhone(); ?> 
+                                                                                    </span>
+                                                                                    <!-- <span>
+                                                                                        <span class="title">• Grupo Familiar:  </span>
+                                                                                        <?= $rsv->getClient()->getFamilyGroup(); ?> 
+                                                                                    </span> -->
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha inicio:  </span>
+                                                                                        <?= $rsv->getDateStart(); ?> 
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title">• Fecha fin:  </span>
+                                                                                        <?= $rsv->getDateEnd(); ?> 
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <?php ?>
+                                                                            </div>                                                               
+                                                                        </div>                                                                   
+
+                                                                    <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                        Reservas futuras
+                                                                    <?php else: ?>
+                                                                        La carpa no tiene reservas.    
+                                                                    <?php endif; ?>                                                          
+
+                                                                <?php else: ?>
+                                                                    La carpa no tiene reservas.
+                                                                <?php endif; ?>
+                                                            </div>
                                                         </div>
+                                                        
+                                                        <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                            <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
+                                                                <div class="future-container">                                                   
+                                                                    <?php foreach ($rsvList as $rsv): ?>
+                                                                        <div class="future-item">
+                                                                            <div class="client">
+                                                                                <i class="material-icons">person_pin</i>
+                                                                                <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
+                                                                                    $rsv->getClient()->getLastName(); ?>
+                                                                            </div>
+                                                                            <div class="date">
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha inicio: </span>
+                                                                                    <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Fecha fin: </span>
+                                                                                    <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <span class="title-2">• Telefono: </span>
+                                                                                    <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>                                                         
+                                                                </div>    
+                                                            </div>
+                                                        <?php endif; ?>                 
                                                     </div>
-                                                    
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
 
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
+                                                    <div class="modal-footer">
+                                                        <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
                                                         </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div> 
+                                                        <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Modificar
+                                                            </a>
+                                                            <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Deshabilitar
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div> 
                                         </div>
                                     <?php endforeach; ?>
 								</div>

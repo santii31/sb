@@ -2,8 +2,9 @@
 
     namespace Controllers;    
     
-    use Models\Client as Client;
     use Models\Admin as Admin;
+    use Models\Client as Client;
+    use Models\BeachTent as BeachTent;    
 	use DAO\ClientDAO as ClientDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ReservationController as ReservationController; 
@@ -128,6 +129,73 @@
             }
         }        
 
+        public function searchPath($alert = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Clientes - Buscar";                       
+                $filter = true;
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "search-client.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->adminController->userPath();
+            }   
+        }
+
+        public function search($option, $value) {                              
+            if ($admin = $this->adminController->isLogged()) { 
+                if (!empty($value)) {
+                    if ($option == 'name') {
+                        return $this->searchByName($value);
+                    } elseif ($option == 'tent') {                    
+                        return $this->searchByTentNumber($value);
+                    }                
+                    return $this->searchPath('error inesperado');
+                }
+                return $this->searchPath(EMPTY_FIELDS);
+            } else {
+                return $this->adminController->userPath();
+            }           
+        }
+
+        private function searchByName($name) {
+            if ($admin = $this->adminController->isLogged()) {     
+                $title = "Clientes - Buscar por nombre";
+                $clientTemp = new Client();
+                $clientTemp->setName( strtolower($name) );                       
+                $rsvClients = $this->clientDAO->getByName($clientTemp);
+                if (sizeof($rsvClients) > 0) {
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "list-search-client.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                } else {
+                    return $this->searchPath(SEARCH_EMPTY);
+                }                
+            } else {
+                return $this->adminController->userPath();
+            } 
+        }
+
+        private function searchByTentNumber($tent) {
+            if ($admin = $this->adminController->isLogged()) {     
+                $title = "Clientes - Buscar por Nº de carpa";
+                $tentTemp = new BeachTent();
+                $tentTemp->setNumber( strtoupper($tent) );
+                $rsvClients = $this->clientDAO->getByTentNumber($tentTemp);
+                if (sizeof($rsvClients) > 0) {
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "list-search-client.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                } else {
+                    return $this->searchPath(SEARCH_EMPTY);
+                }                
+            } else {
+                return $this->adminController->userPath();
+            } 
+        }
+
         public function enable($id) {
             if ($admin = $this->adminController->isLogged()) {
                 $client = new Client();
@@ -214,9 +282,7 @@
                 return $this->updatePath($id, EMAIL_ERROR);
             }            
             return $this->updatePath($id, EMPTY_FIELDS);
-        }
-        
-
+        }        
         
         // 
         public function getEmails() {

@@ -11,17 +11,17 @@
 	define("IMG_PATH", FRONT_ROOT . VIEWS_PATH . "assets/img/");	
 	define("MAX_ITEMS_PAGE", 6);
 	
-	// EMAIL {COMPLETAR}
-	define("SB_EMAIL", "");
-	define("SB_EMAIL_PASS", "");
-	define("EMAIL_HOST", "smtp.live.com");	//-> este sirve si la cuenta es hotmail
-	define('EMAIL_PORT', 587);
-	define('EMAIL_SUCCESS', 'Correos enviados con exito.');
-	define('EMAIL_ERROR', 'Error al enviar los correos. Intente mas tarde.');
+	// EMAIL
+	define("SB_EMAIL", "southbeachmdp@gmail.com");
+	define("SB_EMAIL_PASS", "bal4950hoz");
+	define("EMAIL_HOST", "smtp.gmail.com");	
+	define("EMAIL_PORT", 587);
+	define("EMAIL_SUCCESS", "Correos enviados con exito.");
+	define("EMAIL_ERROR", "Error al enviar los correos. Intente mas tarde.");
 	
 	//DB
 	define("DB_HOST", "localhost");
-	define("DB_NAME", "southbeach");
+	define("DB_NAME", "southbeach2");
 	define("DB_USER", "root");
 	define("DB_PASS", "");
 
@@ -54,6 +54,7 @@
 	define("PROVIDER_ENABLE", "Proveedor habilitado con éxito.");
 	define("PROVIDER_UPDATE", "Proveedor modificado con éxito.");
 	define("PROVIDER_EMPTY", "No hay proveedores registrados en el sistema.");
+	define("SEARCH_PROVIDER_EMPTY", "No se han encontrado proveedores.");
 	
 	define("CLIENT_ADDED", "Cliente potencial añadido con éxito.");
 	define("CLIENT_ERROR", "El cliente potencial ya se encuentra registrado.");
@@ -66,6 +67,7 @@
 	define("PRODUCT_DISABLE", "Producto deshabilitado con éxito.");
 	define("PRODUCT_ENABLE", "Producto habilitado con éxito.");
 	define("PRODUCT_UPDATE", "Producto modificado con éxito.");
+	define("SEARCH_PRODUCT_EMPTY", "No se han encontrado productos.");
 	
 	define("STOCK_ADDED", "Stock agregado con exito.");
 	define("STOCK_REMOVE", "Stock removido con exito.");
@@ -77,6 +79,7 @@
 	define("STAFF_DISABLE", "Empleado deshabilitado con éxito.");
 	define("STAFF_ENABLE", "Empleado habilitado con éxito.");
 	define("STAFF_UPDATE", "Empleado modificado con éxito.");
+	define("SEARCH_STAFF_EMPTY", "No se han encontrado personal.");
 	
 	define("RESERVATION_ADDED", "Reserva añadida con éxito.");
 	define("RESERVATION_ERROR", "Carpa reservada durante estas fechas.");		
@@ -84,5 +87,7 @@
 	define("PARKING_ERROR", "El estacionamiento seleccionado se encuentra reservado.");		
 
 	define("CONFIG_UPDATE", "Configuracion actualizada con éxito.");
+
+	define("SEARCH_EMPTY", "No se han encontrado clientes.");
 
 ?>

@@ -83,8 +83,7 @@
                     $provider->setAddress($row["provider_address"]);
                     $provider->setCuilNumber($row["provider_cuil"]);
                     $provider->setSocialReason($row["provider_socialReason"]);
-					$provider->setBilling($row["provider_typeBilling"]);
-					$provider->setItem($row["item"]);
+					$provider->setBilling($row["provider_typeBilling"]);					
                     $provider->setIsActive($row["provider_isActive"]);
                     $providerxproductTemp->setProvider($provider);                    					
 				}

@@ -52,6 +52,7 @@
                                 <th>Email</th>
                                 <th>Telefono</th>
                                 <th>Nº Carpa</th>
+                                <th>Estadia</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
                                 <!-- <th>Acciones</th> -->
@@ -62,12 +63,13 @@
                             <?php foreach ($rsv as $reservation): ?>
                             <tr>
                                 <td> <?= $reservation->getId(); ?> </td>
-                                <td> <?= $reservation->getClient()->getName(); ?> </td>
-                                <td> <?= $reservation->getClient()->getLastName(); ?> </td>
-                                <td> <?= $reservation->getClient()->getAddress(); ?> </td>                                
+                                <td> <?= ucfirst( $reservation->getClient()->getName() ) ; ?> </td>
+                                <td> <?= ucfirst( $reservation->getClient()->getLastName() ); ?> </td>
+                                <td> <?= ucfirst( $reservation->getClient()->getAddress() ); ?> </td>                                
                                 <td> <?= $reservation->getClient()->getEmail(); ?> </td>
                                 <td> <?= $reservation->getClient()->getPhone(); ?> </td>
                                 <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
+                                <td> <?= ucfirst( $reservation->getStay() ); ?> </td>
                                 <td> <?= $reservation->getDateStart(); ?> </td>
                                 <td> <?= $reservation->getDateEnd(); ?> </td>
                             </tr>
@@ -75,7 +77,8 @@
                         </tbody>
                     </table>                                          
                     
-                    <ul class="pagination center-align">                        
+                    <ul class="pagination center-align">     
+
                         <?php if ($page > 1): ?>                    
                         <li class="waves-effect">
                             <a href="<?= FRONT_ROOT ?>client/listClientPath/<?= $page - 1; ?>">

@@ -64,6 +64,33 @@
 			}
 		}
 
+		public function getByName(ClientPotential $client) {
+			try {				
+				$clientList = array();
+				$query = "CALL client_potential_getByName(?)";
+				$parameters["name"] = $client->getName();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$client = new ClientPotential();
+					$client->setId($row["id"]);
+					$client->setName($row["name"]);
+					$client->setLastName($row["lastname"]);
+					$client->setAddress($row["address"]);
+					$client->setCity($row["city"]);				
+					$client->setEmail($row["email"]);
+					$client->setPhone($row["tel"]);
+					$client->setNumTent($row["num_tent"]);
+					$client->setIsActive($row["is_active"]);                    
+					array_push($clientList, $client);
+				}
+				return $clientList;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
         public function getByEmail(ClientPotential $client) {
 			try {				
 				$clientP = null;

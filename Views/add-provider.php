@@ -73,11 +73,11 @@
                             </div>                                                        
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s6">
                                 <input id="domicilio" type="text" name="address" class="validate" required>
                                 <label for="domicilio">Domicilio</label>
                             </div>
-                            <div class="input-field col s12">
+                            <div class="input-field col s6">
                                 <input id="item" type="text" name="item" class="validate" required>
                                 <label for="item">Rubro</label>
                             </div>

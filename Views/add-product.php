@@ -40,9 +40,7 @@
                                 <select name="id_category">
                                     <option value="" disabled selected>Seleccione su opcion</option>
                                     <?php foreach ($categories as $category): ?>
-                                        <option value="<?= $category->getId(); ?>">
-                                            <?= ucfirst( $category->getName() ); ?>
-                                        </option>
+                                        <option value="<?= $category->getId(); ?>"><?= ucfirst( $category->getName() ); ?></option>
                                     <?php endforeach; ?> 
                                 </select>
                                 <label>Categoria</label>
@@ -52,9 +50,7 @@
                                 <select name="id_provider">
                                     <option value="" disabled selected>Seleccione su opcion</option>
                                     <?php foreach ($providers as $provider): ?>
-                                        <option value="<?= $provider->getId(); ?>">
-                                            <?= ucfirst( $provider->getName() ) . ' ' . $provider->getLastName(); ?>
-                                        </option>
+                                        <option value="<?= $provider->getId(); ?>"><?= ucfirst( $provider->getName() ) . ' ' . $provider->getLastName(); ?></option>
                                     <?php endforeach; ?> 
                                 </select>
                                 <label>Proveedor</label>

@@ -105,7 +105,7 @@
         }
 
         public function getIsActive() {
-            return $this->isActive;
+            return $this->is_active;
         }
 
         public function setIsActive($is_active) {

@@ -38,14 +38,10 @@
                         
                             <div class="input-field col s6">
                                 <select name="id_locker_man">
-                                    <option value="">Seleccione una sombrilla</option>
-                                    
+                                    <option value="">Seleccione una sombrilla</option>                                    
                                     <?php foreach ($parasolFinalList as $parasol): ?>
-                                        <option value="<?= $parasol->getId(); ?>">
-                                            <?= $parasol->getParasolNumber(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                     
+                                        <option value="<?= $parasol->getId(); ?>"><?= $parasol->getParasolNumber(); ?></option>
+                                    <?php endforeach; ?>                                     
                                 </select>
                                 <label>Sombrillas</label>
                             </div>

@@ -46,7 +46,8 @@
                 <div class="row">                    
                     <table class="responsive-table centered" id="table-filter">
                         <thead>
-                        <tr>                            
+                        <tr>                     
+                            <th>Estadia</th>       
                             <th>Fecha entrada</th>
                             <th>Fecha salida</th>
                             <th>Precio</th>
@@ -62,6 +63,7 @@
                         <tbody>
                             <?php foreach ($reservations as $reservation): ?>
                                 <tr>                                    
+                                    <td> <?= $reservation->getStay(); ?> </td>
                                     <td> <?= $reservation->getDateStart(); ?> </td>
                                     <td> <?= $reservation->getDateEnd(); ?> </td>
                                     <td> <?= $reservation->getPrice(); ?> </td>

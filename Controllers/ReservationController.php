@@ -50,9 +50,7 @@
             $vehicle_s = filter_var($vehicle, FILTER_SANITIZE_EMAIL);     
             
             // esto es un string? preguntar
-            // $fam_s = filter_var($fam, FILTER_SANITIZE_STRING);        
-            
-            $addrStayl_s = filter_var($addrStay, FILTER_SANITIZE_STRING);
+            // $fam_s = filter_var($fam, FILTER_SANITIZE_STRING);                                
 
             $client = new Client();
             $client->setName( strtolower($name_s) );

@@ -113,6 +113,48 @@
             }
         } 
 
+        public function searchPath($alert = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Proveedor - Buscar";                       
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "search-provider.php");
+                require_once(VIEWS_PATH . "footer.php");                
+            } else {
+                return $this->adminController->userPath();
+            }   
+        }
+
+        public function search($value) {                              
+            if ($admin = $this->adminController->isLogged()) { 
+                if (!empty($value)) {
+                    return $this->searchByItem($value);                    
+                }
+                return $this->searchPath(EMPTY_FIELDS);
+            } else {
+                return $this->adminController->userPath();
+            }           
+        }
+
+        private function searchByItem($item) {
+            if ($admin = $this->adminController->isLogged()) {     
+                $title = "Proveedor - Buscar por rubro";
+                $provider = new Provider();
+                $provider->setItem( strtolower($item) );                       
+                $providers = $this->providerDAO->getByItem($provider);
+                if (sizeof($providers) > 0) {
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "list-search-provider.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                } else {
+                    return $this->searchPath(SEARCH_PROVIDER_EMPTY);
+                }                
+            } else {
+                return $this->adminController->userPath();
+            } 
+        }
+
         public function enable($id) {
             if ($admin = $this->adminController->isLogged()) {
                 $provider = new Provider();

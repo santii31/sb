@@ -266,10 +266,10 @@ CREATE TABLE client (
     `cp` INT NOT NULL,  -- cp
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `tel` INT NOT NULL,
-    `family_group` VARCHAR(255) NOT NULL,   -- grupo familiar
-    'auxiliary_phone' INT NOT NULL,
-    'payment_method' VARCHAR(255) NOT NULL,
-    'vehicle_type' VARCHAR(255) NOT NULL,
+    `family_group` VARCHAR(255) NOT NULL,   
+    `auxiliary_phone` INT NOT NULL,
+    `payment_method` VARCHAR(255) NOT NULL,
+    `vehicle_type` VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
     `date_register` DATE NOT NULL,
     `register_by` INT NOT NULL, 
@@ -339,6 +339,66 @@ DELIMITER $$
 CREATE PROCEDURE client_getByEmail (IN email VARCHAR(255))
 BEGIN
 	SELECT * FROM `client` WHERE `client`.`email` = email;
+END$$
+
+
+DROP procedure IF EXISTS `client_getByName`;
+DELIMITER $$
+CREATE PROCEDURE client_getByName (IN name VARCHAR(255))
+BEGIN
+	SELECT             
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                       
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,
+            admin.name AS admin_name,
+            admin.lastname AS admin_lastName,            
+            beach_tent.number AS tent_number            
+	FROM `client` 	
+    INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
+    INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
+    INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
+	WHERE `client`.`name` LIKE CONCAT('%', name , '%');
+END$$
+
+
+DROP procedure IF EXISTS `client_getByTentNumber`;
+DELIMITER $$
+CREATE PROCEDURE client_getByTentNumber (IN number VARCHAR(255))
+BEGIN
+	SELECT             
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                       
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,
+            admin.name AS admin_name,
+            admin.lastname AS admin_lastName,            
+            beach_tent.number AS tent_number            
+	FROM `client` 	
+    INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
+    INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
+    INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
+	WHERE `beach_tent`.`number` LIKE CONCAT('%', number , '%');
 END$$
 
 
@@ -433,8 +493,8 @@ BEGIN
         `client`.`tel` = tel,
         `client`.`family_group` = family_group,
         `client`.`auxiliary_phone` = auxiliary_phone,
-        'client'.'payment_method' = payment_method,
-        'client'.'vehicle_type' = vehicle_type,
+        `client`.`payment_method` = payment_method,
+        `client`.`vehicle_type` = vehicle_type,
         `client`.`date_update` = date_update,
         `client`.`update_by` = update_by    
     WHERE 
@@ -506,6 +566,15 @@ DELIMITER $$
 CREATE PROCEDURE client_potential_getById (IN id INT)
 BEGIN
 	SELECT * FROM `client_potential` WHERE `client_potential`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getByName`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getByName (IN name VARCHAR(255))
+BEGIN
+	SELECT * FROM `client_potential` 
+    WHERE `client_potential`.`name` LIKE CONCAT('%', name , '%');
 END$$
 
 
@@ -1135,10 +1204,10 @@ BEGIN
         client.email AS client_email,
         client.tel AS client_tel,
         client.city AS client_city,
-        client.address AS client_address
+        client.address AS client_address,
         client.payment_method AS client_paymentMethod,
         client.auxiliary_phone AS client_auxiliaryPhone,
-        client.vehicle_type AS client_vehicleType,
+        client.vehicle_type AS client_vehicleType
     FROM reservation         
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN client ON reservation.FK_id_client = client.id
@@ -1294,6 +1363,19 @@ DELIMITER $$
 CREATE PROCEDURE provider_getById (IN id INT)
 BEGIN
 	SELECT * FROM `provider` WHERE `provider`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `provider_getByItem`;
+DELIMITER $$
+CREATE PROCEDURE provider_getByItem (IN item VARCHAR(255))
+BEGIN
+    SELECT `provider`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname
+    FROM `provider` 
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`    
+    WHERE `provider`.`item` LIKE CONCAT('%', item , '%');    
 END$$
 
 
@@ -1570,8 +1652,7 @@ BEGIN
             product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
-            category.name AS category_name,
-            category.description AS category_description
+            category.name AS category_name
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
     WHERE `product`.`FK_id_category` = id_category;
@@ -2332,36 +2413,6 @@ BEGIN
 END$$
 
 
----------------------------- LOCKER ---------------------------
-
-CREATE TABLE locker (
-    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `locker_number` INT NOT NULL UNIQUE,
-    `price` FLOAT NOT NULL
-);
-
-
-DROP procedure IF EXISTS `locker_getById`;
-DELIMITER $$
-CREATE PROCEDURE locker_getById (IN id INT)
-BEGIN
-	SELECT *
-    FROM `locker` 
-    WHERE `locker`.`id` = id;
-END$$
-
-
-DROP procedure IF EXISTS `locker_getAll`;
-DELIMITER $$
-CREATE PROCEDURE locker_getAll ()
-BEGIN
-	SELECT *
-    FROM `locker`
-    ORDER BY price ASC;
-END$$
-
-
-
 ---------------------------- PARASOL ---------------------------
 
 CREATE TABLE parasol (
@@ -2552,6 +2603,19 @@ DELIMITER $$
 CREATE PROCEDURE staff_getById (IN id INT)
 BEGIN
 	SELECT * FROM `staff` WHERE `staff`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `staff_getByName`;
+DELIMITER $$
+CREATE PROCEDURE staff_getByName (IN name VARCHAR(255))
+BEGIN
+	SELECT `staff`.*,
+            `admin`.`name` AS admin_name,
+            `admin`.`lastname` AS admin_lastname 
+    FROM `staff` 
+    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
+    WHERE `staff`.`name` LIKE CONCAT('%', name , '%');
 END$$
 
 

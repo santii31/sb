@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `southbeach`
+-- Database: `southbeach2`
 --
 
 DELIMITER $$
@@ -74,10 +74,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getAllActives` ()  BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`is_active` = true ORDER BY name ASC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getAllDisables` ()  BEGIN
-	SELECT * FROM `admin` WHERE `admin`.`is_active` = false ORDER BY name ASC;
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getByDni` (IN `dni` INT)  BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`dni` = dni;
 END$$
@@ -107,6 +103,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_update` (IN `name` VARCHAR(25
         `admin`.`id` = id;	
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `beach_tent_add` (IN `number` INT, IN `price` FLOAT, IN `position` INT, IN `sea` BOOLEAN, IN `FK_id_hall` INT)  BEGIN
+	INSERT INTO beach_tent (
+			beach_tent.number,
+            beach_tent.price,
+            beach_tent.position,
+            beach_tent.sea,
+            beach_tent.FK_id_hall          
+	)
+    VALUES
+        (number, price, position, sea, FK_id_hall);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `category_add` (IN `name` VARCHAR(255))  BEGIN
 	INSERT INTO category (
 			category.name
@@ -127,7 +135,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `category_getByName` (IN `Name` VARC
 	SELECT * FROM `category` WHERE `category`.`name` = name;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `date_register` DATE, IN `register_by` INT, OUT `lastId` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `auxiliary_phone` INT, IN `payment_method` VARCHAR(255), IN `vehicle_type` VARCHAR(255), IN `date_register` DATE, IN `register_by` INT, OUT `lastId` INT)  BEGIN
     INSERT INTO client (
 			client.name,
 			client.lastname,            
@@ -137,18 +145,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_add` (IN `name` VARCHAR(255)
 			client.email,
             client.tel,
             client.family_group,
-            client.stay_address,
-            client.tel_stay,            
+            client.auxiliary_phone,
+            client.payment_method,
+            client.vehicle_type,
             client.date_register,			
             client.register_by
 	)
-    VALUES (name, lastname, address, city, cp, email, tel, family_group, stay_address, tel_stay, date_register, register_by);
+    VALUES (name, lastname, address, city, cp, email, tel, family_group, auxiliary_phone, payment_method, vehicle_type, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_checkEmail` (IN `dni` INT, IN `email` VARCHAR(255))  BEGIN
-    SELECT `client`.`id` FROM `client` WHERE `client`.`email` = email AND `client`.`id` != id;	
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_disableById` (IN `id` INT, IN `date_disable` DATE, IN `disable_by` INT)  BEGIN
@@ -179,6 +184,58 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `client` WHERE `client`.`id` = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getByName` (IN `name` VARCHAR(255))  BEGIN
+	SELECT             
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                       
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,
+            admin.name AS admin_name,
+            admin.lastname AS admin_lastName,            
+            beach_tent.number AS tent_number            
+	FROM `client` 	
+    INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
+    INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
+    INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
+	WHERE `client`.`name` LIKE CONCAT('%', name , '%');
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getByTentNumber` (IN `number` VARCHAR(255))  BEGIN
+	SELECT             
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                       
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,
+            admin.name AS admin_name,
+            admin.lastname AS admin_lastName,            
+            beach_tent.number AS tent_number            
+	FROM `client` 	
+    INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
+    INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
+    INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
+	WHERE `beach_tent`.`number` LIKE CONCAT('%', number , '%');
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_getEmails` ()  BEGIN
@@ -239,6 +296,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getById` (IN `id` 
 	SELECT * FROM `client_potential` WHERE `client_potential`.`id` = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getByName` (IN `name` VARCHAR(255))  BEGIN
+	SELECT * FROM `client_potential` 
+    WHERE `client_potential`.`name` LIKE CONCAT('%', name , '%');
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_getEmails` ()  BEGIN
 	SELECT `client_potential`.`email` FROM `client_potential`;
 END$$
@@ -259,7 +321,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_potential_update` (IN `name`
         `client_potential`.`id` = id;	
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `client_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `stay_address` VARCHAR(255), IN `tel_stay` INT, IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `client_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `address` VARCHAR(255), IN `city` VARCHAR(255), IN `cp` INT, IN `email` VARCHAR(255), IN `tel` INT, IN `family_group` VARCHAR(255), IN `auxiliary_phone` INT, IN `payment_method` VARCHAR(255), IN `vehicle_type` VARCHAR(255), IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
     UPDATE `client` 
     SET 
         `client`.`name` = name, 
@@ -270,8 +332,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `client_update` (IN `name` VARCHAR(2
         `client`.`email` = email,
         `client`.`tel` = tel,
         `client`.`family_group` = family_group,
-        `client`.`stay_address` = stay_address,
-        `client`.`tel_stay` = tel_stay,
+        `client`.`auxiliary_phone` = auxiliary_phone,
+        `client`.`payment_method` = payment_method,
+        `client`.`vehicle_type` = vehicle_type,
         `client`.`date_update` = date_update,
         `client`.`update_by` = update_by    
     WHERE 
@@ -315,7 +378,7 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getAll` ()  BEGIN
 	SELECT *
     FROM `parasol` 
-    ORDER BY price ASC;
+    ORDER BY parasol_number ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getById` (IN `id` INT)  BEGIN
@@ -332,8 +395,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `parasol_getN_row` (IN `start` INT) 
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parking_getAll` ()  BEGIN
-	SELECT * FROM `parking` ORDER BY number ASC;
-    
+	SELECT * FROM `parking` ORDER BY number ASC;    
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `parking_getById` (IN `id` INT)  BEGIN
@@ -408,6 +470,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `product_getAll` ()  BEGIN
             category.name AS category_name            
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
+    WHERE `product`.`is_active` = true
     ORDER BY product.price ASC;
 END$$
 
@@ -418,8 +481,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `product_getByCategory` (IN `id_cate
             product.quantity AS product_quantity,
             product.is_active AS product_isActive,
             category.id AS category_id,
-            category.name AS category_name,
-            category.description AS category_description
+            category.name AS category_name
     FROM `product` 
     INNER JOIN category ON product.FK_id_category = category.id
     WHERE `product`.`FK_id_category` = id_category;
@@ -479,10 +541,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `providerxproduct_add` (IN `FK_id_pr
 	INSERT INTO providerxproduct (
 			providerxproduct.FK_id_provider,
             providerxproduct.FK_id_product
-    --         providerxproduct.quantity,
-    --         providerxproduct.total,
-    --         providerxproduct.discount,
-    --         providerxproduct.transaction_date
 	)
     VALUES
         (FK_id_provider, FK_id_product);
@@ -548,7 +606,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `providerxproduct_getProviderByProdu
 	GROUP BY provider.id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `tel` INT, IN `email` VARCHAR(255), IN `dni` INT, IN `address` VARCHAR(255), IN `cuil` INT, IN `social_reason` VARCHAR(255), IN `type_billing` VARCHAR(255), IN `date_register` DATE, IN `register_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_add` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `tel` INT, IN `email` VARCHAR(255), IN `dni` INT, IN `address` VARCHAR(255), IN `cuil` INT, IN `social_reason` VARCHAR(255), IN `type_billing` VARCHAR(255), IN `item` VARCHAR(255), IN `date_register` DATE, IN `register_by` INT)  BEGIN
 	INSERT INTO provider (
             provider.name,
             provider.lastname,
@@ -559,11 +617,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_add` (IN `name` VARCHAR(25
             provider.cuil,
             provider.social_reason,
             provider.type_billing,
+            provider.item,
             provider.date_register,
             provider.register_by
 	)
     VALUES
-        (name, lastname, tel, email, dni, address, cuil, social_reason, type_billing, date_register, register_by);
+        (name, lastname, tel, email, dni, address, cuil, social_reason, type_billing, item, date_register, register_by);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_checkDni` (IN `dni` INT, IN `id` INT)  BEGIN
@@ -623,7 +682,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getById` (IN `id` INT)  BE
 	SELECT * FROM `provider` WHERE `provider`.`id` = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `tel` INT, IN `email` VARCHAR(255), IN `dni` INT, IN `address` VARCHAR(255), IN `cuil` INT, IN `social_reason` VARCHAR(255), IN `type_billing` VARCHAR(255), IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_getByItem` (IN `item` VARCHAR(255))  BEGIN
+    SELECT `provider`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname
+    FROM `provider` 
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`    
+    WHERE `provider`.`item` LIKE CONCAT('%', item , '%');    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `tel` INT, IN `email` VARCHAR(255), IN `dni` INT, IN `address` VARCHAR(255), IN `cuil` INT, IN `social_reason` VARCHAR(255), IN `type_billing` VARCHAR(255), IN `item` VARCHAR(255), IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
     UPDATE `provider` 
     SET 
         `provider`.`name` = name, 
@@ -635,27 +703,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `provider_update` (IN `name` VARCHAR
         `provider`.`cuil` = cuil,
         `provider`.`social_reason` = social_reason,
         `provider`.`type_billing` = type_billing,
+        `provider`.`item` = item,
         `provider`.`date_update` = date_update,
         `provider`.`update_by` = update_by    
     WHERE 
         `provider`.`id` = id;	
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `providreservationxparking_add_getAller_getAll` ()  BEGIN
-    SELECT 
-        reservation.id as reservation_id,
-        reservation.date_start as reservation_date_start,
-        reservation.date_end as reservation_date_end,
-        client.name as client_name,
-        client.lastname as client_lastname,
-        parking.id as parking_id,
-        parking.number as parking_number,
-        parking.price as parking_price        
-    FROM `reservationxparking` 
-    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
-    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
-    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`;
-    -- ORDER BY name ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_add` (IN `FK_id_reservation` INT, IN `FK_id_parking` INT)  BEGIN
@@ -665,23 +717,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_add` (IN `FK_id
 	)
     VALUES
         (FK_id_reservation, FK_id_parking);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_add_getAll` ()  BEGIN
-    SELECT 
-        reservation.id as reservation_id,
-        reservation.date_start as reservation_date_start,
-        reservation.date_end as reservation_date_end,
-        client.name as client_name,
-        client.lastname as client_lastname,
-        parking.id as parking_id,
-        parking.number as parking_number,
-        parking.price as parking_price        
-    FROM `reservationxparking` 
-    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
-    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
-    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`;
-    -- ORDER BY name ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reservationxparking_getAll` ()  BEGIN
@@ -841,7 +876,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_geByIdTent` (IN `id` IN
         client.email AS client_email,
         client.tel AS client_tel,
         client.city AS client_city,
-        client.address AS client_address
+        client.address AS client_address,
+        client.payment_method AS client_paymentMethod,
+        client.auxiliary_phone AS client_auxiliaryPhone,
+        client.vehicle_type AS client_vehicleType
     FROM reservation         
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN client ON reservation.FK_id_client = client.id
@@ -863,6 +901,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getAll` ()  BEGIN
            client.tel AS client_tel,
            client.city AS client_city,
            client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -894,6 +935,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getAllByClientId` (IN `
            client.tel AS client_tel,
            client.city AS client_city,
            client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -928,7 +972,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getAllRsvWithClientsWit
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_address,           
+           client.address AS client_address,         
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,  
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number           
     FROM `reservation`
@@ -949,7 +996,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getAllWithClients` ()  
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_address,           
+           client.address AS client_address,         
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,  
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number           
     FROM `reservation`
@@ -974,6 +1024,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reservation_getById` (IN `id` INT) 
            client.tel AS client_tel,
            client.city AS client_city,
            client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
            admin.id AS admin_id,
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
@@ -1046,17 +1099,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_add` (IN `FK_id_ser
 	)
     VALUES
         (FK_id_service, FK_id_parasol);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_getParasolByService` (IN `id_service` INT)  BEGIN
-	SELECT parasol.id AS parasol_id,
-           parasol.parasol_number AS parasol_number,
-           parasol.price AS parasol_price
-	FROM servicexparasol
-	INNER JOIN parasol ON servicexparasol.FK_id_parasol = parasol.id
-	
-	WHERE (servicexparasol.FK_id_service = id_service)
-	GROUP BY parasol.id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `servicexparasol_getServiceByParasol` (IN `id_parasol` INT)  BEGIN
@@ -1141,9 +1183,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `service_getAll` ()  BEGIN
 	SELECT additional_service.id AS service_id,
            additional_service.description AS service_description,
            additional_service.total AS service_total,
-           additional_service.is_active AS service_is_active
-        
-    FROM `additional_service` ;
+           additional_service.is_active AS service_is_active        
+    FROM `additional_service` 
+    WHERE `additional_service`.`is_active` = true;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `service_getByDescription` (IN `description` VARCHAR(255))  BEGIN
@@ -1246,6 +1288,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_getById` (IN `id` INT)  BEGIN
 	SELECT * FROM `staff` WHERE `staff`.`id` = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_getByName` (IN `name` VARCHAR(255))  BEGIN
+	SELECT `staff`.*,
+            `admin`.`name` AS admin_name,
+            `admin`.`lastname` AS admin_lastname 
+    FROM `staff` 
+    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
+    WHERE `staff`.`name` LIKE CONCAT('%', name , '%');
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `staff_update` (IN `name` VARCHAR(255), IN `lastname` VARCHAR(255), IN `position` VARCHAR(255), IN `salary` FLOAT, IN `date_start` DATE, IN `date_end` DATE, IN `dni` INT, IN `address` VARCHAR(255), IN `tel` INT, IN `shirt_size` FLOAT, IN `pant_size` FLOAT, IN `id` INT, IN `date_update` DATE, IN `update_by` INT)  BEGIN
     UPDATE `staff` 
     SET 
@@ -1282,6 +1333,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getAllWithoutReservation` (IN 
     FROM `beach_tent` 
     INNER JOIN `reservation` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
     WHERE today NOT BETWEEN `reservation`.`date_start` AND `reservation`.`date_end`;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getById` (IN `id` INT)  BEGIN
+	SELECT * FROM `beach_tent` WHERE `beach_tent`.`id` = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getByNumber` (IN `number` INT)  BEGIN
+	SELECT * FROM `beach_tent` WHERE `beach_tent`.`number` = number;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `tent_getN_row` (IN `start` INT)  BEGIN
@@ -1332,25 +1391,8 @@ CREATE TABLE `additional_service` (
 --
 
 INSERT INTO `additional_service` (`id`, `description`, `total`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'cofre', 500, 1, '2020-01-08', 1, '2020-01-13', 1, '2020-01-13', 1, '2020-01-13', 1),
-(2, 'sombrilla', 500, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'estacionamiento', 2000, 1, '2020-01-14', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, '2020-01-17', 1),
-(9, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, '2020-01-17', 1),
-(11, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(14, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(15, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(16, 'descripcion 1 ejemplo', 100, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, '2020-01-17', 1),
-(17, 'descripcion 1 ejemplo', 100, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(18, 'descripcion 1 ejemplo', 100, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, '2020-01-18', 1),
-(19, 'descripcion 1 ejemplo', 100, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(20, 'descripcion 1 ejemplo', 100, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(21, 'descripcion 1 ejemplo', 100, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(22, 'descripcion 1 ejemplo', 100, 1, '2020-01-19', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(23, 'descripcion 1 ejemplo', 100, 1, '2020-01-20', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 'descripcion 1 ejemplo', 100, 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'descripcion 1 ejemplo', 100, 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1381,9 +1423,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `lastname`, `dni`, `email`, `password`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'admin', 'admin', 404040, 'admin@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1, '2020-01-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'rodrigo', 'leon', 404142, 'rodrigoleon2016@hotmail.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 0, '2020-01-07', 1, '2020-01-18', 1, '2020-01-18', 1, '2020-01-18', 1),
-(3, 'santiago', 'admin', 707070, 'rinaldisantiago@hotmail.com', '$2y$10$t5m0VNDRsrv96z3k386mHuoo/YdnRldp.DN409hnRjEiiBRKTGDly', 0, '2020-01-08', 1, '2020-01-20', 1, '2020-01-18', 1, '2020-01-20', 1);
+(1, 'admin', 'admin', 505050, 'admin@admin.com', '$2y$10$xNd90YZ2Zcttqmt2JU9d3uWt.CgYhVAW4ylkauUaXZ8vLkHRy.X1a', 1, '2020-01-21', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1673,8 +1713,9 @@ CREATE TABLE `client` (
   `email` varchar(255) COLLATE utf8_bin NOT NULL,
   `tel` int(11) NOT NULL,
   `family_group` varchar(255) COLLATE utf8_bin NOT NULL,
-  `stay_address` varchar(255) COLLATE utf8_bin NOT NULL,
-  `tel_stay` int(11) NOT NULL,
+  `auxiliary_phone` int(11) NOT NULL,
+  `payment_method` varchar(255) COLLATE utf8_bin NOT NULL,
+  `vehicle_type` varchar(255) COLLATE utf8_bin NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `date_register` date NOT NULL,
   `register_by` int(11) NOT NULL,
@@ -1690,24 +1731,9 @@ CREATE TABLE `client` (
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`id`, `name`, `lastname`, `address`, `city`, `cp`, `email`, `tel`, `family_group`, `stay_address`, `tel_stay`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(3, 'pepe', 'pipo', 'calle 1', 'mar del plata', 4000, 'pepepipo@mail.com', 4501010, '5', 'calle 3', 4501111, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'jose', 'luis', 'calle 99', 'mar del plata', 5000, 'joseluis@mail.com', 4501212, '5', 'calle 11', 4501110, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, 'bruce', 'gonzalez', 'calle 30', 'mar del plata', 1212, 'bruce_g@mail.com', 12312313, '5', 'calle 999', 1230009, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, 'juan', 'cd', 'calle 1', 'mar del plata', 1000, 'jua2@mail.com', 1010101001, '5', 'calle 0', 14124, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, 'periodo', 'juan', 'calle 1', 'mar del plata', 1050, 'perjuan@mail.com', 4123123, '15', '412412', 124124, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, 'asd', 'asd', 'ad', 'asd', 1, 'ads@mail.com', 12, '12', '12', 12, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, 'p', 'p', 'p', 'p', 1, 'p@mal.com', 1, 'p', 'p', 1, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 'q', 'q', 'q', 'q', 1, 'q@mail.com', 1, 'q', 'q', 1, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 'b', 'b', 'b', 'b', 1, 'bb@mail.com', 1, 'b', 'b', 1, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, 't', 't', 't', 't', 1, 't@mail.com', 1, 't', 't', 1, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, 'w', 'w', 'w', 'w', 1, 'w@mail.com', 1, 'w', 'w', 11, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(14, 'dd', 'dd', '2e', '2e2', 224, '2323@mail.com', 123, '123', '3123', 3123, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(15, 'asd', 'asda', 'dasd', 'sada', 123124, '4124asd@mail.com', 123, '123', '3123', 312, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(16, 'fd', 'sf', 'sf', 'sf', 2, 'sf@mail.com', 2, 'sf', '2', 2, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, 'xd', 'xd', 'xd', 'xd', 12, 'xd@mail.com', 12, 'xd', 'xd', 123, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(18, 'jose', 'josito', 'calle 30', 'mar del plata', 5124, 'josejosito@mail.com', 4500500, '5', 'calle 30', 4123000, 1, '2020-01-19', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(19, 'santiago', 'rinaldi', 'asd 546', 'mar del plata', 7600, 'rinaldi@santiago.com', 15545454, '3', 'asd 67', 56456, 1, '2020-01-20', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `client` (`id`, `name`, `lastname`, `address`, `city`, `cp`, `email`, `tel`, `family_group`, `auxiliary_phone`, `payment_method`, `vehicle_type`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'rodrigo', 'leon', 'calle 1', 'mar del plata', 5000, 'rodrigo@mail.com', 4502424, '1', 4301212, 'cash', 'car', 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'santiago', 'santi', 'calle 1', 'mar del plata', 1212, 'santiago@mail.com', 1212, '5', 1212, 'check', 'van', 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1740,8 +1766,7 @@ CREATE TABLE `client_potential` (
 --
 
 INSERT INTO `client_potential` (`id`, `name`, `lastname`, `address`, `city`, `email`, `tel`, `num_tent`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'juan', 'jose', 'calle 33', 'mar del plata', 'clientepot@hotmail.com', 43430, 100, 1, '2020-01-08', 1, '2020-01-18', 1, '2020-01-18', 1, '2020-01-20', 1),
-(2, 'tom', 'jerry', 'calle 999', 'mar del plata', 'tom_jerry@mail.com', 123, 150, 0, '2020-01-18', 1, '2020-01-18', 1, NULL, NULL, '2020-01-18', 1);
+(1, 'juansito', 'perez', 'calle 9999', 'mar del plata', 'juansito@mail.com', 1235005, 100, 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1764,13 +1789,6 @@ CREATE TABLE `config` (
   `date_update` date DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `config`
---
-
-INSERT INTO `config` (`date_start_season`, `date_end_season`, `price_tent_season`, `price_tent_january`, `price_tent_january_day`, `price_tent_january_fortnigh`, `price_tent_february`, `price_tent_february_day`, `price_tent_february_first_fortnigh`, `price_tent_february_second_fortnigh`, `price_parasol`, `date_update`, `update_by`) VALUES
-('2020-01-01', '2020-01-01', 50000, 35000, 2500, 20000, 25000, 2000, 20000, 20000, 1800, '2020-01-20', 1);
 
 -- --------------------------------------------------------
 
@@ -1993,21 +2011,21 @@ CREATE TABLE `parasol` (
 --
 
 INSERT INTO `parasol` (`id`, `parasol_number`, `price`, `position`, `FK_id_hall`) VALUES
-(1, 1, 100, 1, 1),
-(2, 2, 100, 2, 1),
-(3, 3, 100, 3, 1),
-(4, 4, 100, 4, 2),
-(5, 5, 100, 5, 2),
-(6, 6, 100, 6, 2),
-(7, 7, 100, 7, 3),
-(8, 8, 100, 8, 3),
-(9, 9, 100, 9, 3),
-(10, 10, 100, 10, 4),
-(11, 11, 100, 11, 4),
-(12, 12, 100, 12, 4),
-(13, 13, 100, 13, 5),
-(14, 14, 100, 14, 5),
-(15, 15, 100, 15, 5);
+(2, 1, 100, 1, 1),
+(3, 2, 100, 2, 1),
+(4, 3, 100, 3, 1),
+(5, 4, 100, 4, 2),
+(6, 5, 100, 5, 2),
+(7, 6, 100, 6, 2),
+(8, 7, 100, 7, 3),
+(9, 8, 100, 8, 3),
+(10, 9, 100, 9, 3),
+(11, 10, 100, 10, 4),
+(12, 11, 100, 11, 4),
+(13, 12, 100, 12, 4),
+(14, 13, 100, 13, 5),
+(15, 14, 100, 14, 5),
+(16, 15, 100, 15, 5);
 
 -- --------------------------------------------------------
 
@@ -2028,202 +2046,203 @@ CREATE TABLE `parking` (
 --
 
 INSERT INTO `parking` (`id`, `number`, `price`, `position`, `FK_id_hall`) VALUES
-(1, '168', 100, 1, 1),
-(2, '169', 100, 2, 1),
-(3, '170', 100, 3, 1),
-(4, '171', 100, 4, 1),
-(5, '172', 100, 5, 1),
-(6, '173', 100, 6, 1),
-(7, '174', 100, 7, 1),
-(8, '175', 100, 8, 1),
-(9, '176', 100, 9, 1),
-(10, '177', 100, 10, 1),
-(11, '178', 100, 11, 1),
-(12, '179', 100, 12, 1),
-(13, '180', 100, 13, 1),
-(14, '181', 100, 14, 1),
-(15, '182', 100, 15, 1),
-(16, '183', 100, 16, 1),
-(17, '184', 100, 17, 1),
-(18, '185', 100, 18, 1),
-(19, '186', 100, 19, 1),
-(20, '187', 100, 20, 1),
-(21, '160', 100, 21, 2),
-(22, '161', 100, 22, 2),
-(23, '162', 100, 23, 2),
-(24, '163', 100, 24, 2),
-(25, '164', 100, 25, 2),
-(26, '165', 100, 26, 2),
-(27, '45', 100, 27, 2),
-(28, '46', 100, 28, 2),
-(29, '47', 100, 29, 2),
-(30, '48', 100, 30, 2),
-(31, '49', 100, 31, 2),
-(32, '50', 100, 32, 2),
-(33, '166D', 100, 33, 2),
-(34, '167D', 100, 34, 3),
-(35, '53', 100, 35, 3),
-(36, '54', 100, 36, 3),
-(37, '55', 100, 37, 3),
-(38, '56', 100, 38, 3),
-(39, '57', 100, 39, 3),
-(40, '58', 100, 40, 3),
-(41, '59', 100, 41, 3),
-(42, '60', 100, 42, 3),
-(43, '61', 100, 43, 4),
-(44, '62', 100, 44, 4),
-(45, '63', 100, 45, 4),
-(46, '64', 100, 46, 4),
-(47, '1', 100, 47, 4),
-(48, '2', 100, 48, 4),
-(49, '3', 100, 49, 4),
-(50, '4', 100, 50, 4),
-(51, '5', 100, 51, 4),
-(52, '6', 100, 52, 4),
-(53, '7', 100, 53, 4),
-(54, '8', 100, 54, 4),
-(55, '9', 100, 55, 4),
-(56, '10', 100, 56, 4),
-(57, '11', 100, 57, 4),
-(58, '12', 100, 58, 4),
-(59, '13', 100, 59, 4),
-(60, '14', 100, 60, 4),
-(61, '15', 100, 61, 4),
-(62, '16', 100, 62, 4),
-(63, '17', 100, 63, 4),
-(64, '18', 100, 64, 4),
-(65, '19', 100, 65, 4),
-(66, '20', 100, 66, 4),
-(67, '21', 100, 67, 4),
-(68, '22', 100, 68, 4),
-(69, '65', 100, 69, 5),
-(70, '66', 100, 70, 5),
-(71, '67', 100, 71, 5),
-(72, '68', 100, 72, 5),
-(73, '44', 100, 73, 5),
-(74, '43', 100, 74, 5),
-(75, '42', 100, 75, 5),
-(76, '41', 100, 76, 5),
-(77, '40', 100, 77, 5),
-(78, '39', 100, 78, 5),
-(79, '38', 100, 79, 5),
-(80, '37', 100, 80, 5),
-(81, '36', 100, 81, 5),
-(82, '35', 100, 82, 5),
-(83, '34', 100, 83, 5),
-(84, '33', 100, 84, 5),
-(85, '32', 100, 85, 5),
-(86, '31', 100, 86, 5),
-(87, '30', 100, 87, 5),
-(88, '29', 100, 88, 5),
-(89, '28', 100, 89, 5),
-(90, '27', 100, 90, 5),
-(91, '26', 100, 91, 5),
-(92, '25', 100, 92, 5),
-(93, '24', 100, 93, 5),
-(94, '23', 100, 94, 5),
-(95, '69', 100, 95, 6),
-(96, '70', 100, 96, 6),
-(97, '71', 100, 97, 6),
-(98, '72', 100, 98, 6),
-(99, '73', 100, 99, 6),
-(100, '74', 100, 100, 6),
-(101, '75', 100, 101, 6),
-(102, '76', 100, 102, 6),
-(103, '77', 100, 103, 6),
-(104, '78', 100, 104, 6),
-(105, '79', 100, 105, 6),
-(106, '80', 100, 106, 6),
-(107, '81', 100, 107, 6),
-(108, '82', 100, 108, 6),
-(109, '83', 100, 109, 6),
-(110, '84', 100, 110, 6),
-(111, '85', 100, 111, 6),
-(112, '86', 100, 112, 6),
-(113, '87', 100, 113, 6),
-(114, '88', 100, 114, 6),
-(115, '89', 100, 115, 6),
-(116, '90', 100, 116, 6),
-(117, '91', 100, 117, 7),
-(118, '92', 100, 118, 7),
-(119, '93', 100, 119, 7),
-(120, '94', 100, 120, 7),
-(121, '95', 100, 121, 7),
-(122, '96', 100, 122, 7),
-(123, '97', 100, 123, 7),
-(124, '98', 100, 124, 7),
-(125, '99', 100, 125, 7),
-(126, '100', 100, 126, 7),
-(127, '101', 100, 127, 7),
-(128, '102', 100, 128, 7),
-(129, '103', 100, 129, 7),
-(130, '104', 100, 130, 7),
-(131, '105', 100, 131, 7),
-(132, '106', 100, 132, 7),
-(133, '107', 100, 133, 7),
-(134, '108', 100, 134, 7),
-(135, '109', 100, 135, 7),
-(136, '110', 100, 136, 7),
-(137, '111', 100, 137, 7),
-(138, '112', 100, 138, 7),
-(139, '132', 100, 139, 8),
-(140, '131', 100, 140, 8),
-(141, '130', 100, 141, 8),
-(142, '129', 100, 142, 8),
-(143, '128', 100, 143, 8),
-(144, '127', 100, 144, 8),
-(145, '126', 100, 145, 8),
-(146, '125', 100, 146, 8),
-(147, '124', 100, 147, 8),
-(148, '123', 100, 148, 8),
-(149, '122', 100, 149, 8),
-(150, '121', 100, 150, 8),
-(151, '120', 100, 151, 8),
-(152, '119', 100, 152, 8),
-(153, '118', 100, 153, 8),
-(154, '117', 100, 154, 8),
-(155, '116', 100, 155, 8),
-(156, '115', 100, 156, 8),
-(157, '114', 100, 157, 8),
-(158, '113', 100, 158, 8),
-(159, '188', 100, 159, 9),
-(160, '189', 100, 160, 9),
-(161, '190', 100, 161, 9),
-(162, '191', 100, 162, 9),
-(163, '192', 100, 163, 9),
-(164, '193', 100, 164, 9),
-(165, '194', 100, 165, 9),
-(166, '195', 100, 166, 9),
-(167, '196', 100, 167, 9),
-(168, '197', 100, 168, 9),
-(169, '198', 100, 169, 9),
-(170, '199', 100, 170, 9),
-(171, '200', 100, 171, 9),
-(172, '135', 100, 172, 9),
-(173, '136', 100, 173, 9),
-(174, '137', 100, 174, 9),
-(175, '138', 100, 175, 9),
-(176, '139', 100, 176, 9),
-(177, '140', 100, 177, 9),
-(178, '141', 100, 178, 9),
-(179, '142', 100, 179, 9),
-(180, '143', 100, 180, 9),
-(181, '144', 100, 181, 9),
-(182, '159', 100, 182, 10),
-(183, '158', 100, 183, 10),
-(184, '157', 100, 184, 10),
-(185, '156', 100, 185, 10),
-(186, '155', 100, 186, 10),
-(187, '154', 100, 187, 10),
-(188, '153', 100, 188, 10),
-(189, '152', 100, 189, 10),
-(190, '151', 100, 190, 10),
-(191, '150', 100, 191, 10),
-(192, '149', 100, 192, 10),
-(193, '148', 100, 193, 10),
-(194, '147', 100, 194, 10),
-(195, '146', 100, 195, 10),
-(196, '145', 100, 196, 10);
+(53, '168', 100, 1, 1),
+(54, '169', 100, 2, 1),
+(55, '170', 100, 3, 1),
+(56, '171', 100, 4, 1),
+(57, '172', 100, 5, 1),
+(58, '173', 100, 6, 1),
+(59, '174', 100, 7, 1),
+(60, '175', 100, 8, 1),
+(61, '176', 100, 9, 1),
+(62, '177', 100, 10, 1),
+(63, '178', 100, 11, 1),
+(64, '179', 100, 12, 1),
+(65, '180', 100, 13, 1),
+(66, '181', 100, 14, 1),
+(67, '182', 100, 15, 1),
+(68, '183', 100, 16, 1),
+(69, '184', 100, 17, 1),
+(70, '185', 100, 18, 1),
+(71, '186', 100, 19, 1),
+(72, '187', 100, 20, 1),
+(73, '160', 100, 21, 2),
+(74, '161', 100, 22, 2),
+(75, '162', 100, 23, 2),
+(76, '163', 100, 24, 2),
+(77, '164', 100, 25, 2),
+(78, '165', 100, 26, 2),
+(79, '45', 100, 27, 2),
+(80, '46', 100, 28, 2),
+(81, '47', 100, 29, 2),
+(82, '48', 100, 30, 2),
+(83, '49', 100, 31, 2),
+(84, '50', 100, 32, 2),
+(85, '166D', 100, 33, 2),
+(86, '167D', 100, 34, 3),
+(87, '53', 100, 35, 3),
+(88, '54', 100, 36, 3),
+(89, '55', 100, 37, 3),
+(90, '56', 100, 38, 3),
+(91, '57', 100, 39, 3),
+(92, '58', 100, 40, 3),
+(93, '59', 100, 41, 3),
+(94, '60', 100, 42, 3),
+(95, '61', 100, 43, 4),
+(96, '62', 100, 44, 4),
+(97, '63', 100, 45, 4),
+(98, '64', 100, 46, 4),
+(99, '1', 100, 47, 4),
+(100, '2', 100, 48, 4),
+(101, '3', 100, 49, 4),
+(102, '4', 100, 50, 4),
+(103, '5', 100, 51, 4),
+(104, '6', 100, 52, 4),
+(105, '7', 100, 53, 4),
+(106, '8', 100, 54, 4),
+(107, '9', 100, 55, 4),
+(108, '10', 100, 56, 4),
+(109, '11', 100, 57, 4),
+(110, '12', 100, 58, 4),
+(111, '13', 100, 59, 4),
+(112, '14', 100, 60, 4),
+(113, '15', 100, 61, 4),
+(114, '16', 100, 62, 4),
+(115, '17', 100, 63, 4),
+(116, '18', 100, 64, 4),
+(117, '19', 100, 65, 4),
+(118, '20', 100, 66, 4),
+(119, '21', 100, 67, 4),
+(120, '22', 100, 68, 4),
+(121, '65', 100, 69, 5),
+(122, '66', 100, 70, 5),
+(123, '67', 100, 71, 5),
+(124, '68', 100, 72, 5),
+(125, '44', 100, 73, 5),
+(126, '43', 100, 74, 5),
+(127, '42', 100, 75, 5),
+(128, '41', 100, 76, 5),
+(129, '40', 100, 77, 5),
+(130, '39', 100, 78, 5),
+(131, '38', 100, 79, 5),
+(132, '37', 100, 80, 5),
+(133, '36', 100, 81, 5),
+(134, '35', 100, 82, 5),
+(135, '34', 100, 83, 5),
+(136, '33', 100, 84, 5),
+(137, '32', 100, 85, 5),
+(138, '31', 100, 86, 5),
+(139, '30', 100, 87, 5),
+(140, '29', 100, 88, 5),
+(141, '28', 100, 89, 5),
+(142, '27', 100, 90, 5),
+(143, '26', 100, 91, 5),
+(144, '25', 100, 92, 5),
+(145, '24', 100, 93, 5),
+(146, '23', 100, 94, 5),
+(147, '69', 100, 95, 6),
+(148, '70', 100, 96, 6),
+(149, '71', 100, 97, 6),
+(150, '72', 100, 98, 6),
+(151, '73', 100, 99, 6),
+(152, '74', 100, 100, 6),
+(153, '75', 100, 101, 6),
+(154, '76', 100, 102, 6),
+(155, '77', 100, 103, 6),
+(156, '78', 100, 104, 6),
+(157, '79', 100, 105, 6),
+(158, '80', 100, 106, 6),
+(159, '81', 100, 107, 6),
+(160, '82', 100, 108, 6),
+(161, '83', 100, 109, 6),
+(162, '84', 100, 110, 6),
+(163, '85', 100, 111, 6),
+(164, '86', 100, 112, 6),
+(165, '87', 100, 113, 6),
+(166, '88', 100, 114, 6),
+(167, '89', 100, 115, 6),
+(168, '90', 100, 116, 6),
+(169, '91', 100, 117, 7),
+(170, '92', 100, 118, 7),
+(171, '93', 100, 119, 7),
+(172, '94', 100, 120, 7),
+(173, '95', 100, 121, 7),
+(174, '96', 100, 122, 7),
+(175, '97', 100, 123, 7),
+(176, '98', 100, 124, 7),
+(177, '99', 100, 125, 7),
+(178, '100', 100, 126, 7),
+(179, '101', 100, 127, 7),
+(180, '102', 100, 128, 7),
+(181, '103', 100, 129, 7),
+(182, '104', 100, 130, 7),
+(183, '105', 100, 131, 7),
+(184, '106', 100, 132, 7),
+(185, '107', 100, 133, 7),
+(186, '108', 100, 134, 7),
+(187, '109', 100, 135, 7),
+(188, '110', 100, 136, 7),
+(189, '111', 100, 137, 7),
+(190, '112', 100, 138, 7),
+(191, '132', 100, 139, 8),
+(192, '131', 100, 140, 8),
+(193, '130', 100, 141, 8),
+(194, '129', 100, 142, 8),
+(195, '128', 100, 143, 8),
+(196, '127', 100, 144, 8),
+(197, '126', 100, 145, 8),
+(198, '125', 100, 146, 8),
+(199, '124', 100, 147, 8),
+(200, '123', 100, 148, 8),
+(201, '122', 100, 149, 8),
+(202, '121', 100, 150, 8),
+(203, '120', 100, 151, 8),
+(204, '119', 100, 152, 8),
+(205, '118', 100, 153, 8),
+(206, '117', 100, 154, 8),
+(207, '116', 100, 155, 8),
+(208, '115', 100, 156, 8),
+(209, '114', 100, 157, 8),
+(210, '113', 100, 158, 8),
+(211, '113B', 100, 159, 8),
+(212, '188', 100, 160, 9),
+(213, '189', 100, 161, 9),
+(214, '190', 100, 162, 9),
+(215, '191', 100, 163, 9),
+(216, '192', 100, 164, 9),
+(217, '193', 100, 165, 9),
+(218, '194', 100, 166, 9),
+(219, '195', 100, 167, 9),
+(220, '196', 100, 168, 9),
+(221, '197', 100, 169, 9),
+(222, '198', 100, 170, 9),
+(223, '199', 100, 171, 9),
+(224, '200', 100, 172, 9),
+(225, '135', 100, 173, 9),
+(226, '136', 100, 174, 9),
+(227, '137', 100, 175, 9),
+(228, '138', 100, 176, 9),
+(229, '139', 100, 177, 9),
+(230, '140', 100, 178, 9),
+(231, '141', 100, 179, 9),
+(232, '142', 100, 180, 9),
+(233, '143', 100, 181, 9),
+(234, '144', 100, 182, 9),
+(235, '159', 100, 183, 10),
+(236, '158', 100, 184, 10),
+(237, '157', 100, 185, 10),
+(238, '156', 100, 186, 10),
+(239, '155', 100, 187, 10),
+(240, '154', 100, 188, 10),
+(241, '153', 100, 189, 10),
+(242, '152', 100, 190, 10),
+(243, '151', 100, 191, 10),
+(244, '150', 100, 192, 10),
+(245, '149', 100, 193, 10),
+(246, '148', 100, 194, 10),
+(247, '147', 100, 195, 10),
+(248, '146', 100, 196, 10),
+(249, '145', 100, 197, 10);
 
 -- --------------------------------------------------------
 
@@ -2284,7 +2303,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `price`, `quantity`, `FK_id_category`, `is_active`, `date_add`, `add_by`, `date_remove`, `remove_by`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'test', 10, 60, 1, 1, '2020-01-20', 1, '2020-01-20', 1, '2020-01-12', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 'administracion 1', 100, 130, 1, 1, '2020-01-21', 1, NULL, NULL, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2303,6 +2322,7 @@ CREATE TABLE `provider` (
   `cuil` int(11) NOT NULL,
   `social_reason` varchar(255) COLLATE utf8_bin NOT NULL,
   `type_billing` varchar(255) COLLATE utf8_bin NOT NULL,
+  `item` varchar(255) COLLATE utf8_bin NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `date_register` date NOT NULL,
   `register_by` int(11) NOT NULL,
@@ -2318,8 +2338,8 @@ CREATE TABLE `provider` (
 -- Dumping data for table `provider`
 --
 
-INSERT INTO `provider` (`id`, `name`, `lastname`, `tel`, `email`, `dni`, `address`, `cuil`, `social_reason`, `type_billing`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'jose', 'luis', 4500000, 'jose_prov@mail.com', 123132123, 'calle 5051', 1234, 'jose s.a', 'a', 0, '2020-01-12', 1, '2020-01-20', 1, '2020-01-18', 1, '2020-01-20', 1);
+INSERT INTO `provider` (`id`, `name`, `lastname`, `tel`, `email`, `dni`, `address`, `cuil`, `social_reason`, `type_billing`, `item`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
+(1, 'carlos', 'pedro', 4501212, 'carlospedro@mail.com', 125050, 'calle 450', 3101, 'carlos sa', 'a', 'electricista', 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2371,23 +2391,8 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `date_start`, `date_end`, `stay`, `discount`, `total_price`, `FK_id_client`, `FK_id_tent`, `is_reserved`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(3, '2020-01-01', '2020-01-31', 'january', 0, 0, 3, 1, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '2020-01-17', '2020-01-17', 'day', 0, 0, 4, 8, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, '2020-01-01', '2020-02-28', 'season', 0, 0, 5, 15, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, '2020-01-07', '2020-01-29', 'rest', 0, 0, 6, 194, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, '2020-01-01', '2020-01-17', 'period', 0, 0, 7, 42, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, '2020-01-02', '2020-02-28', 'season', 0, 0, 8, 20, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, '2020-01-17', '2020-01-31', 'period', 0, 0, 9, 49, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, '2020-01-01', '2020-01-30', 'season', 0, 0, 10, 93, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, '2020-01-07', '2020-01-30', 'january', 0, 0, 11, 215, NULL, 1, '2020-01-17', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, '2020-01-18', '2020-01-20', 'period', 0, 0, 12, 45, NULL, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, '2020-01-01', '2020-02-01', 'season', 0, 0, 13, 6, NULL, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(14, '2020-02-01', '2020-02-02', 'day', 0, 0, 14, 11, NULL, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(15, '2020-01-31', '2020-02-01', 'january', 0, 0, 15, 12, NULL, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(16, '2020-01-01', '2020-01-20', 'season', 0, 0, 16, 12, NULL, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, '2020-02-01', '2020-02-05', 'period', 0, 0, 17, 215, NULL, 1, '2020-01-18', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(18, '2020-01-01', '2020-02-29', 'season', 0, 0, 18, 10, NULL, 1, '2020-01-19', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(19, '2020-02-02', '2020-02-02', 'period', 0, 0, 19, 192, NULL, 1, '2020-01-20', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, '2020-01-01', '2020-01-31', 'january', 0, 0, 1, 1, NULL, 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '2020-02-01', '2020-02-29', 'february', 0, 0, 2, 1, NULL, 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2405,22 +2410,8 @@ CREATE TABLE `reservationxparking` (
 --
 
 INSERT INTO `reservationxparking` (`FK_id_reservation`, `FK_id_parking`) VALUES
-(3, 43),
-(4, 32),
-(5, 56),
-(6, 39),
-(7, 181),
-(8, 8),
-(9, 22),
-(10, 171),
-(11, 137),
-(12, 102),
-(13, 66),
-(14, 24),
-(15, 87),
-(16, 143),
-(18, 188),
-(19, 30);
+(1, 99),
+(2, 235);
 
 -- --------------------------------------------------------
 
@@ -2438,22 +2429,8 @@ CREATE TABLE `reservationxservice` (
 --
 
 INSERT INTO `reservationxservice` (`FK_id_reservation`, `FK_id_service`) VALUES
-(3, 8),
-(4, 9),
-(5, 10),
-(6, 11),
-(7, 12),
-(8, 13),
-(9, 14),
-(10, 15),
-(11, 16),
-(12, 17),
-(13, 18),
-(14, 19),
-(15, 20),
-(16, 21),
-(18, 22),
-(19, 23);
+(1, 1),
+(2, 2);
 
 -- --------------------------------------------------------
 
@@ -2465,19 +2442,6 @@ CREATE TABLE `servicexlocker` (
   `FK_id_service` int(11) NOT NULL,
   `FK_id_locker` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `servicexlocker`
---
-
-INSERT INTO `servicexlocker` (`FK_id_service`, `FK_id_locker`) VALUES
-(8, 141),
-(8, 5),
-(8, 146),
-(16, 142),
-(16, 6),
-(18, 147),
-(18, 4);
 
 -- --------------------------------------------------------
 
@@ -2506,22 +2470,8 @@ CREATE TABLE `servicexparking` (
 --
 
 INSERT INTO `servicexparking` (`FK_id_service`, `FK_id_parking`) VALUES
-(8, 43),
-(9, 32),
-(10, 56),
-(11, 39),
-(12, 181),
-(13, 8),
-(14, 22),
-(15, 171),
-(16, 137),
-(17, 102),
-(18, 66),
-(19, 24),
-(20, 87),
-(21, 143),
-(22, 188),
-(23, 30);
+(1, 99),
+(2, 235);
 
 -- --------------------------------------------------------
 
@@ -2558,8 +2508,7 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `name`, `lastname`, `position`, `salary`, `date_start`, `date_end`, `dni`, `address`, `tel`, `shirt_size`, `pant_size`, `is_active`, `date_register`, `register_by`, `date_disable`, `disable_by`, `date_enable`, `enable_by`, `date_update`, `update_by`) VALUES
-(1, 'per1', 'per', 'cargo 1', 20000, '2020-01-08', '2020-01-30', 505052, 'calle 100 mod', 4230000, 5, 5, 1, '2020-01-08', 1, '2020-01-18', 1, '2020-01-21', 1, '2020-01-10', 2),
-(2, 'jose', 'pepe', 'administrador', 50000, '2020-01-17', '2020-01-31', 4040, 'calle 5', 41241, 5, 5, 1, '2020-01-10', 2, '2020-01-21', 1, '2020-01-21', 1, '2020-01-20', 1);
+(1, 'lucas', 'gonzales', 'cargo 1', 30000, '2020-01-03', '2020-01-31', 515150, 'calle 99', 3123123, 5, 5, 1, '2020-01-21', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -2760,13 +2709,13 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `additional_service`
 --
 ALTER TABLE `additional_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `beach_tent`
@@ -2784,19 +2733,19 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `client_potential`
 --
 ALTER TABLE `client_potential`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `hall`
 --
 ALTER TABLE `hall`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `locker`
@@ -2808,13 +2757,13 @@ ALTER TABLE `locker`
 -- AUTO_INCREMENT for table `parasol`
 --
 ALTER TABLE `parasol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `parking`
 --
 ALTER TABLE `parking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
 
 --
 -- AUTO_INCREMENT for table `parking_hall`
@@ -2832,19 +2781,19 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `provider`
 --
 ALTER TABLE `provider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

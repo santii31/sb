@@ -20,6 +20,7 @@
 				$query = "CALL config_get()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				$config = null;
 				foreach ($results as $row) {					
 					$config = new Config();
 					$config->setDateStartSeason($row["date_start_season"]);
