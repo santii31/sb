@@ -37,17 +37,22 @@
                         <div class="row">
                         
                             <div class="input-field col s6">
-                                <select name="id_locker_man">
-                                    <option value="">Seleccione una sombrilla</option>
+                                <select name="id_mobileParasol">
+                                    <option value="">Seleccione una sombrilla movil</option>
                                     
-                                    <?php foreach ($parasolFinalList as $parasol): ?>
-                                        <option value="<?= $parasol->getId(); ?>">
-                                            <?= $parasol->getParasolNumber(); ?>
+                                    <?php foreach ($mobileParasolFinalList as $mobileParasol): ?>
+                                        <option value="<?= $mobileParasol->getId(); ?>">
+                                            <?= $mobileParasol->getMobileParasolNumber(); ?>
                                         </option>
                                     <?php endforeach; ?>
                                      
                                 </select>
-                                <label>Sombrillas</label>
+                                <label>Sombrillas moviles</label>
+                            </div>
+
+                            <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
                             </div>
 
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">

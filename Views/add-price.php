@@ -1,8 +1,8 @@
- <!-- Main content  -->
- <div class="col s12 m8 l10">
+  <!-- Main content  -->
+  <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>additionalService/addLocker" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reserve/add" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -35,43 +35,42 @@
                         <?php endif; ?>
 
                         <div class="row">
-                        
-                            <div class="input-field col s6">
-                                <select name="id_locker_man">
-                                    <option value="">Seleccione un locker</option>
-                                    
-                                    <?php foreach ($lockerManList as $locker): ?>
-                                        <option value="<?= $locker->getId(); ?>">
-                                            <?= $locker->getLockerNumber(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                     
-                                </select>
-                                <label>Lockers de hombres</label>
-                            </div>
 
-                            <div class="input-field col s6">
-                                <select name="id_locker_woman">
-                                    <option value="" >Seleccione un locker</option>
-                                    
-                                    <?php foreach ($lockerWomanList as $locker): ?>
-                                        <option value="<?= $locker->getId(); ?>">
-                                            <?= $locker->getLockerNumber(); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                     
-                                </select>
-                                <label>Lockers de mujeres</label>
-                            </div>
+                            
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Valor por dia</th>
+                                <th>Valor por quincena de enero</th>
+                                <th>Valor por febrero</th>
+                                <th>Valor por primer quincena de febrero</th>
+                                <th>Valor por segunda quincena de febrero</th>
+                                <th>Valor por temporada completa</th>
+                                <th>Valor por febrero</th>
+                                <th>Valor por dia(sombrilla)</th>
+                            </tr>
+                            </thead>
 
-                            <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate">
+                            <tbody>
+                            <tr>
+                                <td>Jonathan</td>
+                                <td>Lollipop</td>
+                                <td>$7.00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                            
+
+                                                        
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="price" type="number" name="price" class="validate" required>
                                 <label for="price">Precio</label>
                             </div>
-                            
-                        <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
-                                                     
                         </div>                        
+
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
@@ -84,4 +83,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>    

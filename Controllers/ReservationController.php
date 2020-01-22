@@ -92,6 +92,13 @@
             return false;
         }
 
+        public function addPrice(){
+            require_once(VIEWS_PATH . "head.php");
+            require_once(VIEWS_PATH . "sidenav.php");
+            require_once(VIEWS_PATH . "list-reservation.php");
+            require_once(VIEWS_PATH . "footer.php");
+        }
+
         public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent) { 
 
             if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent)) {

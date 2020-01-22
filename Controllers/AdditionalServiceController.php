@@ -5,19 +5,20 @@
     use Models\AdditionalService as AdditionalService;
     use Models\ReservationxService as ReservationxService;
     use Models\Locker as Locker;
-    use Models\Parasol as Parasol;
+    use Models\MobileParasol as MobileParasol;
     use Models\Parking as Parking;
     use Models\Reservation as Reservation;
     use Models\ServicexLocker as ServicexLocker;
-    use Models\ServicexParasol as ServicexParasol;
+    use Models\ServicexMobileParasol as ServiceMobilexParasol;
     use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
     use DAO\ClientDAO as ClientDAO;
-    use DAO\ParasolDAO as ParasolDAO;
+    use DAO\MobileParasolDAO as MobileParasolDAO;
     use DAO\LockerDAO as LockerDAO;
     use DAO\ParkingDAO as ParkingDAO;
     use DAO\ReservationDAO as ReservationDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
+    use DAO\ServicexMobileParasolDAO as ServicexMobileParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use Controllers\AdminController as AdminController;
@@ -29,24 +30,24 @@
         private $additionalServiceDAO;
         private $reservationxserviceDAO;
         private $servicexlockerDAO;
-        private $servicexparasolDAO;
+        private $servicexmobileParasolDAO;
         private $servicexparkingDAO;
         private $clientDAO;
         private $reservationDAO;
         private $adminController;
         private $reservationController;
         private $parkingController;
-        private $parasolDAO;
+        private $mobileParasolDAO;
         private $lockerDAO;
 
         public function __construct() {
             $this->additionalServiceDAO = new AdditionalServiceDAO();
-            $this->parasolDAO = new ParasolDAO();
+            $this->mobileParasolDAO = new MobileParasolDAO();
             $this->lockerDAO = new LockerDAO();
             $this->clientDAO = new ClientDAO();
             $this->reservationDAO = new ReservationDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
-            $this->servicexparasolDAO = new ServicexParasolDAO();
+            $this->servicexmobileParasolDAO = new ServicexMobileParasolDAO();
             $this->servicexparkingDAO = new ServicexParkingDAO();
             $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->adminController = new AdminController();
@@ -84,7 +85,7 @@
         }*/
                 
 
-        public function addLocker($id_locker_man = "", $id_locker_woman = "",$id_reserve) {
+        public function addLocker($id_locker_man = "", $id_locker_woman = "", $price, $id_reserve) {
             
            if (!empty($id_locker_man) || !empty($id_locker_woman)) {
                 $total = 0;
@@ -96,7 +97,7 @@
                     $lockerMan->setId($id_locker_man);
                     $locker = $this->lockerDAO->getById($lockerMan);
                     
-                    $total = $service->getTotal() + $locker->getPrice();
+                    $total = $service->getTotal() + $price;
                     $service->setTotal($total);
                     $update_by = $this->adminController->isLogged();
                     $this->additionalServiceDAO->update($service, $update_by);
@@ -155,25 +156,25 @@
             }
         }*/
 
-        public function addParasol($id_parasol = "", $id_reserve) {
+        public function addParasol($id_mobileParasol = "", $price, $id_reserve) {
             
-            if (!empty($id_parasol)) {
+            if (!empty($id_mobileParasol)) {
                 $total = 0;
                 $flag=0;
                 $service = $this->reservationxserviceDAO->getServiceByReservation($id_reserve);
                     
-                $parasolTemp = new Parasol();
-                $servicexparasol = new ServicexParasol();
-                $parasolTemp->setId($id_parasol);
-                $parasol = $this->parasolDAO->getById($parasolTemp);
+                $mobileParasolTemp = new MobileParasol();
+                $servicexmobileParasol = new ServicexMobileParasol();
+                $mobileParasolTemp->setId($id_mobileParasol);
+                $mobileParasol = $this->mobileParasolDAO->getById($mobileParasolTemp);
                         
-                $total = $service->getTotal() + $parasol->getPrice();
+                $total = $service->getTotal() + $price;
                 $service->setTotal($total);
                 $update_by = $this->adminController->isLogged();
                 $this->additionalServiceDAO->update($service, $update_by);
-                $servicexparasol->setIdService($service->getId());
-                $servicexparasol->setIdParasol($parasol->getId());
-                $this->servicexparasolDAO->add($servicexparasol);
+                $servicexmobileParasol->setIdService($service->getId());
+                $servicexmobileParasol->setIdMobileParasol($mobileParasol->getId());
+                $this->servicexmobileParasolDAO->add($servicexmobileParasol);
                 $flag++;                
             }
             if ($flag > 0) {
@@ -182,6 +183,7 @@
                 return true;
             }
         }
+
             
         public function hasAdditionalService($id_reservation, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {                                       
@@ -307,18 +309,18 @@
 			}
         }
 
-        public function addParasolPath($id_reservation = "", $alert = "", $success = "") {
+        public function addMobileParasolPath($id_reservation = "", $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                                                        
-                $title = "Seleccione numero de sombrilla";
+                $title = "Seleccione numero de sombrilla movil";
                 
                 $reserveTemp = new Reservation();
                 $reserveTemp->setId($id_reservation);
                 $reserve = $this->reservationDAO->getById($reserveTemp);
                 $reservations = $this->reservationDAO->getAll();
-                $listParasoles = $this->parasolDAO->getAll();
+                $listMobileParasoles = $this->mobileParasolDAO->getAll();
                 
-                $parasoles = array();
+                $mobileParasoles = array();
 
 
                 
@@ -326,42 +328,42 @@
                         
                         $service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId());
                         $flag = 1;
-                        $parasolServ = $this->servicexparasolDAO->getParasolByService($service->getId());
+                        $mobileParasolServ = $this->servicexmobileParasolDAO->getMobileParasolByService($service->getId());
 
-                        if($parasolServ == false){
+                        if($mobileParasolServ == false){
                             $flag = 0;
                         }
 
 
                         if( ($this->reservationController->checkIsDateReserved($reservation)) && ($flag == 1) ) {
                              
-                            foreach ($parasolServ as $parasol) {
-                                array_push($parasoles, $parasol);
+                            foreach ($mobileParasolServ as $mobileParasol) {
+                                array_push($mobileParasoles, $mobileParasol);
                             }
                                   
                                    
                             
                         } else if ( ($this->reservationController->checkIsDateReserved($reservation) == false) && ($flag == 1)  ) {
-                            foreach ($parasolServ as $parasol) {
+                            foreach ($mobileParasolServ as $mobileParasol) {
                                 if(($reservation->getDateEnd() < $reserve->getDateStart()) xor ($reservation->getDateStart() > $reserve->getDateEnd())){ 
-                                    array_push($parasoles, $parsol);
+                                    array_push($mobileParasoles, $mobileParsol);
                                 }
                             }
                         }
                     } 
                 
-                $parasolFinalList = array();
+                $mobileParasolFinalList = array();
                 $exist=false;
                 
-                foreach ($listParasoles as $parasol){
-                    foreach ($parasoles as $parasol2){
+                foreach ($listMobileParasoles as $mobileParasol){
+                    foreach ($mobileParasoles as $mobileParasol2){
                         
-                        if ($parasol->getId() == $parasol2->getId()){
+                        if ($mobileParasol->getId() == $mobileParasol2->getId()){
                             $exist=true;
                         }
                     }
                     if ($exist == false){
-                        array_push($parasolFinalList, $parasol);
+                        array_push($mobileParasolFinalList, $mobileParasol);
                     }
                     $exist = false;
                 }

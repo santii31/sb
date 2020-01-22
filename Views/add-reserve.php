@@ -164,7 +164,41 @@
                             </div>
                         </div>
 
+                        <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
+                        </div>
+
                     </form>
+                    <div class="row">
+
+                            
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Valor por dia</th>
+                                <th>Valor por quincena de enero</th>
+                                <th>Valor por febrero</th>
+                                <th>Valor por primer quincena de febrero</th>
+                                <th>Valor por segunda quincena de febrero</th>
+                                <th>Valor por temporada completa</th>
+                                <th>Valor por febrero</th>
+                                <th>Valor por dia(sombrilla)</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>Jonathan</td>
+                                <td>Lollipop</td>
+                                <td>$7.00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                            
+
+                                                        
+                        </div>
                 </div>
             </div>
         </div>
