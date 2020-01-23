@@ -376,12 +376,12 @@
                             <div class="collapsible-header"><i class="material-icons">person_pin_circle</i>Clientes</div>
                             <div class="collapsible-body">
                                 <ul>
-                                    <li>            
+                                    <!-- <li>            
                                         <a href="<?= FRONT_ROOT ?>balance/addBalancePath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">add</i>
                                             Saldo de clientes
                                         </a>
-                                    </li> 
+                                    </li>  -->
                                     <li>            
                                         <a href="<?= FRONT_ROOT ?>client/searchPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">search</i>

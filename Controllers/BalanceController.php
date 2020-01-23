@@ -3,13 +3,16 @@
     namespace Controllers;    
     
     use Models\Balance as Balance;
+    use Models\Reservation as Reservation;
 	use DAO\BalanceDAO as BalanceDAO;   
     use Controllers\AdminController as AdminController; 
+    use Controllers\ReservationController as ReservationController; 
 
     class BalanceController {
 
-        private $adminController;        
         private $balanceDAO;        
+        private $adminController; 
+        private $reservationController;   
 
         public function __construct() {            
             $this->adminController = new AdminController();
@@ -17,9 +20,12 @@
         }       
         
 
-        public function addBalancePath($reservation) {
+        public function addBalancePath($id_reservation, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                       
-                $title = "Cliente - Saldo";                
+                $title = "Cliente - Saldo";      
+                $this->reservationController = new ReservationController();
+                $reservation = $this->reservationController->getById($id_reservation);
+                $balances = $this->balanceDAO->getByReservationId($reservation);
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "balance.php");
@@ -28,7 +34,43 @@
 				return $this->adminController->userPath();
 			}
         }
+
+        public function add($id_reservation, $date, $concept, $number_r, $total, $partial, $remainder) {
+            if ($this->isFormNotEmpty($id_reservation, $date, $concept, $number_r, $total, $partial, $remainder)) {
+                
+                $balance = new Balance();
+                $balance->setDate($date);
+                $balance->setConcept($concept);
+                $balance->setNumberReceipt($number_r);
+                $balance->setTotal($total);
+                $balance->setPartial($partial);
+                $balance->setRemainder($remainder);
+
+                $reservation = new Reservation();
+                $reservation->setId($id_reservation);
+
+                $balance->setReservation($reservation);
+
+                if ($this->balanceDAO->add($balance)) {
+                    return $this->addBalancePath($id_reservation);
+                }
+                return $this->addBalancePath($id_reservation);
+            }
+            return $this->addBalancePath($id_reservation);
+        }
         
+        private function isFormNotEmpty($id_reservation, $date, $concept, $number_r, $total, $partial, $remainder) {
+            if (empty($id_reservation) || 
+                empty($date) || 
+                empty($concept) || 
+                empty($number_r) || 
+                empty($total) || 
+                empty($partial) ||       
+                empty($remainder)) {
+                    return false;
+            }
+            return true;
+        }
     }
     
 ?>

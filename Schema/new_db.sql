@@ -1260,6 +1260,22 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS balance_getByReservationId;
+DELIMITER $$
+CREATE PROCEDURE balance_getByReservationId (IN id INT)
+BEGIN
+    SELECT        
+        balance.date AS balance_date,
+        balance.concept AS balance_concept,
+        balance.number_receipt AS balance_number_receipt,
+        balance.total AS balance_total,
+        balance.partial AS balance_partial,
+        balance.remainder AS balance_remainder     
+    FROM balance             
+    WHERE balance.FK_id_reservation = id;    
+END$$
+
+
 
 ------------------------- RESERVATION_X_PARKING ---------------------
 

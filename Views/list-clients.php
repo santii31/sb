@@ -55,7 +55,7 @@
                                 <th>Estadia</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
-                                <!-- <th>Acciones</th> -->
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                                                
@@ -71,7 +71,13 @@
                                 <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
                                 <td> <?= ucfirst( $reservation->getStay() ); ?> </td>                                
                                 <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
-                                <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>                                
+                                <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>          
+                                <td>
+                                    <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
+                                        <i class="material-icons left">attach_money</i>
+                                        Saldo
+                                    </a>
+                                </td>                      
                             </tr>
                             <?php endforeach; ?>         
                         </tbody>

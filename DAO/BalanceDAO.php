@@ -19,46 +19,41 @@
 
 
 		public function add(Balance $balance) { 
-			try {				
-				$categoryTemp = null;
-                
-                $query = "CALL balance_add(?, ?, ?, ?, ?, ?, ?)";
-                
+			try {								
+                $query = "CALL balance_add(?, ?, ?, ?, ?, ?, ?)";                
                 $parameters["date"] = $balance->getDate();
                 $parameters["concept"] = $balance->getConcept();
                 $parameters["number_receipt"] = $balance->getNumberReceipt();
                 $parameters["total"] = $balance->getTotal();
                 $parameters["partial"] = $balance->getPartial();
                 $parameters["remainder"] = $balance->getRemainder();
-                $parameters["FK_id_reservation"] = $balance->getReservation()->getId();
-                
+                $parameters["FK_id_reservation"] = $balance->getReservation()->getId();                
                 $this->connection = Connection::GetInstance();
-				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
-				foreach ($results as $row) {
-
-                    
-				}
-				return $categoryTemp;
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);									
 			} catch (Exception $e) {
 				return false;
 			}
         }        
 					
-		public function getById(Balance $balance) {
+		public function getByReservationId(Reservation $reservation) {
 			try {				
-				$categoryTemp = null;
-                
-                $query = "CALL category_getById(?)";
-                
-                $parameters["id"] = $category->getId();
-                
+				$balanceList = array();                
+                $query = "CALL balance_getByReservationId(?)";                
+                $parameters["id"] = $reservation->getId();                
                 $this->connection = Connection::GetInstance();
-				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);											
 				foreach ($results as $row) {
-
-                    
+					$balance = new Balance();
+					$balance->setDate($row["balance_date"]);
+					$balance->setConcept($row["balance_concept"]);
+					$balance->setNumberReceipt($row["balance_number_receipt"]);
+					$balance->setTotal($row["balance_total"]);
+					$balance->setPartial($row["balance_partial"]);
+					$balance->setRemainder($row["balance_remainder"]);					
+                    array_push($balanceList, $balance);
 				}
-				return $categoryTemp;
+				return $balanceList;
+
 			} catch (Exception $e) {
 				return false;
 			}

@@ -822,3 +822,11 @@ nav .input-field label.active i {
     margin-right: .5rem;
     color: #d50000;
 }
+
+/* balance client */
+.more-info-reservation {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    
+}
