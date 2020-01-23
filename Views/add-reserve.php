@@ -151,6 +151,11 @@
 
                         <input type="hidden" name="tent" value="<?= $id_tent ?>">
 
+                        <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
+                        </div>
+
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
@@ -159,10 +164,7 @@
                             </div>
                         </div>
 
-                        <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate">
-                                <label for="price">Precio</label>
-                        </div>
+                        
 
                     </form>
                     <div class="row">

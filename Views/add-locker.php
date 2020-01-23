@@ -57,6 +57,15 @@
                             </div>                                                                                 
                         </div>    
 
+                        <div class="row">
+                        <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
+                            </div>
+                        </div>
+
+                        
+
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
                         
                         <div class="row">

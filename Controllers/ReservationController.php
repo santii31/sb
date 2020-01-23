@@ -41,7 +41,7 @@
 
         // falta descuento
         private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent, $price) {
-                                            
+
             $this->clientController = new ClientController();                              
             
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);
@@ -100,12 +100,12 @@
             require_once(VIEWS_PATH . "footer.php");
         }
 
-        public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent) { 
+        public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price) { 
 
-            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent)) {
+            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {
                 
                 if ($this->checkInterval($start, $end, $tent) == 1) {                                                                                
-                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent)) {                                                    
+                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
 
                         $this->parkingController = new ParkingController();                    
                         return $this->parkingController->parkingMap($lastId);                                                

@@ -7,6 +7,8 @@ USE southbeach;
 
 ----------------------------- CONFIG -----------------------------
 
+INSERT INTO config (date_start_season,date_end_season,price_tent_season,price_tent_january,price_tent_january_day,price_tent_january_fortnigh,price_tent_february,price_tent_february_day,price_tent_february_first_fortnigh,price_tent_february_second_fortnigh,price_parasol) VALUES ('2020-01-01' , '2020-03-01' , 50000.00 , 35000.00 , 2500.00 , 20000.00 , 25000.00 , 2000.00, 20000.00, 13000.00, 1800.00);
+
 CREATE TABLE config (    
     `date_start_season` DATE NOT NULL,    
     `date_end_season` DATE NOT NULL,    
@@ -39,7 +41,7 @@ DROP procedure IF EXISTS `config_update`;
 DELIMITER $$
 CREATE PROCEDURE config_update (
                                     IN date_start_season DATE,
-                                    IN date_end_season DATE,
+s                                    IN date_end_season DATE,
                                     IN price_tent_season FLOAT,                                   
                                     IN price_tent_january FLOAT,                                   
                                     IN price_tent_january_day FLOAT,                                   
@@ -1165,10 +1167,9 @@ CREATE PROCEDURE reservation_update (
                                     IN stay VARCHAR(255),
                                     IN discount FLOAT,
                                     IN total_price FLOAT,
-                                    IN FK_id_client INT,                                    
-                                    IN FK_id_tent INT,
-                                    IN date_update DATE,
-                                    IN update_by INT
+                                    IN date_update DATE,                                    
+                                    IN update_by INT,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `reservation` 
@@ -1178,10 +1179,9 @@ BEGIN
         `reservation`.`stay` = stay,
         `reservation`.`discount` = discount,
         `reservation`.`total_price` = total_price,
-        `reservation`.`FK_id_client` = FK_id_client,
-        `reservation`.`FK_id_tent` = FK_id_tent,
         `reservation`.`date_update` = date_update,
-        `reservation`.`update_by` = update_by    
+        `reservation`.`update_by` = update_by,
+        `reservation`.`id` = id    
     WHERE 
         `reservation`.`id` = id;	
 END$$
@@ -1958,6 +1958,8 @@ INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUE
 
 
 ---------------------------- MOBILE PARASOL ---------------------------
+
+INSERT INTO mobile_parasol (id,mobileParasol_number,price)  VALUES (1,1,0.00),(2,2,0.00),(3,3,0.00),(4,4,0.00),(5,5,0.00),(6,6,0.00)
 
 CREATE TABLE mobile_parasol (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

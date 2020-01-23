@@ -39,7 +39,7 @@
                                 <select name="service">
                                     <option value="" disabled selected>Seleccione una opcion</option>
                                     
-                                    <option value="parasol"> Sombrilla </option>
+                                    <option value="parasol"> Sombrilla movil </option>
                                     <option value="locker"> Locker </option>
                                     <option value="parking"> Estacionamiento </option>
                                      
