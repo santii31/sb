@@ -99,8 +99,7 @@
 				return $this->adminController->userPath();
 			}
         }
-        
-        // seguir con paginacion
+                
         public function listClientPath($page = 1, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Clientes";                

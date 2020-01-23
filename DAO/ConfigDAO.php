@@ -60,8 +60,8 @@
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
-				return false;
-				// echo $e;
+				// return false;
+				echo $e;
 			}
 		}
 

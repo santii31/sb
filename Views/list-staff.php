@@ -60,7 +60,7 @@
                     </div>
                 </nav>                 
                 <div class="row">    
-                    <table class="responsive-table centered" id="table-filter">
+                    <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
                             <tr>
                                 <th>#</th>
@@ -82,8 +82,8 @@
                                     <td> <?= ucfirst( $staff->getName() ); ?> </td>
                                     <td> <?= ucfirst( $staff->getLastName() ); ?> </td>
                                     <td> <?= ucfirst( $staff->getPosition() ); ?> </td>
-                                    <td> <?= $staff->getDateStart(); ?> </td>
-                                    <td> <?= $staff->getDateEnd(); ?> </td>
+                                    <td> <?= date("d-m-Y" , strtotime($staff->getDateStart())); ?> </td>
+                                    <td> <?= date("d-m-Y" , strtotime($staff->getDateEnd())); ?> </td>
                                     <td> $<?= $staff->getSalary(); ?> </td>
                                     <td>
                                         <ul class="collapsible">

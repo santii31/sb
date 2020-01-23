@@ -42,7 +42,7 @@
                     </div>
                 </nav>                 
                 <div class="row">    
-                    <table class="responsive-table centered" id="table-filter">
+                    <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
                             <tr>
                                 <th>#</th>
@@ -55,7 +55,7 @@
                                 <th>Estadia</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
-                                <!-- <th>Acciones</th> -->
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                                                
@@ -69,14 +69,21 @@
                                 <td> <?= $reservation->getClient()->getEmail(); ?> </td>
                                 <td> <?= $reservation->getClient()->getPhone(); ?> </td>
                                 <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
-                                <td> <?= ucfirst( $reservation->getStay() ); ?> </td>
-                                <td> <?= $reservation->getDateStart(); ?> </td>
-                                <td> <?= $reservation->getDateEnd(); ?> </td>
+                                <td> <?= ucfirst( $reservation->getStay() ); ?> </td>                                
+                                <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
+                                <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>          
+                                <td>
+                                    <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
+                                        <i class="material-icons left">attach_money</i>
+                                        Saldo
+                                    </a>
+                                </td>                      
                             </tr>
                             <?php endforeach; ?>         
                         </tbody>
                     </table>                                          
                     
+                    <?php if (sizeof($rsv) > MAX_ITEMS_PAGE): ?>
                     <ul class="pagination center-align">     
 
                         <?php if ($page > 1): ?>                    
@@ -120,7 +127,7 @@
                             </li>                               
                         <?php endif; ?>                                                
                     </ul>
-
+                    <?php endif; ?>
                 </div>
             </div>
 

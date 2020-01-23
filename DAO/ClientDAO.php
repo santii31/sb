@@ -117,13 +117,15 @@
 				foreach ($results as $row) {	
 					
 					$reservation = new Reservation();					
+					$reservation->setId($row["reservation_id"]);
 					$reservation->setDateStart($row["reservation_dateStart"]);
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
 					$reservation->setStay($row["reservation_stay"]);
 					$reservation->setDiscount($row["reservation_discount"]);
                     $reservation->setPrice($row["reservation_totalPrice"]);
 					
-					$client = new Client();					
+					$client = new Client();			
+					$client->setId($row["client_id"]);		
 					$client->setName($row["client_name"]);
 					$client->setLastName($row["client_lastName"]);					
 					$client->setAddress($row["client_address"]);
@@ -163,14 +165,16 @@
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
 				foreach ($results as $row) {	
 					
-					$reservation = new Reservation();					
+					$reservation = new Reservation();				
+					$reservation->setId($row["reservation_id"]);	
 					$reservation->setDateStart($row["reservation_dateStart"]);
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
 					$reservation->setStay($row["reservation_stay"]);
 					$reservation->setDiscount($row["reservation_discount"]);
                     $reservation->setPrice($row["reservation_totalPrice"]);
 					
-					$client = new Client();					
+					$client = new Client();				
+					$client->setId($row["client_id"]);			
 					$client->setName($row["client_name"]);
 					$client->setLastName($row["client_lastName"]);					
 					$client->setAddress($row["client_address"]);

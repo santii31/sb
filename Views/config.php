@@ -12,7 +12,7 @@
                         </div>
                         <div class="divider mb-divider"></div>
 
-                        <?php if ($success == null): ?>
+                        <?php if ($success == null && $alert == null): ?>
                         <div class="row">
                             <div class="col s6">
                                 <div class="card-panel lime lighten-4">
@@ -35,6 +35,17 @@
                             </div>                    
                         </div>    
                         <?php endif; ?>                                           
+
+                        <?php if ($alert != null): ?>
+                        <div class="row">
+                            <div class="col s6">
+                                <div class="card-panel red lighten-4">
+                                    <i class="material-icons left">error</i>
+                                    <span class="card-text card-alert"> <?= $alert; ?> </span>                            
+                                </div>        
+                            </div>                    
+                        </div>                
+                        <?php endif; ?>
 
                         <div class="subtitle">
                             <i class="material-icons left">chevron_right</i>

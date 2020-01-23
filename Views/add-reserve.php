@@ -121,12 +121,12 @@
                                 <label>Tipo de vehiculo:</label>
                             </div>
                             <div class="input-field col s3">
-                                    <p>
-                                        <label>
-                                            <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
-                                            <span>Auto</span>
-                                        </label>
-                                    </p>                                        
+                                <p>
+                                    <label>
+                                        <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
+                                        <span>Auto</span>
+                                    </label>
+                                </p>                                        
                             </div>
                             
                             <div class="input-field col s3">
@@ -157,57 +157,92 @@
                         </div>
 
                         <div class="row">
+                            <div class="input-field col s12">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>
                         </div>
+<<<<<<< HEAD
 
                         
 
+=======
+                        <br><br>
+>>>>>>> 5273a24f4866417dc827970ea48eebb3ab241426
                     </form>
+                
+                    
                     <div class="row">
-
-                            
-                    <table class="responsive-table centered" id="table-filter">
-                        <thead>                            
-                            <tr>
-                                <th>Fecha inicio de temporada.</th>
-                                <th>Fecha fin de temporada.</th>
-                                <th>Precio de carpa por temporada.</th>
-                                <th>Precio por enero.</th>
-                                <th>Precio por dia en enero.</th>
-                                <th>Precio por quincena en enero.</th>
-                                <th>Precio por febrero.</th>
-                                <th>Precio por dia en febrero.</th>
-                                <th>Precio por primera quincena en febrero.</th>
-                                <th>Precio por segunda quincena en febrero.</th>
-                                <th>Precio sombrilla.</th>
-                            </tr>
-                        </thead>
-                                               
-                        <tbody>
-                            <tr>
-                                <td> <?= "$" . $config->getDateStartSeason(); ?> </td>
-                                <td> <?= "$" . $config->getDateEndSeason(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentSeason(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentJanuary(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentJanuaryDay(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentJanuaryFortnigh(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentFebruary(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentFebruaryDay(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentFebruaryFirstFortnigh(); ?> </td>
-                                <td> <?= "$" . $config->getPriceTentFebruarySecondFortnigh(); ?> </td>
-                                <td> <?= "$" . $config->getPriceParasol(); ?> </td>
-                            </tr>
-                                     
-                        </tbody>
-                    </table>            
-                            
-
-                                                        
+                        <div class="col s4">
+                            <span>
+                                • Fecha inicio temporada: <?= date("d-m-Y" , strtotime($config->getDateStartSeason())); ?>
+                            </span>
                         </div>
+                        <div class="col s4">
+                            <span>
+                                • Fecha fin temporada: <?= date("d-m-Y" , strtotime($config->getDateEndSeason())); ?>
+                            </span>
+                        </div>
+                        <div class="col s4">
+                            <span>
+                                • Precio carpa temporada: $<?= $config->getPriceTentSeason(); ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s4">
+                            <span>
+                                • Precio carpa enero: $<?= $config->getPriceTentJanuary(); ?>
+                            </span>
+                        </div>
+                        <div class="col s4">
+                            <span>
+                                • Precio por dia en enero: $<?= $config->getPriceTentJanuaryDay(); ?>
+                            </span>
+                        </div>
+                        <div class="col s4">
+                            <span>
+                                • Precio por quincena en enero: $<?= $config->getPriceTentJanuaryFortnigh(); ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s4">
+                            <span>
+                                • Precio carpa febrero: $<?= $config->getPriceTentFebruary(); ?>
+                            </span>
+                        </div>
+                        <div class="col s4">
+                            <span>
+                                • Precio por dia en febrero: $<?= $config->getPriceTentFebruaryDay(); ?>
+                            </span>
+                        </div>
+                        <div class="col s4">
+                            <span>
+                                • Precio por primera quincena en febrero: $<?= $config->getPriceTentFebruaryFirstFortnigh(); ?>
+                            </span>
+                        </div>                       
+                    </div>
+                    <div class="row">
+                        <div class="col s4">
+                            <span>
+                                • Precio por segunda quincena en febrero: $<?= $config->getPriceTentFebruarySecondFortnigh(); ?>
+                            </span>
+                        </div> 
+                        <div class="col s4">
+                            <span>
+                                • Precio sombrilla: $<?= $config->getPriceParasol(); ?>
+                            </span>
+                        </div> 
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -228,8 +263,8 @@
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
             const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);                               
             
-            const f_day = firstDay.toISOString().slice(0,10);            
-            const l_day = lastDay.toISOString().slice(0,10);            
+            const f_day = firstDay.toISOString().slice(0, 10);            
+            const l_day = lastDay.toISOString().slice(0, 10);            
 
             dateStart.value = f_day;            
             dateEnd.value = l_day;            
@@ -241,8 +276,8 @@
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
             const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);                               
             
-            const f_day = firstDay.toISOString().slice(0,10);            
-            const l_day = lastDay.toISOString().slice(0,10);            
+            const f_day = firstDay.toISOString().slice(0, 10);            
+            const l_day = lastDay.toISOString().slice(0, 10);            
 
             dateStart.value = f_day;            
             dateEnd.value = l_day; 
