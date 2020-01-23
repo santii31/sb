@@ -309,11 +309,25 @@
 			}
 		}		
 
-		public function checkDateStart(Reservation $reservation) {
+		
+ 		public function checkDateStart(Reservation $reservation) {
 			try {
-				$query = "CALL service_checkDateStart(?, ?)";
+				$query = "CALL reservation_checkDateStart(?, ?)";
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["id"] = $reservation->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function checkEmail(Client $client) {
+			try {
+				$query = "CALL client_checkEmail(?, ?)";
+				$parameters["email"] = $client->getEmail();
+				$parameters["id"] = $client->getId();
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 			}

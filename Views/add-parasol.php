@@ -1,5 +1,5 @@
-<!-- Main content  -->
-<div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
                     <form action="<?= FRONT_ROOT ?>additionalService/addParasol" method="post" class="col s10 form-test">
@@ -34,14 +34,15 @@
                         </div>                
                         <?php endif; ?>
 
-                        <div class="row">
-                        
+                        <div class="row">                        
                             <div class="input-field col s6">
-                                <select name="id_locker_man">
+                                <select name="id_mobileParasol">                        
                                     <option value="">Seleccione una sombrilla</option>                                    
-                                    <?php foreach ($parasolFinalList as $parasol): ?>
-                                        <option value="<?= $parasol->getId(); ?>"><?= $parasol->getParasolNumber(); ?></option>
-                                    <?php endforeach; ?>                                     
+                                    
+                                    <?php foreach ($mobileParasolFinalList as $parasol): ?>
+                                        <option value="<?= $parasol->getId(); ?>"><?= $parasol->getMobileParasolNumber(); ?></option>
+                                    <?php endforeach; ?>    
+
                                 </select>
                                 <label>Sombrillas moviles</label>
                             </div>

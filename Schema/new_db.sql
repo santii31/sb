@@ -1166,24 +1166,17 @@ DELIMITER $$
 CREATE PROCEDURE reservation_update (
                                     IN date_start DATE,
                                     IN date_end DATE,
-                                    IN stay VARCHAR(255),
-                                    IN discount FLOAT,
-                                    IN total_price FLOAT,
-                                    IN FK_id_client INT,                                    
-                                    IN FK_id_tent INT,
+                                    IN stay VARCHAR(255),                                    
                                     IN date_update DATE,
-                                    IN update_by INT
+                                    IN update_by INT,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `reservation` 
     SET 
         `reservation`.`date_start` = date_start, 
         `reservation`.`date_end` = date_end,
-        `reservation`.`stay` = stay,
-        `reservation`.`discount` = discount,
-        `reservation`.`total_price` = total_price,
-        `reservation`.`FK_id_client` = FK_id_client,
-        `reservation`.`FK_id_tent` = FK_id_tent,
+        `reservation`.`stay` = stay,        
         `reservation`.`date_update` = date_update,
         `reservation`.`update_by` = update_by    
     WHERE 

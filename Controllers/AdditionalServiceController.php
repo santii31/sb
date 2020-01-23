@@ -9,7 +9,7 @@
     use Models\Parking as Parking;
     use Models\Reservation as Reservation;
     use Models\ServicexLocker as ServicexLocker;
-    use Models\ServicexMobileParasol as ServiceMobilexParasol;
+    use Models\ServicexMobileParasol as ServicexMobileParasol;
     use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
     use DAO\ClientDAO as ClientDAO;
     use DAO\MobileParasolDAO as MobileParasolDAO;
@@ -156,8 +156,7 @@
             }
         }*/
 
-        public function addParasol($id_mobileParasol = "", $price, $id_reserve) {
-            
+        public function addParasol($id_mobileParasol = "", $price, $id_reserve) {            
             if (!empty($id_mobileParasol)) {
                 $total = 0;
                 $flag=0;
@@ -171,19 +170,19 @@
                 $total = $service->getTotal() + $price;
                 $service->setTotal($total);
                 $update_by = $this->adminController->isLogged();
-                $this->additionalServiceDAO->update($service, $update_by);
-                $servicexmobileParasol->setIdService($service->getId());
-                $servicexmobileParasol->setIdMobileParasol($mobileParasol->getId());
-                $this->servicexmobileParasolDAO->add($servicexmobileParasol);
-                $flag++;                
-            }
-            if ($flag > 0) {
-                return false;
-            } else {
-                return true;
-            }
-        }
+                
+                if ($this->additionalServiceDAO->update($service, $update_by)) {
+                    
+                    $servicexmobileParasol->setIdService($service->getId());
+                    $servicexmobileParasol->setIdMobileParasol($mobileParasol->getId());
 
+                    if ($this->servicexmobileParasolDAO->add($servicexmobileParasol)) {
+                        return true;      
+                    }
+                }
+            }
+            return false;            
+        }
             
         public function hasAdditionalService($id_reservation, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {                                       
@@ -212,7 +211,7 @@
 
         public function optionsDistributor($service, $id_reserve) {
             if ($service == "parasol") {
-                $this->addParasolPath($id_reserve, null, null, null);
+                $this->addMobileParasolPath($id_reserve, null, null, null);
             }
             else if ($service == "locker") {
                 $this->addLockerPath($id_reserve, null, null, null);
@@ -220,7 +219,6 @@
             else if ($service == "parking") {
                 $this->parkingController->parkingMap($id_reserve, null);
             }
-
         }
              
         public function addSelectServicePath($id_reservation = "", $alert = "", $success = "") {
@@ -321,54 +319,51 @@
                 $listMobileParasoles = $this->mobileParasolDAO->getAll();
                 
                 $mobileParasoles = array();
-
-
                 
-                    foreach ($reservations as $reservation) {
-                        
-                        $service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId());
-                        $flag = 1;
-                        $mobileParasolServ = $this->servicexmobileParasolDAO->getMobileParasolByService($service->getId());
+                foreach ($reservations as $reservation) {
+                    
+                    $service = $this->reservationxserviceDAO->getServiceByReservation( $reservation->getId() );
+                    $flag = 1;
+                    $mobileParasolServ = $this->servicexmobileParasolDAO->getMobileParasolByService( $service->getId() );
 
-                        if($mobileParasolServ == false){
-                            $flag = 0;
-                        }
+                    if ($mobileParasolServ == false){
+                        $flag = 0;
+                    }
 
-
-                        if( ($this->reservationController->checkIsDateReserved($reservation)) && ($flag == 1) ) {
-                             
-                            foreach ($mobileParasolServ as $mobileParasol) {
-                                array_push($mobileParasoles, $mobileParasol);
-                            }
-                                  
-                                   
+                    if ( ($this->reservationController->checkIsDateReserved($reservation)) && ($flag == 1) ) {
                             
-                        } else if ( ($this->reservationController->checkIsDateReserved($reservation) == false) && ($flag == 1)  ) {
-                            foreach ($mobileParasolServ as $mobileParasol) {
-                                if(($reservation->getDateEnd() < $reserve->getDateStart()) xor ($reservation->getDateStart() > $reserve->getDateEnd())){ 
+                        foreach ($mobileParasolServ as $mobileParasol) {
+                            array_push($mobileParasoles, $mobileParasol);
+                        }                                                                     
+                        
+                    } else if ( ($this->reservationController->checkIsDateReserved($reservation) == false) && ($flag == 1)  ) {
+                        foreach ($mobileParasolServ as $mobileParasol) {
+
+                            if (($reservation->getDateEnd() < $reserve->getDateStart()) 
+                                xor ($reservation->getDateStart() > $reserve->getDateEnd())) { 
+
                                     array_push($mobileParasoles, $mobileParsol);
-                                }
+
                             }
                         }
-                    } 
+                    }
+                } 
                 
                 $mobileParasolFinalList = array();
-                $exist=false;
+                $exist = false;
                 
                 foreach ($listMobileParasoles as $mobileParasol){
-                    foreach ($mobileParasoles as $mobileParasol2){
-                        
+                    foreach ($mobileParasoles as $mobileParasol2){                        
                         if ($mobileParasol->getId() == $mobileParasol2->getId()){
-                            $exist=true;
+                            $exist = true;
                         }
                     }
                     if ($exist == false){
                         array_push($mobileParasolFinalList, $mobileParasol);
                     }
                     $exist = false;
-                }
+                }        
 
-            
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-parasol.php");

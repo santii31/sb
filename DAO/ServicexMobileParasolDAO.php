@@ -22,7 +22,7 @@
         public function add(ServicexMobileParasol $servicexmobileParasol) {								
 			try {					
 				$query = "CALL servicexmobileParasol_add(?, ?)";
-                $parameters["FK_id_service"] = $servicexparasol->getIdService();
+                $parameters["FK_id_service"] = $servicexmobileParasol->getIdService();
                 $parameters["FK_id_mobileParasol"] = $servicexmobileParasol->getIdMobileParasol();
 				$this->connection = Connection::getInstance();
 				$this->connection->executeNonQuery($query, $parameters, QueryType::StoredProcedure);

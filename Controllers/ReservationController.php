@@ -270,13 +270,13 @@
                     
                     $update_by = $this->adminController->isLogged();
 
-                    echo '<pre>';
-                    var_dump($reservation);
-                    echo '</pre>';
+                    // echo '<pre>';
+                    // var_dump($reservation);
+                    // echo '</pre>';
 
-                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                
+                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
                         return $this->updatePath(null, null, RESERVATION_UPDATE);
-                    } else {                        
+                    } else {       
                         return $this->updatePath(null, DB_ERROR, null);        
                     }
                 }                
