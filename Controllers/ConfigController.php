@@ -62,9 +62,9 @@
 
                 $update_by = $this->adminController->isLogged();
 
-                if ($this->configDAO->update($config, $update_by)) {
+                if ($this->configDAO->update($config, $update_by)) {                    
                     return $this->updateValuesPath(null, CONFIG_UPDATE);
-                }
+                }                
                 return $this->updateValuesPath(DB_ERROR, null);
             } 
             return $this->updateValuesPath(EMPTY_FIELDS, null);

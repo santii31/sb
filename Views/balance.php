@@ -105,7 +105,7 @@
 
                 <div class="row">    
                 <?php if (sizeof($balances)): ?>
-                    <table class="responsive-table centered" id="table-filter">
+                    <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
                             <tr>                                
                                 <th>Fecha</th>
@@ -121,7 +121,7 @@
                             <?php foreach ($balances as $balance): ?>
                             <tr>                                
                                 <td> <?= date("d-m-Y" , strtotime($balance->getDate())); ?> </td>
-                                <td> <?= $balance->getConcept(); ?> </td>
+                                <td> <?= ucfirst( $balance->getConcept() ); ?> </td>
                                 <td> <?= $balance->getNumberReceipt(); ?> </td>
                                 <td> $<?= $balance->getTotal(); ?> </td>
                                 <td> $<?= $balance->getPartial(); ?> </td>

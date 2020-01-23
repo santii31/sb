@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>reservation/addReservation" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/update" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -33,6 +33,10 @@
                             </div>                    
                         </div>                
                         <?php endif; ?>
+                         
+                        <input type="hidden" name="id_rsv" value="<?= $id_rsv ?>">
+                        
+                        <input type="hidden" name="id_tent" value="<?= $id_tent ?>">
 
                         <div class="row">
                             <div class="input-field col s4">
@@ -53,9 +57,6 @@
                                         <option value="period">
                                             Periodo
                                         </option>
-                                        <!-- <option value="fortnight">
-                                            Quincena
-                                        </option> -->
                                 </select>
                                 <label>Estadia</label>  
                             </div>  
@@ -69,12 +70,10 @@
                                 <label for="end">Fecha de egreso</label>
                             </div>                            
                         </div>                                                                   
-                                                
-                        <input type="hidden" name="tent" value="<?= $id_tent ?>">
-
+                                                                    
                         <div class="row">
                             <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Modificar
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>

@@ -40,8 +40,8 @@
 
 
         // falta descuento
-        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent, $price) {
-                                            
+        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent, $price) {                        
+
             $this->clientController = new ClientController();                              
             
             $name_s = filter_var($name, FILTER_SANITIZE_STRING);
@@ -50,10 +50,7 @@
             $city_s = filter_var($city, FILTER_SANITIZE_STRING);
             $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);   
             $payment_method_s = filter_var($payment_method, FILTER_SANITIZE_EMAIL);    
-            $vehicle_s = filter_var($vehicle, FILTER_SANITIZE_EMAIL);     
-            
-            // esto es un string? preguntar
-            // $fam_s = filter_var($fam, FILTER_SANITIZE_STRING);                                
+            $vehicle_s = filter_var($vehicle, FILTER_SANITIZE_EMAIL);                                
 
             $client = new Client();
             $client->setName( strtolower($name_s) );
@@ -73,8 +70,7 @@
             if ($clientId = $this->clientController->addObj($client, $register_by)) {
 
                 $client->setId($clientId);
-                
-                // $reservation->setPrice($beach_tent->getPrice() - $discount);
+                                
                 $reservation = new Reservation();
                 $reservation->setDateStart($start);
                 $reservation->setDateEnd($end);            
@@ -100,12 +96,12 @@
             require_once(VIEWS_PATH . "footer.php");
         }
 
-        public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent) { 
+        public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price) { 
 
-            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent)) {
+            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {
                 
                 if ($this->checkInterval($start, $end, $tent) == 1) {                                                                                
-                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent)) {                                                    
+                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
 
                         $this->parkingController = new ParkingController();                    
                         return $this->parkingController->parkingMap($lastId);                                                
@@ -118,7 +114,6 @@
             }            
             return $this->addReservationPath($tent, EMPTY_FIELDS, null);            
         }
-
         
         public function checkInterval($date_start, $date_end, $id_tent) {
 			$existance = $this->getByIdTent($id_tent);			
@@ -212,11 +207,11 @@
             }                
         }       
 
-        public function updatePath($id_reservation, $alert = "", $success = "") {
+        public function updatePath($id_rsv, $id_tent, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {      
                 $title = "Reserva - Modificar informacion";       
                 $reservationTemp = new Reservation();
-                $reservationTemp->setId($id_reservation);                
+                $reservationTemp->setId($id_rsv);                
                 $reservation = $this->reservationDAO->getById($reservationTemp);               
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
@@ -227,37 +222,67 @@
             }           
         }
 
-        // falta? probar?
-        public function update($id, $stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2, $tent) {    
-            
-            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $addrStay, $phone2,                                     $tent)) {     
+        private function isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end) {
+            if (empty($id_rsv) || 
+                empty($id_tent) || 
+                empty($stay) || 
+                empty($start) || 
+                empty($end)) {
+                    return false;
+            }
+            return true;
+        } 
                 
-                $reservationTemp = new Reservation();
-                $reservationTemp->setId($id);                
-                $reservationTemp->setDateStart($date_start);
+        // PROBAR BIEN
+        public function checkIntervalToUpdate($date_start, $date_end, $id_tent, $id_rsv) {
+			$existance = $this->getByIdTent($id_tent);			
+			$flag = 1;
+			if ($existance != null) {
+				foreach ($existance as $reserve) {
+                    if ($reserve->getId() != $id_rsv) {
+                        if ( ($date_end < $reserve->getDateStart()) xor ($date_start > $reserve->getDateEnd())  ) {
+                            $flag *= 1;	
+                        } else {
+                            $flag *= 0;
+                        }
+                    }
+				}
+            }
+            return $flag;
+        }
+        
+        public function update($id_rsv, $id_tent, $stay, $start, $end) {    
+            
+            if ($this->isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end)) {     
+                
+				if ($this->checkIntervalToUpdate($start, $end, $id_tent, $id_rsv) == 1) {                                                         
 
-				if ($this->reservationDAO->checkDateStart($reservationTemp) == null) {                                                           
-                    
-                    $reservation = new Reservation();  
-                    $reservation->setId($id);
-                    $reservation->setDateStart($date_start);
-                    $reservation->setDateEnd($date_end);
-                    $reservation->setPrice($total_price);
-                    $reservation->setClient($client);
-                    $reservation->setBeachTent($beach_tent);
-                    $reservation->setParking($parking);  
+                    $reservation = new Reservation();    
+                    $reservation->setId($id_rsv);                  
+                    $reservation->setStay($stay);
+                    $reservation->setDateStart($start);
+                    $reservation->setDateEnd($end);
+
+                    $tent = new BeachTent();
+                    $tent->setId($id_tent);
+
+                    $reservation->setBeachTent($tent);                    
                     
                     $update_by = $this->adminController->isLogged();
 
+                    echo '<pre>';
+                    var_dump($reservation);
+                    echo '</pre>';
+
                     if ($this->reservationDAO->update($reservation, $update_by)) {                                                
-                        return $this->listReservationPath(null, null, RESERVATION_UPDATE);
+                        return $this->updatePath(null, null, RESERVATION_UPDATE);
                     } else {                        
-                        return $this->listReservationPath(null, DB_ERROR, null);        
+                        return $this->updatePath(null, DB_ERROR, null);        
                     }
                 }                
-                return $this->updatePath($id, EMAIL_ERROR, null);
+                // return $this->updatePath($id_tent, RESERVATION_ERROR, null);
             }            
-            return $this->updatePath($id, EMPTY_FIELDS, null);
+            // return $this->updatePath($id_tent, EMPTY_FIELDS, null);
         }
 
         public function checkIsDateReserved(Reservation $reservation) {                        

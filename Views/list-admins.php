@@ -61,7 +61,7 @@
                 </nav>                
                 
                 <div class="row">                    
-                    <table class="responsive-table centered" id="table-filter">
+                    <table class="responsive-table striped centered" id="table-filter">
                         <thead>
                         <tr>
                             <th>#</th>

@@ -328,8 +328,6 @@
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();
 				$parameters["stay"] = $reservation->getStay();
-				$parameters["discount"] = $reservation->getDiscount();
-				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();  
 				$parameters["id"] = $reservation->getId();  
