@@ -40,11 +40,7 @@
 
 
         // falta descuento
-<<<<<<< HEAD
-        private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent, $price) {
-=======
         private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $id_tent, $price) {                        
->>>>>>> 5273a24f4866417dc827970ea48eebb3ab241426
 
             $this->clientController = new ClientController();                              
             

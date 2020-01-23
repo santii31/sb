@@ -38,7 +38,7 @@
 		
 		public function getAll() {
 			try {
-				$query = "CALL parasol_getAll()";
+				$query = "CALL mobileParasol_getAll()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {

@@ -103,11 +103,12 @@
                     $locker = $this->lockerDAO->getById($lockerMan);
                     
                     $totalService = $service->getTotal() + $price;
-                    $totalReserve = $reservation->getPrice() + $totalService;
+                    $totalReserve = $reservation->getPrice() + $price;
                     
 
                     $service->setTotal($totalService);
                     $reservation->setPrice($totalReserve);
+                    echo $reservation->getPrice() . "|";
                     $update_by = $this->adminController->isLogged();
                     $this->additionalServiceDAO->update($service, $update_by);
                     $this->reservationDAO->update($reservation, $update_by);
@@ -115,6 +116,7 @@
                     $servicexlocker->setIdService($service->getId());
                     $servicexlocker->setIdLocker($locker->getId());
                     $reservationAux = $this->reservationDAO->getById($reservation);
+                    echo $reservationAux->getPrice();
                     $this->servicexlockerDAO->add($servicexlocker);
                     $flag++;
                 }
@@ -127,7 +129,7 @@
                     $locker = $this->lockerDAO->getById($lockerWoman);
                     
                     $totalService = $service->getTotal() + $price;
-                    $totalReserve = $reservation->getPrice() + $totalService;
+                    $totalReserve = $reservation->getPrice() + $price;
 
                     $service->setTotal($totalService);
                     $reservation->setPrice($totalReserve);
