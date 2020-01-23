@@ -74,25 +74,21 @@
                     $locker = $this->lockerDAO->getById($lockerMan);
                     
                     $totalService = $service->getTotal() + $price;
-                    $totalReserve = $reservation->getPrice() + $totalService;
+                    $totalReserve = $reservation->getPrice() + $price;
                     
                     $service->setTotal($totalService);
                     $reservation->setPrice($totalReserve);
+                    echo $reservation->getPrice() . "|";
                     $update_by = $this->adminController->isLogged();
-
-                    if ($this->additionalServiceDAO->update($service, $update_by)) {
-                        if ($this->reservationDAO->update($reservation, $update_by)) {
-                            
-                            $servicexlocker->setIdService($service->getId());
-                            $servicexlocker->setIdLocker($locker->getId());
-                            
-                            if ($reservationAux = $this->reservationDAO->getById($reservation)) {
-                                if ($this->servicexlockerDAO->add($servicexlocker)) {
-                                    $flag++;
-                                }
-                            }
-                        }
-                    }                                        
+                    $this->additionalServiceDAO->update($service, $update_by);
+                    $this->reservationDAO->update($reservation, $update_by);
+                    
+                    $servicexlocker->setIdService($service->getId());
+                    $servicexlocker->setIdLocker($locker->getId());
+                    $reservationAux = $this->reservationDAO->getById($reservation);
+                    echo $reservationAux->getPrice();
+                    $this->servicexlockerDAO->add($servicexlocker);
+                    $flag++;
                 }
 
                 if (!empty($id_locker_woman)){
@@ -104,7 +100,7 @@
                     $locker = $this->lockerDAO->getById($lockerWoman);
                     
                     $totalService = $service->getTotal() + $price;
-                    $totalReserve = $reservation->getPrice() + $totalService;
+                    $totalReserve = $reservation->getPrice() + $price;
 
                     $service->setTotal($totalService);
                     $reservation->setPrice($totalReserve);
