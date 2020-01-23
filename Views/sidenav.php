@@ -216,7 +216,7 @@
                                 <ul>
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>beachTent/showMap" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">add_circle</i>
+                                            <i class="material-icons left">map</i>
                                             Ver mapa de reservas
                                         </a>
                                     </li>   

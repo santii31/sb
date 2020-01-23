@@ -38,14 +38,14 @@
                             <div class="input-field col s4">
                                 <select name="stay" id="stay-select">
                                     <option value="" disabled selected>Seleccione su opcion</option>                                    
-                                    <option value="season">Temporada</option>                                    
-                                    <option value="january">Enero</option>
-                                    <option value="january_day">Enero - Dia</option>
-                                    <option value="january_fortnigh">Enero - Quincena</option>
-                                    <option value="february">Febrero</option>
-                                    <option value="february_day">Febrero - Dia</option>
-                                    <option value="february_first_fortnigh">Febrero - Primer quincena</option>
-                                    <option value="february_second_fortnigh">Febrero - Segunda quincena</option>
+                                    <option value="temporada">Temporada</option>                                    
+                                    <option value="enero">Enero</option>
+                                    <option value="enero_dia">Enero - Dia</option>
+                                    <option value="enero_quincena">Enero - Quincena</option>
+                                    <option value="febrero">Febrero</option>
+                                    <option value="febrero_dia">Febrero - Dia</option>
+                                    <option value="febero_primer_quincena">Febrero - Primer quincena</option>
+                                    <option value="febrero_segunda_quincena">Febrero - Segunda quincena</option>
                                 </select>
                                 <label>Estadia</label>  
                             </div>  
@@ -151,11 +151,6 @@
 
                         <input type="hidden" name="tent" value="<?= $id_tent ?>">
 
-                        <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate">
-                                <label for="price">Precio</label>
-                        </div>
-
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="price" type="number" name="price" class="validate">
@@ -170,15 +165,8 @@
                                 </button>
                             </div>
                         </div>
-<<<<<<< HEAD
-
-                        
-
-=======
-                        <br><br>
->>>>>>> 5273a24f4866417dc827970ea48eebb3ab241426
-                    </form>
-                
+                        <br><br>                        
+                    </form>                
                     
                     <div class="row">
                         <div class="col s4">

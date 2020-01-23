@@ -10,6 +10,24 @@
 
                 <div class="divider mb-divider"></div>
 
+                <div class="more-list">
+                    <?php if (isset($showAll)): ?>
+                    <a href="<?= FRONT_ROOT ?>reservation/listReservationPath">                    
+                        <i class="material-icons left">arrow_forward</i>
+                        <span>
+                            Mostrar solo reservas habilitadas
+                        </span>    
+                    </a>
+                    <?php else: ?>
+                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/all">                    
+                        <i class="material-icons left">arrow_forward</i>
+                        <span>
+                            Mostrar reservas deshabilitadas
+                        </span>    
+                    </a>
+                    <?php endif; ?>
+                </div> 
+
                 <?php if ($success != null): ?>
                 <div class="row">
                     <div class="col s6">
@@ -53,9 +71,10 @@
                             <th>Precio</th>
                             <th>Cliente</th>
                             <th>Carpa</th>
-                            <th>Locker</th>
-                            <th>Sombrilla</th>
-                            <th>Cochera</th>
+                            <th>Servicios</th>
+                            <!-- <th>Locker</th>
+                            <th>Sombrilla</th> 
+                            <th>Cochera</th>-->
                             <th>Añadir</th>
                         </tr>
                         </thead>
@@ -66,7 +85,7 @@
                                     <td> <?= ucfirst( $reservation->getStay() ); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>                                    
-                                    <td> <?= $reservation->getPrice(); ?> </td>
+                                    <td> $<?= $reservation->getPrice(); ?> </td>
                                     <td> <?= 
                                             ucfirst($reservation->getClient()->getName()) 
                                             . " " . 
@@ -74,62 +93,66 @@
                                     </td>
                                     <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
                                     
-                                    <?php $service=null; ?>
-                                    <?php $lockers=null; ?>
-                                    
-                                    <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
-                                        <?php if ($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())): ?>                 
-                                            <td>
-                                                <ul> 
-                                                    <?php foreach ($lockers as $locker): ?>
+                                    <td>
+                                        <?php $service=null; ?>
+                                        <?php $lockers=null; ?>
+                                        <ul class="collapsible">
+                                            <li>
+                                                <div class="collapsible-header">
+                                                    <i class="material-icons left">arrow_forward</i>Ver
+                                                </div>
+                                                <div class="collapsible-body">
+                                                    <ul>
                                                         <li>
-                                                            • <?= $locker->getLockerNumber() . "(" .$locker->getSex() . ")" ; ?> 
+                                                            • Lockers:   
+                                                            <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
+                                                                <?php if ($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())): ?>                             
+                                                                    <?php foreach ($lockers as $locker): ?>
+                                                                        
+                                                                            • <?= $locker->getLockerNumber() . "(" .$locker->getSex() . ")" ; ?> 
+                                                                        
+                                                                    <?php endforeach; ?>                                                                                              
+                                                                <?php else: ?>
+                                                                    N/A
+                                                                <?php endif; ?>
+                                                            <?php else: ?>
+                                                                N/A
+                                                            <?php endif; ?>                                                        
                                                         </li>
-                                                    <?php endforeach; ?>
-                                                </ul>
-                                            </td>
-                                        <?php else: ?>
-                                            <td> N/A </td>
-                                        <?php endif; ?>
-                                    <?php else: ?>
-                                        <td> N/A </td>
-                                    <?php endif; ?>
+                                                        <li>
+                                                            • Sombrillas:  
 
-                                    <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>
-                                        <?php if ($parasoles = $this->servicexparasolDAO->getParasolByService($service->getId())): ?>
-                                            <td>
-                                                <ul>
-                                                    <?php foreach ($parasoles as $parasol): ?>
-                                                        <li>
-                                                            • <?= $parasol->getParasolNumber(); ?> 
+                                                            <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>
+                                                                <?php if ($parasoles = $this->servicexparasolDAO->getParasolByService($service->getId())): ?>
+                                                                    <?php foreach ($parasoles as $parasol): ?>
+                                                                            • <?= $parasol->getParasolNumber(); ?> 
+                                                                    <?php endforeach; ?>                                            
+                                                                <?php else: ?>
+                                                                    N/A
+                                                                <?php endif; ?>
+                                                            <?php else: ?>
+                                                                N/A
+                                                            <?php endif; ?>
                                                         </li>
-                                                    <?php endforeach; ?>                                            
-                                                </ul>
-                                            </td>
-                                        <?php else: ?>
-                                        <td>N/A</td>
-                                        <?php endif; ?>
-                                    <?php else: ?>
-                                        <td>N/A</td>
-                                    <?php endif; ?>
-
-                                    <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
-                                        <?php if ($parkings = $this->servicexparkingDAO->getParkingByService($service->getId())): ?>              
-                                            <td>
-                                                <ul>
-                                                    <?php foreach ($parkings as $parking): ?>
                                                         <li>
-                                                            • <?= $parking->getNumber(); ?> 
+                                                            • Estacionamiento:  
+                                                            <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
+                                                                <?php if ($parkings = $this->servicexparkingDAO->getParkingByService($service->getId())): ?>                          
+                                                                    <?php foreach ($parkings as $parking): ?>                                                                        
+                                                                        • <?= $parking->getNumber(); ?>                                                                     
+                                                                    <?php endforeach; ?>                                                                                              
+                                                                <?php else: ?>
+                                                                    N/A
+                                                                <?php endif; ?>
+                                                            <?php else: ?>
+                                                                N/A
+                                                            <?php endif; ?>
                                                         </li>
-                                                    <?php endforeach; ?>
-                                                </ul>
-                                            </td>
-                                        <?php else: ?>
-                                            <td> N/A </td>
-                                        <?php endif; ?>
-                                    <?php else: ?>
-                                        <td> N/A </td>
-                                    <?php endif; ?>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>                                      
+                                    </td>       
 
                                     <td class="actions">
                                         <a href="<?= FRONT_ROOT ?>additionalService/addLockerPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">

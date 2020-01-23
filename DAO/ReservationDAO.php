@@ -185,6 +185,100 @@
 			}
 		}		
 
+		public function getAllActives() {
+			try {
+				$reservList = array();
+				$query = "CALL reservation_getAllActives()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+                    $reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($reservList, $reservation);
+				}
+				return $reservList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function getAllDisables() {
+			try {
+				$reservList = array();
+				$query = "CALL reservation_getAllDisables()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+                    $reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($reservList, $reservation);
+				}
+				return $reservList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
 		public function getAllRsvWithClients() {
 			try {
 				$reservList = array();
@@ -296,7 +390,7 @@
 
 		public function disableById(Reservation $reservation, Admin $disableBy) {
 			try {
-				$query = "CALL reservation_disableById(?)";
+				$query = "CALL reservation_disableById(?, ?, ?)";
 				$parameters["id"] = $reservation->getId();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["disable_by"] = $disableBy->getId();
@@ -305,7 +399,7 @@
 				return true;
 			}
 			catch (Exception $e) {
-				return false;
+				return false;				
 			}
 		}		
 
