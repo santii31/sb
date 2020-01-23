@@ -151,6 +151,11 @@
 
                         <input type="hidden" name="tent" value="<?= $id_tent ?>">
 
+                        <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
+                        </div>
+
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="price" type="number" name="price" class="validate">
@@ -165,7 +170,13 @@
                                 </button>
                             </div>
                         </div>
+<<<<<<< HEAD
+
+                        
+
+=======
                         <br><br>
+>>>>>>> 5273a24f4866417dc827970ea48eebb3ab241426
                     </form>
                 
                     

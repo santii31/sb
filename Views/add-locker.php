@@ -1,5 +1,5 @@
- <!-- Main content  -->
- <div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
                     <form action="<?= FRONT_ROOT ?>additionalService/addLocker" method="post" class="col s10 form-test">
@@ -56,6 +56,13 @@
                                 <label>Lockers de mujeres</label>
                             </div>                                                                                 
                         </div>    
+
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate">
+                                <label for="price">Precio</label>
+                            </div>
+                        </div>                        
 
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
                         
