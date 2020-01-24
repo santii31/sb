@@ -281,6 +281,30 @@
 			}
 		}
 
+		public function getSalesMonthly() {
+			try {
+				$salesList = array();
+				$query = "CALL reservation_getSalesMonthly()";				
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					
+					$sales = array(
+						"year" => $row["year"],
+						"month" => $row["month"],
+						"subtotal" => $row["subtotal"],
+						"reservations" => $row["orders"]
+					);
+					
+					array_push($salesList, $sales);
+				}
+				return $salesList;
+			} catch (Exception $e) {
+				return false;
+				//echo $e;
+			}
+		}
+
 		public function getAll() {
 			try {
 				$reservList = array();

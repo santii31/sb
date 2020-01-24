@@ -49,11 +49,12 @@
 				return $this->adminController->userPath();
 			}
         }
-
-        // ventas mensuales
+        
         public function salesMonthlyPath() {
             if ($admin = $this->adminController->isLogged()) {                       
                 $title = "Contabilidad - Ventas mensuales";                
+                $this->reservationController = new ReservationController();
+                $rsvList = $this->reservationController->getSalesMonthly();                 
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "accounting-monthly.php");
@@ -141,6 +142,11 @@
 				return $this->adminController->userPath();
 			}
         }
+
+        public function staffSalaryPath() {
+
+        }
+
     }
     
 ?>

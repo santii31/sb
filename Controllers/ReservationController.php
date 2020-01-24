@@ -373,5 +373,8 @@
             return $this->reservationDAO->getAllRsvWithClientsWithLimit($start);
         }
 
+        public function getSalesMonthly() {
+            return $this->reservationDAO->getSalesMonthly();
+        }
     }
 ?>

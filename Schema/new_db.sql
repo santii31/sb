@@ -1120,6 +1120,22 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservation_getSalesMonthly`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getSalesMonthly ()
+BEGIN
+    SET lc_time_names = 'es_ES';
+	SELECT
+        YEAR(date_register) AS `year`,
+        MONTHNAME(date_register) AS `month`,
+        SUM(total_price) AS `subtotal`,
+        count(*) AS orders
+    FROM reservation
+    GROUP BY YEAR(date_register), MONTH(date_register);
+    -- WHERE date_register BETWEEN '2020-01-21' AND '2020-01-24'
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getAllActives`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getAllActives ()
