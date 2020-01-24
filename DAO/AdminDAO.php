@@ -3,10 +3,9 @@
     namespace DAO;
 
 	use \Exception as Exception;
-	
 	use \PDOException as PDOException;
-
-    use Models\Admin as Admin;	
+	use Models\Admin as Admin;	
+	use Models\Reservation as Reservation;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
 
@@ -119,8 +118,7 @@
 					$admin->setName($row["name"]);
 					$admin->setLastName($row["lastname"]);
 					$admin->setEmail($row["email"]);
-					$admin->setDni($row["dni"]);
-					$admin->setPassword($row["password"]);				
+					$admin->setDni($row["dni"]);								
 					$admin->setIsActive($row["is_active"]);
 					array_push($this->adminList, $admin);
 				}
@@ -142,8 +140,7 @@
 					$admin->setName($row["name"]);
 					$admin->setLastName($row["lastname"]);
 					$admin->setEmail($row["email"]);
-					$admin->setDni($row["dni"]);
-					$admin->setPassword($row["password"]);				
+					$admin->setDni($row["dni"]);								
 					$admin->setIsActive($row["is_active"]);
 					array_push($list, $admin);
 				}
@@ -243,7 +240,61 @@
 			} catch (Exception $e) {
 				return false;				
 			}
-		}		
+		}	
+		
+		public function getAllWithRsv() {
+			try {
+				$list = array();
+				$query = "CALL admin_getAllWithRsv()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+					$admin = new Admin();
+					$admin->setId($row["id"]);
+					$admin->setName($row["name"]);
+					$admin->setLastName($row["lastname"]);
+					$admin->setEmail($row["email"]);
+					$admin->setDni($row["dni"]);								
+					$admin->setIsActive($row["is_active"]);
+					array_push($list, $admin);
+				}
+				return $list;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function getAllCountRsvById(Admin $admin) {
+			try {				
+				$query = "CALL admin_getAllCountRsvById(?)";
+				$parameters["id"] = $admin->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);	
+				foreach ($results as $row) {					
+					return $row["total"];
+				}							
+			} catch (Exception $e) {
+				return false;				
+			}
+		}
+
+		public function getAllRsvById(Admin $admin) {
+			try {
+				$list = array();
+				$query = "CALL admin_getAllRsvById(?)";
+				$parameters["id"] = $admin->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);	
+				foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setPrice($row["total"]);
+					array_push($list, $reservation);
+				}
+				return $list;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
 
     }
 

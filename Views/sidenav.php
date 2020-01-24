@@ -259,35 +259,35 @@
                             <div class="collapsible-body">
                                 <ul>    
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>accounting/diary" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/diaryPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">chrome_reader_mode</i>
                                             Caja diaria
                                         </a>
                                     </li>                                         
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/salesDailyPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">date_range</i>
                                             Ventas diarias
                                         </a>
                                     </li>         
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/salesMonthlyPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">description</i>
                                             Ventas mensuales
                                         </a>
-                                    </li>   
+                                    </li>    
                                     <li>
-                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
-                                            <i class="material-icons left">event_available</i>
-                                            Ventas de carpas por dia
-                                        </a>
-                                    </li>   
-                                    <li>
-                                        <a href="<?= FRONT_ROOT ?>accounting/" class="valign-wrapper waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>accounting/salesByAdminsPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">folder_shared</i>
                                             Ventas por administradores
                                         </a>
-                                    </li>                                                                                                                                                                                    
+                                    </li>                                                                                                                                                    
+                                     <li>
+                                        <a href="<?= FRONT_ROOT ?>accounting/salesByDatesPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">search</i>
+                                            Filtrar por fechas
+                                        </a>
+                                    </li>                                                                     
                                 </ul>
                             </div>
                         </li>                    

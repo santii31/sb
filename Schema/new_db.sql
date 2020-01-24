@@ -41,7 +41,7 @@ DROP procedure IF EXISTS `config_update`;
 DELIMITER $$
 CREATE PROCEDURE config_update (
                                     IN date_start_season DATE,
-s                                    IN date_end_season DATE,
+                                    IN date_end_season DATE,
                                     IN price_tent_season FLOAT,                                   
                                     IN price_tent_january FLOAT,                                   
                                     IN price_tent_january_day FLOAT,                                   
@@ -172,6 +172,42 @@ DELIMITER $$
 CREATE PROCEDURE admin_getAllActives ()
 BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`is_active` = true ORDER BY name ASC;
+END$$
+
+
+
+
+DROP procedure IF EXISTS `admin_getAllWithRsv`;
+DELIMITER $$
+CREATE PROCEDURE admin_getAllWithRsv ()
+BEGIN
+	SELECT * 
+    FROM `admin` 
+    INNER JOIN `reservation` ON `admin`.`id` = `reservation`.`register_by`
+    GROUP BY `admin`.`id`;
+END$$
+
+
+DROP procedure IF EXISTS `admin_getAllCountRsvById`;
+DELIMITER $$
+CREATE PROCEDURE admin_getAllCountRsvById (IN id INT)
+BEGIN
+	SELECT count(`admin`.`id`) AS total
+    FROM `admin` 
+    INNER JOIN `reservation` ON `admin`.`id` = `reservation`.`register_by`
+    WHERE `admin`.`id` = id
+    GROUP BY `admin`.`id`;
+END$$
+
+
+DROP procedure IF EXISTS `admin_getAllRsvById`;
+DELIMITER $$
+CREATE PROCEDURE admin_getAllRsvById (IN id INT)
+BEGIN
+	SELECT `reservation`.`total_price` AS total
+    FROM `admin` 
+    INNER JOIN `reservation` ON `admin`.`id` = `reservation`.`register_by`
+    WHERE `admin`.`id` = id;    
 END$$
 
 
@@ -972,6 +1008,43 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservation_getByDate`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getByDate (IN date DATE)
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
+           reservation.discount AS reservation_discount,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email,		   
+           beach_tent.id AS tent_id,
+           beach_tent.number AS tent_number,
+           beach_tent.price AS tent_price
+    FROM `reservation`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
+    INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
+    WHERE `reservation`.`date_register` = date;
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getAll`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getAll ()
@@ -1193,6 +1266,28 @@ BEGIN
     INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     WHERE `reservation`.`FK_id_client` = client_id;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getAllByAdmin`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllByAdmin(IN id INT)
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                        
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            beach_tent.number AS tent_number            
+    FROM `reservation`
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.register_by = admin.id
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    WHERE `reservation`.`register_by` = id;
 END$$
 
 
@@ -2960,3 +3055,17 @@ BEGIN
     WHERE 
         `staff`.`id` = id;	
 END$$
+
+
+
+---------------------------- ACCOUTING ---------------------------
+
+SELECT
+
+    `reservation`.`date_start` AS date_start,
+    `reservation`.`date_end` AS date_end,
+    `reservation`.`stay` AS date_stay,
+    `reservation`.`date_price` AS date_total_price,
+
+FROM `reservation`
+INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.id

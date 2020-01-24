@@ -10,23 +10,25 @@
 
                 <div class="divider mb-divider"></div>
 
-                <div class="more-list">
-                    <?php if (isset($showAll)): ?>
-                    <a href="<?= FRONT_ROOT ?>reservation/listReservationPath">                    
-                        <i class="material-icons left">arrow_forward</i>
-                        <span>
-                            Mostrar solo reservas habilitadas
-                        </span>    
-                    </a>
-                    <?php else: ?>
-                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/all">                    
-                        <i class="material-icons left">arrow_forward</i>
-                        <span>
-                            Mostrar reservas deshabilitadas
-                        </span>    
-                    </a>
-                    <?php endif; ?>
-                </div> 
+                <?php if (!isset($adminTemp)): ?>
+                    <div class="more-list">
+                        <?php if (isset($showAll)): ?>
+                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath">                    
+                            <i class="material-icons left">arrow_forward</i>
+                            <span>
+                                Mostrar solo reservas habilitadas
+                            </span>    
+                        </a>
+                        <?php else: ?>
+                            <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/all">                    
+                            <i class="material-icons left">arrow_forward</i>
+                            <span>
+                                Mostrar reservas deshabilitadas
+                            </span>    
+                        </a>
+                        <?php endif; ?>
+                    </div> 
+                <?php endif; ?>
 
                 <?php if ($success != null): ?>
                 <div class="row">
@@ -71,10 +73,7 @@
                             <th>Precio</th>
                             <th>Cliente</th>
                             <th>Carpa</th>
-                            <th>Servicios</th>
-                            <!-- <th>Locker</th>
-                            <th>Sombrilla</th> 
-                            <th>Cochera</th>-->
+                            <th>Servicios</th>                            
                             <th>Añadir</th>
                         </tr>
                         </thead>

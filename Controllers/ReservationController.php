@@ -89,12 +89,14 @@
             return false;
         }
 
+        /*
         public function addPrice(){
             require_once(VIEWS_PATH . "head.php");
             require_once(VIEWS_PATH . "sidenav.php");
             require_once(VIEWS_PATH . "list-reservation.php");
             require_once(VIEWS_PATH . "footer.php");
         }
+        */
 
         public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price) { 
 
@@ -300,6 +302,20 @@
             return false;
         }
 
+        public function listReservationByAdminPath($id_admin, $alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {
+                $title = "Reservas por administrador";                    
+                $adminTemp = new Admin();
+                $adminTemp->setId($id_admin);
+                $reservations = $this->reservationDAO->getAllByAdmin($admin);                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "list-reservation.php");
+                require_once(VIEWS_PATH . "footer.php");
+            } else {
+                return $this->adminController->userPath();
+            }
+        }
         
         // 
         public function getByIdTent($id_tent) {
@@ -316,6 +332,10 @@
 
         public function getAllReservations() {
             return $this->reservationDAO->getAll();
+        }
+
+        public function getReservationsByDate($date) {
+            return $this->reservationDAO->getByDate($date);
         }
 
         public function futureReservations() {

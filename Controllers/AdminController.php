@@ -255,6 +255,23 @@
             return $this->adminDAO->getEmails();
         }
 
+        public function getAllWithRsv() {
+            return $this->adminDAO->getAllWithRsv();
+        }
+
+        public function getAllCountRsvByAdmin(Admin $admin) {
+            return $this->adminDAO->getAllCountRsvById($admin);            
+        }
+
+        public function getTotalRsvById(Admin $admin) {
+            $listRsv = $this->adminDAO->getAllRsvById($admin);    
+            $total = 0;  
+            foreach ($listRsv as $rsv) {
+                $total += $rsv->getPrice();
+            }                   
+            return $total;
+        }
+
     }
 
  ?>

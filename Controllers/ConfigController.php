@@ -59,7 +59,7 @@
                 $config->setPriceTentFebruaryFirstFortnigh($february_first_fortnigh_s);
                 $config->setPriceTentFebruarySecondFortnigh($february_second_fortnigh_s);
                 $config->setPriceParasol($parasol_s);
-
+                
                 $update_by = $this->adminController->isLogged();
 
                 if ($this->configDAO->update($config, $update_by)) {                    
