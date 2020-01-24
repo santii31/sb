@@ -194,6 +194,59 @@
 			}
 		}
 
+		public function getBetweenDates($date_start, $date_end) {
+			try {				
+				$rsvList = array();
+				$query = "CALL reservation_getBetweenDates(?, ?)";
+				$parameters["date_start"] = $date_start;
+				$parameters["date_end"] = $date_end;
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+
+					$reservation->setBeachTent($beachTent);		
+					
+					$reservation->setRegisterBy($admin);
+
+					array_push($rsvList, $reservation);
+				}
+				return $rsvList;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
 		public function getAllByAdmin(Admin $admin) {
 			try {
 				$query = "CALL reservation_getAllByAdmin(?)";

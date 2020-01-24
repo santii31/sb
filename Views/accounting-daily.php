@@ -9,6 +9,7 @@
                 </div>
                 <div class="divider mb-divider"></div>         
 
+                <?php if (sizeof($rsvList) > 0): ?>
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
@@ -19,7 +20,7 @@
                         </div>                    
                     </div>
                 </nav>                
-                
+                                
                 <div class="row">
                     <div class="col s12">
                         <h5>• Total recaudado: $<?= $total ?></h5>
@@ -53,6 +54,12 @@
                         </tbody>
                     </table>
                 </div>
+                <?php else: ?>
+                <div class="not-results z-depth-1">                
+                    <i class="material-icons left">priority_high</i>      
+                    No se encontraron resultados.
+                </div>                                   
+                <?php endif; ?>
             </div>
 
         </div>

@@ -338,6 +338,10 @@
             return $this->reservationDAO->getByDate($date);
         }
 
+        public function getReservationsBetweenDates($date_start, $date_end) {
+            return $this->reservationDAO->getBetweenDates($date_start, $date_end);
+        }
+
         public function futureReservations() {
             $futureReserve = array();
             $reserveList = $this->reservationDAO->getAll();
