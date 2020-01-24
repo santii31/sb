@@ -92,4 +92,6 @@
 
 	define("SEARCH_EMPTY", "No se han encontrado clientes.");
 
+	define("DIARY_BALANCE_ADDED", "Registro añadido con éxito.");
+
 ?>

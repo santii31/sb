@@ -849,3 +849,12 @@ table.striped>tbody>tr:nth-child(odd) {
     display: flex;
     align-items: center;    
 }
+
+.table-double {
+    font-weight: bold;
+}
+
+.table-double-total {
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -3113,12 +3113,50 @@ END$$
 
 ---------------------------- ACCOUTING ---------------------------
 
-SELECT
+CREATE TABLE diary_balance (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `date` DATE NOT NULL,
+    `type` VARCHAR(255) NOT NULL,
+    `payment` VARCHAR(255) NOT NULL,
+    `detail` VARCHAR(255) NOT NULL,
+    `total` FLOAT NOT NULL,
 
-    `reservation`.`date_start` AS date_start,
-    `reservation`.`date_end` AS date_end,
-    `reservation`.`stay` AS date_stay,
-    `reservation`.`date_price` AS date_total_price,
+    `date_register` DATE NOT NULL,
+    `register_by` INT NOT NULL, 
+    
+    CONSTRAINT `FK_diary_balance_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`)
+);
 
-FROM `reservation`
-INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.id
+
+DROP procedure IF EXISTS `diary_balance_add`;
+DELIMITER $$
+CREATE PROCEDURE diary_balance_add (                                
+                                IN date DATE,                                                                
+                                IN type VARCHAR(255),
+                                IN payment VARCHAR(255),
+                                IN detail VARCHAR(255),
+                                IN total FLOAT,
+                                IN date_register DATE,
+                                IN register_by INT   
+                            )                             
+BEGIN
+	INSERT INTO diary_balance (
+            diary_balance.date,
+            diary_balance.type,
+            diary_balance.payment,
+            diary_balance.detail,
+            diary_balance.total,                                                
+            diary_balance.date_register,
+            diary_balance.register_by
+	)
+    VALUES
+        (date, type, payment, detail, total, date_register, register_by);
+END$$
+
+
+DROP procedure IF EXISTS `diary_balance_getByDate`;
+DELIMITER $$
+CREATE PROCEDURE diary_balance_getByDate (IN date DATE)
+BEGIN
+	SELECT * FROM `diary_balance` WHERE `diary_balance`.`date` = date;
+END$$

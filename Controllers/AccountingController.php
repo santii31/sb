@@ -1,8 +1,9 @@
 <?php
 
     namespace Controllers;    
-    
-    use Models\Reservation as Reservation;
+        
+    use Models\DiaryBalance as DiaryBalance;
+    use DAO\DiaryBalanceDAO as DiaryBalanceDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ReservationController as ReservationController; 
 
@@ -10,15 +11,28 @@
 
         private $adminController;        
         private $reservationController;        
+        private $diaryBalanceDAO;    
 
         public function __construct() {            
-            $this->adminController = new AdminController();
+            $this->adminController = new AdminController();            
         }       
         
-        // ingresos y salidas
-        public function diaryPath() {
+        
+        public function diaryPath($date = null, $alert = "", $success ="") {
             if ($admin = $this->adminController->isLogged()) {                       
-                $title = "Contabilidad - Caja diaria";                
+                $title = "Contabilidad - Caja diaria";        
+                $this->diaryBalanceDAO = new DiaryBalanceDAO();
+                
+                if ($date == null) {
+                    $subTitle = "Caja diaria del " . date("d-m-Y");
+                    $diarys = $this->diaryBalanceDAO->getByDate( date("Y-m-d") );
+                    $values = $this->getSummary(date("Y-m-d"));
+                } else {
+                    $subTitle = "Caja diaria del " . date("d-m-Y" , strtotime($date));
+                    $diarys = $this->diaryBalanceDAO->getByDate($date);
+                    $values = $this->getSummary($date);
+                }                    
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "accounting-diary.php");
@@ -26,6 +40,121 @@
 			} else {
 				return $this->adminController->userPath();
 			}
+        }
+
+        private function getSummary($date) {            
+            $this->diaryBalanceDAO = new DiaryBalanceDAO();
+            $diarys = $this->diaryBalanceDAO->getByDate($date);
+
+            // entradas
+            $inCash = 0;
+            $inTarjet = 0;
+            $inCheck = 0;
+            $inOther = 0;
+
+            // salidas
+            $outCash = 0;
+            $outTarjet = 0;
+            $outCheck = 0;
+            $outOther = 0;
+
+            foreach ($diarys as $diary) {
+
+                if ($diary->getType() == "ingreso") {
+
+                    if ($diary->getPayment() == "efectivo") {
+
+                        $inCash += $diary->getTotal();
+
+                    } else if ($diary->getPayment() == "tarjeta") {
+
+                        $inTarjet += $diary->getTotal();
+
+                    } else if ($diary->getPayment() == "cheque") {
+                        
+                        $inCheck += $diary->getTotal();
+
+                    } else if ($diary->getPayment() == "otros") {
+
+                        $inOther += $diary->getTotal();
+
+                    }
+
+                } else if ($diary->getType() == "salida") {
+
+                    if ($diary->getPayment() == "efectivo") {
+
+                        $outCash += $diary->getTotal();
+
+                    } else if ($diary->getPayment() == "tarjeta") {
+
+                        $outTarjet += $diary->getTotal();
+
+                    } else if ($diary->getPayment() == "cheque") {
+                        
+                        $outCheck += $diary->getTotal();
+
+                    } else if ($diary->getPayment() == "otros") {
+
+                        $outOther += $diary->getTotal();
+
+                    }                    
+
+                }
+            }
+                    
+            $values = array(
+                "inCash" => $inCash,
+                "inTarjet" => $inTarjet,
+                "inCheck" => $inCheck,
+                "inOther" => $inOther,                
+                "outCash" => $outCash,
+                "outTarjet" => $outTarjet,
+                "outCheck"=> $outCheck,
+                "outOther"=> $outOther,
+                "totalCash" => $inCash - $outCash,
+                "totalTarjet" => $inTarjet - $outTarjet,
+                "totalCheck" => $inCheck - $outCheck,
+                "totalOther" => $inOther - $outOther,
+                "totalIn" => $inCash + $inTarjet + $inCheck + $inOther,
+                "totalOut" => $outCash + $outTarjet + $outCheck + $outOther,
+                "total" => ($inCash + $inTarjet + $inCheck + $inOther) - ($outCash + $outTarjet + $outCheck + $outOther)
+            );
+    
+            return $values;
+        }
+
+        public function addDiary($start, $type, $payment, $detail, $total) {
+            if ($this->isFormNotEmpty($start, $type, $payment, $detail, $total)) {
+
+                $this->diaryBalanceDAO = new DiaryBalanceDAO();
+
+                $registerBy = $this->adminController->isLogged();
+
+                $diaryBalance = new DiaryBalance();
+                $diaryBalance->setDate($start);
+                $diaryBalance->setType($type);
+                $diaryBalance->setPayment($payment);
+                $diaryBalance->setDetail($detail);
+                $diaryBalance->setTotal($total);
+
+                if ($this->diaryBalanceDAO->add($diaryBalance, $registerBy)) {
+                    return $this->diaryPath(null, null, DIARY_BALANCE_ADDED);
+                }
+                return $this->diaryPath(null, DB_ERROR, null);
+            }
+            return $this->diaryPath(null, EMPTY_FIELDS, null);
+        }
+
+        private function isFormNotEmpty($start, $type, $payment, $detail, $total) {
+            if (empty($start) || 
+                empty($type) || 
+                empty($payment) || 
+                empty($detail) || 
+                empty($total)) {
+                    return false;
+            }
+            return true;
         }
         
         public function salesDailyPath() {
