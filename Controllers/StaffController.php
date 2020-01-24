@@ -49,6 +49,21 @@
         public function addStaff($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
                                  $address, $phone, $shirt_size, $pant_size) {
            
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "name"=> $name, 
+                "lastName"=> $lastName,
+                "position"=> $position,
+                "salary"=> $salary,
+                "date_start"=> $date_start,
+                "date_end"=> $date_end,
+                "dni"=> $dni,
+                "address"=> $address,
+                "phone"=> $phone,
+                "shirt_size"=> $shirt_size,
+                "pant_size"=> $pant_size
+            );
+
             if ($this->isFormRegisterNotEmpty($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
                                               $address, $phone, $shirt_size, $pant_size)) {
 
@@ -62,12 +77,12 @@
                         return $this->addStaffPath(null, STAFF_ADDED);
 
                     } else {                        
-                        return $this->addStaffPath(DB_ERROR, null);        
+                        return $this->addStaffPath(DB_ERROR, null, $inputs);        
                     }
                 }                
-                return $this->addStaffPath(STAFF_ERROR, null);
+                return $this->addStaffPath(STAFF_ERROR, null, $inputs);
             }                 
-            return $this->addStaffPath(EMPTY_FIELDS, null);            
+            return $this->addStaffPath(EMPTY_FIELDS, null, $inputs);            
         }
 
         private function isFormRegisterNotEmpty($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
@@ -89,7 +104,7 @@
             return true;
         }         
 
-        public function addStaffPath($alert = "", $success = "") {
+        public function addStaffPath($alert = "", $success = "", $inputs = array()) {
             if ($admin = $this->adminController->isLogged()) {                         
                 $title = "Personal - Añadir";
                 require_once(VIEWS_PATH . "head.php");

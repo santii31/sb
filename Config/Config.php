@@ -75,7 +75,7 @@
 	define("STOCK_ZERO", "Ingrese un valor mayor a 0.");
 		
 	define("STAFF_ADDED", "Empleado añadido con éxito.");
-	define("STAFF_ERROR", "El Empleado ya se encuentra registrado.");
+	define("STAFF_ERROR", "El empleado ya se encuentra registrado.");
 	define("STAFF_DISABLE", "Empleado deshabilitado con éxito.");
 	define("STAFF_ENABLE", "Empleado habilitado con éxito.");
 	define("STAFF_UPDATE", "Empleado modificado con éxito.");

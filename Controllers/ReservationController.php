@@ -89,32 +89,40 @@
             return false;
         }
 
-        /*
-        public function addPrice(){
-            require_once(VIEWS_PATH . "head.php");
-            require_once(VIEWS_PATH . "sidenav.php");
-            require_once(VIEWS_PATH . "list-reservation.php");
-            require_once(VIEWS_PATH . "footer.php");
-        }
-        */
-
         public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price) { 
 
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "start"=> $start, 
+                "end"=> $end,
+                "name"=> $name,
+                "l_name"=> $l_name,
+                "addr"=> $addr,
+                "city"=> $city,
+                "cp"=> $cp,
+                "email"=> $email,
+                "phone"=> $phone,
+                "fam"=> $fam,
+                "aux_phone"=> $auxiliary_phone,
+                "price"=> $price
+            );
+            
             if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {
                 
-                if ($this->checkInterval($start, $end, $tent) == 1) {                                                                                
+                if ($this->checkInterval($start, $end, $tent) == 1) {                                 
+
                     if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
 
                         $this->parkingController = new ParkingController();                    
                         return $this->parkingController->parkingMap($lastId);                                                
 
                     } else {                        
-                        return $this->addReservationPath(null, DB_ERROR, null);        
+                        return $this->addReservationPath(null, DB_ERROR, null, $inputs);        
                     }
                 }                             
-                return $this->addReservationPath(null, RESERVATION_ERROR, null);
+                return $this->addReservationPath(null, RESERVATION_ERROR, null, $inputs);
             }            
-            return $this->addReservationPath($tent, EMPTY_FIELDS, null);            
+            return $this->addReservationPath($tent, EMPTY_FIELDS, null, $inputs);            
         }
         
         public function checkInterval($date_start, $date_end, $id_tent) {
@@ -153,7 +161,7 @@
             return true;
         } 
         
-        public function addReservationPath($id_tent = "", $alert = "", $success = "") { 
+        public function addReservationPath($id_tent = "", $alert = "", $success = "", $inputs = array()) { 
             if ($admin = $this->adminController->isLogged()) {
                 $config = $this->configDAO->get();                     
                 $title = "Reserva - Añadir";

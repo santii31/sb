@@ -57,18 +57,30 @@
                             </div>
 
                             <div class="input-field col s4">
+                                <?php if (isset($inputs["name"])): ?>              
+                                <input id="name" type="text" name="name" class="validate" value="<?= $inputs["name"]; ?>" required>
+                                <?php else: ?>
                                 <input id="name" type="text" name="name" class="validate" required>
+                                <?php endif; ?>                                  
                                 <label for="name">Nombre del producto</label>
                             </div>                            
                         </div>
 
                         <div class="row">
                             <div class="input-field col s6">
+                                <?php if (isset($inputs["price"])): ?>              
+                                <input id="price" type="number" name="price" class="validate" value="<?= $inputs["price"]; ?>" required>
+                                <?php else: ?>
                                 <input id="price" type="number" name="price" class="validate" required>
+                                <?php endif; ?>                                  
                                 <label for="price">Precio</label>
                             </div>
                             <div class="input-field col s6">
+                                <?php if (isset($inputs["quantity"])): ?>              
+                                <input id="quantity" type="number" name="quantity" class="validate" value="<?= $inputs["quantity"]; ?>" required>
+                                <?php else: ?>
                                 <input id="quantity" type="number" name="quantity" class="validate" required>
+                                <?php endif; ?>                                  
                                 <label for="quantity">Cantidad</label>
                             </div>
                         </div>                        

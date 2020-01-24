@@ -45,6 +45,8 @@
                                                             
                                                             <?php $stay = $rsv->getStay(); ?>
                                                                 
+                                                            <!-- AGREGAR NUEVAS ESTADIAS (QUINCENA ENERO ETC) -->
+                                                            
                                                             <?php switch ($stay): 
                                                                 case "season": ?>
                                                                     <div class="tent yellow">                                                
@@ -64,7 +66,7 @@
                                                                 
                                                                 <?php case "period": ?>
                                                                     <div class="tent blue">                                                
-                                                                <?php break; ?>
+                                                                <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>    
                                                                                                                           

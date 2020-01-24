@@ -43,6 +43,18 @@
         }
 
         public function addPotentialClient($name, $lastName, $address, $city, $email, $phone, $num_tent) {
+
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "name"=> $name, 
+                "lastName"=> $lastName,
+                "address"=> $address,
+                "city"=> $city,
+                "email"=> $email,
+                "phone"=> $phone,
+                "num_tent"=> $num_tent
+            );
+
             if ($this->isFormRegisterNotEmpty($name, $lastName, $address, $city, $email, $phone, $num_tent)) {
                 
                 $clientTemp = new ClientPotential();
@@ -52,12 +64,12 @@
                     if ($this->add($name, $lastName, $address, $city, $email, $phone, $num_tent)) {            
                         return $this->addPotentialClientPath(null, CLIENT_ADDED);
                     } else {                        
-                        return $this->addPotentialClientPath(DB_ERROR, null);        
+                        return $this->addPotentialClientPath(DB_ERROR, null, $inputs);        
                     }
                 }                
-                return $this->addPotentialClientPath(CLIENT_ERROR, null);
+                return $this->addPotentialClientPath(CLIENT_ERROR, null, $inputs);
             }            
-            return $this->addPotentialClientPath(EMPTY_FIELDS, null);            
+            return $this->addPotentialClientPath(EMPTY_FIELDS, null, $inputs);            
         }        
        
         private function isFormRegisterNotEmpty($name, $lastName, $address, $city, $email, $phone, $num_tent) {
@@ -73,7 +85,7 @@
             return true;
         }
 
-        public function addPotentialClientPath($alert = "", $success = "") {
+        public function addPotentialClientPath($alert = "", $success = "", $inputs = array()) {
             if ($admin = $this->adminController->isLogged()) {                         
                 $title = "Cliente potencial - Añadir";
                 require_once(VIEWS_PATH . "head.php");

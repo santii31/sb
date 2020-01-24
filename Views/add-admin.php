@@ -36,28 +36,44 @@
 
                         <div class="row">
                             <div class="input-field col s6">
+                                <?php if (isset($inputs["name"])): ?>              
+                                <input id="name" type="text" name="name" class="validate" value="<?= $inputs["name"]; ?>" required>
+                                <?php else: ?>
                                 <input id="name" type="text" name="name" class="validate" required>
+                                <?php endif; ?>                                
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="last_name" type="text" name="lastname" class="validate" required>
-                                <label for="last_name">Apellido</label>
+                                <?php if (isset($inputs["lastName"])): ?>              
+                                <input id="lastName" type="text" name="lastName" class="validate" value="<?= $inputs["lastName"]; ?>" required>
+                                <?php else: ?>
+                                <input id="lastName" type="text" name="lastName" class="validate" required>
+                                <?php endif; ?>                                                                
+                                <label for="lastName">Apellido</label>
                             </div>                         
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
+                                <?php if (isset($inputs["email"])): ?>              
+                                <input id="email" type="email" name="email" class="validate" value="<?= $inputs["email"]; ?>" required>
+                                <?php else: ?>
                                 <input id="email" type="email" name="email" class="validate" required>
+                                <?php endif; ?>                                                                 
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s6">
+                                <?php if (isset($inputs["dni"])): ?>              
+                                <input id="dni" type="number" name="dni" class="validate" value="<?= $inputs["dni"]; ?>" required>
+                                <?php else: ?>
                                 <input id="dni" type="number" name="dni" class="validate" required>
+                                <?php endif; ?>                                             
                                 <label for="dni">DNI</label>
                             </div>                                                         
                         </div>                        
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="contraseña" type="password" name="password" class="validate" required>
-                                <label for="contraseña">Contraseña</label>
+                                <input id="password" type="password" name="password" class="validate" required>
+                                <label for="password">Contraseña</label>
                             </div>                                                             
                         </div>                     
                         <div class="row">

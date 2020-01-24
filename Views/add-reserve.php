@@ -49,55 +49,95 @@
                                 </select>
                                 <label>Estadia</label>  
                             </div>  
-                            <div class="input-field col s4">
+                            <div class="input-field col s4">                                                            
+                                <?php if (isset($inputs["start"])): ?>              
+                                <input id="start" type="date" name="start" class="validate" value="<?= $inputs["start"]; ?>" required>
+                                <?php else: ?>
                                 <input id="start" type="date" name="start" class="validate" required>
+                                <?php endif; ?>
                                 <label for="start">Fecha de ingreso</label>
                             </div>
 
                             <div class="input-field col s4">
+                                <?php if (isset($inputs["end"])): ?>         
+                                <input id="end" type="date" name="end" class="validate" value="<?= $inputs["end"]; ?>" required>
+                                <?php else: ?>
                                 <input id="end" type="date" name="end" class="validate" required>
+                                <?php endif; ?>                                
                                 <label for="end">Fecha de egreso</label>
                             </div>                            
                         </div>      
 
                         <div class="row">                        
                             <div class="input-field col s6">
+                                <?php if (isset($inputs["name"])): ?>         
+                                <input id="name" type="text" name="name" class="validate" value="<?= $inputs["name"]; ?>" required>
+                                <?php else: ?>
                                 <input id="name" type="text" name="name" class="validate" required>
+                                <?php endif; ?>                                   
                                 <label for="name">Nombre</label>
                             </div>
                             <div class="input-field col s6">
+                                <?php if (isset($inputs["l_name"])): ?>         
+                                <input id="l_name" type="text" name="l_name" class="validate" value="<?= $inputs["l_name"]; ?>" required>
+                                <?php else: ?>
                                 <input id="l_name" type="text" name="l_name" class="validate" required>
+                                <?php endif; ?>                                                             
                                 <label for="l_name">Apellido</label>
                             </div>                                                                          
                         </div>
 
                         <div class="row">
                             <div class="input-field col s4">
+                                <?php if (isset($inputs["addr"])): ?>         
+                                <input id="addr" type="text" name="addr" class="validate" value="<?= $inputs["addr"]; ?>" required>
+                                <?php else: ?>
                                 <input id="addr" type="text" name="addr" class="validate" required>
+                                <?php endif; ?>                                                                                         
                                 <label for="addr">Domicilio</label>
                             </div>
                             <div class="input-field col s4">
+                                <?php if (isset($inputs["city"])): ?>         
+                                <input id="city" type="text" name="city" class="validate" value="<?= $inputs["city"]; ?>" required>
+                                <?php else: ?>
                                 <input id="city" type="text" name="city" class="validate" required>
+                                <?php endif; ?>                                                                           
                                 <label for="city">Ciudad</label>
                             </div>
                             <div class="input-field col s4">
+                            <?php if (isset($inputs["cp"])): ?>         
+                                <input id="cp" type="number" name="cp" class="validate" value="<?= $inputs["cp"]; ?>" required>
+                                <?php else: ?>
                                 <input id="cp" type="number" name="cp" class="validate" required>
+                                <?php endif; ?>                                                                           
                                 <label for="cp">Codigo Postal</label>
                             </div>                                                        
                         </div>
                         <div class="row">
                             <div class="input-field col s8">
+                            <?php if (isset($inputs["email"])): ?>         
+                                <input id="email" type="email" name="email" class="validate" value="<?= $inputs["email"]; ?>" required>
+                                <?php else: ?>
                                 <input id="email" type="email" name="email" class="validate" required>
+                                <?php endif; ?>                                                                           
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s4">
+                            <?php if (isset($inputs["phone"])): ?>         
+                                <input id="phone" type="number" name="phone" class="validate" value="<?= $inputs["phone"]; ?>" required>
+                                <?php else: ?>
                                 <input id="phone" type="number" name="phone" class="validate" required>
+                                <?php endif; ?>                                                                           
                                 <label for="phone">Telefono</label>
                             </div>                            
                         </div>
                         <div class="row">
                             <div class="input-field col s4">
+                            <?php if (isset($inputs["fam"])): ?>         
+                                <input id="fam" type="text" name="fam" class="validate" value="<?= $inputs["fam"]; ?>" required>
+                                <?php else: ?>
                                 <input id="fam" type="text" name="fam" class="validate" required>
+                                <?php endif; ?>                                                                           
                                 <label for="fam">Grupo familiar</label>
                             </div>       
 
@@ -111,7 +151,11 @@
                             </div>
 
                             <div class="input-field col s4">
-                                <input id="phone2" type="number" name="auxiliary_phone" class="validate">
+                            <?php if (isset($inputs["aux_phone"])): ?>         
+                                <input id="phone2" type="number" name="auxiliary_phone" class="validate" value="<?= $inputs["aux_phone"]; ?>" required>
+                                <?php else: ?>
+                                <input id="phone2" type="number" name="auxiliary_phone" class="validate" required>
+                                <?php endif; ?>                                                                           
                                 <label for="phone2">Telefono auxiliar</label>
                             </div>                                  
                         </div>
@@ -153,7 +197,11 @@
 
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="price" type="number" name="price" class="validate">
+                            <?php if (isset($inputs["price"])): ?>         
+                                <input id="price" type="number" name="price" class="validate" value="<?= $inputs["price"]; ?>" required>
+                                <?php else: ?>
+                                <input id="price" type="number" name="price" class="validate" required>
+                                <?php endif; ?>                                                                           
                                 <label for="price">Precio</label>
                             </div>
                         </div>
@@ -243,9 +291,10 @@
     const dateStart = document.getElementById('start'); 
     const dateEnd = document.getElementById('end'); 
 
+console.log(dateStart, dateEnd);
+
     selectStay.addEventListener('change', (e)=> {
-        if (selectStay.value === 'january' ) {
-            
+        if (selectStay.value === 'january' ) {            
             const date = new Date();
             date.setMonth(0);
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -272,8 +321,8 @@
 
         } else {
 
-            dateStart.value = 0;            
-            dateEnd.value = 0; 
+            // dateStart.value = 0;            
+            // dateEnd.value = 0; 
             
         }
     });    

@@ -15,7 +15,7 @@
         }
         
         
-		public function addAdminPath($alert = "", $success = "") {
+		public function addAdminPath($alert = "", $success = "", $inputs = array()) {
             if ($admin = $this->isLogged()) {                                       
                 $title = "Administrador - Añadir";
                 require_once(VIEWS_PATH . "head.php");
@@ -50,6 +50,15 @@
         }
   
         public function register($name, $lastName, $email, $dni, $password) {
+
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "name"=> $name, 
+                "lastName"=> $lastName,
+                "email"=> $email,
+                "dni"=> $dni
+            );
+
 			if ($this->isFormRegisterNotEmpty($name, $lastName, $email, $dni, $password) && $this->validateEmailForm($email)) {     
                 $adminTemp = new Admin();
                 $adminTemp->setEmail($email);
@@ -61,14 +70,14 @@
                         if ($this->add($name, $lastName, $dni, $email, $passwordHash)) {                                                
                             return $this->addAdminPath(null, ADMIN_ADDED);
                         } else {                        
-                            return $this->addAdminPath(DB_ERROR, null);        
+                            return $this->addAdminPath(DB_ERROR, null, $inputs);        
                         }
                     }
-                    return $this->addAdminPath(DNI_ERROR, null);
+                    return $this->addAdminPath(DNI_ERROR, null, $inputs);
                 }                
-                return $this->addAdminPath(REGISTER_ERROR, null);
+                return $this->addAdminPath(REGISTER_ERROR, null, $inputs);
             }            
-            return $this->addAdminPath(EMPTY_FIELDS, null);
+            return $this->addAdminPath(EMPTY_FIELDS, null, $inputs);
 		}
 
         private function isFormRegisterNotEmpty($name, $lastName, $email, $dni, $password) {
