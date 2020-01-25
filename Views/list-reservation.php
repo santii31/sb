@@ -163,7 +163,7 @@
                                             <i class="material-icons left"></i>
                                             Sombrilla
                                         </a>  
-                                        <a href="<?= FRONT_ROOT ?>parking/parkingMap/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                        <a href="<?= FRONT_ROOT ?>parking/parkingMap/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left"></i>
                                             Cochera
                                         </a>                                        
