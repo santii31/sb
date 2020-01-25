@@ -144,14 +144,6 @@
                                 <label for="fam">Grupo familiar</label>
                             </div>       
 
-                            <div class="input-field col s4">
-                                <select name="payment_method">
-                                    <option value="" disabled selected>Seleccione su opcion</option>
-                                    <option value="cash">Efectivo</option>
-                                    <option value="check">Cheque</option>
-                                </select>
-                                <label>Metodo de pago</label>
-                            </div>
 
                             <div class="input-field col s4">
                             <?php if (isset($inputs["aux_phone"])): ?>         

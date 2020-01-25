@@ -3109,6 +3109,124 @@ BEGIN
         `staff`.`id` = id;	
 END$$
 
+<<<<<<< HEAD
+---------------------------- CHECK ---------------------------
+
+CREATE TABLE check (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `bank` VARCHAR(255) NOT NULL,
+    'account_number' INT NOT NULL,
+    'check_number' INT NOT NULL,
+    'FK_id_client' INT NOT NULL,
+    CONSTRAINT `FK_id_client_check` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`)
+);
+
+DROP procedure IF EXISTS `check_add`;
+DELIMITER $$
+CREATE PROCEDURE check_add (
+                                IN bank VARCHAR(255),
+                                IN account_number INT,
+                                IN check_number INT,
+                                IN FK_id_client INT,
+                                OUT lastId INT  
+                            )                             
+BEGIN
+	INSERT INTO check (
+			check.bank,
+			check.account_number,
+			check.check_number,
+            check.FK_id_client
+	)
+    VALUES
+        (bank,account_number,check_number,FK_id_client);
+        SET lastId = LAST_INSERT_ID();	
+	    SELECT lastId;
+END$$
+
+DROP procedure IF EXISTS `check_getById`;
+DELIMITER $$
+CREATE PROCEDURE check_getById (IN id INT)
+BEGIN
+	SELECT check.id AS check_id,
+           check.bank AS check_bank,
+           check.account_number AS check_accountNumber,
+           check.check_number AS check_number,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_addres,
+		   client.is_active AS client_isActive
+    FROM `check` 
+    INNER JOIN client ON check.FK_id_client = client.id
+    WHERE `check`.`id` = id;
+END$$
+
+DROP procedure IF EXISTS `check_getByClientId`;
+DELIMITER $$
+CREATE PROCEDURE check_getByClientId (IN id INT)
+BEGIN
+	SELECT check.id AS check_id,
+           check.bank AS check_bank,
+           check.account_number AS check_accountNumber,
+           check.check_number AS check_number,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+		   client.is_active AS client_isActive
+    FROM `check` 
+    INNER JOIN client ON check.FK_id_client = client.id
+    WHERE `check`.`FK_id_client` = id;
+END$$
+
+DROP procedure IF EXISTS `check_getByBank`;
+DELIMITER $$
+CREATE PROCEDURE check_getByBank (IN bank VARCHAR(255))
+BEGIN
+	SELECT check.id AS check_id,
+           check.bank AS check_bank,
+           check.account_number AS check_accountNumber,
+           check.check_number AS check_number,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+		   client.is_active AS client_isActive
+    FROM `check` 
+    INNER JOIN client ON check.FK_id_client = client.id
+    WHERE `check`.`bank` = bank;
+END$$
+
+
+DROP procedure IF EXISTS `check_getAll`;
+DELIMITER $$
+CREATE PROCEDURE check_getAll ()
+BEGIN
+	SELECT check.id AS check_id,
+           check.bank AS check_bank,
+           check.account_number AS check_accountNumber,
+           check.check_number AS check_number,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+		   client.is_active AS client_isActive
+    FROM `check` 
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    ORDER BY id ASC;
+=======
 
 
 ---------------------------- ACCOUTING ---------------------------
@@ -3159,4 +3277,5 @@ DELIMITER $$
 CREATE PROCEDURE diary_balance_getByDate (IN date DATE)
 BEGIN
 	SELECT * FROM `diary_balance` WHERE `diary_balance`.`date` = date;
+>>>>>>> b4401df867bedb014f93830e9eecc2a3187960fd
 END$$

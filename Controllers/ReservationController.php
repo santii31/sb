@@ -5,7 +5,10 @@
     use Models\Admin as Admin;
     use Models\Client as Client;    
     use Models\BeachTent as BeachTent;
-    use Models\Reservation as Reservation;        
+    use Models\Reservation as Reservation;
+    use Models\Check as Check;
+    use DAO\CheckDAO as CheckDAO;
+    use DAO\ClientDAO as ClientDAO;        
     use DAO\ReservationDAO as ReservationDAO;    
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
@@ -22,11 +25,13 @@
         private $adminController;
         private $clientController;          
         private $parkingController;
+        private $clientDAO;
         private $reservationxserviceDAO;
         private $servicexlockerDAO;
         private $servicexparasolDAO;      
         private $servicexparkingDAO;
         private $configDAO;
+        private $checkDAO;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();                                    
@@ -36,6 +41,8 @@
             $this->servicexparasolDAO = new ServicexParasolDAO();
             $this->servicexparkingDAO = new ServicexParkingDAO();
             $this->configDAO = new ConfigDAO();
+            $this->clientDAO = new ClientDAO();
+            $this->checkDAO = new CheckDAO();
         }               
 
 
