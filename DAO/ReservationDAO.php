@@ -654,7 +654,111 @@
 				return false;			
 				//echo $e;					
 			}
-		}		
+		}
+		
+		
+
+		// 
+		public function getActiveCount() {
+            try {				
+                $query = "CALL reservation_getActiveCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getDisableCount() {
+            try {				
+                $query = "CALL reservation_getDisableCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;                
+            }
+        }
+
+        public function getAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$beachTent = new BeachTent();					
+					$beachTent->setNumber($row["tent_number"]);
+					
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($list, $reservation);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+				return false;
+				// echo $ex;
+            }
+        }
+
+        public function getAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$beachTent = new BeachTent();					
+					$beachTent->setNumber($row["tent_number"]);
+					
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($list, $reservation);                          
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
 		
     }
 

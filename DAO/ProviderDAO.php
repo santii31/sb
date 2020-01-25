@@ -311,6 +311,109 @@
 			}
 		}
 		
+		public function getActiveCount() {
+            try {				
+                $query = "CALL provider_getActiveCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getDisableCount() {
+            try {				
+                $query = "CALL provider_getDisableCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;                
+            }
+        }
+
+        public function getAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL provider_getAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$provider = new Provider();
+					$provider->setId($row["id"]);
+					$provider->setName($row["name"]);
+					$provider->setLastName($row["lastname"]);
+                    $provider->setPhone($row["tel"]);
+                    $provider->setEmail($row["email"]);
+					$provider->setDni($row["dni"]);				
+                    $provider->setAddress($row["address"]);
+                    $provider->setCuilNumber($row["cuil"]);
+                    $provider->setSocialReason($row["social_reason"]);
+					$provider->setBilling($row["type_billing"]);
+					$provider->setItem($row["item"]);
+					$provider->setIsActive($row["is_active"]);
+
+					$admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+					$provider->setRegisterBy($admin);
+
+					array_push($list, $provider);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL provider_getAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$provider = new Provider();
+					$provider->setId($row["id"]);
+					$provider->setName($row["name"]);
+					$provider->setLastName($row["lastname"]);
+                    $provider->setPhone($row["tel"]);
+                    $provider->setEmail($row["email"]);
+					$provider->setDni($row["dni"]);				
+                    $provider->setAddress($row["address"]);
+                    $provider->setCuilNumber($row["cuil"]);
+                    $provider->setSocialReason($row["social_reason"]);
+					$provider->setBilling($row["type_billing"]);
+					$provider->setItem($row["item"]);
+					$provider->setIsActive($row["is_active"]);
+					
+					$admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+					$provider->setRegisterBy($admin);
+
+					array_push($list, $provider);       
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
 
     }
 

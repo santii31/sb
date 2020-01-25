@@ -10,22 +10,22 @@
                 <div class="divider mb-divider"></div>
                 
                 <div class="more-list">
-                    <?php if (isset($showAll)): ?>
-                    <a href="<?= FRONT_ROOT ?>admin/listAdminPath">                    
+                    <?php if (isset($showDisables)): ?>
+                    <a href="<?= FRONT_ROOT ?>admin/listAdminPath">              
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar solo activos
+                            Mostrar solo habilitados
                         </span>    
                     </a>
-                    <?php else: ?>
-                    <a href="<?= FRONT_ROOT ?>admin/listAdminPath/all">                    
+                    <?php else: ?>                        
+                        <a href="<?= FRONT_ROOT ?>admin/listAdminPath/1/disables">                    
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar lista completa (Incluyendo los deshabilitados)
+                            Mostrar deshabilitados
                         </span>    
                     </a>
                     <?php endif; ?>
-                </div>                
+                </div>                  
 
                 <?php if ($success != null): ?>
                 <div class="row">
@@ -63,8 +63,7 @@
                 <div class="row">                    
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>
-                        <tr>
-                            <th>#</th>
+                        <tr>                            
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Email</th>
@@ -75,8 +74,7 @@
 
                         <tbody>
                             <?php foreach ($admins as $admin): ?>
-                                <tr>
-                                    <td> <?= $admin->getId(); ?> </td>
+                                <tr>                                    
                                     <td> <?= ucfirst( $admin->getName() ); ?> </td>
                                     <td> <?= ucfirst( $admin->getLastName() ); ?> </td>
                                     <td> <?= $admin->getEmail(); ?> </td>
@@ -103,6 +101,102 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
+                    <?php if (isset($adminsCount)): ?>
+                        <?php if ($adminsCount > MAX_ITEMS_PAGE): ?>
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>admin/listAdminPath/<?= $page - 1; ?>">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>
+                                        <a href="<?= FRONT_ROOT ?>admin/listAdminPath/<?= $i; ?>">
+                                            <?php $current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $current): ?>
+                                    <li class="waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>admin/listAdminPath/<?= $page + 1; ?>">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+
+                    <?php elseif (isset($d_adminsCount)): ?>
+                        <?php if ($d_adminsCount > MAX_ITEMS_PAGE): ?>                            
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>admin/listAdminPath/<?= $page - 1; ?>/disables">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $d_pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>                                    
+                                        <a href="<?= FRONT_ROOT ?>admin/listAdminPath/<?= $i; ?>/disables">
+                                            <?php $d_current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $d_current): ?>
+                                    <li class="waves-effect">                                    
+                                        <a href="<?= FRONT_ROOT ?>admin/listAdminPath/<?= $page + 1; ?>/disables">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+                    <?php endif; ?>
+
                 </div>
             </div>
 

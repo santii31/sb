@@ -139,14 +139,39 @@
             }
         }   
 
-        public function listAdminPath($showAll = null, $alert = "", $success = "") {
+        public function listAdminPath($page = 1, $showDisables = null, $alert = "", $success = "") {
             if ($admin = $this->isLogged()) {      
-                $title = "Administradores";
-                if ($showAll != null) {
-                    $admins = $this->adminDAO->getAll();
-                } else {
-                    $admins = $this->adminDAO->getAllActives();                    
-                }
+
+                if ($showDisables == null) {
+                    $title = "Administradores";
+                    $adminsCount = $this->adminDAO->getActiveCount();         
+                    $pages = ceil ($adminsCount / MAX_ITEMS_PAGE);                                                                  
+
+                    // This variable will contain the number of the current page
+                    $current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $admins = $this->adminDAO->getAllActiveWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $admins = $this->adminDAO->getAllActiveWithLimit($startFrom);                    
+                    }
+                } else {                    
+                    $title = "Administradores - Deshabilitados";
+                    $d_adminsCount = $this->adminDAO->getDisableCount();         
+                    $d_pages = ceil ($d_adminsCount / MAX_ITEMS_PAGE);                                                                           
+
+                    // This variable will contain the number of the current page
+                    $d_current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $admins = $this->adminDAO->getAllDisableWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $admins = $this->adminDAO->getAllDisableWithLimit($startFrom);                    
+                    }                                      
+                }   
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-admins.php");
@@ -196,9 +221,9 @@
                     $update_by = $this->isLogged();
 
                     if ($this->adminDAO->update($admin, $update_by)) {
-                        return $this->listAdminPath(null, null, ADMIN_UPDATE);
+                        return $this->listAdminPath(1, null, null, ADMIN_UPDATE);
                     } else {
-                        return $this->listAdminPath(null, DB_ERROR, null);        
+                        return $this->listAdminPath(1, null, DB_ERROR, null);        
                     }                                        
                 }                
                 return $this->updatePath($id, REGISTER_ERROR);
@@ -230,9 +255,9 @@
                 $admin_enable = new Admin();
                 $admin_enable->setId($id);
                 if ($this->adminDAO->enableById($admin_enable, $admin)) {
-                    return $this->listAdminPath(null, null, ADMIN_ENABLE);
+                    return $this->listAdminPath(1, null, null, ADMIN_ENABLE);
                 } else {
-                    return $this->listAdminPath(null, DB_ERROR, null);
+                    return $this->listAdminPath(1, null, DB_ERROR, null);
                 }
             } else {
                 return $this->userPath();
@@ -248,9 +273,9 @@
                     $admin_disable = new Admin();
                     $admin_disable->setId($id);           
                     if ($this->adminDAO->disableById($admin_disable, $admin)) {
-                        return $this->listAdminPath(null, null, ADMIN_DISABLE);
+                        return $this->listAdminPath(1, null, null, ADMIN_DISABLE);
                     } else {
-                        return $this->listAdminPath(null, DB_ERROR, null);
+                        return $this->listAdminPath(1, null, DB_ERROR, null);
                     }                     
                 }
             } else {

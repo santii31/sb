@@ -268,6 +268,23 @@
             return $name;
         }
 
+        // 
+        public function getActiveCount() {
+            return $this->productDAO->getActiveCount();
+        }
+
+        public function getDisableCount() {
+            return $this->productDAO->getDisableCount();
+        }
+
+        public function getAllActiveWithLimit($start) {
+            return $this->productDAO->getAllActiveWithLimit($start);
+        }
+
+        public function getAllDisableWithLimit($start) {
+            return $this->productDAO->getAllDisableWithLimit($start);
+        }
+
     }
     
 ?>

@@ -7,7 +7,7 @@
                         <?= $title ?>
                     </h2>
                 </div>
-                <div class="divider mb-divider"></div>         
+                <div class="divider mb-divider"></div>
 
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
@@ -18,37 +18,41 @@
                             </label>                            
                         </div>                    
                     </div>
-                </nav>                
-                
-                <div class="row">                    
-                    <table class="responsive-table striped centered" id="table-filter">
-                        <thead>
-                        <tr>                            
-                            <th>Nombre</th>
-                            <th>Apellido</th>                            
-                            <th>Cantidad de ventas</th>
-                            <th>Cantidad en pesos</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
+                </nav>                 
 
+                <div class="row">
+                    <div class="col s12">
+                        <h5>• Total gastado en personal: $<?= number_format($total, 2, ',', '.'); ?></h5>
+                    </div>
+                </div>
+
+                <div class="row">    
+                    <table class="responsive-table striped centered" id="table-filter">
+                        <thead>                            
+                            <tr>                                
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Cargo</th>
+                                <th>Fecha inicio</th>
+                                <th>Fecha fin</th>
+                                <th>Sueldo</th>                                
+                            </tr>
+                        </thead>
+                                               
                         <tbody>
-                            <?php foreach ($admins as $admin): ?>
+                            <?php foreach ($staffs as $staff): ?>
                                 <tr>                                    
-                                    <td> <?= ucfirst( $admin->getName() ); ?> </td>
-                                    <td> <?= ucfirst( $admin->getLastName() ); ?> </td>
-                                    <td> <?= $this->adminController->getAllCountRsvByAdmin($admin); ?></td>
-                                    <td> $<?= number_format($this->adminController->getTotalRsvById($admin), 2, ',', '.'); ?></td>
-                                    <td>
-                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationByAdminPath/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small">
-                                            <i class="material-icons left">list</i>
-                                            Ver reservas
-                                        </a>
-                                    </td>                                           
+                                    <td> <?= ucfirst( $staff->getName() ); ?> </td>
+                                    <td> <?= ucfirst( $staff->getLastName() ); ?> </td>
+                                    <td> <?= ucfirst( $staff->getPosition() ); ?> </td>                                    
+                                    <td> <?= date("d-m-Y", strtotime($staff->getDateStart())); ?> </td>
+                                    <td> <?= date("d-m-Y", strtotime($staff->getDateEnd())); ?> </td>
+                                    <td> $<?= number_format($staff->getSalary(), 2, ',', '.'); ?> </td>                                           
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
-                    </table>
+                    </table>                                          
+
                 </div>
             </div>
 
@@ -80,3 +84,4 @@
     });
 
 </script>
+ 

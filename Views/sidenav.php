@@ -287,7 +287,14 @@
                                             <i class="material-icons left">search</i>
                                             Filtrar por fechas
                                         </a>
-                                    </li>                                                                     
+                                    </li>         
+
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>accounting/staffSalaryPath" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">account_circle</i>
+                                            Sueldo del personal
+                                        </a>
+                                    </li>                                                              
                                 </ul>
                             </div>
                         </li>                    

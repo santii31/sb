@@ -243,6 +243,90 @@
 				return false;				
 			}
 		}
+
+		public function getActiveCount() {
+            try {				
+                $query = "CALL client_potential_getActiveCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getDisableCount() {
+            try {				
+                $query = "CALL client_potential_getDisableCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;                
+            }
+        }
+
+        public function getAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL client_potential_getAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$client = new ClientPotential();
+					$client->setId($row["id"]);
+					$client->setName($row["name"]);
+					$client->setLastName($row["lastname"]);
+					$client->setAddress($row["address"]);
+					$client->setCity($row["city"]);				
+					$client->setEmail($row["email"]);
+					$client->setPhone($row["tel"]);
+					$client->setNumTent($row["num_tent"]);
+					$client->setIsActive($row["is_active"]);                    
+					array_push($list, $client);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL client_potential_getAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$client = new ClientPotential();
+					$client->setId($row["id"]);
+					$client->setName($row["name"]);
+					$client->setLastName($row["lastname"]);
+					$client->setAddress($row["address"]);
+					$client->setCity($row["city"]);				
+					$client->setEmail($row["email"]);
+					$client->setPhone($row["tel"]);
+					$client->setNumTent($row["num_tent"]);
+					$client->setIsActive($row["is_active"]);                    
+					array_push($list, $client);                                           
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
 	
     }
 

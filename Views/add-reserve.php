@@ -46,6 +46,9 @@
                                     <option value="febrero_dia">Febrero - Dia</option>
                                     <option value="febero_primer_quincena">Febrero - Primer quincena</option>
                                     <option value="febrero_segunda_quincena">Febrero - Segunda quincena</option>
+                                    <option value="diario">Día</option>
+                                    <option value="periodo">Periodo</option>
+                                    <option value="fin_semana">Fin de semana</option>
                                 </select>
                                 <label>Estadia</label>  
                             </div>  
@@ -132,7 +135,7 @@
                             </div>                            
                         </div>
                         <div class="row">
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                             <?php if (isset($inputs["fam"])): ?>         
                                 <input id="fam" type="text" name="fam" class="validate" value="<?= $inputs["fam"]; ?>" required>
                                 <?php else: ?>
@@ -142,7 +145,7 @@
                             </div>       
 
 
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                             <?php if (isset($inputs["aux_phone"])): ?>         
                                 <input id="phone2" type="number" name="auxiliary_phone" class="validate" value="<?= $inputs["aux_phone"]; ?>" required>
                                 <?php else: ?>
@@ -255,14 +258,14 @@
                         </div>
                         <div class="col s4">
                             <span>
-                                • Precio por primera quincena en febrero: $<?= $config->getPriceTentFebruaryFirstFortnigh(); ?>
+                                • Precio primera quincena en febrero: $<?= $config->getPriceTentFebruaryFirstFortnigh(); ?>
                             </span>
                         </div>                       
                     </div>
                     <div class="row">
                         <div class="col s4">
                             <span>
-                                • Precio por segunda quincena en febrero: $<?= $config->getPriceTentFebruarySecondFortnigh(); ?>
+                                • Precio segunda quincena en febrero: $<?= $config->getPriceTentFebruarySecondFortnigh(); ?>
                             </span>
                         </div> 
                         <div class="col s4">
@@ -283,10 +286,9 @@
     const dateStart = document.getElementById('start'); 
     const dateEnd = document.getElementById('end'); 
 
-console.log(dateStart, dateEnd);
-
     selectStay.addEventListener('change', (e)=> {
-        if (selectStay.value === 'january' ) {            
+        if (selectStay.value === 'enero' ) {     
+                   
             const date = new Date();
             date.setMonth(0);
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -298,7 +300,7 @@ console.log(dateStart, dateEnd);
             dateStart.value = f_day;            
             dateEnd.value = l_day;            
 
-        } else if (selectStay.value == 'february' ) {
+        } else if (selectStay.value == 'febrero' ) {
             
             const date = new Date();
             date.setMonth(1);
@@ -313,8 +315,8 @@ console.log(dateStart, dateEnd);
 
         } else {
 
-            // dateStart.value = 0;            
-            // dateEnd.value = 0; 
+            dateStart.value = 0;            
+            dateEnd.value = 0; 
             
         }
     });    

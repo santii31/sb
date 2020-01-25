@@ -243,6 +243,100 @@
 			}
 		}
 
+		public function getActiveCount() {
+            try {				
+                $query = "CALL product_getActiveCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+				return false;
+				// echo $e;
+            }
+        }
+
+        public function getDisableCount() {
+            try {				
+                $query = "CALL product_getDisableCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+				return false;                
+				// echo $e;
+            }
+        }
+
+        public function getAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL product_getAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$product = new Product();
+                    $product->setId($row["product_id"]);
+                    $product->setName($row["product_name"]);
+					$product->setPrice($row["product_price"]);
+					$product->setQuantity($row["product_quantity"]);
+					$product->setIsActive($row["product_isActive"]);
+					$product->setDateRegister($row["product_date_register"]);
+
+                    $category = new Category();
+                    $category->setId($row["category_id"]);
+                    $category->setName($row["category_name"]);                    
+
+                    $product->setCategory($category);
+					array_push($list, $product);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+				return false;
+				// echo $ex;
+            }
+        }
+
+        public function getAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL product_getAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$product = new Product();
+                    $product->setId($row["product_id"]);
+                    $product->setName($row["product_name"]);
+					$product->setPrice($row["product_price"]);
+					$product->setQuantity($row["product_quantity"]);
+					$product->setIsActive($row["product_isActive"]);
+					$product->setDateRegister($row["product_date_register"]);
+
+                    $category = new Category();
+                    $category->setId($row["category_id"]);
+                    $category->setName($row["category_name"]);                    
+
+                    $product->setCategory($category);
+					array_push($list, $product);
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+				return false;
+				// echo $ex;
+            }
+        }
+
     }
 
  ?>

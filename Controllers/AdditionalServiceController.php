@@ -64,9 +64,9 @@
 
            if (!empty($id_locker_man) || !empty($id_locker_woman)) {
                 
-                $flag=0;
+                $flag = 0;
                 $service = $this->reservationxserviceDAO->getServiceByReservation($id_reserve);
-                if (!empty($id_locker_man)){
+                if (!empty($id_locker_man)) {
                     $lockerMan = new Locker();
                     $servicexlocker = new ServicexLocker();
                      
@@ -78,7 +78,7 @@
                     
                     $service->setTotal($totalService);
                     $reservation->setPrice($totalReserve);
-                    echo $reservation->getPrice() . "|";
+                    // echo $reservation->getPrice() . "|";
                     $update_by = $this->adminController->isLogged();
                     $this->additionalServiceDAO->update($service, $update_by);
                     $this->reservationDAO->update($reservation, $update_by);
@@ -86,12 +86,12 @@
                     $servicexlocker->setIdService($service->getId());
                     $servicexlocker->setIdLocker($locker->getId());
                     $reservationAux = $this->reservationDAO->getById($reservation);
-                    echo $reservationAux->getPrice();
+                    // echo $reservationAux->getPrice();
                     $this->servicexlockerDAO->add($servicexlocker);
                     $flag++;
                 }
 
-                if (!empty($id_locker_woman)){
+                if (!empty($id_locker_woman)) {
                     $totalService = 0;
                     $totalReserve = 0;
                     $lockerWoman = new Locker();
@@ -122,6 +122,7 @@
                 }                              
             }
             if ($flag > 0) {                
+                // CAMBIAR MENSAJE DE ERROR???????
                 return $this->addLockerPath($id_reserve, DB_ERROR);
             } else {
                 return $this->hasAdditionalService($id_reserve);

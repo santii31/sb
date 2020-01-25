@@ -1,15 +1,18 @@
 <?php
 
     namespace Controllers;    
-        
+    
+    use Models\Staff as Staff;
     use Models\DiaryBalance as DiaryBalance;
     use DAO\DiaryBalanceDAO as DiaryBalanceDAO;
+    use Controllers\StaffController as StaffController; 
     use Controllers\AdminController as AdminController; 
     use Controllers\ReservationController as ReservationController; 
 
     class AccountingController {
 
-        private $adminController;        
+        private $adminController;       
+        private $staffController; 
         private $reservationController;        
         private $diaryBalanceDAO;    
 
@@ -249,7 +252,8 @@
             if ($admin = $this->adminController->isLogged()) {    
                 if (!empty($date_start) && !empty($date_end)) {
 
-                    $title = "Contabilidad - Ventas entre el " . date("d/m/Y" , strtotime($date_start)) . ' y el ' . date("d/m/Y" , strtotime($date_end));   
+                    $title = "Contabilidad - Ventas entre el " . date("d/m/Y" , strtotime($date_start)) . 
+                             " y el " . date("d/m/Y" , strtotime($date_end));   
 
                     $this->reservationController = new ReservationController();
                     $rsvList = $this->reservationController->getReservationsBetweenDates($date_start, $date_end);
@@ -271,9 +275,27 @@
 				return $this->adminController->userPath();
 			}
         }
-
+        
         public function staffSalaryPath() {
+            if ($admin = $this->adminController->isLogged()) {                       
+                $title = "Contabilidad - Sueldos del personal";       
+                $total = 0;
+                $this->staffController = new StaffController();
+                $staffs = $this->staffController->getAllStAff();
 
+                foreach ($staffs as $staff) {
+                    if ($staff->getIsActive()) {
+                        $total += $staff->getSalary();
+                    }
+                }
+
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "accounting-staff.php");
+                require_once(VIEWS_PATH . "footer.php");                
+			} else {
+				return $this->adminController->userPath();
+			}            
         }
 
     }

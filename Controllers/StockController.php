@@ -17,10 +17,23 @@
         }   
         
 
-        public function listStockPath($alert = "", $success = "") {
+        public function listStockPath($page = 1, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
+                
                 $title = "Stock";                
-                $products = $this->productController->getProducts();        
+                $productsCount = $this->productController->getActiveCount();         
+                $pages = ceil ($productsCount / MAX_ITEMS_PAGE);                                                                  
+
+                // This variable will contain the number of the current page
+                $current = 0;                  
+
+                if ($page == 1) {                                        
+                    $products = $this->productController->getAllActiveWithLimit(0);
+                } else {
+                    $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                    $products = $this->productController->getAllActiveWithLimit($startFrom);                    
+                }
+                                  
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "stock.php");
@@ -51,11 +64,11 @@
                     $product->setQuantity($currQuantity);
 
                     if ($this->productController->addQuantity($product, $admin)) {
-                        return $this->listStockPath(null, STOCK_ADDED);            
+                        return $this->listStockPath(1, null, STOCK_ADDED);            
                     }
-                    return $this->listStockPath(DB_ERROR, null);   
+                    return $this->listStockPath(1, DB_ERROR, null);   
                 }
-                return $this->listStockPath(STOCK_ZERO, null);  
+                return $this->listStockPath(1, STOCK_ZERO, null);  
             } else {
                 return $this->adminController->userPath();
             }          
@@ -81,13 +94,13 @@
                         $product->setQuantity($currQuantity);
     
                         if ($this->productController->removeQuantity($product, $admin)) {
-                            return $this->listStockPath(null, STOCK_REMOVE);            
+                            return $this->listStockPath(1, null, STOCK_REMOVE);            
                         }
-                        return $this->listStockPath(DB_ERROR, null);            
+                        return $this->listStockPath(1, DB_ERROR, null);            
                     }
-                    return $this->listStockPath(STOCK_REMOVE_ERROR, null);            
+                    return $this->listStockPath(1, STOCK_REMOVE_ERROR, null);            
                 }
-                return $this->listStockPath(STOCK_ZERO, null);  
+                return $this->listStockPath(1, STOCK_ZERO, null);  
             } else {
                 return $this->adminController->userPath();
             } 

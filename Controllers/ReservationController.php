@@ -178,14 +178,39 @@
 			}
         }
         
-        public function listReservationPath($showAll = null, $alert = "", $success = "") {
+        public function listReservationPath($page = 1, $showDisables = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Reservas";    
-                if ($showAll != null) {
-                    $reservations = $this->reservationDAO->getAllDisables();
-                } else {
-                    $reservations = $this->reservationDAO->getAllActives();                                     
-                }                             
+                
+                if ($showDisables == null) {
+                    $title = "Reservas";    
+                    $rsvCount = $this->reservationDAO->getActiveCount();                    
+                    $pages = ceil ($rsvCount / MAX_ITEMS_PAGE);                                                                  
+
+                    // This variable will contain the number of the current page
+                    $current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $reservations = $this->reservationDAO->getAllActiveWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $reservations = $this->reservationDAO->getAllActiveWithLimit($startFrom);                    
+                    }
+                } else {                    
+                    $title = "Reservas - Deshabilitadas";
+                    $d_rsvCount = $this->reservationDAO->getDisableCount();         
+                    $d_pages = ceil ($d_rsvCount / MAX_ITEMS_PAGE);                                                                           
+
+                    // This variable will contain the number of the current page
+                    $d_current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $reservations = $this->reservationDAO->getAllDisableWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $reservations = $this->reservationDAO->getAllDisableWithLimit($startFrom);                    
+                    }                                      
+                }   
+                      
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-reservation.php");
@@ -200,9 +225,9 @@
                 $reservation = new Reservation();
                 $reservation->setId($id);
                 if ($this->reservationDAO->enableById($reservation, $admin)) {
-                    return $this->listReservationPath(null, null, RESERVATION_ENABLE);
+                    return $this->listReservationPath(1, null, null, RESERVATION_ENABLE);
                 } else {
-                    return $this->listReservationPath(null, DB_ERROR, null);
+                    return $this->listReservationPath(1, null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -214,9 +239,9 @@
                 $reservation = new Reservation();
                 $reservation->setId($id);
                 if ($this->reservationDAO->disableById($reservation, $admin)) {
-                    return $this->listReservationPath(null, null, RESERVATION_DISABLE);
+                    return $this->listReservationPath(1, null, null, RESERVATION_DISABLE);
                 } else {
-                    return $this->listReservationPath(null, DB_ERROR, null);
+                    return $this->listReservationPath(1, null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -407,7 +432,7 @@
             }
         }
 
-        public function addCheck($bank, $account_number, $check_number, $id_client){
+        public function addCheck($bank, $account_number, $check_number, $id_client, $id_reserve){
             if(!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($id_client)){
                 $check = new Check();
                 $clientTemp = new Client();

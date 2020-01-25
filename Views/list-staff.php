@@ -10,18 +10,18 @@
                 <div class="divider mb-divider"></div>
 
                 <div class="more-list">
-                    <?php if (isset($showAll)): ?>
+                    <?php if (isset($showDisables)): ?>
                     <a href="<?= FRONT_ROOT ?>staff/listStaffPath">                    
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar solo activos
+                            Mostrar solo habilitados
                         </span>    
                     </a>
                     <?php else: ?>
-                        <a href="<?= FRONT_ROOT ?>staff/listStaffPath/all">                    
+                        <a href="<?= FRONT_ROOT ?>staff/listStaffPath/1/disables">                    
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar lista completa (Incluyendo los deshabilitados)
+                            Mostrar deshabilitados
                         </span>    
                     </a>
                     <?php endif; ?>
@@ -62,8 +62,7 @@
                 <div class="row">    
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
-                            <tr>
-                                <th>#</th>
+                            <tr>                                
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Cargo</th>
@@ -77,14 +76,13 @@
                                                
                         <tbody>
                             <?php foreach ($staffs as $staff): ?>
-                                <tr>
-                                    <td> <?= $staff->getId(); ?> </td>
+                                <tr>                                
                                     <td> <?= ucfirst( $staff->getName() ); ?> </td>
                                     <td> <?= ucfirst( $staff->getLastName() ); ?> </td>
                                     <td> <?= ucfirst( $staff->getPosition() ); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($staff->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($staff->getDateEnd())); ?> </td>
-                                    <td> $<?= $staff->getSalary(); ?> </td>
+                                    <td> $<?= number_format($staff->getSalary(), 2, ',', '.'); ?> </td>
                                     <td>
                                         <ul class="collapsible">
                                             <li>
@@ -132,6 +130,100 @@
                         </tbody>
                     </table>                                          
 
+                    <?php if (isset($staffsCount)): ?>
+                        <?php if ($staffsCount > MAX_ITEMS_PAGE): ?>
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>staff/listStaffPath/<?= $page - 1; ?>">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>
+                                        <a href="<?= FRONT_ROOT ?>staff/listStaffPath/<?= $i; ?>">
+                                            <?php $current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $current): ?>
+                                    <li class="waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>staff/listStaffPath/<?= $page + 1; ?>">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+
+                    <?php elseif (isset($d_staffsCount)): ?>
+                        <?php if ($d_staffsCount > MAX_ITEMS_PAGE): ?>                            
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>staff/listStaffPath/<?= $page - 1; ?>/disables">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $d_pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>                                    
+                                        <a href="<?= FRONT_ROOT ?>staff/listStaffPath/<?= $i; ?>/disables">
+                                            <?php $d_current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $d_current): ?>
+                                    <li class="waves-effect">                                    
+                                        <a href="<?= FRONT_ROOT ?>staff/listStaffPath/<?= $page + 1; ?>/disables">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+                    <?php endif; ?>
                 </div>
             </div>
 
