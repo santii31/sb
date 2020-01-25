@@ -38,7 +38,7 @@
                                     <td> <?= ucfirst( $admin->getName() ); ?> </td>
                                     <td> <?= ucfirst( $admin->getLastName() ); ?> </td>
                                     <td> <?= $this->adminController->getAllCountRsvByAdmin($admin); ?></td>
-                                    <td> $<?= $this->adminController->getTotalRsvById($admin); ?></td>
+                                    <td> $<?= number_format($this->adminController->getTotalRsvById($admin), 2, ',', '.'); ?></td>
                                     <td>
                                         <a href="<?= FRONT_ROOT ?>reservation/listReservationByAdminPath/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left">list</i>

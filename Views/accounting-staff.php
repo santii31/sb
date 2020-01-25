@@ -22,7 +22,7 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <h5>• Total gastado en personal: $<?= $total ?></h5>
+                        <h5>• Total gastado en personal: $<?= number_format($total, 2, ',', '.'); ?></h5>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
                                     <td> <?= ucfirst( $staff->getPosition() ); ?> </td>                                    
                                     <td> <?= date("d-m-Y", strtotime($staff->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y", strtotime($staff->getDateEnd())); ?> </td>
-                                    <td> $<?= $staff->getSalary(); ?> </td>                                            
+                                    <td> $<?= number_format($staff->getSalary(), 2, ',', '.'); ?> </td>                                           
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

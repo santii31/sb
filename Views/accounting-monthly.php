@@ -27,8 +27,7 @@
                             <th>Año</th>    
                             <th>Mes</th>         
                             <th>Total en cantidad</th>                                           
-                            <th>Total en pesos</th>                                                                                            
-                            <!-- <th>Registrado por</th> -->
+                            <th>Total en pesos</th>                                                                                               
                         </tr>
                         </thead>
 
@@ -37,8 +36,8 @@
                                 <tr>                                    
                                     <td> <?= $row["year"]; ?> </td>
                                     <td> <?= ucfirst( $row["month"] ); ?> </td>
-                                    <td> <?= $row["reservations"]; ?> </td>
-                                    <td> $<?= $row["subtotal"]; ?> </td>
+                                    <td> <?= $row["reservations"]; ?> </td>                                    
+                                    <td> $<?= number_format($row["subtotal"], 2, ',', '.'); ?> </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

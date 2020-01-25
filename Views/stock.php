@@ -64,7 +64,7 @@
                                     <td> <?= ucfirst( $product->getName() ); ?> </td>
                                     <td> <?= ucfirst( $this->getProviderByProduct($product) ); ?>   </td>
                                     <td> <?= ucfirst($product->getCategory()->getName() ); ?> </td>
-                                    <td> $<?= $product->getPrice(); ?> </td>
+                                    <td> $<?= number_format($product->getPrice(), 2, ',', '.'); ?> </td>
                                     <td> <?= $product->getQuantity(); ?> </td>                                           
                                     <td> <?= date("d-m-Y" , strtotime($product->getDateRegister())); ?> </td>                           
                                     <td class="actions">    

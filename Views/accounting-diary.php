@@ -164,7 +164,7 @@
                                     <td> <?= ucfirst( $diary->getType() ); ?> </td>
                                     <td> <?= ucfirst( $diary->getPayment() ); ?> </td>
                                     <td> <?= ucfirst( $diary->getDetail() ); ?> </td>
-                                    <td> $<?= $diary->getTotal(); ?> </td>
+                                    <td> $<?= number_format($diary->getTotal(), 2, ',', '.'); ?> </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -196,27 +196,27 @@
                         <tbody>
                             <tr>
                                 <td class="table-double">Ingresos</td>
-                                <td><?= $values["inCash"]; ?></td>
-                                <td><?= $values["inTarjet"]; ?></td>
-                                <td><?= $values["inCheck"]; ?></td>
-                                <td><?= $values["inOther"]; ?></td>
-                                <td><?= $values["totalIn"]; ?></td>                                
+                                <td><?= number_format($values["inCash"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["inTarjet"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["inCheck"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["inOther"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["totalIn"], 2, ',', '.'); ?></td>                              
                             </tr>
                             <tr>
                                 <td class="table-double">Salidas</td>
-                                <td><?= $values["outCash"]; ?></td>
-                                <td><?= $values["outTarjet"]; ?></td>
-                                <td><?= $values["outCheck"]; ?></td>
-                                <td><?= $values["outOther"]; ?></td>
-                                <td><?= $values["totalOut"]; ?></td>  
+                                <td><?= number_format($values["outCash"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["outTarjet"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["outCheck"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["outOther"], 2, ',', '.'); ?></td>
+                                <td><?= number_format($values["totalOut"], 2, ',', '.'); ?></td>                              
                             </tr>
                             <tr>
                                 <td class="table-double">Saldo total</td>
-                                <td><?= $values["totalCash"]; ?></td>
-                                <td><?= $values["totalTarjet"]; ?></td>
-                                <td><?= $values["totalCheck"]; ?></td>
-                                <td><?= $values["totalOther"]; ?></td>
-                                <td class="table-double-total"><?= $values["total"]; ?></td>  
+                                <td><?= number_format($values["totalCash"], 2, ',', '.'); ?></td>                              
+                                <td><?= number_format($values["totalTarjet"], 2, ',', '.'); ?></td>                              
+                                <td><?= number_format($values["totalCheck"], 2, ',', '.'); ?></td>                              
+                                <td><?= number_format($values["totalOther"], 2, ',', '.'); ?></td>                                   
+                                <td class="table-double-total"><?= number_format($values["total"], 2, ',', '.'); ?></td>  
                             </tr>
                         </tbody>
                     </table>

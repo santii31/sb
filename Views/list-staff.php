@@ -82,7 +82,7 @@
                                     <td> <?= ucfirst( $staff->getPosition() ); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($staff->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($staff->getDateEnd())); ?> </td>
-                                    <td> $<?= $staff->getSalary(); ?> </td>
+                                    <td> $<?= number_format($staff->getSalary(), 2, ',', '.'); ?> </td>
                                     <td>
                                         <ul class="collapsible">
                                             <li>

@@ -23,7 +23,7 @@
                                 
                 <div class="row">
                     <div class="col s12">
-                        <h5>• Total recaudado: $<?= $total ?></h5>
+                        <h5>• Total recaudado: $<?= number_format($total, 2, ',', '.'); ?></h5>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
                                     <td> <?= $rsv->getBeachTent()->getNumber(); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                    
-                                    <td> $<?= $rsv->getPrice(); ?> </td>
+                                    <td> $<?= number_format($rsv->getPrice(), 2, ',', '.');  ?> </td>
                                     <td> <?= ucfirst( $rsv->getRegisterBy()->getName()) . ' ' . ucfirst( $rsv->getRegisterBy()->getLastName()); ?> </td>
                                 </tr>
                             <?php endforeach; ?>
