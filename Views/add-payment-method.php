@@ -2,7 +2,7 @@
 <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>additionalService/addParasol" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>additionalService/addLocker" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -36,24 +36,22 @@
 
                         <div class="row">
                         
-                            <div class="input-field col s6">
-                                <select name="id_locker_man">
-                                    <option value="">Seleccione una sombrilla</option>                                    
-                                    <?php foreach ($mobileParasolFinalList as $parasol): ?>
-                                        <option value="<?= $parasol->getId(); ?>"><?= $parasol->getMobileParasolNumber(); ?></option>
-                                    <?php endforeach; ?>                                     
+                        <div class="input-field col s4">
+                                <select name="payment_method">
+                                    <option value="" disabled selected>Seleccione su opcion</option>
+                                    <option value="cash">Efectivo</option>
+                                    <option value="check">Cheque</option>
                                 </select>
-                                <label>Sombrillas moviles</label>
-                            </div>
+                                <label>Metodo de pago</label>
+                            </div>                                                                                 
+                        </div>    
 
-                            <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate">
-                                <label for="price">Precio</label>
-                            </div>
+                        
+
+                        
 
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
-                                                     
-                        </div>                        
+                        
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir

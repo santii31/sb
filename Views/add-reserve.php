@@ -101,14 +101,6 @@
                                 <label for="fam">Grupo familiar</label>
                             </div>       
 
-                            <div class="input-field col s4">
-                                <select name="payment_method">
-                                    <option value="" disabled selected>Seleccione su opcion</option>
-                                    <option value="cash">Efectivo</option>
-                                    <option value="check">Cheque</option>
-                                </select>
-                                <label>Metodo de pago</label>
-                            </div>
 
                             <div class="input-field col s4">
                                 <input id="phone2" type="number" name="auxiliary_phone" class="validate">
@@ -156,12 +148,7 @@
                                 <label for="price">Precio</label>
                         </div>
 
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="price" type="number" name="price" class="validate">
-                                <label for="price">Precio</label>
-                            </div>
-                        </div>
+                        
 
                         <div class="row">
                             <div class="col s12 center-align">

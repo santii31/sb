@@ -5,7 +5,10 @@
     use Models\Admin as Admin;
     use Models\Client as Client;    
     use Models\BeachTent as BeachTent;
-    use Models\Reservation as Reservation;        
+    use Models\Reservation as Reservation;
+    use Models\Check as Check;
+    use DAO\CheckDAO as CheckDAO;
+    use DAO\ClientDAO as ClientDAO;        
     use DAO\ReservationDAO as ReservationDAO;    
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
@@ -22,11 +25,13 @@
         private $adminController;
         private $clientController;          
         private $parkingController;
+        private $clientDAO;
         private $reservationxserviceDAO;
         private $servicexlockerDAO;
         private $servicexparasolDAO;      
         private $servicexparkingDAO;
         private $configDAO;
+        private $checkDAO;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();                                    
@@ -36,6 +41,8 @@
             $this->servicexparasolDAO = new ServicexParasolDAO();
             $this->servicexparkingDAO = new ServicexParkingDAO();
             $this->configDAO = new ConfigDAO();
+            $this->clientDAO = new ClientDAO();
+            $this->checkDAO = new CheckDAO();
         }               
 
 
@@ -338,6 +345,37 @@
 
         public function getAllReservationsWithClients($start) {
             return $this->reservationDAO->getAllRsvWithClientsWithLimit($start);
+        }
+
+        public function addPaymentMethod($payment_method, $id_reserve){
+            if(!empty($payment_method)){
+                if($payment_method == "cash"){
+                    $reserveTemp = $this->reservationDAO->getById($id_reserve);
+                    $update_by = $this->adminController->isLogged();
+                    $clientTemp = $this->clientDAO->update($reserveTemp->getClient(), $update_by);
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "add-check.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                }
+            }
+        }
+
+        public function addCheck($bank , $account_number , $check_number , $id_client){
+            if(!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($id_client)){
+                $check = new Check();
+                $check_s = filter_var($bank, FILTER_SANITIZE_STRING);
+                $check->setBank(strtolower($bank_s));
+                $check->setAccountNumber($account_number);
+                $check->setCheckNumber($check_number);
+                $check->setClient($this->clientDAO->getById($id_client));
+                $lastId = $this->checkDAO->add($check);
+            }
+            if ($lastId == false) {
+                return false;
+            } else {
+                return true;
+            }
         }
 
     }

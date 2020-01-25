@@ -965,16 +965,16 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>/addReservationPath/<?= $tent->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
-                                                        <a href="<?= FRONT_ROOT ?>/disable/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Deshabilitar
                                                         </a>

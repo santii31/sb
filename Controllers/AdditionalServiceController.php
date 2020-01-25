@@ -9,7 +9,7 @@
     use Models\Parking as Parking;
     use Models\Reservation as Reservation;
     use Models\ServicexLocker as ServicexLocker;
-    use Models\ServicexMobileParasol as ServiceMobilexParasol;
+    use Models\ServicexMobileParasol as ServicexMobileParasol;
     use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
     use DAO\ClientDAO as ClientDAO;
     use DAO\MobileParasolDAO as MobileParasolDAO;
@@ -196,7 +196,7 @@
                         
                 $totalService = $service->getTotal() + $price;
                 $totalReserve = $reservation->getPrice() + $price;
-                $service->setTotal($total);
+                $service->setTotal($totalService);
                 $reservation->setPrice($totalReserve);
                 $update_by = $this->adminController->isLogged();
                 $this->additionalServiceDAO->update($service, $update_by);
@@ -380,7 +380,6 @@
                             }
                         }
                     } 
-                
                 $mobileParasolFinalList = array();
                 $exist=false;
                 
