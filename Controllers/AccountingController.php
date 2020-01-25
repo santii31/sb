@@ -1,15 +1,18 @@
 <?php
 
     namespace Controllers;    
-        
+    
+    use Models\Staff as Staff;
     use Models\DiaryBalance as DiaryBalance;
     use DAO\DiaryBalanceDAO as DiaryBalanceDAO;
+    use Controllers\StaffController as StaffController; 
     use Controllers\AdminController as AdminController; 
     use Controllers\ReservationController as ReservationController; 
 
     class AccountingController {
 
-        private $adminController;        
+        private $adminController;       
+        private $staffController; 
         private $reservationController;        
         private $diaryBalanceDAO;    
 
@@ -272,14 +275,23 @@
 				return $this->adminController->userPath();
 			}
         }
-
-        // aca
+        
         public function staffSalaryPath() {
             if ($admin = $this->adminController->isLogged()) {                       
-                $title = "Contabilidad - Sueldo del personal";                     
+                $title = "Contabilidad - Sueldo del personal";       
+                $total = 0;
+                $this->staffController = new StaffController();
+                $staffs = $this->staffController->getAllStAff();
+
+                foreach ($staffs as $staff) {
+                    if ($staff->getIsActive()) {
+                        $total += $staff->getSalary();
+                    }
+                }
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "accounting-dates-search.php");
+                require_once(VIEWS_PATH . "accounting-staff.php");
                 require_once(VIEWS_PATH . "footer.php");                
 			} else {
 				return $this->adminController->userPath();

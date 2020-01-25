@@ -294,7 +294,7 @@
 
 
 
-        
+        // SACAR ESTO
         // prueba ajax
         public function getAllNames() {            
             $clients = $this->clientDAO->getAll();

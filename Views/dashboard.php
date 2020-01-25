@@ -17,6 +17,10 @@
 							<div class="box-color fuchsia"></div>
 							<span>Enero</span>
 						</div>
+                        <div class="beach-color">
+							<div class="box-color violet"></div>
+							<span>Febrero</span>
+						</div>
 						<div class="beach-color">
 							<div class="box-color orange"></div>
 							<span>Fin de semana/Feriados</span>
@@ -64,19 +68,19 @@
 
                                                                 <!-- FEBRERO - VER COLOR -->
                                                                 <?php case "febrero": ?>
-                                                                    <div class="tent green">                                                
+                                                                    <div class="tent violet">                                                
                                                                 <?php break; ?>                                                                
 
                                                                 <?php case "febrero_dia": ?>
-                                                                    <div class="tent green">                                                
+                                                                    <div class="tent violet">                                                
                                                                 <?php break; ?>
 
                                                                 <?php case "febero_primer_quincena": ?>
-                                                                    <div class="tent green">                                                
+                                                                    <div class="tent violet">                                                
                                                                 <?php break; ?>
 
                                                                 <?php case "febrero_segunda_quincena": ?>
-                                                                    <div class="tent green">                                                
+                                                                    <div class="tent violet">                                                
                                                                 <?php break; ?>
                                                                 <!--  -->
 
@@ -262,52 +266,52 @@
                                                             
                                                         <?php switch ($stay): 
                                                             case "temporada": ?>
-                                                                <div class="tent-sea yellow">                                                
+                                                                <div class="tent yellow">                                                
                                                             <?php break; ?> 
                                                         
                                                             <?php case "enero": ?>
-                                                                <div class="tent-sea fuchsia">                                                
+                                                                <div class="tent fuchsia">                                                
                                                             <?php break; ?>
 
                                                             <?php case "enero_dia": ?>
-                                                                <div class="tent-sea fuchsia">                                                
+                                                                <div class="tent fuchsia">                                                
                                                             <?php break; ?>
 
                                                             <?php case "enero_quincena": ?>
-                                                                <div class="tent-sea fuchsia">                                                
+                                                                <div class="tent fuchsia">                                                
                                                             <?php break; ?>
 
                                                             <!-- FEBRERO - VER COLOR -->
                                                             <?php case "febrero": ?>
-                                                                <div class="tent-sea green">                                                
+                                                                <div class="tent violet">                                                
                                                             <?php break; ?>                                                                
 
                                                             <?php case "febrero_dia": ?>
-                                                                <div class="tent-sea green">                                                
+                                                                <div class="tent violet">                                                
                                                             <?php break; ?>
 
                                                             <?php case "febero_primer_quincena": ?>
-                                                                <div class="tent-sea green">                                                
+                                                                <div class="tent violet">                                                
                                                             <?php break; ?>
 
                                                             <?php case "febrero_segunda_quincena": ?>
-                                                                <div class="tent-sea green">                                                
+                                                                <div class="tent violet">                                                
                                                             <?php break; ?>
                                                             <!--  -->
 
                                                             <?php case "diario": ?>
-                                                                <div class="tent-sea green">                                                
+                                                                <div class="tent green">                                                
                                                             <?php break; ?>                                                                
                                                             
                                                             <?php case "fin_semana": ?>
-                                                                <div class="tent-sea orange">                                                
+                                                                <div class="tent orange">                                                
                                                             <?php break; ?>
                                                             
                                                             <?php case "periodo": ?>
-                                                                <div class="tent-sea blue">                                                
+                                                                <div class="tent blue">                                                
                                                             <?php break; ?>  
                                                             
-                                                        <?php endswitch; ?>                                                                  
+                                                        <?php endswitch; ?>                                                                    
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="tent-sea">
@@ -484,27 +488,53 @@
 
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
+                                                                case "temporada": ?>
+                                                                    <div class="tent tent-inverse yellow">                                       
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "enero": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <!-- FEBRERO - VER COLOR -->
+                                                                <?php case "febrero": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+                                                                <!--  -->
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="tent tent-inverse green">                                                
+                                                                <?php break; ?>                                                                
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue">                                     
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="tent tent-inverse orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "periodo": ?>
+                                                                    <div class="tent tent-inverse blue">                                                
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
@@ -522,27 +552,52 @@
                                                         
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
+                                                                    case "temporada": ?>
                                                                         <div class="tent yellow">                                                
                                                                     <?php break; ?> 
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
+                                                                    <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
+
+                                                                    <?php case "enero_dia": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "enero_quincena": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <!-- FEBRERO - VER COLOR -->
+                                                                    <?php case "febrero": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>                                                                
+
+                                                                    <?php case "febrero_dia": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febero_primer_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febrero_segunda_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+                                                                    <!--  -->
+
+                                                                    <?php case "diario": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>                                                                
                                                                     
-                                                                    <?php case "rest": ?>
+                                                                    <?php case "fin_semana": ?>
                                                                         <div class="tent orange">                                                
                                                                     <?php break; ?>
                                                                     
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                    <?php case "periodo": ?>
+                                                                        <div class="tent blue">                                                
+                                                                    <?php break; ?>                                                              
+                                                                <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent">
@@ -714,27 +769,53 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
-                                                                <div class="tent-sea yellow">                                                
+                                                            case "temporada": ?>
+                                                                <div class="tent yellow">                                                
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="tent-sea green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <!-- FEBRERO - VER COLOR -->
+                                                            <?php case "febrero": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+                                                            <!--  -->
+
+                                                            <?php case "diario": ?>
+                                                                <div class="tent green">                                                
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="tent orange">                                                
                                                             <?php break; ?>
                                                             
-                                                            <?php case "january": ?>
-                                                                <div class="tent-sea fuchsia">                                                
-                                                            <?php break; ?>
+                                                            <?php case "periodo": ?>
+                                                                <div class="tent blue">                                                
+                                                            <?php break; ?>  
                                                             
-                                                            <?php case "rest": ?>
-                                                                <div class="tent-sea orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "period": ?>
-                                                                <div class="tent-sea blue">                                                
-                                                            <?php break; ?>
-                                                            
-                                                        <?php endswitch; ?>    
+                                                        <?php endswitch; ?>      
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="tent-sea">
@@ -1059,27 +1140,53 @@
 
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
+                                                                case "temporada": ?>
+                                                                    <div class="tent tent-inverse yellow">                                       
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "enero": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <!-- FEBRERO - VER COLOR -->
+                                                                <?php case "febrero": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+                                                                <!--  -->
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="tent tent-inverse green">                                                
+                                                                <?php break; ?>                                                                
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue">                                     
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="tent tent-inverse orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "periodo": ?>
+                                                                    <div class="tent tent-inverse blue">                                                
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
@@ -1097,27 +1204,52 @@
                                                         
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
+                                                                    case "temporada": ?>
                                                                         <div class="tent yellow">                                                
                                                                     <?php break; ?> 
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
+                                                                    <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
+
+                                                                    <?php case "enero_dia": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "enero_quincena": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <!-- FEBRERO - VER COLOR -->
+                                                                    <?php case "febrero": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>                                                                
+
+                                                                    <?php case "febrero_dia": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febero_primer_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febrero_segunda_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+                                                                    <!--  -->
+
+                                                                    <?php case "diario": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>                                                                
                                                                     
-                                                                    <?php case "rest": ?>
+                                                                    <?php case "fin_semana": ?>
                                                                         <div class="tent orange">                                                
                                                                     <?php break; ?>
                                                                     
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                    <?php case "periodo": ?>
+                                                                        <div class="tent blue">                                                
+                                                                    <?php break; ?>                                                              
+                                                                <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent">
@@ -1261,7 +1393,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -1289,25 +1421,51 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
-                                                                <div class="tent-sea yellow">                                                
+                                                            case "temporada": ?>
+                                                                <div class="tent yellow">                                                
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="tent-sea green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <!-- FEBRERO - VER COLOR -->
+                                                            <?php case "febrero": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+                                                            <!--  -->
+
+                                                            <?php case "diario": ?>
+                                                                <div class="tent green">                                                
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="tent orange">                                                
                                                             <?php break; ?>
                                                             
-                                                            <?php case "january": ?>
-                                                                <div class="tent-sea fuchsia">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "rest": ?>
-                                                                <div class="tent-sea orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "period": ?>
-                                                                <div class="tent-sea blue">                                                
-                                                            <?php break; ?>
+                                                            <?php case "periodo": ?>
+                                                                <div class="tent blue">                                                
+                                                            <?php break; ?>  
                                                             
                                                         <?php endswitch; ?>    
                                                                                                                         
@@ -1511,27 +1669,53 @@
 
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
+                                                                case "temporada": ?>
+                                                                    <div class="tent tent-inverse yellow">                                       
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "enero": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <!-- FEBRERO - VER COLOR -->
+                                                                <?php case "febrero": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+                                                                <!--  -->
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="tent tent-inverse green">                                                
+                                                                <?php break; ?>                                                                
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue">                                     
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="tent tent-inverse orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "periodo": ?>
+                                                                    <div class="tent tent-inverse blue">                                                
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
@@ -1549,27 +1733,52 @@
                                                         
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
+                                                                    case "temporada": ?>
                                                                         <div class="tent yellow">                                                
                                                                     <?php break; ?> 
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
+                                                                    <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
+
+                                                                    <?php case "enero_dia": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "enero_quincena": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <!-- FEBRERO - VER COLOR -->
+                                                                    <?php case "febrero": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>                                                                
+
+                                                                    <?php case "febrero_dia": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febero_primer_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febrero_segunda_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+                                                                    <!--  -->
+
+                                                                    <?php case "diario": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>                                                                
                                                                     
-                                                                    <?php case "rest": ?>
+                                                                    <?php case "fin_semana": ?>
                                                                         <div class="tent orange">                                                
                                                                     <?php break; ?>
                                                                     
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                    <?php case "periodo": ?>
+                                                                        <div class="tent blue">                                                
+                                                                    <?php break; ?>                                                              
+                                                                <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent">
@@ -1713,7 +1922,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -1741,27 +1950,53 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
-                                                                <div class="tent-sea yellow">                                                
+                                                            case "temporada": ?>
+                                                                <div class="tent yellow">                                                
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="tent-sea green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <!-- FEBRERO - VER COLOR -->
+                                                            <?php case "febrero": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+                                                            <!--  -->
+
+                                                            <?php case "diario": ?>
+                                                                <div class="tent green">                                                
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="tent orange">                                                
                                                             <?php break; ?>
                                                             
-                                                            <?php case "january": ?>
-                                                                <div class="tent-sea fuchsia">                                                
-                                                            <?php break; ?>
+                                                            <?php case "periodo": ?>
+                                                                <div class="tent blue">                                                
+                                                            <?php break; ?>  
                                                             
-                                                            <?php case "rest": ?>
-                                                                <div class="tent-sea orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "period": ?>
-                                                                <div class="tent-sea blue">                                                
-                                                            <?php break; ?>
-                                                            
-                                                        <?php endswitch; ?>    
+                                                        <?php endswitch; ?>      
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="tent-sea">
@@ -1963,27 +2198,53 @@
 
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
+                                                                case "temporada": ?>
+                                                                    <div class="tent tent-inverse yellow">                                       
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "enero": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <!-- FEBRERO - VER COLOR -->
+                                                                <?php case "febrero": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+                                                                <!--  -->
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="tent tent-inverse green">                                                
+                                                                <?php break; ?>                                                                
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue">                                     
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="tent tent-inverse orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "periodo": ?>
+                                                                    <div class="tent tent-inverse blue">                                                
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
@@ -2001,27 +2262,52 @@
                                                         
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
+                                                                    case "temporada": ?>
                                                                         <div class="tent yellow">                                                
                                                                     <?php break; ?> 
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
+                                                                    <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
+
+                                                                    <?php case "enero_dia": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "enero_quincena": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <!-- FEBRERO - VER COLOR -->
+                                                                    <?php case "febrero": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>                                                                
+
+                                                                    <?php case "febrero_dia": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febero_primer_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febrero_segunda_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+                                                                    <!--  -->
+
+                                                                    <?php case "diario": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>                                                                
                                                                     
-                                                                    <?php case "rest": ?>
+                                                                    <?php case "fin_semana": ?>
                                                                         <div class="tent orange">                                                
                                                                     <?php break; ?>
                                                                     
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                    <?php case "periodo": ?>
+                                                                        <div class="tent blue">                                                
+                                                                    <?php break; ?>                                                              
+                                                                <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent">
@@ -2165,7 +2451,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -2193,27 +2479,53 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
-                                                                <div class="tent-sea yellow">                                                
+                                                            case "temporada": ?>
+                                                                <div class="tent yellow">                                                
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="tent-sea green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <!-- FEBRERO - VER COLOR -->
+                                                            <?php case "febrero": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+                                                            <!--  -->
+
+                                                            <?php case "diario": ?>
+                                                                <div class="tent green">                                                
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="tent orange">                                                
                                                             <?php break; ?>
                                                             
-                                                            <?php case "january": ?>
-                                                                <div class="tent-sea fuchsia">                                                
-                                                            <?php break; ?>
+                                                            <?php case "periodo": ?>
+                                                                <div class="tent blue">                                                
+                                                            <?php break; ?>  
                                                             
-                                                            <?php case "rest": ?>
-                                                                <div class="tent-sea orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "period": ?>
-                                                                <div class="tent-sea blue">                                                
-                                                            <?php break; ?>
-                                                            
-                                                        <?php endswitch; ?>    
+                                                        <?php endswitch; ?>      
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="tent-sea">
@@ -2415,27 +2727,53 @@
 
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
-                                                                        <div class="tent tent-inverse yellow">                                                
-                                                                    <?php break; ?> 
+                                                                case "temporada": ?>
+                                                                    <div class="tent tent-inverse yellow">                                       
+                                                                <?php break; ?> 
+                                                            
+                                                                <?php case "enero": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="tent tent-inverse fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <!-- FEBRERO - VER COLOR -->
+                                                                <?php case "febrero": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="tent tent-inverse violet">                                                
+                                                                <?php break; ?>
+                                                                <!--  -->
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="tent tent-inverse green">                                                
+                                                                <?php break; ?>                                                                
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent tent-inverse green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
-                                                                        <div class="tent tent-inverse fuchsia">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "rest": ?>
-                                                                        <div class="tent tent-inverse orange">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent tent-inverse blue">                                     
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="tent tent-inverse orange">                                                
+                                                                <?php break; ?>
+                                                                
+                                                                <?php case "periodo": ?>
+                                                                    <div class="tent tent-inverse blue">                                                
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
@@ -2453,27 +2791,52 @@
                                                         
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
-                                                                    case "season": ?>
+                                                                    case "temporada": ?>
                                                                         <div class="tent yellow">                                                
                                                                     <?php break; ?> 
                                                                 
-                                                                    <?php case "day": ?>
-                                                                        <div class="tent green">                                                
-                                                                    <?php break; ?>
-                                                                    
-                                                                    <?php case "january": ?>
+                                                                    <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
+
+                                                                    <?php case "enero_dia": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "enero_quincena": ?>
+                                                                        <div class="tent fuchsia">                                                
+                                                                    <?php break; ?>
+
+                                                                    <!-- FEBRERO - VER COLOR -->
+                                                                    <?php case "febrero": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>                                                                
+
+                                                                    <?php case "febrero_dia": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febero_primer_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+
+                                                                    <?php case "febrero_segunda_quincena": ?>
+                                                                        <div class="tent violet">                                                
+                                                                    <?php break; ?>
+                                                                    <!--  -->
+
+                                                                    <?php case "diario": ?>
+                                                                        <div class="tent green">                                                
+                                                                    <?php break; ?>                                                                
                                                                     
-                                                                    <?php case "rest": ?>
+                                                                    <?php case "fin_semana": ?>
                                                                         <div class="tent orange">                                                
                                                                     <?php break; ?>
                                                                     
-                                                                    <?php case "period": ?>
-                                                                        <div class="tent blue">                                                  
-                                                                    <?php break; ?>
-                                                                    
-                                                                <?php endswitch; ?> 
+                                                                    <?php case "periodo": ?>
+                                                                        <div class="tent blue">                                                
+                                                                    <?php break; ?>                                                              
+                                                                <?php endswitch; ?>   
 
                                                             <?php else: ?>
                                                                 <div class="tent">
@@ -2617,7 +2980,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -2645,27 +3008,53 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
-                                                                <div class="tent-sea yellow">                                                
+                                                            case "temporada": ?>
+                                                                <div class="tent yellow">                                                
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="tent-sea green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <!-- FEBRERO - VER COLOR -->
+                                                            <?php case "febrero": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+                                                            <!--  -->
+
+                                                            <?php case "diario": ?>
+                                                                <div class="tent green">                                                
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="tent orange">                                                
                                                             <?php break; ?>
                                                             
-                                                            <?php case "january": ?>
-                                                                <div class="tent-sea fuchsia">                                                
-                                                            <?php break; ?>
+                                                            <?php case "periodo": ?>
+                                                                <div class="tent blue">                                                
+                                                            <?php break; ?>  
                                                             
-                                                            <?php case "rest": ?>
-                                                                <div class="tent-sea orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "period": ?>
-                                                                <div class="tent-sea blue">                                                
-                                                            <?php break; ?>
-                                                            
-                                                        <?php endswitch; ?>    
+                                                        <?php endswitch; ?>   
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="tent-sea">
@@ -2866,27 +3255,53 @@
                                                             <?php $stay = $rsv->getStay(); ?>
                                                                 
                                                             <?php switch ($stay): 
-                                                                case "season": ?>
-                                                                    <div class="tent tent-inverse yellow">                                                
+                                                                case "temporada": ?>
+                                                                    <div class="tent yellow">                                                
                                                                 <?php break; ?> 
                                                             
-                                                                <?php case "day": ?>
-                                                                    <div class="tent tent-inverse green">                                                
+                                                                <?php case "enero": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="tent fuchsia">                                                
+                                                                <?php break; ?>
+
+                                                                <!-- FEBRERO - VER COLOR -->
+                                                                <?php case "febrero": ?>
+                                                                    <div class="tent violet">                                                
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="tent violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="tent violet">                                                
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="tent violet">                                                
+                                                                <?php break; ?>
+                                                                <!--  -->
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="tent green">                                                
+                                                                <?php break; ?>                                                                
+                                                                
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="tent orange">                                                
                                                                 <?php break; ?>
                                                                 
-                                                                <?php case "january": ?>
-                                                                    <div class="tent tent-inverse fuchsia">                                                
-                                                                <?php break; ?>
+                                                                <?php case "periodo": ?>
+                                                                    <div class="tent blue">                                                
+                                                                <?php break; ?>  
                                                                 
-                                                                <?php case "rest": ?>
-                                                                    <div class="tent tent-inverse orange">                                                
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="tent tent-inverse blue">                                                
-                                                                <?php break; ?>
-                                                                
-                                                            <?php endswitch; ?>    
+                                                            <?php endswitch; ?>     
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="tent tent-inverse">
@@ -3057,27 +3472,53 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
-                                                                <div class="tent-sea yellow">                                                
+                                                            case "temporada": ?>
+                                                                <div class="tent yellow">                                                
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="tent-sea green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="tent fuchsia">                                                
+                                                            <?php break; ?>
+
+                                                            <!-- FEBRERO - VER COLOR -->
+                                                            <?php case "febrero": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="tent violet">                                                
+                                                            <?php break; ?>
+                                                            <!--  -->
+
+                                                            <?php case "diario": ?>
+                                                                <div class="tent green">                                                
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="tent orange">                                                
                                                             <?php break; ?>
                                                             
-                                                            <?php case "january": ?>
-                                                                <div class="tent-sea fuchsia">                                                
-                                                            <?php break; ?>
+                                                            <?php case "periodo": ?>
+                                                                <div class="tent blue">                                                
+                                                            <?php break; ?>  
                                                             
-                                                            <?php case "rest": ?>
-                                                                <div class="tent-sea orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "period": ?>
-                                                                <div class="tent-sea blue">                                                
-                                                            <?php break; ?>
-                                                            
-                                                        <?php endswitch; ?>    
+                                                        <?php endswitch; ?>      
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="tent-sea">

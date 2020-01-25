@@ -135,7 +135,7 @@
                             </div>                            
                         </div>
                         <div class="row">
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                             <?php if (isset($inputs["fam"])): ?>         
                                 <input id="fam" type="text" name="fam" class="validate" value="<?= $inputs["fam"]; ?>" required>
                                 <?php else: ?>
@@ -145,7 +145,7 @@
                             </div>       
 
 
-                            <div class="input-field col s4">
+                            <div class="input-field col s6">
                             <?php if (isset($inputs["aux_phone"])): ?>         
                                 <input id="phone2" type="number" name="auxiliary_phone" class="validate" value="<?= $inputs["aux_phone"]; ?>" required>
                                 <?php else: ?>
@@ -286,10 +286,8 @@
     const dateStart = document.getElementById('start'); 
     const dateEnd = document.getElementById('end'); 
 
-console.log(dateStart, dateEnd);
-
     selectStay.addEventListener('change', (e)=> {
-        if (selectStay.value === 'january' ) {     
+        if (selectStay.value === 'enero' ) {     
                    
             const date = new Date();
             date.setMonth(0);
@@ -302,7 +300,7 @@ console.log(dateStart, dateEnd);
             dateStart.value = f_day;            
             dateEnd.value = l_day;            
 
-        } else if (selectStay.value == 'february' ) {
+        } else if (selectStay.value == 'febrero' ) {
             
             const date = new Date();
             date.setMonth(1);

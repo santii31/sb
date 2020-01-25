@@ -262,6 +262,12 @@
             return $this->updatePath($id ,EMPTY_FIELDS);
         }        
 
+
+        // 
+        public function getAllStaff() {
+            return $this->staffDAO->getAll();
+        }
+
     }
     
 ?>

@@ -18,7 +18,7 @@
             return $this->parasolDAO->getN_row($n);
         }
 
-        // cambiar
+        // cambiar aca
         public function hasReservation($id_parasol) {            
             $reserveList = $this->reservationController->getByIdTent($id_tent);
             return sizeof($reserveList);
