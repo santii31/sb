@@ -384,16 +384,23 @@
         public function PaymentMethod($paymentMethod, $id_reserve, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {
                 if(!empty($paymentMethod)){
-                    $title = "Metodo de pago";
-                    $update_by = $this->adminController->isLogged();
-                    $reserveTemp = new Reservation();
-                    $reserveTemp->setId($id_reserve);
-                    $reservation = $this->reservationDAO->getById($reserveTemp);
-                    $this->clientDAO->update($reservation->getClient(), $update_by);
-                    require_once(VIEWS_PATH . "head.php");
-                    require_once(VIEWS_PATH . "sidenav.php");
-                    require_once(VIEWS_PATH . "add-check.php");
-                    require_once(VIEWS_PATH . "footer.php");
+                    if($paymentMethod == "cheque"){
+                        $title = "Metodo de pago";
+                        $update_by = $this->adminController->isLogged();
+                        $reserveTemp = new Reservation();
+                        $reserveTemp->setId($id_reserve);
+                        $reservation = $this->reservationDAO->getById($reserveTemp);
+                        $clientTemp = $reservation->getClient();
+                        $clientTemp->setPaymentMethod($paymentMethod);
+                        $this->clientDAO->update($clientTemp, $update_by);
+                        require_once(VIEWS_PATH . "head.php");
+                        require_once(VIEWS_PATH . "sidenav.php");
+                        require_once(VIEWS_PATH . "add-check.php");
+                        require_once(VIEWS_PATH . "footer.php");
+                    }else{
+
+                    }
+                    
                 }   
             } else {
                 return $this->adminController->userPath();
