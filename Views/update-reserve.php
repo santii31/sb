@@ -68,7 +68,12 @@
                             <div class="input-field col s4">
                                 <input id="end" type="Date" name="end" class="validate" value="<?= $reservation->getDateEnd(); ?>" required>
                                 <label for="end">Fecha de egreso</label>
-                            </div>                            
+                            </div>     
+
+                            <div class="input-field col s4">
+                                <input id="price" type="number" name="price" class="validate" value="<?= $reservation->getDateEnd(); ?>" required>
+                                <label for="price">Precio</label>
+                            </div>                           
                         </div>                                                                   
                                                                     
                         <div class="row">

@@ -82,6 +82,8 @@
 					$beachTent->setId($row["tent_id"]);
 					$beachTent->setNumber($row["tent_number"]);
 					$beachTent->setPrice($row["tent_price"]);
+
+					$reservationTemp->setRegisterBy($admin);
 					$reservationTemp->setBeachTent($beachTent);					
 				}
 				return $reservationTemp;
@@ -127,6 +129,8 @@
 					$beachTent->setId($row["tent_id"]);
 					$beachTent->setNumber($row["tent_number"]);
 					$beachTent->setPrice($row["tent_price"]);
+					
+					$reservation->setRegisterBy($admin);
 					$reservation->setBeachTent($beachTent);
 
 					array_push($this->reservationList, $reservation);
@@ -138,6 +142,169 @@
 			}
 		}
 		
+		public function getByDate($date) {
+			try {				
+				$rsvList = array();
+				$query = "CALL reservation_getByDate(?)";
+				$parameters["date"] = $date;
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+
+					$reservation->setBeachTent($beachTent);		
+					
+					$reservation->setRegisterBy($admin);
+
+					array_push($rsvList, $reservation);
+				}
+				return $rsvList;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
+		public function getBetweenDates($date_start, $date_end) {
+			try {				
+				$rsvList = array();
+				$query = "CALL reservation_getBetweenDates(?, ?)";
+				$parameters["date_start"] = $date_start;
+				$parameters["date_end"] = $date_end;
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+
+					$reservation->setBeachTent($beachTent);		
+					
+					$reservation->setRegisterBy($admin);
+
+					array_push($rsvList, $reservation);
+				}
+				return $rsvList;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
+		public function getAllByAdmin(Admin $admin) {
+			try {
+				$query = "CALL reservation_getAllByAdmin(?)";
+				$parameters["id"] = $admin->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+                    $reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+					
+					$beachTent = new BeachTent();					
+					$beachTent->setNumber($row["tent_number"]);
+										
+					$reservation->setBeachTent($beachTent);
+
+					array_push($this->reservationList, $reservation);
+				}
+				return $this->reservationList;
+			} catch (Exception $e) {
+				return false;
+				//echo $e;
+			}
+		}
+
+		public function getSalesMonthly() {
+			try {
+				$salesList = array();
+				$query = "CALL reservation_getSalesMonthly()";				
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					
+					$sales = array(
+						"year" => $row["year"],
+						"month" => $row["month"],
+						"subtotal" => $row["subtotal"],
+						"reservations" => $row["orders"]
+					);
+					
+					array_push($salesList, $sales);
+				}
+				return $salesList;
+			} catch (Exception $e) {
+				return false;
+				//echo $e;
+			}
+		}
+
 		public function getAll() {
 			try {
 				$reservList = array();
@@ -184,6 +351,100 @@
 				return false;
 			}
 		}		
+
+		public function getAllActives() {
+			try {
+				$reservList = array();
+				$query = "CALL reservation_getAllActives()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+                    $reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($reservList, $reservation);
+				}
+				return $reservList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function getAllDisables() {
+			try {
+				$reservList = array();
+				$query = "CALL reservation_getAllDisables()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+                    $reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$beachTent = new BeachTent();
+					$beachTent->setId($row["tent_id"]);
+					$beachTent->setNumber($row["tent_number"]);
+					$beachTent->setPrice($row["tent_price"]);
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($reservList, $reservation);
+				}
+				return $reservList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
 
 		public function getAllRsvWithClients() {
 			try {
@@ -296,7 +557,7 @@
 
 		public function disableById(Reservation $reservation, Admin $disableBy) {
 			try {
-				$query = "CALL reservation_disableById(?)";
+				$query = "CALL reservation_disableById(?, ?, ?)";
 				$parameters["id"] = $reservation->getId();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["disable_by"] = $disableBy->getId();
@@ -305,15 +566,29 @@
 				return true;
 			}
 			catch (Exception $e) {
-				return false;
+				return false;				
 			}
 		}		
 
-		public function checkDateStart(Reservation $reservation) {
+		
+ 		public function checkDateStart(Reservation $reservation) {
 			try {
-				$query = "CALL service_checkDateStart(?, ?)";
+				$query = "CALL reservation_checkDateStart(?, ?)";
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["id"] = $reservation->getId();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
+			}
+			catch (Exception $e) {
+				return false;
+			}
+		}
+
+		public function checkEmail(Client $client) {
+			try {
+				$query = "CALL client_checkEmail(?, ?)";
+				$parameters["email"] = $client->getEmail();
+				$parameters["id"] = $client->getId();
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);
 			}

@@ -124,7 +124,6 @@
                                 <label for="february_second_fortnigh">Valor carpa segunda quincena febrero</label>
                             </div>                                                   
                         </div>
-
                         
                         <div class="subtitle">                            
                             <i class="material-icons left">chevron_right</i>
@@ -133,7 +132,6 @@
                             </h2>
                         </div>
                         <div class="divider mb-divider"></div>
-
                         
                         <div class="row">
                             <div class="input-field col s12">
@@ -151,6 +149,7 @@
                         </div>
                         
                     </form>
+                    
                 </div>
             </div>
         </div>

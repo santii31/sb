@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col s12">
                         <ul class="collapsible ">
-                            <li>
+                            <li class="active">
                                 <div class="collapsible-header">
                                     <i class="material-icons">arrow_drop_down</i>
                                     Ver informacion de la reserva
@@ -76,7 +76,11 @@
 
                                         <div class="row">                                            
                                             <div class="input-field col s4">
+                                                <?php if (sizeof($balances) == 0): ?>
+                                                <input id="total" type="number" name="total" class="validate" value="<?= $reservation->getPrice() ?>" required> 
+                                                <?php else: ?>
                                                 <input id="total" type="number" name="total" class="validate" required>
+                                                <?php endif; ?>
                                                 <label for="total">Debe</label>
                                             </div>            
                                             <div class="input-field col s4">
@@ -151,7 +155,7 @@
     const partialInput = document.getElementById('partial');
     const remainderInput = document.getElementById('remainder');
 
-    let total = 0;    
+    let total = totalInput.value;    
     let partial = 0;  
     let remainder = 0;                  
 

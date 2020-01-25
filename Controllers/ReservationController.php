@@ -96,30 +96,40 @@
             return false;
         }
 
-        public function addPrice(){
-            require_once(VIEWS_PATH . "head.php");
-            require_once(VIEWS_PATH . "sidenav.php");
-            require_once(VIEWS_PATH . "list-reservation.php");
-            require_once(VIEWS_PATH . "footer.php");
-        }
-
         public function addReservation($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price) { 
 
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "start"=> $start, 
+                "end"=> $end,
+                "name"=> $name,
+                "l_name"=> $l_name,
+                "addr"=> $addr,
+                "city"=> $city,
+                "cp"=> $cp,
+                "email"=> $email,
+                "phone"=> $phone,
+                "fam"=> $fam,
+                "aux_phone"=> $auxiliary_phone,
+                "price"=> $price
+            );
+            
             if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {
                 
-                if ($this->checkInterval($start, $end, $tent) == 1) {                                                                                
+                if ($this->checkInterval($start, $end, $tent) == 1) {                                 
+
                     if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $payment_method, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
 
                         $this->parkingController = new ParkingController();                    
                         return $this->parkingController->parkingMap($lastId);                                                
 
                     } else {                        
-                        return $this->addReservationPath(null, DB_ERROR, null);        
+                        return $this->addReservationPath(null, DB_ERROR, null, $inputs);        
                     }
                 }                             
-                return $this->addReservationPath(null, RESERVATION_ERROR, null);
+                return $this->addReservationPath(null, RESERVATION_ERROR, null, $inputs);
             }            
-            return $this->addReservationPath($tent, EMPTY_FIELDS, null);            
+            return $this->addReservationPath($tent, EMPTY_FIELDS, null, $inputs);            
         }
         
         public function checkInterval($date_start, $date_end, $id_tent) {
@@ -158,7 +168,7 @@
             return true;
         } 
         
-        public function addReservationPath($id_tent = "", $alert = "", $success = "") { 
+        public function addReservationPath($id_tent = "", $alert = "", $success = "", $inputs = array()) { 
             if ($admin = $this->adminController->isLogged()) {
                 $config = $this->configDAO->get();                     
                 $title = "Reserva - Añadir";
@@ -171,12 +181,14 @@
 			}
         }
         
-        public function listReservationPath($alert = "", $success = "") {
+        public function listReservationPath($showAll = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Reservas";
-                $flag1=0;
-                $flag2=0;
-                $reservations = $this->reservationDAO->getAll();
+                $title = "Reservas";    
+                if ($showAll != null) {
+                    $reservations = $this->reservationDAO->getAllDisables();
+                } else {
+                    $reservations = $this->reservationDAO->getAllActives();                                     
+                }                             
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-reservation.php");
@@ -191,9 +203,9 @@
                 $reservation = new Reservation();
                 $reservation->setId($id);
                 if ($this->reservationDAO->enableById($reservation, $admin)) {
-                    return $this->listReservationPath(null, RESERVATION_ENABLE);
+                    return $this->listReservationPath(null, null, RESERVATION_ENABLE);
                 } else {
-                    return $this->listReservationPath(DB_ERROR, null);
+                    return $this->listReservationPath(null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -205,9 +217,9 @@
                 $reservation = new Reservation();
                 $reservation->setId($id);
                 if ($this->reservationDAO->disableById($reservation, $admin)) {
-                    return $this->listReservationPath(null, RESERVATION_DISABLE);
+                    return $this->listReservationPath(null, null, RESERVATION_DISABLE);
                 } else {
-                    return $this->listReservationPath(DB_ERROR, null);
+                    return $this->listReservationPath(null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -240,7 +252,7 @@
             return true;
         } 
                 
-        // PROBAR BIEN
+        // borrar o probar
         public function checkIntervalToUpdate($date_start, $date_end, $id_tent, $id_rsv) {
 			$existance = $this->getByIdTent($id_tent);			
 			$flag = 1;
@@ -277,13 +289,13 @@
                     
                     $update_by = $this->adminController->isLogged();
 
-                    echo '<pre>';
-                    var_dump($reservation);
-                    echo '</pre>';
+                    // echo '<pre>';
+                    // var_dump($reservation);
+                    // echo '</pre>';
 
-                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                
+                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
                         return $this->updatePath(null, null, RESERVATION_UPDATE);
-                    } else {                        
+                    } else {       
                         return $this->updatePath(null, DB_ERROR, null);        
                     }
                 }                
@@ -305,6 +317,20 @@
             return false;
         }
 
+        public function listReservationByAdminPath($id_admin, $alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {
+                $title = "Reservas por administrador";                    
+                $adminTemp = new Admin();
+                $adminTemp->setId($id_admin);
+                $reservations = $this->reservationDAO->getAllByAdmin($admin);                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "list-reservation.php");
+                require_once(VIEWS_PATH . "footer.php");
+            } else {
+                return $this->adminController->userPath();
+            }
+        }
         
         // 
         public function getByIdTent($id_tent) {
@@ -323,6 +349,14 @@
             return $this->reservationDAO->getAll();
         }
 
+        public function getReservationsByDate($date) {
+            return $this->reservationDAO->getByDate($date);
+        }
+
+        public function getReservationsBetweenDates($date_start, $date_end) {
+            return $this->reservationDAO->getBetweenDates($date_start, $date_end);
+        }
+
         public function futureReservations() {
             $futureReserve = array();
             $reserveList = $this->reservationDAO->getAll();
@@ -337,8 +371,7 @@
             }
             return $futureReserve;
         }
-
-        // count
+        
         public function getRsvClientsCount() {
             return $this->reservationDAO->getCount();
         }
@@ -347,36 +380,8 @@
             return $this->reservationDAO->getAllRsvWithClientsWithLimit($start);
         }
 
-        public function addPaymentMethod($payment_method, $id_reserve){
-            if(!empty($payment_method)){
-                if($payment_method == "cash"){
-                    $reserveTemp = $this->reservationDAO->getById($id_reserve);
-                    $update_by = $this->adminController->isLogged();
-                    $clientTemp = $this->clientDAO->update($reserveTemp->getClient(), $update_by);
-                    require_once(VIEWS_PATH . "head.php");
-                    require_once(VIEWS_PATH . "sidenav.php");
-                    require_once(VIEWS_PATH . "add-check.php");
-                    require_once(VIEWS_PATH . "footer.php");
-                }
-            }
+        public function getSalesMonthly() {
+            return $this->reservationDAO->getSalesMonthly();
         }
-
-        public function addCheck($bank , $account_number , $check_number , $id_client){
-            if(!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($id_client)){
-                $check = new Check();
-                $check_s = filter_var($bank, FILTER_SANITIZE_STRING);
-                $check->setBank(strtolower($bank_s));
-                $check->setAccountNumber($account_number);
-                $check->setCheckNumber($check_number);
-                $check->setClient($this->clientDAO->getById($id_client));
-                $lastId = $this->checkDAO->add($check);
-            }
-            if ($lastId == false) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
     }
 ?>

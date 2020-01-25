@@ -90,7 +90,7 @@
         }
 
         public function getPriceTentFebruarySecondFortnigh() {
-            return $this->price_tent_february_first_fortnigh;
+            return $this->price_tent_february_second_fortnigh;
         }
 
         public function setPriceTentFebruarySecondFortnigh($price_tent_february_second_fortnigh) {

@@ -35,7 +35,7 @@
                         <?php endif; ?>
 
                         <div class="row">
-                            <div class="input-field col s6">
+                            <div class="input-field col s12">
                                 <select name="service">
                                     <option value="" disabled selected>Seleccione una opcion</option>
                                     

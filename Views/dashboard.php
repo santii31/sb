@@ -45,6 +45,8 @@
                                                             
                                                             <?php $stay = $rsv->getStay(); ?>
                                                                 
+                                                            <!-- AGREGAR NUEVAS ESTADIAS (QUINCENA ENERO ETC) -->
+                                                            
                                                             <?php switch ($stay): 
                                                                 case "season": ?>
                                                                     <div class="tent yellow">                                                
@@ -64,7 +66,7 @@
                                                                 
                                                                 <?php case "period": ?>
                                                                     <div class="tent blue">                                                
-                                                                <?php break; ?>
+                                                                <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>    
                                                                                                                           
@@ -2815,33 +2817,33 @@
                                                                 
                                                             <?php switch ($stay): 
                                                                 case "season": ?>
-                                                                    <div class="tent yellow">                                                
+                                                                    <div class="tent tent-inverse yellow">                                                
                                                                 <?php break; ?> 
                                                             
                                                                 <?php case "day": ?>
-                                                                    <div class="tent green">                                                
+                                                                    <div class="tent tent-inverse green">                                                
                                                                 <?php break; ?>
                                                                 
                                                                 <?php case "january": ?>
-                                                                    <div class="tent fuchsia">                                                
+                                                                    <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
                                                                 
                                                                 <?php case "rest": ?>
-                                                                    <div class="tent orange">                                                
+                                                                    <div class="tent tent-inverse orange">                                                
                                                                 <?php break; ?>
                                                                 
                                                                 <?php case "period": ?>
-                                                                    <div class="tent blue">                                                
+                                                                    <div class="tent tent-inverse blue">                                                
                                                                 <?php break; ?>
                                                                 
                                                             <?php endswitch; ?>    
                                                                                                                             
                                                         <?php else: ?>
-                                                        <div class="tent">
+                                                        <div class="tent tent-inverse">
                                                         <?php endif; ?>
 
                                                     <?php else: ?>
-                                                    <div class="tent">
+                                                    <div class="tent tent-inverse">
                                                     <?php endif; ?>
                                                         <span>
                                                             <?= $tent->getNumber(); ?>

@@ -3,8 +3,8 @@
     namespace Config;
     
     define("ROOT", dirname(__DIR__) . "/");
-	//define("FRONT_ROOT", "/SouthBeach/");	
-	define("FRONT_ROOT", "http://localhost/sb/");
+	define("FRONT_ROOT", "/SouthBeach/");	
+	// define("FRONT_ROOT", "http://localhost/sb/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
@@ -21,7 +21,7 @@
 	
 	//DB
 	define("DB_HOST", "localhost");
-	define("DB_NAME", "southbeach");
+	define("DB_NAME", "southbeach2");
 	define("DB_USER", "root");
 	define("DB_PASS", "");
 
@@ -75,7 +75,7 @@
 	define("STOCK_ZERO", "Ingrese un valor mayor a 0.");
 		
 	define("STAFF_ADDED", "Empleado añadido con éxito.");
-	define("STAFF_ERROR", "El Empleado ya se encuentra registrado.");
+	define("STAFF_ERROR", "El empleado ya se encuentra registrado.");
 	define("STAFF_DISABLE", "Empleado deshabilitado con éxito.");
 	define("STAFF_ENABLE", "Empleado habilitado con éxito.");
 	define("STAFF_UPDATE", "Empleado modificado con éxito.");
@@ -83,11 +83,15 @@
 	
 	define("RESERVATION_ADDED", "Reserva añadida con éxito.");
 	define("RESERVATION_ERROR", "Carpa reservada durante estas fechas.");		
+	define("RESERVATION_DISABLE", "Reserva dada de baja con éxito.");
+	define("RESERVATION_ENABLE", "Reserva habilitada con éxito.");
 		
 	define("PARKING_ERROR", "El estacionamiento seleccionado se encuentra reservado.");		
 
 	define("CONFIG_UPDATE", "Configuracion actualizada con éxito.");
 
 	define("SEARCH_EMPTY", "No se han encontrado clientes.");
+
+	define("DIARY_BALANCE_ADDED", "Registro añadido con éxito.");
 
 ?>

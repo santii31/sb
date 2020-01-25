@@ -48,6 +48,21 @@
         }
 
         public function addProvider($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item) {
+            
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "name"=> $name, 
+                "lastName"=> $lastName,
+                "phone"=> $phone,
+                "email"=> $email,
+                "dni"=> $dni,
+                "billing"=> $billing,
+                "cuil_number"=> $cuil_number,
+                "social_reason"=> $social_reason,
+                "address"=> $address,
+                "item"=> $item
+            );
+
             if ($this->isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item)) {
                 $providerTemp = new Provider();
                 $providerTemp->setDni($dni);                                
@@ -57,15 +72,15 @@
                         if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item)) {            
                             return $this->addProviderPath(null, PROVIDER_ADDED);
                         } else {                        
-                            return $this->addProviderPath(DB_ERROR, null);        
+                            return $this->addProviderPath(DB_ERROR, null, $inputs);        
                         }
                     }
-                    return $this->addProviderPath(REGISTER_ERROR, null);        
+                    return $this->addProviderPath(REGISTER_ERROR, null, $inputs);        
 
                 }                
-                return $this->addProviderPath(PROVIDER_ERROR, null);
+                return $this->addProviderPath(PROVIDER_ERROR, null, $inputs);
             }            
-            return $this->addProviderPath(EMPTY_FIELDS, null);            
+            return $this->addProviderPath(EMPTY_FIELDS, null, $inputs);            
         }
 
         private function isFormRegisterNotEmpty($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item) {
@@ -84,7 +99,7 @@
             return true;
         }         
 
-        public function addProviderPath($alert = "", $success = "") {
+        public function addProviderPath($alert = "", $success = "", $inputs = array()) {
             if ($admin = $this->adminController->isLogged()) {                         
                 $title = "Proveedor - Añadir";
                 require_once(VIEWS_PATH . "head.php");

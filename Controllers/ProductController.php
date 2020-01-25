@@ -64,6 +64,14 @@
         }
 
         public function addProduct($id_category, $id_provider, $name, $price, $quantity) {
+
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "name"=> $name, 
+                "price"=> $price,
+                "quantity"=> $quantity
+            );
+            
             if ($this->isFormRegisterNotEmpty($id_category, $id_provider, $name, $price, $quantity)) {
                 
                 $productTemp = new Product();
@@ -73,12 +81,12 @@
                     if ($this->add($id_category, $id_provider, $name, $price, $quantity)) {            
                         return $this->addProductPath(null, PRODUCT_ADDED);
                     } else {                        
-                        return $this->addProductPath(DB_ERROR, null);        
+                        return $this->addProductPath(DB_ERROR, null, $inputs);        
                     }
                 }                
-                return $this->addProductPath(PRODUCT_ERROR, null);
+                return $this->addProductPath(PRODUCT_ERROR, null, $inputs);
             }            
-            return $this->addProductPath(EMPTY_FIELDS, null);            
+            return $this->addProductPath(EMPTY_FIELDS, null, $inputs);            
         }
 
         private function isFormRegisterNotEmpty($id_category, $id_provider, $name, $price, $quantity) {
@@ -92,7 +100,7 @@
             return true;
         }
 
-        public function addProductPath($alert = "", $success = "") {
+        public function addProductPath($alert = "", $success = "", $inputs = array()) {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Producto - Añadir";
                 $categories = $this->categoryController->getCategorys();
