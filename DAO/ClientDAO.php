@@ -21,7 +21,7 @@
 		
         public function add(Client $client, Admin $registerBy) {								
 			try {									
-				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
+				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();				
 				$parameters["address"] = $client->getAddress();
@@ -31,7 +31,6 @@
 				$parameters["tel"] = $client->getPhone();
 				$parameters["family_group"] = $client->getFamilyGroup();
 				$parameters["auxiliary_phone"] = $client->getAuxiliaryPhone();
-				$parameters["payment_method"] = $client->getPaymentMethod();
 				$parameters["vehicle_type"] = $client->getVehicleType();
 				$parameters["date_register"] = date("Y-m-d");
 				$parameters["register_by"] = $registerBy->getId();

@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>additionalService/addLocker" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/addCheck" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -50,12 +50,21 @@
                                 <input id="check_number" type="number" name="check_number" class="validate" required>
                                 <label for="check_number">Numero de cheque</label>
                             </div>
+<<<<<<< HEAD:Views/add-check.php
+
+                            <input type="hidden" name="id_client" value="<?php $reservation->getClient()->getId(); ?>" >
+
+=======
                             
+>>>>>>> 1c958d891322e4b8d58df221d46980513c0e3f9f:Models/add-check.php
                         </div>    
                         
+<<<<<<< HEAD:Views/add-check.php
+=======
                         <input type="hidden" name="id_client" value="<?= $reserveTemp->getClient()->getId(); ?>" >
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
                         
+>>>>>>> 1c958d891322e4b8d58df221d46980513c0e3f9f:Models/add-check.php
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
