@@ -12,22 +12,22 @@
 
                 <?php if (!isset($adminTemp)): ?>
                     <div class="more-list">
-                        <?php if (isset($showAll)): ?>
-                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath">                    
+                        <?php if (isset($showDisables)): ?>
+                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath">              
                             <i class="material-icons left">arrow_forward</i>
                             <span>
-                                Mostrar solo reservas habilitadas
+                                Mostrar solo habilitados
                             </span>    
                         </a>
-                        <?php else: ?>
-                            <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/all">                    
+                        <?php else: ?>                        
+                            <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/1/disables">                    
                             <i class="material-icons left">arrow_forward</i>
                             <span>
-                                Mostrar reservas deshabilitadas
+                                Mostrar deshabilitados
                             </span>    
                         </a>
                         <?php endif; ?>
-                    </div> 
+                    </div>                    
                 <?php endif; ?>
 
                 <?php if ($success != null): ?>
@@ -84,7 +84,7 @@
                                     <td> <?= ucfirst( str_replace('_', ' ', $reservation->getStay()) ); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>                                    
-                                    <td> $<?= $reservation->getPrice(); ?> </td>
+                                    <td> $<?= number_format($reservation->getPrice(), 2, ',', '.'); ?> </td>
                                     <td> <?= 
                                             ucfirst($reservation->getClient()->getName()) 
                                             . " " . 
@@ -173,6 +173,102 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
+                    <?php if (isset($rsvCount)): ?>
+                        <?php if ($rsvCount > MAX_ITEMS_PAGE): ?>
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/<?= $page - 1; ?>">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>
+                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/<?= $i; ?>">
+                                            <?php $current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $current): ?>
+                                    <li class="waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/<?= $page + 1; ?>">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+
+                    <?php elseif (isset($d_rsvCount)): ?>
+                        <?php if ($d_rsvCount > MAX_ITEMS_PAGE): ?>                            
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/<?= $page - 1; ?>/disables">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $d_pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>                                    
+                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/<?= $i; ?>/disables">
+                                            <?php $d_current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $d_current): ?>
+                                    <li class="waves-effect">                                    
+                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/<?= $page + 1; ?>/disables">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+                    <?php endif; ?>
+
                 </div>
             </div>
 

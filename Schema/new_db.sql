@@ -1543,6 +1543,76 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservation_getAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                        
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            beach_tent.number AS tent_number 
+    FROM reservation         
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN client ON reservation.FK_id_client = client.id            
+    WHERE `reservation`.`is_active` = true
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                        
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            beach_tent.number AS tent_number 
+    FROM reservation         
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN client ON reservation.FK_id_client = client.id     
+    WHERE `reservation`.`is_active` = false
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getActiveCount`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getActiveCount ()
+BEGIN
+	SELECT count(reservation.id) AS total 
+    FROM `reservation`
+    WHERE `reservation`.`is_active` = true;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getDisableCount`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getDisableCount ()
+BEGIN
+	SELECT count(reservation.id) AS total 
+    FROM `reservation`
+    WHERE `reservation`.`is_active` = false;
+END$$
+
+
 
 ------------------------- BALANCE ---------------------
 
