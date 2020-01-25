@@ -372,7 +372,7 @@
 
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "pay.php");
+                require_once(VIEWS_PATH . "add-payment-method.php");
                 require_once(VIEWS_PATH . "footer.php");                    
 			} else {                
                 return $this->adminController->userPath();

@@ -2,7 +2,7 @@
 <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>additionalService/addLocker" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/addCheck" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -51,15 +51,10 @@
                                 <label for="check_number">Numero de cheque</label>
                             </div>
 
-                            <input type="hidden" name="id_client" value="<?php $reserveTemp->getClient()->getId(); ?>" >
+                            <input type="hidden" name="id_client" value="<?php $reservation->getClient()->getId(); ?>" >
 
                         </div>    
 
-                        
-
-                        
-
-                        <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
                         
                         <div class="row">
                             <div class="col s12 center-align">
