@@ -4,6 +4,11 @@ CREATE DATABASE southbeach;
 
 USE southbeach;
 
+-- USUARIO
+CREATE USER 'sb_admin'@'localhost' IDENTIFIED BY 'sb_admin_30485934';
+
+GRANT SELECT, INSERT, UPDATE ON southbeach2.* TO 'sb_admin'@'localhost';
+
 
 ----------------------------- CONFIG -----------------------------
 

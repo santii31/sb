@@ -25,6 +25,9 @@
 	define("DB_USER", "root");
 	define("DB_PASS", "");
 
+	// define("DB_USER", "sb_admin@localhost");
+	// define("DB_PASS", "sb_admin_30485934");
+
 	//ERR MSGS
 	define("DB_ERROR", "Un error ha ocurrido. Intente mas tarde!");	
 

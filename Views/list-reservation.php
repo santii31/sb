@@ -16,14 +16,14 @@
                         <a href="<?= FRONT_ROOT ?>reservation/listReservationPath">              
                             <i class="material-icons left">arrow_forward</i>
                             <span>
-                                Mostrar solo habilitados
+                                Mostrar reservas habilitadas
                             </span>    
                         </a>
                         <?php else: ?>                        
                             <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/1/disables">                    
                             <i class="material-icons left">arrow_forward</i>
                             <span>
-                                Mostrar deshabilitados
+                                Mostrar reservas deshabilitadas
                             </span>    
                         </a>
                         <?php endif; ?>

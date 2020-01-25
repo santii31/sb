@@ -208,6 +208,17 @@
                                                                     <span class="title">• Fecha fin:  </span>
                                                                     <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                 </span>
+
+                                                                <!-- SIGO ACA -->
+                                                                <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                <!-- VER COMO SE MUESTRA -->
+                                                                <span>
+                                                                    <span class="title">• Estadia:  </span>
+                                                                    <?= ucfirst(
+                                                                            str_replace('_', ' ', $rsv->getStay()) 
+                                                                        ); 
+                                                                    ?>                    
+                                                                </span>
                                                             </div>
 
                                                             <?php ?>
@@ -243,6 +254,13 @@
                                                                         <span>
                                                                             <span class="title-2">• Fecha fin:  </span>
                                                                             <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                        </span>
+                                                                        <span>
+                                                                            <span class="title-2">• Estadia:  </span>
+                                                                            <?= ucfirst(
+                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                ); 
+                                                                            ?>   
                                                                         </span>
                                                                     </div>                                                                    
                                                                 </div>
@@ -438,6 +456,13 @@
                                                                         <span>
                                                                             <span class="title">• Fecha fin:  </span>
                                                                             <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
+                                                                        </span>
+                                                                        <span>
+                                                                            <span class="title">• Estadia:  </span>
+                                                                            <?= ucfirst(
+                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                ); 
+                                                                            ?>                    
                                                                         </span>
                                                                     </div>
 
