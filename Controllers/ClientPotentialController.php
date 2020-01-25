@@ -97,14 +97,39 @@
 			}
         }
         
-        public function listPotentialClientPath($showAll = null, $alert = "", $success = "") {
+        public function listPotentialClientPath($page = 1, $showDisables = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Clientes Potenciales";
-                if ($showAll != null) {
-                    $clients = $this->clientPotentialDAO->getAll();
-                } else {
-                    $clients = $this->clientPotentialDAO->getAllActives();
-                }                
+
+                if ($showDisables == null) {
+                    $title = "Clientes Potenciales";
+                    $clientsCount = $this->clientPotentialDAO->getActiveCount();         
+                    $pages = ceil ($clientsCount / MAX_ITEMS_PAGE);                                                                  
+
+                    // This variable will contain the number of the current page
+                    $current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $clients = $this->clientPotentialDAO->getAllActiveWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $clients = $this->clientPotentialDAO->getAllActiveWithLimit($startFrom);                    
+                    }
+                } else {                    
+                    $title = "Clientes Potenciales - Deshabilitados";
+                    $d_clientsCount = $this->clientPotentialDAO->getDisableCount();         
+                    $d_pages = ceil ($d_clientsCount / MAX_ITEMS_PAGE);                                                                           
+
+                    // This variable will contain the number of the current page
+                    $d_current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $clients = $this->clientPotentialDAO->getAllDisableWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $clients = $this->clientPotentialDAO->getAllDisableWithLimit($startFrom);                    
+                    }                                      
+                }                 
+              
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-potential-client.php");
@@ -161,9 +186,9 @@
                 $client = new ClientPotential();
                 $client->setId($id);
                 if ($this->clientPotentialDAO->enableById($client, $admin)) {
-                    return $this->listPotentialClientPath(null, null, CLIENT_ENABLE);
+                    return $this->listPotentialClientPath(1, null, null, CLIENT_ENABLE);
                 } else {
-                    return $this->listPotentialClientPath(null, DB_ERROR, null);
+                    return $this->listPotentialClientPath(1, null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -175,9 +200,9 @@
                 $client = new ClientPotential();
                 $client->setId($id);
                 if ($this->clientPotentialDAO->disableById($client, $admin)) {
-                    return $this->listPotentialClientPath(null, null, CLIENT_DISABLE);
+                    return $this->listPotentialClientPath(1, null, null, CLIENT_DISABLE);
                 } else {
-                    return $this->listPotentialClientPath(null, DB_ERROR, null);
+                    return $this->listPotentialClientPath(1, null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -227,9 +252,9 @@
                     $update_by = $this->adminController->isLogged();
 
                     if ($this->clientPotentialDAO->update($client, $update_by)) {                                                
-                        return $this->listPotentialClientPath(null, null, CLIENT_UPDATE);
+                        return $this->listPotentialClientPath(1, null, null, CLIENT_UPDATE);
                     } else {                        
-                        return $this->listPotentialClientPath(null, DB_ERROR, null);        
+                        return $this->listPotentialClientPath(1, null, DB_ERROR, null);        
                     }
                 }                
                 return $this->updatePotentialPath($id, EMAIL_ERROR);

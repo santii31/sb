@@ -258,14 +258,14 @@
                         </div>
                         <div class="col s4">
                             <span>
-                                • Precio por primera quincena en febrero: $<?= $config->getPriceTentFebruaryFirstFortnigh(); ?>
+                                • Precio primera quincena en febrero: $<?= $config->getPriceTentFebruaryFirstFortnigh(); ?>
                             </span>
                         </div>                       
                     </div>
                     <div class="row">
                         <div class="col s4">
                             <span>
-                                • Precio por segunda quincena en febrero: $<?= $config->getPriceTentFebruarySecondFortnigh(); ?>
+                                • Precio segunda quincena en febrero: $<?= $config->getPriceTentFebruarySecondFortnigh(); ?>
                             </span>
                         </div> 
                         <div class="col s4">

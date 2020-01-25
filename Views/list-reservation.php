@@ -81,7 +81,7 @@
                         <tbody>
                             <?php foreach ($reservations as $reservation): ?>
                                 <tr>                                    
-                                    <td> <?= ucfirst( $reservation->getStay() ); ?> </td>
+                                    <td> <?= ucfirst( str_replace('_', ' ', $reservation->getStay()) ); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>                                    
                                     <td> $<?= $reservation->getPrice(); ?> </td>

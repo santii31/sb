@@ -22,7 +22,7 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <h5>• Total gastado en sueldos: $<?= $total ?></h5>
+                        <h5>• Total gastado en personal: $<?= $total ?></h5>
                     </div>
                 </div>
 

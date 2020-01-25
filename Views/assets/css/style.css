@@ -319,14 +319,14 @@ nav .input-field label.active i {
 .beach-color {
     display: flex;
     align-items: center;
-    justify-content: space-between;    
+    justify-content: space-around;    
 }
 
 .box-color {
-    height: 10px;
+    height: 7px;
     width: 10px;    
     border: 1px solid #2b2f3a;
-    border-radius: 5px;
+    border-radius: 2px;
     margin-right: .3rem;
 }
 

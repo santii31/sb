@@ -23,7 +23,7 @@
 						</div>
 						<div class="beach-color">
 							<div class="box-color orange"></div>
-							<span>Fin de semana/Feriados</span>
+							<span>Fin de semana</span>
 						</div>
 						<div class="beach-color">
 							<div class="box-color blue"></div>

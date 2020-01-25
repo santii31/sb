@@ -209,6 +209,42 @@
             }
         }	
                 
+        public function getAllDisables() {
+            try {
+                $list = array();
+                $query = "CALL staff_getAllDisables()";
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+                foreach ($results as $row) {
+                    $staff = new Staff();
+                    $staff->setId($row["id"]);
+                    $staff->setName($row["name"]);
+                    $staff->setLastName($row["lastname"]);
+                    $staff->setPosition($row["position"]);
+                    $staff->setSalary($row["salary"]);
+                    $staff->setDateStart($row["date_start"]);
+                    $staff->setDateEnd($row["date_end"]);
+                    $staff->setDni($row["dni"]);
+                    $staff->setAddress($row["address"]);
+                    $staff->setPhone($row["tel"]);
+                    $staff->setShirtSize($row["shirt_size"]);
+                    $staff->setPantSize($row["pant_size"]);
+                    $staff->setIsActive($row["is_active"]);
+                    
+                    $admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+                    $staff->setRegisterBy($admin);
+
+                    array_push($list, $staff);
+                }
+                return $list;	
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+
         public function enableById(Staff $staff, Admin $enableBy) {
             try {
                 $query = "CALL staff_enableById(?, ?, ?)";
@@ -274,9 +310,117 @@
             } catch (Exception $e) {
                 return false;
                 // echo $e;
+            }            
+        }
+
+        public function getActiveCount() {
+            try {				
+                $query = "CALL staff_getActiveCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;
             }
         }
 
+        public function getDisableCount() {
+            try {				
+                $query = "CALL staff_getDisableCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;
+                // echo $ex;
+            }
+        }
+
+        public function getAllActiveStaffWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL staff_getAllActiveStaffWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+
+                    $staff = new Staff();
+                    $staff->setId($row["id"]);
+                    $staff->setName($row["name"]);
+                    $staff->setLastName($row["lastname"]);
+                    $staff->setPosition($row["position"]);
+                    $staff->setSalary($row["salary"]);
+                    $staff->setDateStart($row["date_start"]);
+                    $staff->setDateEnd($row["date_end"]);
+                    $staff->setDni($row["dni"]);
+                    $staff->setAddress($row["address"]);
+                    $staff->setPhone($row["tel"]);
+                    $staff->setShirtSize($row["shirt_size"]);
+                    $staff->setPantSize($row["pant_size"]);
+                    $staff->setIsActive($row["is_active"]);
+                    
+                    $admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+                    $staff->setRegisterBy($admin);
+
+                    array_push($list, $staff);                                                
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getAllDisableStaffWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL staff_getAllDisableStaffWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+
+                    $staff = new Staff();
+                    $staff->setId($row["id"]);
+                    $staff->setName($row["name"]);
+                    $staff->setLastName($row["lastname"]);
+                    $staff->setPosition($row["position"]);
+                    $staff->setSalary($row["salary"]);
+                    $staff->setDateStart($row["date_start"]);
+                    $staff->setDateEnd($row["date_end"]);
+                    $staff->setDni($row["dni"]);
+                    $staff->setAddress($row["address"]);
+                    $staff->setPhone($row["tel"]);
+                    $staff->setShirtSize($row["shirt_size"]);
+                    $staff->setPantSize($row["pant_size"]);
+                    $staff->setIsActive($row["is_active"]);
+                    
+                    $admin = new Admin();
+                    $admin->setName($row["admin_name"]);
+                    $admin->setLastName($row["admin_lastname"]);
+
+                    $staff->setRegisterBy($admin);
+
+                    array_push($list, $staff);                                                
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
     }
 
 ?>

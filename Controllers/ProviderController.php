@@ -111,14 +111,39 @@
 			}
 		}
 
-        public function listProviderPath($showAll = null, $alert = "", $success = "") {
+        public function listProviderPath($page = 1, $showDisables = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Proveedores";
-                if ($showAll != null) {
-                    $providers = $this->providerDAO->getAll();
-                } else {
-                    $providers = $this->providerDAO->getAllActives();                    
-                }                   
+
+                if ($showDisables == null) {
+                    $title = "Proveedores";
+                    $providersCount = $this->providerDAO->getActiveCount();         
+                    $pages = ceil ($providersCount / MAX_ITEMS_PAGE);                                                                  
+
+                    // This variable will contain the number of the current page
+                    $current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $providers = $this->providerDAO->getAllActiveWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $providers = $this->providerDAO->getAllActiveWithLimit($startFrom);                    
+                    }
+                } else {                    
+                    $title = "Proveedores - Deshabilitados";
+                    $d_providersCount = $this->providerDAO->getDisableCount();         
+                    $d_pages = ceil ($d_providersCount / MAX_ITEMS_PAGE);                                                                         
+
+                    // This variable will contain the number of the current page
+                    $d_current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $providers = $this->providerDAO->getAllDisableWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $providers = $this->providerDAO->getAllDisableWithLimit($startFrom);                    
+                    }                                      
+                }
+                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-providers.php");
@@ -175,9 +200,9 @@
                 $provider = new Provider();
                 $provider->setId($id);
                 if ($this->providerDAO->enableById($provider, $admin)) {
-                    return $this->listProviderPath(null, null, PROVIDER_ENABLE);
+                    return $this->listProviderPath(1, null, null, PROVIDER_ENABLE);
                 } else {
-                    return $this->listProviderPath(null, DB_ERROR, null);
+                    return $this->listProviderPath(1, null, DB_ERROR, null);
                 }
             } else {
                 return $this->adminController->userPath();
@@ -189,9 +214,9 @@
                 $provider = new Provider();
                 $provider->setId($id);
                 if ($this->providerDAO->disableById($provider, $admin)) {
-                    return $this->listProviderPath(null, null, PROVIDER_DISABLE);
+                    return $this->listProviderPath(1, null, null, PROVIDER_DISABLE);
                 } else {
-                    return $this->listProviderPath(null, DB_ERROR, null);
+                    return $this->listProviderPath(1, null, DB_ERROR, null);
                 }              
             } else {
                 return $this->adminController->userPath();
@@ -251,9 +276,9 @@
                         $update_by = $this->adminController->isLogged();
 
                         if ($this->providerDAO->update($provider, $update_by)) {                                                
-                            return $this->listProviderPath(null, null, PROVIDER_UPDATE);
+                            return $this->listProviderPath(1, null, null, PROVIDER_UPDATE);
                         } else {                        
-                            return $this->listProviderPath(null, DB_ERROR, null);        
+                            return $this->listProviderPath(1, null, DB_ERROR, null);        
                         }
                     }
                     return $this->updatePath($id, DNI_ERROR);

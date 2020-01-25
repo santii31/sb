@@ -127,6 +127,53 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
+                    <?php if ($productsCount > MAX_ITEMS_PAGE): ?>
+                        <ul class="pagination center-align">     
+
+                            <?php if ($page > 1): ?>                    
+                            <li class="waves-effect">
+                                <a href="<?= FRONT_ROOT ?>stock/listStockPath/<?= $page - 1; ?>">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                            </li>
+                            <?php else: ?>
+                            <li class="disabled">
+                                <a href="#!">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            
+                            <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                <?php if ($i == $page): ?>
+                                    <li class="active">
+                                <?php else: ?>
+                                    <li class="waves-effect">
+                                <?php endif; ?>
+                                    <a href="<?= FRONT_ROOT ?>stock/listStockPath/<?= $i; ?>">
+                                        <?php $current = $i; ?>
+                                        <?= $i; ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?> 
+
+                            <?php if ($page != $current): ?>
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>stock/listStockPath/<?= $page + 1; ?>">
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
+                                </li>             
+                            <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
+                                </li>                               
+                            <?php endif; ?>                                                
+                        </ul>                        
+                    <?php endif; ?>  
+
                 </div>
             </div>
 

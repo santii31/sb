@@ -8,24 +8,24 @@
                     </h2>
                 </div>
                 <div class="divider mb-divider"></div>
-
+                
                 <div class="more-list">
-                    <?php if (isset($showAll)): ?>
-                    <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath">                    
+                    <?php if (isset($showDisables)): ?>
+                    <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath">              
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar solo activos
+                            Mostrar solo habilitados
                         </span>    
                     </a>
-                    <?php else: ?>
-                        <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/all">                    
+                    <?php else: ?>                        
+                        <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/1/disables">                    
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar lista completa (Incluyendo los deshabilitados)
+                            Mostrar deshabilitados
                         </span>    
                     </a>
                     <?php endif; ?>
-                </div>  
+                </div> 
 
                 <?php if ($success != null): ?>
                 <div class="row">
@@ -62,8 +62,7 @@
                 <div class="row">    
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
-                            <tr>
-                                <th>#</th>
+                            <tr>                                
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Domicilio</th>
@@ -77,8 +76,7 @@
                                                
                         <tbody>
                             <?php foreach ($clients as $client): ?>
-                            <tr>
-                                <td> <?= $client->getId(); ?> </td>
+                            <tr>                                
                                 <td> <?= ucfirst( $client->getName() ); ?> </td>
                                 <td> <?= ucfirst( $client->getLastName() ); ?> </td>
                                 <td> <?= ucfirst( $client->getAddress() ); ?> </td>
@@ -108,7 +106,102 @@
                             </tr>
                             <?php endforeach; ?>         
                         </tbody>
-                    </table>                                          
+                    </table>              
+                    
+                    <?php if (isset($clientsCount)): ?>
+                        <?php if ($clientsCount > MAX_ITEMS_PAGE): ?>
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/<?= $page - 1; ?>">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/<?= $i; ?>">
+                                            <?php $current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $current): ?>
+                                    <li class="waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/<?= $page + 1; ?>">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+
+                    <?php elseif (isset($d_clientsCount)): ?>
+                        <?php if ($d_clientsCount > MAX_ITEMS_PAGE): ?>                            
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/<?= $page - 1; ?>/disables">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $d_pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>                                    
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/<?= $i; ?>/disables">
+                                            <?php $d_current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $d_current): ?>
+                                    <li class="waves-effect">                                    
+                                        <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath/<?= $page + 1; ?>/disables">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+                    <?php endif; ?>
 
                 </div>
             </div>

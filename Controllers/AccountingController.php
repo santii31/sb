@@ -278,7 +278,7 @@
         
         public function staffSalaryPath() {
             if ($admin = $this->adminController->isLogged()) {                       
-                $title = "Contabilidad - Sueldo del personal";       
+                $title = "Contabilidad - Sueldos del personal";       
                 $total = 0;
                 $this->staffController = new StaffController();
                 $staffs = $this->staffController->getAllStAff();

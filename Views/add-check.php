@@ -1,5 +1,5 @@
-<!-- Main content  -->
-<div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
                     <form action="<?= FRONT_ROOT ?>additionalService/addLocker" method="post" class="col s10 form-test">
@@ -50,15 +50,10 @@
                                 <input id="check_number" type="number" name="check_number" class="validate" required>
                                 <label for="check_number">Numero de cheque</label>
                             </div>
-
-                            <input type="hidden" name="id_client" value="<?php $reserveTemp->getClient()->getId(); ?>" >
-
+                            
                         </div>    
-
                         
-
-                        
-
+                        <input type="hidden" name="id_client" value="<?= $reserveTemp->getClient()->getId(); ?>" >
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
                         
                         <div class="row">

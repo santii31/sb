@@ -175,8 +175,6 @@ BEGIN
 END$$
 
 
-
-
 DROP procedure IF EXISTS `admin_getAllWithRsv`;
 DELIMITER $$
 CREATE PROCEDURE admin_getAllWithRsv ()
@@ -289,6 +287,56 @@ BEGIN
         `admin`.`update_by` = update_by    
     WHERE 
         `admin`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `admin_getAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE admin_getAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `admin`.*         
+    FROM `admin`     
+    WHERE `admin`.`is_active` = true
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `admin_getAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE admin_getAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `admin`.*         
+    FROM `admin`     
+    WHERE `admin`.`is_active` = false
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `admin_getActiveCount`;
+DELIMITER $$
+CREATE PROCEDURE admin_getActiveCount ()
+BEGIN
+	SELECT count(admin.id) AS total 
+    FROM `admin`
+    WHERE `admin`.`is_active` = true;
+END$$
+
+
+DROP procedure IF EXISTS `admin_getDisableCount`;
+DELIMITER $$
+CREATE PROCEDURE admin_getDisableCount ()
+BEGIN
+	SELECT count(admin.id) AS total 
+    FROM `admin`
+    WHERE `admin`.`is_active` = false;
 END$$
 
 
@@ -725,6 +773,56 @@ BEGIN
         `client_potential`.`update_by` = update_by    
     WHERE 
         `client_potential`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `client_potential`.*         
+    FROM `client_potential`     
+    WHERE `client_potential`.`is_active` = true
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `client_potential`.*         
+    FROM `client_potential`     
+    WHERE `client_potential`.`is_active` = false
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getActiveCount`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getActiveCount ()
+BEGIN
+	SELECT count(client_potential.id) AS total 
+    FROM `client_potential`
+    WHERE `client_potential`.`is_active` = true;
+END$$
+
+
+DROP procedure IF EXISTS `client_potential_getDisableCount`;
+DELIMITER $$
+CREATE PROCEDURE client_potential_getDisableCount ()
+BEGIN
+	SELECT count(client_potential.id) AS total 
+    FROM `client_potential`
+    WHERE `client_potential`.`is_active` = false;
 END$$
 
 
@@ -1802,6 +1900,64 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `provider_getAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE provider_getAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `provider`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname   
+    FROM `provider`     
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`
+    WHERE `provider`.`is_active` = true
+    ORDER BY name ASC
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `provider_getAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE provider_getAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `provider`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname  
+    FROM `provider`     
+    INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`
+    WHERE `provider`.`is_active` = false
+    ORDER BY name ASC
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `provider_getActiveCount`;
+DELIMITER $$
+CREATE PROCEDURE provider_getActiveCount ()
+BEGIN
+	SELECT count(provider.id) AS total 
+    FROM `provider`
+    WHERE `provider`.`is_active` = true;
+END$$
+
+
+DROP procedure IF EXISTS `provider_getDisableCount`;
+DELIMITER $$
+CREATE PROCEDURE provider_getDisableCount ()
+BEGIN
+	SELECT count(provider.id) AS total 
+    FROM `provider`
+    WHERE `provider`.`is_active` = false;
+END$$
+
+
 
 ----------------------------- CATEGORY -----------------------------
 
@@ -2077,6 +2233,72 @@ BEGIN
         `product`.`remove_by` = remove_by
     WHERE 
         `product`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `product_getAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE product_getAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT  product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.quantity AS product_quantity,
+            product.is_active AS product_isActive,
+            product.date_register AS product_date_register,
+            category.id AS category_id,
+            category.name AS category_name            
+    FROM `product` 
+    INNER JOIN category ON product.FK_id_category = category.id       
+    WHERE `product`.`is_active` = true
+    ORDER BY `product`.`name` ASC
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `product_getAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE product_getAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT  product.id AS product_id,
+            product.name AS product_name,
+            product.price AS product_price,
+            product.quantity AS product_quantity,
+            product.is_active AS product_isActive,
+            product.date_register AS product_date_register,
+            category.id AS category_id,
+            category.name AS category_name            
+    FROM `product` 
+    INNER JOIN category ON product.FK_id_category = category.id
+    WHERE `product`.`is_active` = false
+    ORDER BY `product`.`name` ASC
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `product_getActiveCount`;
+DELIMITER $$
+CREATE PROCEDURE product_getActiveCount ()
+BEGIN
+	SELECT count(product.id) AS total 
+    FROM `product`
+    WHERE `product`.`is_active` = true;
+END$$
+
+
+DROP procedure IF EXISTS `product_getDisableCount`;
+DELIMITER $$
+CREATE PROCEDURE product_getDisableCount ()
+BEGIN
+	SELECT count(product.id) AS total 
+    FROM `product`
+    WHERE `product`.`is_active` = false;
 END$$
 
 
@@ -3013,6 +3235,20 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `staff_getAllDisables`;
+DELIMITER $$
+CREATE PROCEDURE staff_getAllDisables ()
+BEGIN
+	SELECT `staff`.*,
+            `admin`.`name` AS admin_name,
+            `admin`.`lastname` AS admin_lastname
+    FROM `staff` 
+    INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
+    WHERE `staff`.`is_active` = false
+    ORDER BY name ASC;
+END$$
+
+
 DROP procedure IF EXISTS `staff_getAll`;
 DELIMITER $$
 CREATE PROCEDURE staff_getAll ()
@@ -3109,7 +3345,63 @@ BEGIN
         `staff`.`id` = id;	
 END$$
 
-<<<<<<< HEAD
+
+DROP procedure IF EXISTS `staff_getAllActiveStaffWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE staff_getAllActiveStaffWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `staff`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname             
+    FROM `staff`    
+    INNER JOIN admin ON staff.register_by = admin.id 
+    WHERE `staff`.`is_active` = true
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `staff_getAllDisableStaffWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE staff_getAllDisableStaffWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+        `staff`.*,
+        `admin`.`name` AS admin_name,
+        `admin`.`lastname` AS admin_lastname             
+    FROM `staff`    
+    INNER JOIN admin ON staff.register_by = admin.id    
+    WHERE `staff`.`is_active` = false
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `staff_getActiveCount`;
+DELIMITER $$
+CREATE PROCEDURE staff_getActiveCount ()
+BEGIN
+	SELECT count(staff.id) AS total 
+    FROM `staff`
+    WHERE `staff`.`is_active` = true;
+END$$
+
+
+DROP procedure IF EXISTS `staff_getDisableCount`;
+DELIMITER $$
+CREATE PROCEDURE staff_getDisableCount ()
+BEGIN
+	SELECT count(staff.id) AS total 
+    FROM `staff`
+    WHERE `staff`.`is_active` = false;
+END$$
+
+
 ---------------------------- CHECK ---------------------------
 
 CREATE TABLE check (
@@ -3142,91 +3434,6 @@ BEGIN
         SET lastId = LAST_INSERT_ID();	
 	    SELECT lastId;
 END$$
-
-DROP procedure IF EXISTS `check_getById`;
-DELIMITER $$
-CREATE PROCEDURE check_getById (IN id INT)
-BEGIN
-	SELECT check.id AS check_id,
-           check.bank AS check_bank,
-           check.account_number AS check_accountNumber,
-           check.check_number AS check_number,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_addres,
-		   client.is_active AS client_isActive
-    FROM `check` 
-    INNER JOIN client ON check.FK_id_client = client.id
-    WHERE `check`.`id` = id;
-END$$
-
-DROP procedure IF EXISTS `check_getByClientId`;
-DELIMITER $$
-CREATE PROCEDURE check_getByClientId (IN id INT)
-BEGIN
-	SELECT check.id AS check_id,
-           check.bank AS check_bank,
-           check.account_number AS check_accountNumber,
-           check.check_number AS check_number,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_address,
-		   client.is_active AS client_isActive
-    FROM `check` 
-    INNER JOIN client ON check.FK_id_client = client.id
-    WHERE `check`.`FK_id_client` = id;
-END$$
-
-DROP procedure IF EXISTS `check_getByBank`;
-DELIMITER $$
-CREATE PROCEDURE check_getByBank (IN bank VARCHAR(255))
-BEGIN
-	SELECT check.id AS check_id,
-           check.bank AS check_bank,
-           check.account_number AS check_accountNumber,
-           check.check_number AS check_number,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_address,
-		   client.is_active AS client_isActive
-    FROM `check` 
-    INNER JOIN client ON check.FK_id_client = client.id
-    WHERE `check`.`bank` = bank;
-END$$
-
-
-DROP procedure IF EXISTS `check_getAll`;
-DELIMITER $$
-CREATE PROCEDURE check_getAll ()
-BEGIN
-	SELECT check.id AS check_id,
-           check.bank AS check_bank,
-           check.account_number AS check_accountNumber,
-           check.check_number AS check_number,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_address,
-		   client.is_active AS client_isActive
-    FROM `check` 
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    ORDER BY id ASC;
-=======
 
 
 ---------------------------- ACCOUTING ---------------------------
@@ -3277,5 +3484,4 @@ DELIMITER $$
 CREATE PROCEDURE diary_balance_getByDate (IN date DATE)
 BEGIN
 	SELECT * FROM `diary_balance` WHERE `diary_balance`.`date` = date;
->>>>>>> b4401df867bedb014f93830e9eecc2a3187960fd
 END$$

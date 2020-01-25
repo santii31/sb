@@ -58,7 +58,7 @@
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "parking.php");
                 require_once(VIEWS_PATH . "footer.php"); 
-                
+                                
             } else {
                 return $this->adminController->userPath();
             }

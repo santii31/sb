@@ -296,6 +296,85 @@
 			}
 		}
 
+		public function getActiveCount() {
+            try {				
+                $query = "CALL admin_getActiveCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getDisableCount() {
+            try {				
+                $query = "CALL admin_getDisableCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;                
+            }
+        }
+
+        public function getAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL admin_getAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$admin = new Admin();
+					$admin->setId($row["id"]);
+					$admin->setName($row["name"]);
+					$admin->setLastName($row["lastname"]);
+					$admin->setEmail($row["email"]);
+					$admin->setDni($row["dni"]);								
+					$admin->setIsActive($row["is_active"]);
+					array_push($list, $admin);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL admin_getAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$admin = new Admin();
+					$admin->setId($row["id"]);
+					$admin->setName($row["name"]);
+					$admin->setLastName($row["lastname"]);
+					$admin->setEmail($row["email"]);
+					$admin->setDni($row["dni"]);								
+					$admin->setIsActive($row["is_active"]);
+					array_push($list, $admin);                                          
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+			
+
     }
 
  ?>

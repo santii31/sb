@@ -10,18 +10,18 @@
                 <div class="divider mb-divider"></div>
 
                 <div class="more-list">
-                    <?php if (isset($showAll)): ?>
-                    <a href="<?= FRONT_ROOT ?>provider/listProviderPath">                    
+                    <?php if (isset($showDisables)): ?>
+                    <a href="<?= FRONT_ROOT ?>provider/listProviderPath">              
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar solo activos
+                            Mostrar solo habilitados
                         </span>    
                     </a>
-                    <?php else: ?>
-                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath/all">                    
+                    <?php else: ?>                        
+                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath/1/disables">                    
                         <i class="material-icons left">arrow_forward</i>
                         <span>
-                            Mostrar lista completa (Incluyendo los deshabilitados)
+                            Mostrar deshabilitados
                         </span>    
                     </a>
                     <?php endif; ?>
@@ -62,8 +62,7 @@
                 <div class="row">    
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
-                            <tr>
-                                <th>#</th>
+                            <tr>                                
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Telefono</th>
@@ -77,8 +76,7 @@
                                                
                         <tbody>
                             <?php foreach ($providers as $provider): ?>
-                            <tr>
-                                <td> <?= $provider->getId(); ?> </td>
+                            <tr>                                
                                 <td> <?= ucfirst( $provider->getName() ); ?> </td>
                                 <td> <?= ucfirst( $provider->getLastName() ); ?> </td>
                                 <td> <?= $provider->getPhone(); ?> </td>
@@ -128,6 +126,101 @@
                             <?php endforeach; ?>         
                         </tbody>
                     </table>                                          
+
+                    <?php if (isset($providersCount)): ?>
+                        <?php if ($providersCount > MAX_ITEMS_PAGE): ?>
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>provider/listProviderPath/<?= $page - 1; ?>">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>
+                                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath/<?= $i; ?>">
+                                            <?php $current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $current): ?>
+                                    <li class="waves-effect">
+                                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath/<?= $page + 1; ?>">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+
+                    <?php elseif (isset($d_providersCount)): ?>
+                        <?php if ($d_providersCount > MAX_ITEMS_PAGE): ?>                            
+                            <ul class="pagination center-align">     
+
+                                <?php if ($page > 1): ?>                    
+                                <li class="waves-effect">
+                                    <a href="<?= FRONT_ROOT ?>provider/listProviderPath/<?= $page - 1; ?>/disables">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php else: ?>
+                                <li class="disabled">
+                                    <a href="#!">
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $d_pages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li class="active">
+                                    <?php else: ?>
+                                        <li class="waves-effect">
+                                    <?php endif; ?>                                    
+                                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath/<?= $i; ?>/disables">
+                                            <?php $d_current = $i; ?>
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?> 
+
+                                <?php if ($page != $d_current): ?>
+                                    <li class="waves-effect">                                    
+                                        <a href="<?= FRONT_ROOT ?>provider/listProviderPath/<?= $page + 1; ?>/disables">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>             
+                                <?php else: ?>
+                                    <li class="disabled">
+                                        <a href="#!">
+                                            <i class="material-icons">chevron_right</i>
+                                        </a>
+                                    </li>                               
+                                <?php endif; ?>                                                
+                            </ul>                        
+                        <?php endif; ?>   
+                    <?php endif; ?>
 
                 </div>
             </div>

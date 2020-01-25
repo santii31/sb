@@ -44,8 +44,7 @@
                 <div class="row">    
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
-                            <tr>
-                                <th>#</th>
+                            <tr>                                
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Domicilio</th>                                
@@ -61,8 +60,7 @@
                                                
                         <tbody>
                             <?php foreach ($rsv as $reservation): ?>
-                            <tr>
-                                <td> <?= $reservation->getId(); ?> </td>
+                            <tr>                                
                                 <td> <?= ucfirst( $reservation->getClient()->getName() ) ; ?> </td>
                                 <td> <?= ucfirst( $reservation->getClient()->getLastName() ); ?> </td>
                                 <td> <?= ucfirst( $reservation->getClient()->getAddress() ); ?> </td>                                
@@ -83,7 +81,7 @@
                         </tbody>
                     </table>                                          
                     
-                    <?php if (sizeof($rsv) > MAX_ITEMS_PAGE): ?>
+                    <?php if ($rsvClientsCount > MAX_ITEMS_PAGE): ?>
                     <ul class="pagination center-align">     
 
                         <?php if ($page > 1): ?>                    

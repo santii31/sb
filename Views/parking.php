@@ -17,15 +17,19 @@
 							<div class="box-color fuchsia"></div>
 							<span>Enero</span>
 						</div>
+                        <div class="beach-color">
+							<div class="box-color violet"></div>
+							<span>Febrero</span>
+						</div>
 						<div class="beach-color">
 							<div class="box-color orange"></div>
-							<span>Fin de semana/Feriados</span>
+							<span>Fin de semana</span>
 						</div>
 						<div class="beach-color">
 							<div class="box-color blue"></div>
 							<span>Periodo</span>
 						</div>
-					</div>                
+					</div>               
 
                     <?php if ($alert != null): ?>
                     <div class="row">
@@ -49,49 +53,97 @@
                                             <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                          
         
                                                 <?php $stay = $rsv->getStay(); ?>
-                                                                                                    
+                                                                                                     
                                                 <?php switch ($stay): 
-                                                    case "season": ?>
+                                                    case "temporada": ?>
                                                         <div class="item yellow">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div>                                              
+                                                        </div>                                                                                   
                                                     <?php break; ?> 
                                                 
-                                                    <?php case "day": ?>
-                                                        <div class="item green">                                                
+                                                    <?php case "enero": ?>
+                                                        <div class="item fuchsia">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div> 
+                                                        </div>                                                              
                                                     <?php break; ?>
-                                                    
-                                                    <?php case "january": ?>
-                                                        <div class="item fuchsia">                                                
+
+                                                    <?php case "enero_dia": ?>
+                                                        <div class="item fuchsia">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div> 
+                                                        </div>                                                              
                                                     <?php break; ?>
-                                                    
-                                                    <?php case "rest": ?>
-                                                        <div class="item orange">                                                
+
+                                                    <?php case "enero_quincena": ?>
+                                                        <div class="item fuchsia">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div> 
+                                                        </div>                                                                                   
                                                     <?php break; ?>
                                                     
-                                                    <?php case "period": ?>
-                                                        <div class="item blue">   
+                                                    <?php case "febrero": ?>
+                                                        <div class="item violet">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div>                                              
+                                                        </div>                                                              
+                                                    <?php break; ?>                                                                
+
+                                                    <?php case "febrero_dia": ?>
+                                                        <div class="item violet">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                              
+                                                    <?php break; ?>
+
+                                                    <?php case "febero_primer_quincena": ?>
+                                                        <div class="item violet">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                              
+                                                    <?php break; ?>
+
+                                                    <?php case "febrero_segunda_quincena": ?>
+                                                        <div class="item violet">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                                                   
+                                                    <?php break; ?>                                                    
+
+                                                    <?php case "diario": ?>
+                                                        <div class="item green">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                              
+                                                    <?php break; ?>                                                                
+                                                    
+                                                    <?php case "fin_semana": ?>
+                                                        <div class="item orange">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                                                   
                                                     <?php break; ?>
                                                     
-                                                <?php endswitch; ?>    
+                                                    <?php case "periodo": ?>
+                                                        <div class="item blue">  
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                                                   
+                                                    <?php break; ?>  
+                                                    
+                                                <?php endswitch; ?>                                                                              
                                                                                                                 
                                             <?php else: ?>
                                             <div class="item">
@@ -234,47 +286,95 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
+                                                            case "temporada": ?>
                                                                 <div class="item yellow">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div>                                              
+                                                                </div>                                                                                   
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="item green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
                                                             <?php break; ?>
-                                                            
-                                                            <?php case "january": ?>
-                                                                <div class="item fuchsia">                                                
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
                                                             <?php break; ?>
-                                                            
-                                                            <?php case "rest": ?>
-                                                                <div class="item orange">                                                
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                            <?php case "period": ?>
-                                                                <div class="item blue">   
+                                                            <?php case "febrero": ?>
+                                                                <div class="item violet">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div>                                              
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
+                                                            <?php break; ?>                                                    
+
+                                                            <?php case "diario": ?>
+                                                                <div class="item green">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="item orange">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                        <?php endswitch; ?>    
+                                                            <?php case "periodo": ?>
+                                                                <div class="item blue">  
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
+                                                            <?php break; ?>  
+                                                            
+                                                        <?php endswitch; ?>     
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="item">
@@ -413,47 +513,95 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
+                                                            case "temporada": ?>
                                                                 <div class="item yellow">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div>                                              
+                                                                </div>                                                                                   
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="item green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
                                                             <?php break; ?>
-                                                            
-                                                            <?php case "january": ?>
-                                                                <div class="item fuchsia">                                                
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
                                                             <?php break; ?>
-                                                            
-                                                            <?php case "rest": ?>
-                                                                <div class="item orange">                                                
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                            <?php case "period": ?>
-                                                                <div class="item blue">   
+                                                            <?php case "febrero": ?>
+                                                                <div class="item violet">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div>                                              
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
+                                                            <?php break; ?>                                                    
+
+                                                            <?php case "diario": ?>
+                                                                <div class="item green">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="item orange">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                        <?php endswitch; ?>    
+                                                            <?php case "periodo": ?>
+                                                                <div class="item blue">  
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
+                                                            <?php break; ?>  
+                                                            
+                                                        <?php endswitch; ?>      
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="item">
@@ -598,47 +746,95 @@
                                                             <?php $stay = $rsv->getStay(); ?>
                                                                                                                 
                                                             <?php switch ($stay): 
-                                                                case "season": ?>
+                                                                case "temporada": ?>
                                                                     <div class="item yellow">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div>                                              
+                                                                    </div>                                                                                   
                                                                 <?php break; ?> 
                                                             
-                                                                <?php case "day": ?>
-                                                                    <div class="item green">                                                
+                                                                <?php case "enero": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
                                                                 <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="item fuchsia">                                                
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
                                                                 <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="item orange">                                                
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                                <?php case "period": ?>
-                                                                    <div class="item blue">   
+                                                                <?php case "febrero": ?>
+                                                                    <div class="item violet">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div>                                              
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>                                                    
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="item green">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+                                                                
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="item orange">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                            <?php endswitch; ?>    
+                                                                <?php case "periodo": ?>
+                                                                    <div class="item blue">  
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>     
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="item">
@@ -774,47 +970,95 @@
                                                             <?php $stay = $rsv->getStay(); ?>
                                                                                                                 
                                                             <?php switch ($stay): 
-                                                                case "season": ?>
+                                                                case "temporada": ?>
                                                                     <div class="item yellow">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div>                                              
+                                                                    </div>                                                                                   
                                                                 <?php break; ?> 
                                                             
-                                                                <?php case "day": ?>
-                                                                    <div class="item green">                                                
+                                                                <?php case "enero": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
                                                                 <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="item fuchsia">                                                
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
                                                                 <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="item orange">                                                
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                                <?php case "period": ?>
-                                                                    <div class="item blue">   
+                                                                <?php case "febrero": ?>
+                                                                    <div class="item violet">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div>                                              
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>                                                    
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="item green">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+                                                                
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="item orange">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                            <?php endswitch; ?>    
+                                                                <?php case "periodo": ?>
+                                                                    <div class="item blue">  
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>     
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="item">
@@ -954,47 +1198,95 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
+                                                            case "temporada": ?>
                                                                 <div class="item yellow">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div>                                              
+                                                                </div>                                                                                   
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="item green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
                                                             <?php break; ?>
-                                                            
-                                                            <?php case "january": ?>
-                                                                <div class="item fuchsia">                                                
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
                                                             <?php break; ?>
-                                                            
-                                                            <?php case "rest": ?>
-                                                                <div class="item orange">                                                
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                            <?php case "period": ?>
-                                                                <div class="item blue">   
+                                                            <?php case "febrero": ?>
+                                                                <div class="item violet">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div>                                              
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
+                                                            <?php break; ?>                                                    
+
+                                                            <?php case "diario": ?>
+                                                                <div class="item green">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="item orange">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                        <?php endswitch; ?>    
+                                                            <?php case "periodo": ?>
+                                                                <div class="item blue">  
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
+                                                            <?php break; ?>  
+                                                            
+                                                        <?php endswitch; ?>     
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="item">
@@ -1135,45 +1427,93 @@
                                                             <?php $stay = $rsv->getStay(); ?>
                                                                                                                 
                                                             <?php switch ($stay): 
-                                                                case "season": ?>
+                                                                case "temporada": ?>
                                                                     <div class="item yellow">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div>                                              
+                                                                    </div>                                                                                   
                                                                 <?php break; ?> 
                                                             
-                                                                <?php case "day": ?>
-                                                                    <div class="item green">                                                
+                                                                <?php case "enero": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="item fuchsia">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="item fuchsia">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                                <?php case "january": ?>
-                                                                    <div class="item fuchsia">                                                
+                                                                <?php case "febrero": ?>
+                                                                    <div class="item violet">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>                                                    
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="item green">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+                                                                
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="item orange">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                                <?php case "rest": ?>
-                                                                    <div class="item orange">                                                
+                                                                <?php case "periodo": ?>
+                                                                    <div class="item blue">  
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case "period": ?>
-                                                                    <div class="item blue">   
-                                                                        <span>
-                                                                            <?= $parking->getNumber(); ?>
-                                                                        </span>		
-                                                                    </div>                                              
-                                                                <?php break; ?>
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>    
                                                                                                                             
@@ -1313,47 +1653,95 @@
                                                             <?php $stay = $rsv->getStay(); ?>
                                                                                                                 
                                                             <?php switch ($stay): 
-                                                                case "season": ?>
+                                                                case "temporada": ?>
                                                                     <div class="item yellow">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div>                                              
+                                                                    </div>                                                                                   
                                                                 <?php break; ?> 
                                                             
-                                                                <?php case "day": ?>
-                                                                    <div class="item green">                                                
+                                                                <?php case "enero": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
                                                                 <?php break; ?>
-                                                                
-                                                                <?php case "january": ?>
-                                                                    <div class="item fuchsia">                                                
+
+                                                                <?php case "enero_dia": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                              
                                                                 <?php break; ?>
-                                                                
-                                                                <?php case "rest": ?>
-                                                                    <div class="item orange">                                                
+
+                                                                <?php case "enero_quincena": ?>
+                                                                    <div class="item fuchsia">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div> 
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                                <?php case "period": ?>
-                                                                    <div class="item blue">   
+                                                                <?php case "febrero": ?>
+                                                                    <div class="item violet">   
                                                                         <span>
                                                                             <?= $parking->getNumber(); ?>
                                                                         </span>		
-                                                                    </div>                                              
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+
+                                                                <?php case "febrero_dia": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febero_primer_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>
+
+                                                                <?php case "febrero_segunda_quincena": ?>
+                                                                    <div class="item violet">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>                                                    
+
+                                                                <?php case "diario": ?>
+                                                                    <div class="item green">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                              
+                                                                <?php break; ?>                                                                
+                                                                
+                                                                <?php case "fin_semana": ?>
+                                                                    <div class="item orange">   
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
                                                                 <?php break; ?>
                                                                 
-                                                            <?php endswitch; ?>    
+                                                                <?php case "periodo": ?>
+                                                                    <div class="item blue">  
+                                                                        <span>
+                                                                            <?= $parking->getNumber(); ?>
+                                                                        </span>		
+                                                                    </div>                                                                                   
+                                                                <?php break; ?>  
+                                                                
+                                                            <?php endswitch; ?>   
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="item">
@@ -1493,45 +1881,93 @@
                                                         <?php $stay = $rsv->getStay(); ?>
                                                                                                             
                                                         <?php switch ($stay): 
-                                                            case "season": ?>
+                                                            case "temporada": ?>
                                                                 <div class="item yellow">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div>                                              
+                                                                </div>                                                                                   
                                                             <?php break; ?> 
                                                         
-                                                            <?php case "day": ?>
-                                                                <div class="item green">                                                
+                                                            <?php case "enero": ?>
+                                                                <div class="item fuchsia">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_dia": ?>
+                                                                <div class="item fuchsia">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "enero_quincena": ?>
+                                                                <div class="item fuchsia">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                            <?php case "january": ?>
-                                                                <div class="item fuchsia">                                                
+                                                            <?php case "febrero": ?>
+                                                                <div class="item violet">   
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+
+                                                            <?php case "febrero_dia": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febero_primer_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>
+
+                                                            <?php case "febrero_segunda_quincena": ?>
+                                                                <div class="item violet">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
+                                                            <?php break; ?>                                                    
+
+                                                            <?php case "diario": ?>
+                                                                <div class="item green">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                              
+                                                            <?php break; ?>                                                                
+                                                            
+                                                            <?php case "fin_semana": ?>
+                                                                <div class="item orange">   
+                                                                    <span>
+                                                                        <?= $parking->getNumber(); ?>
+                                                                    </span>		
+                                                                </div>                                                                                   
                                                             <?php break; ?>
                                                             
-                                                            <?php case "rest": ?>
-                                                                <div class="item orange">                                                
+                                                            <?php case "periodo": ?>
+                                                                <div class="item blue">  
                                                                     <span>
                                                                         <?= $parking->getNumber(); ?>
                                                                     </span>		
-                                                                </div> 
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "period": ?>
-                                                                <div class="item blue">   
-                                                                    <span>
-                                                                        <?= $parking->getNumber(); ?>
-                                                                    </span>		
-                                                                </div>                                              
-                                                            <?php break; ?>
+                                                                </div>                                                                                   
+                                                            <?php break; ?>  
                                                             
                                                         <?php endswitch; ?>    
                                                                                                                         
@@ -1676,45 +2112,93 @@
                                                 <?php $stay = $rsv->getStay(); ?>
                                                                                                     
                                                 <?php switch ($stay): 
-                                                    case "season": ?>
+                                                    case "temporada": ?>
                                                         <div class="item yellow">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div>                                              
+                                                        </div>                                                                                   
                                                     <?php break; ?> 
                                                 
-                                                    <?php case "day": ?>
-                                                        <div class="item green">                                                
+                                                    <?php case "enero": ?>
+                                                        <div class="item fuchsia">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div> 
+                                                        </div>                                                              
+                                                    <?php break; ?>
+
+                                                    <?php case "enero_dia": ?>
+                                                        <div class="item fuchsia">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                              
+                                                    <?php break; ?>
+
+                                                    <?php case "enero_quincena": ?>
+                                                        <div class="item fuchsia">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                                                   
                                                     <?php break; ?>
                                                     
-                                                    <?php case "january": ?>
-                                                        <div class="item fuchsia">                                                
+                                                    <?php case "febrero": ?>
+                                                        <div class="item violet">   
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div> 
+                                                        </div>                                                              
+                                                    <?php break; ?>                                                                
+
+                                                    <?php case "febrero_dia": ?>
+                                                        <div class="item violet">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                              
+                                                    <?php break; ?>
+
+                                                    <?php case "febero_primer_quincena": ?>
+                                                        <div class="item violet">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                              
+                                                    <?php break; ?>
+
+                                                    <?php case "febrero_segunda_quincena": ?>
+                                                        <div class="item violet">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                                                   
+                                                    <?php break; ?>                                                    
+
+                                                    <?php case "diario": ?>
+                                                        <div class="item green">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                              
+                                                    <?php break; ?>                                                                
+                                                    
+                                                    <?php case "fin_semana": ?>
+                                                        <div class="item orange">   
+                                                            <span>
+                                                                <?= $parking->getNumber(); ?>
+                                                            </span>		
+                                                        </div>                                                                                   
                                                     <?php break; ?>
                                                     
-                                                    <?php case "rest": ?>
-                                                        <div class="item orange">                                                
+                                                    <?php case "periodo": ?>
+                                                        <div class="item blue">  
                                                             <span>
                                                                 <?= $parking->getNumber(); ?>
                                                             </span>		
-                                                        </div> 
-                                                    <?php break; ?>
-                                                    
-                                                    <?php case "period": ?>
-                                                        <div class="item blue">   
-                                                            <span>
-                                                                <?= $parking->getNumber(); ?>
-                                                            </span>		
-                                                        </div>                                              
-                                                    <?php break; ?>
+                                                        </div>                                                                                   
+                                                    <?php break; ?>  
                                                     
                                                 <?php endswitch; ?>    
                                                                                                                 
