@@ -249,7 +249,8 @@
             if ($admin = $this->adminController->isLogged()) {    
                 if (!empty($date_start) && !empty($date_end)) {
 
-                    $title = "Contabilidad - Ventas entre el " . date("d/m/Y" , strtotime($date_start)) . ' y el ' . date("d/m/Y" , strtotime($date_end));   
+                    $title = "Contabilidad - Ventas entre el " . date("d/m/Y" , strtotime($date_start)) . 
+                             " y el " . date("d/m/Y" , strtotime($date_end));   
 
                     $this->reservationController = new ReservationController();
                     $rsvList = $this->reservationController->getReservationsBetweenDates($date_start, $date_end);
@@ -272,8 +273,17 @@
 			}
         }
 
+        // aca
         public function staffSalaryPath() {
-
+            if ($admin = $this->adminController->isLogged()) {                       
+                $title = "Contabilidad - Sueldo del personal";                     
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "accounting-dates-search.php");
+                require_once(VIEWS_PATH . "footer.php");                
+			} else {
+				return $this->adminController->userPath();
+			}            
         }
 
     }

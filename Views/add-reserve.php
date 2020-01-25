@@ -46,6 +46,9 @@
                                     <option value="febrero_dia">Febrero - Dia</option>
                                     <option value="febero_primer_quincena">Febrero - Primer quincena</option>
                                     <option value="febrero_segunda_quincena">Febrero - Segunda quincena</option>
+                                    <option value="diario">Día</option>
+                                    <option value="periodo">Periodo</option>
+                                    <option value="fin_semana">Fin de semana</option>
                                 </select>
                                 <label>Estadia</label>  
                             </div>  
@@ -294,7 +297,8 @@
 console.log(dateStart, dateEnd);
 
     selectStay.addEventListener('change', (e)=> {
-        if (selectStay.value === 'january' ) {            
+        if (selectStay.value === 'january' ) {     
+                   
             const date = new Date();
             date.setMonth(0);
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -321,8 +325,8 @@ console.log(dateStart, dateEnd);
 
         } else {
 
-            // dateStart.value = 0;            
-            // dateEnd.value = 0; 
+            dateStart.value = 0;            
+            dateEnd.value = 0; 
             
         }
     });    
