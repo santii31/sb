@@ -278,7 +278,7 @@
 
 		public function update(Client $client, Admin $updateBy) {
 			try {								
-				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";				
+				$query = "CALL client_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";				
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();				
 				$parameters["address"] = $client->getAddress();
@@ -296,6 +296,7 @@
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
+				//echo $e;
 				return false;
 			}
 		}

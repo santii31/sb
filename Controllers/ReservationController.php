@@ -409,7 +409,7 @@
         public function PaymentMethod($paymentMethod, $id_reserve, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {
                 if(!empty($paymentMethod)){
-                    if($paymentMethod == "cheque"){
+                    if($paymentMethod == "check"){
                         $title = "Metodo de pago";
                         $update_by = $this->adminController->isLogged();
                         $reserveTemp = new Reservation();
@@ -423,7 +423,12 @@
                         require_once(VIEWS_PATH . "add-check.php");
                         require_once(VIEWS_PATH . "footer.php");
                     }else{
-
+                        $reserveTemp = new Reservation();
+                        $reserveTemp->setId($id_reserve);
+                        $reservation = $this->reservationDAO->getById($reserveTemp);
+                        $clientTemp = $reservation->getClient();
+                        $clientTemp->setPaymentMethod($paymentMethod);
+                        $this->clientDAO->update($clientTemp, $update_by);
                     }
                     
                 }   
