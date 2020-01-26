@@ -407,11 +407,12 @@
         }
 
         public function PaymentMethod($paymentMethod, $id_reserve, $alert = "", $success = ""){
+            $update_by = $this->adminController->isLogged();
             if ($admin = $this->adminController->isLogged()) {
                 if(!empty($paymentMethod)){
                     if($paymentMethod == "check"){
                         $title = "Metodo de pago";
-                        $update_by = $this->adminController->isLogged();
+                        
                         $reserveTemp = new Reservation();
                         $reserveTemp->setId($id_reserve);
                         $reservation = $this->reservationDAO->getById($reserveTemp);

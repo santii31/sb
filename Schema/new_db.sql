@@ -566,10 +566,10 @@ CREATE PROCEDURE client_update (
                                     IN family_group VARCHAR(255),
                                     IN auxiliary_phone INT,
                                     IN payment_method VARCHAR(255),
-                                    IN vehicle_type VARCHAR(255),
-                                    IN id INT,                              
+                                    IN vehicle_type VARCHAR(255),                              
                                     IN date_update DATE,
-                                    IN update_by INT
+                                    IN update_by INT,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `client` 
