@@ -12,13 +12,13 @@
 
 		private $connection;
 		private $checkList = array();
-		private $tableName = "check";		
+		private $tableName = "checkC";		
 
 		public function __construct() { }
         
         public function add(Check $check) {								
 			try {													
-				$query = "CALL check_add(?, ?, ?, ?, @lastId)";
+				$query = "CALL checkC_add(?, ?, ?, ?, @lastId)";
 				$parameters["bank"] = $check->getBank();
 				$parameters["account_number"] = $check->getAccountNumber();
 				$parameters["check_number"] = $check->getCheckNumber();
@@ -41,15 +41,15 @@
 		public function getById(Check $check) {
 			try {				
 				$checkTemp = null;
-				$query = "CALL check_getById(?)";
+				$query = "CALL checkC_getById(?)";
 				$parameters["id"] = $check->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
 					$checkTemp = new Check();
-                    $checkTemp->setId($row["id"]);
-                    $checkTemp->setBank($row["bank"]);
-                    $checkTemp->setAccountNumber($row["account_number"]);
+                    $checkTemp->setId($row["checkC_id"]);
+                    $checkTemp->setBank($row["checkC_bank"]);
+                    $checkTemp->setAccountNumber($row["checkC_accountNumber"]);
                     $checkTemp->setCheckNumber($row["check_number"]);
                     $client = new Client();
                     $client->set($row["client_id"]);
@@ -70,14 +70,14 @@
 		
 		public function getAll() {
 			try {
-				$query = "CALL check_getAll()";
+				$query = "CALL checkC_getAll()";
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
 					$check = new Check();
-                    $check->setId($row["id"]);
-                    $check->setBank($row["bank"]);
-                    $check->setAccountNumber($row["account_number"]);
+                    $check->setId($row["checkC_id"]);
+                    $check->setBank($row["checkC_bank"]);
+                    $check->setAccountNumber($row["checkC_accountNumber"]);
                     $check->setCheckNumber($row["check_number"]);
                     $client = new Client();
                     $client->set($row["client_id"]);
@@ -101,15 +101,15 @@
 		public function getByClient(Check $check) {
 			try {
 				$checkTemp = array();
-                $query = "CALL check_geByClientId(?)";
+                $query = "CALL checkC_geByClientId(?)";
                 $parameters["id"] = $check->getId();			
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
 				foreach ($results as $row) {					
 					$check = new Check();
-                    $check->setId($row["id"]);
-                    $check->setBank($row["bank"]);
-                    $check->setAccountNumber($row["account_number"]);
+                    $check->setId($row["checkC_id"]);
+                    $check->setBank($row["checkC_bank"]);
+                    $check->setAccountNumber($row["checkC_accountNumber"]);
                     $check->setCheckNumber($row["check_number"]);
                     $client = new Client();
                     $client->set($row["client_id"]);
@@ -132,15 +132,15 @@
         public function getByBank($bank) {
 			try {
 				$checkTemp = array();
-                $query = "CALL check_geByBank(?)";
+                $query = "CALL checkC_geByBank(?)";
                 $parameters["bank"] = $bank;			
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
 				foreach ($results as $row) {					
 					$check = new Check();
-                    $check->setId($row["id"]);
-                    $check->setBank($row["bank"]);
-                    $check->setAccountNumber($row["account_number"]);
+                    $check->setId($row["checkC_id"]);
+                    $check->setBank($row["checkC_bank"]);
+                    $check->setAccountNumber($row["checkC_accountNumber"]);
                     $check->setCheckNumber($row["check_number"]);
                     $client = new Client();
                     $client->set($row["client_id"]);

@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>reservation/addCheck" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>parking/reserve" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -35,26 +35,16 @@
                         <?php endif; ?>
 
                         <div class="row">
-                        
-                            <div class="input-field col s4">
-                                <input id="bank" type="text" name="bank" class="validate" required>
-                                <label for="bank">Banco</label>
-                            </div>
 
                             <div class="input-field col s4">
-                                <input id="account_number" type="number" name="account_number" class="validate" required>
-                                <label for="account_number">Numero de cuenta</label>
+                                <input id="price" type="number" name="price" class="validate" required>
+                                <label for="price">Precio</label>
                             </div>
 
-                            <div class="input-field col s4">
-                                <input id="check_number" type="number" name="check_number" class="validate" required>
-                                <label for="check_number">Numero de cheque</label>
-                            </div>
-                            
                         </div>    
                         
-                        <input type="hidden" name="id_client" value="<?= $reserveTemp->getClient()->getId(); ?>" >
-                        <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
+                        <input type="hidden" name="reservation" value="<?= $reservation;; ?>" >
+                        <input type="hidden" name="id_parking" value="<?= $id_parking; ?>">
                         
                         
 
