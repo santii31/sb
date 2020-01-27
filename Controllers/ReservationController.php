@@ -19,6 +19,7 @@
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\ParkingController as ParkingController;    
+    use Controllers\AdditionalServiceController as AdditionalServiceController;    
     
     class ReservationController {
 
@@ -26,6 +27,7 @@
         private $adminController;
         private $clientController;          
         private $parkingController;
+        private $additionalServiceController;
         private $clientDAO;
         private $reservationxserviceDAO;
         private $servicexlockerDAO;
@@ -406,9 +408,11 @@
             return $this->reservationDAO->getSalesMonthly();
         }
 
+        // 
         public function paymentMethod($paymentMethod, $id_reserve, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {
                 
+                $this->additionalServiceController = new AdditionalServiceController();
                 $update_by = $this->adminController->isLogged();
 
                 if (!empty($paymentMethod)) {
@@ -417,26 +421,38 @@
                         $title = "Metodo de pago - Cheque";                        
                         $reserveTemp = new Reservation();
                         $reserveTemp->setId($id_reserve);
-                        $reservation = $this->reservationDAO->getById($reserveTemp);
-                        $clientTemp = $reservation->getClient();
-                        $clientTemp->setPaymentMethod($paymentMethod);
-                        $this->clientDAO->update($clientTemp, $update_by);
+                        
+                        if ($reservation = $this->reservationDAO->getById($reserveTemp)) {
 
-                        require_once(VIEWS_PATH . "head.php");
-                        require_once(VIEWS_PATH . "sidenav.php");
-                        require_once(VIEWS_PATH . "add-check.php");
-                        require_once(VIEWS_PATH . "footer.php");
+                            $clientTemp = $reservation->getClient();
+                            $clientTemp->setPaymentMethod($paymentMethod);
+                            
+                            if ($this->clientDAO->update($clientTemp, $update_by)) {                            
+                                require_once(VIEWS_PATH . "head.php");
+                                require_once(VIEWS_PATH . "sidenav.php");
+                                require_once(VIEWS_PATH . "add-check.php");
+                                require_once(VIEWS_PATH . "footer.php");
+                            } else {                                
+                                return $this->additionalServiceController->payPath($id_reserve, DB_ERROR, null);
+                            }
+                        } else {
+                            return $this->additionalServiceController->payPath($id_reserve, DB_ERROR, null);                        
+                        }
                     } else {
                         
                         $reserveTemp = new Reservation();
                         $reserveTemp->setId($id_reserve);
-                        $reservation = $this->reservationDAO->getById($reserveTemp);
-                        $clientTemp = $reservation->getClient();
-                        $clientTemp->setPaymentMethod($paymentMethod);
-                        $this->clientDAO->update($clientTemp, $update_by);
+                        
+                        if ($reservation = $this->reservationDAO->getById($reserveTemp)) {
 
-                        // termina aca?
-
+                            $clientTemp = $reservation->getClient();
+                            $clientTemp->setPaymentMethod($paymentMethod);
+                            
+                            if ($this->clientDAO->update($clientTemp, $update_by)) {                                
+                                return $this->payPath($id_reserve);
+                            }                        
+                        }
+                        return $this->additionalServiceController->payPath($id_reserve, DB_ERROR, null);
                     }                    
                 }   
             } else {
@@ -454,13 +470,30 @@
                 $clientTemp->setId($id_client);
                 $client = $this->clientDAO->getById($clientTemp);
                 $check->setClient($client);
-                if ($this->checkDAO->add($check)) {
-                    // vista a pagar?
-                    return true;
+                
+                if ($this->checkDAO->add($check)) {                    
+                    return $this->payPath($id_reserve);
                 }
+                return $this->paymentMethod("check", $id_reserve, DB_ERROR, null);
             }
             return $this->paymentMethod("check", $id_reserve, EMPTY_FIELDS, null);
         }
         
+
+        public function payPath($id_reservation) {
+            if ($admin = $this->adminController->isLogged()) {                                       
+                $title = "Reserva - Precio final";
+                $reservationTemp = new Reservation();
+                $reservationTemp->setId($id_reservation);
+                $reservation = $this->reservationDAO->getById($reservationTemp);
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "pay.php");
+                require_once(VIEWS_PATH . "footer.php");
+            }  else {                
+                return $this->adminController->userPath();
+			}
+        }
+
     }
 ?>

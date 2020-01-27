@@ -92,8 +92,7 @@
                                     
                                         if ($this->servicexlockerDAO->add($servicexlocker)) {
                                             $flag++;
-                                        }
-    
+                                        }    
                                     }
                                 }
                             }                                                        
@@ -119,9 +118,9 @@
                                     if ($this->reservationDAO->update($reservation, $update_by)) {
 
                                         $servicexlocker->setIdService($service->getId());
-                                        $servicexlocker->setIdLocker($locker->getId());                            
-                                        if ($this->servicexlockerDAO->add($servicexlocker)) {
+                                        $servicexlocker->setIdLocker($locker->getId());      
 
+                                        if ($this->servicexlockerDAO->add($servicexlocker)) {
                                             $flag++;
                                         }
                                     }
@@ -163,7 +162,6 @@
                                             if ($this->servicexlockerDAO->add($servicexlockerW)) {
 
                                                 if ($this->servicexlockerDAO->add($servicexlockerM)) {
-
                                                     $flag++;
                                                 }
                                             }
@@ -177,7 +175,7 @@
             }
 
             if ($flag > 0) {                                
-                return $this->hasAdditionalService($id_reserve);
+                return $this->hasAdditionalService($id_reserve, null, null);
             } else {
                 return $this->addLockerPath($id_reserve, DB_ERROR, null);
             }
@@ -216,8 +214,7 @@
                                         $servicexmobileParasol->setIdService($service->getId());
                                         $servicexmobileParasol->setIdMobileParasol($mobileParasol->getId());
                                         
-                                        if ($this->servicexmobileParasolDAO->add($servicexmobileParasol)) {
-                                                                
+                                        if ($this->servicexmobileParasolDAO->add($servicexmobileParasol)) {                                       
                                             return $this->hasAdditionalService($id_reserve);                                        
                                         }
                                     }
@@ -232,7 +229,6 @@
                     $servicexmobileParasol->setIdMobileParasol($mobileParasol->getId());
                     
                     if ($this->servicexmobileParasolDAO->add($servicexmobileParasol)) {
-                                            
                         return $this->hasAdditionalService($id_reserve);                            
                     }
                 }                
@@ -255,13 +251,14 @@
         }
     
         public function chose($answer, $id_reserve){
-            if (!empty($answer) && !empty($id_reserve)){
-                if ($answer == "yes"){
+            if (!empty($answer) && !empty($id_reserve)) {
+                if ($answer == "yes") {
                     return $this->addSelectServicePath($id_reserve, null, null);
                 } else {
                     return $this->payPath($id_reserve);
                 }
             }
+            return $this->hasAdditionalService($id_reserve, EMPTY_FIELDS, null);
         }
 
         public function optionsDistributor($service, $id_reserve) {
@@ -455,11 +452,6 @@
                 $reservationTemp = new Reservation();
                 $reservationTemp->setId($id_reservation);
                 $reservation = $this->reservationDAO->getById($reservationTemp);
-
-                echo '<pre>';
-                var_dump($reservation);
-                echo '</pre>';
-
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-payment-method.php");

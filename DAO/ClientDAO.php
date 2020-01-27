@@ -296,7 +296,7 @@
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
-				//echo $e;
+				// echo $e;
 				return false;
 			}
 		}
