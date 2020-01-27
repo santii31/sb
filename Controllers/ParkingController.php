@@ -91,7 +91,6 @@
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "add-parking-price.php");
                 require_once(VIEWS_PATH . "footer.php");
-
             } else {
                 return $this->adminController->userPath();
             }
@@ -137,9 +136,7 @@
 
                         $this->additionalController = new AdditionalServiceController();
                         return $this->additionalController->hasAdditionalService($reservation, null, null);                        
-                    }
-
-                    echo 'nop';                    
+                    }                                   
                     return $this->parkingMap($reservation, $price, DB_ERROR);
 
                 } else {            
@@ -193,6 +190,8 @@
                 $parking->setId($id_parking);
                 $reservationByParking = $this->reservationxParkingDAO->getAllByParkingId($parking);
                 
+                $serv = new AdditionalService();
+
                 if ($reservationByParking == null) {
                     
                     $reservationTemp = new Reservation();

@@ -104,14 +104,13 @@
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
-                    $additionalService->setId($row["service_id"]);
-                    $additionalService->setDescription($row["service_description"]);
+                    $additionalService->setId($row["service_id"]);                    
                     $additionalService->setTotal($row["service_total"]);
 				}
 				return $additionalService;
 			} catch (Exception $e) {
 				return false;
-				//echo $e;
+				// echo $e;
 			}
 		}
 
@@ -133,35 +132,6 @@
 			}
 		}
 		
-
-		/*
-		public function updateUser(User $user) {
-			try {								
-				$query = "UPDATE " . $this->tableName . " AS user 
-														  INNER JOIN profile_users AS p_user ON user.FK_dni =  p_user.dni
-														 SET
-															 user.mail = :mail,
-															 user.password = :password,
-															 p_user.dni = :dni,
-															 p_user.first_name = :firstname,
-															 p_user.last_name = :lastname
- 														 WHERE 
-															 p_user.dni = :dni";					
-				
-				$parameters["mail"] = $user->getMail();
-				$parameters["password"] = $user->getPassword();
-				$parameters["dni"] = $user->getDni();
-				$parameters["firstname"] = $user->getFirstName();
-				$parameters["lastname"] = $user->getLastName();				
-
-				$this->connection = Connection::GetInstance();
-				$this->connection->ExecuteNonQuery($query, $parameters);								
-				return true;
-			} catch (Exception $e) {
-				return false;
-			}
-		}
-		*/
 
     }
 

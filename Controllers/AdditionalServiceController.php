@@ -121,11 +121,10 @@
                     }
                 }                              
             }
-            if ($flag > 0) {                
-                // CAMBIAR MENSAJE DE ERROR???????
-                return $this->addLockerPath($id_reserve, DB_ERROR, null);
-            } else {
+            if ($flag > 0) {                                
                 return $this->hasAdditionalService($id_reserve);
+            } else {
+                return $this->addLockerPath($id_reserve, DB_ERROR, null);
             }
         }
 
@@ -227,6 +226,7 @@
                 foreach ($reservations as $reservation) {
                     
                     $service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId());
+
                     $flag = 1;
                     $lockerServ = $this->servicexlockerDAO->getLockerByService($service->getId());
 

@@ -2533,8 +2533,7 @@ DROP procedure IF EXISTS `servicexmobileParasol_getServiceByMobileParasol`;
 DELIMITER $$
 CREATE PROCEDURE servicexmobileParasol_getServiceByMobileParasol (IN id_mobileParasol INT)
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
+	SELECT additional_service.id AS service_id,           
            additional_service.total AS service_total,
            additional_service.is_active AS service_is_active
 	FROM servicexmobileParasol
@@ -2745,8 +2744,7 @@ DROP procedure IF EXISTS `servicexparking_getServiceByParking`;
 DELIMITER $$
 CREATE PROCEDURE servicexparking_getServiceByParking (IN id_parking INT)
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
+	SELECT additional_service.id AS service_id,           
            additional_service.total AS service_total,
            additional_service.is_active AS service_is_active
 	FROM servicexparking
@@ -2802,8 +2800,7 @@ DROP procedure IF EXISTS `servicexparasol_getServiceByParasol`;
 DELIMITER $$
 CREATE PROCEDURE servicexparasol_getServiceByParasol (IN id_parasol INT)
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
+	SELECT additional_service.id AS service_id,           
            additional_service.total AS service_total,
            additional_service.is_active AS service_is_active
 	FROM servicexparasol
@@ -2856,12 +2853,12 @@ BEGIN
 END$$
 
 
+
 DROP procedure IF EXISTS `servicexlocker_getServiceByLocker`;					    
 DELIMITER $$
 CREATE PROCEDURE servicexlocker_getServiceByLocker (IN id_locker INT)
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
+	SELECT additional_service.id AS service_id,           
            additional_service.total AS service_total,
            additional_service.is_active AS service_is_active
 	FROM servicexlocker
@@ -2964,8 +2961,7 @@ DROP procedure IF EXISTS `reservationxservice_getServiceByReservation`;
 DELIMITER $$
 CREATE PROCEDURE reservationxservice_getServiceByReservation (IN id_reservation INT)
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
+	SELECT additional_service.id AS service_id,           
            additional_service.total AS service_total,
            additional_service.is_active AS service_is_active          
 	FROM reservationxservice
@@ -3060,8 +3056,7 @@ BEGIN
 	SELECT parasol.id AS parasol_id,
            parasol.parasol_number AS parasol_number,
            parasol.price AS parasol_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
+           additional_service.id AS service_id,           
            additional_service.price AS service_price,
            additional_service.is_active AS service_isActive,
            reservation.id AS reservation_id,
@@ -3111,8 +3106,7 @@ BEGIN
 	SELECT parasol.id AS parasol_id,
            parasol.parasol_number AS parasol_number,
            parasol.price AS parasol_price,
-           additional_service.id AS service_id,
-           additional_service.description AS service_description,
+           additional_service.id AS service_id,           
            additional_service.price AS service_price,
            additional_service.is_active AS service_isActive,
            reservation.id AS reservation_id,

@@ -42,8 +42,7 @@
 				foreach ($results as $row) {
                     
                     $additionalService = new AdditionalService();
-                    $additionalService->setId($row["service_id"]);
-                    $additionalService->setDescription($row["service_description"]);
+                    $additionalService->setId($row["service_id"]);                    
                     $additionalService->setPrice($row["service_total"]);
                     
                     array_push($this->serviceList, $additionalService);

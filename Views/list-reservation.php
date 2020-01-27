@@ -52,6 +52,7 @@
                 </div>                
                 <?php endif; ?>
 
+                <?php if (sizeof($reservations) > 0): ?>
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
@@ -270,6 +271,16 @@
                     <?php endif; ?>
 
                 </div>
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="card-panel lime lighten-4">
+                                <i class="material-icons left">error</i>
+                                <span class="card-text card-warning">No se encontraron reservas. Intente mas tarde!</span>                       
+                            </div>        
+                        </div>                    
+                    </div>    
+                <?php endif; ?>
             </div>
 
         </div>

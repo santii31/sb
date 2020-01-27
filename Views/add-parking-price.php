@@ -36,7 +36,7 @@
 
                         <div class="row">
 
-                            <div class="input-field col s4">
+                            <div class="input-field col s12">
                                 <input id="price" type="number" name="price" class="validate" required>
                                 <label for="price">Precio</label>
                             </div>
