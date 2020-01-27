@@ -123,7 +123,7 @@
             }
             if ($flag > 0) {                
                 // CAMBIAR MENSAJE DE ERROR???????
-                return $this->addLockerPath($id_reserve, DB_ERROR);
+                return $this->addLockerPath($id_reserve, DB_ERROR, null);
             } else {
                 return $this->hasAdditionalService($id_reserve);
             }
@@ -191,7 +191,7 @@
                 return $this->addMobileParasolPath($id_reserve, null, null, null);
             }
             else if ($service == "locker") {
-                return $this->addLockerPath($id_reserve, null, null, null);
+                return $this->addLockerPath($id_reserve, null, null);
             }
             else if ($service == "parking") {
                 return $this->parkingController->parkingMap($id_reserve, null);

@@ -104,8 +104,6 @@
                     $title = "Clientes Potenciales";
                     $clientsCount = $this->clientPotentialDAO->getActiveCount();         
                     $pages = ceil ($clientsCount / MAX_ITEMS_PAGE);                                                                  
-
-                    // This variable will contain the number of the current page
                     $current = 0;                  
     
                     if ($page == 1) {                                        
@@ -118,8 +116,6 @@
                     $title = "Clientes Potenciales - Deshabilitados";
                     $d_clientsCount = $this->clientPotentialDAO->getDisableCount();         
                     $d_pages = ceil ($d_clientsCount / MAX_ITEMS_PAGE);                                                                           
-
-                    // This variable will contain the number of the current page
                     $d_current = 0;                  
     
                     if ($page == 1) {                                        

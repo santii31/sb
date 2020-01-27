@@ -118,8 +118,6 @@
                     $title = "Proveedores";
                     $providersCount = $this->providerDAO->getActiveCount();         
                     $pages = ceil ($providersCount / MAX_ITEMS_PAGE);                                                                  
-
-                    // This variable will contain the number of the current page
                     $current = 0;                  
     
                     if ($page == 1) {                                        
@@ -132,8 +130,6 @@
                     $title = "Proveedores - Deshabilitados";
                     $d_providersCount = $this->providerDAO->getDisableCount();         
                     $d_pages = ceil ($d_providersCount / MAX_ITEMS_PAGE);                                                                         
-
-                    // This variable will contain the number of the current page
                     $d_current = 0;                  
     
                     if ($page == 1) {                                        

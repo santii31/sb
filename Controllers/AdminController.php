@@ -145,9 +145,7 @@
                 if ($showDisables == null) {
                     $title = "Administradores";
                     $adminsCount = $this->adminDAO->getActiveCount();         
-                    $pages = ceil ($adminsCount / MAX_ITEMS_PAGE);                                                                  
-
-                    // This variable will contain the number of the current page
+                    $pages = ceil ($adminsCount / MAX_ITEMS_PAGE);                                                                                
                     $current = 0;                  
     
                     if ($page == 1) {                                        
@@ -159,9 +157,7 @@
                 } else {                    
                     $title = "Administradores - Deshabilitados";
                     $d_adminsCount = $this->adminDAO->getDisableCount();         
-                    $d_pages = ceil ($d_adminsCount / MAX_ITEMS_PAGE);                                                                           
-
-                    // This variable will contain the number of the current page
+                    $d_pages = ceil ($d_adminsCount / MAX_ITEMS_PAGE);                                                                            
                     $d_current = 0;                  
     
                     if ($page == 1) {                                        
