@@ -53,7 +53,7 @@
                             
                         </div>    
                         
-                        <input type="hidden" name="id_client" value="<?= $reserveTemp->getClient()->getId(); ?>" >
+                        <input type="hidden" name="id_client" value="<?= $reservation->getClient()->getId() ?>" >
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
                                             
                         <div class="row">

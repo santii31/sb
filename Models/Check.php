@@ -18,6 +18,14 @@
             $this->id = $id;            
         }
 
+        public function getBank() {
+            return $this->bank;
+        }
+
+        public function setBank($bank) {
+            $this->bank = $bank;            
+        }
+
         public function getAccountNumber() {
             return $this->account_number;
         }
