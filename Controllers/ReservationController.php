@@ -14,6 +14,7 @@
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
+    use DAO\ServicexMobileParasolDAO as ServicexMobileParasolDAO;
     use DAO\ConfigDAO as ConfigDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
@@ -32,6 +33,7 @@
         private $servicexparkingDAO;
         private $configDAO;
         private $checkDAO;
+        private $servicexmobileparasolDAO;
 
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();                                    
@@ -43,6 +45,7 @@
             $this->configDAO = new ConfigDAO();
             $this->clientDAO = new ClientDAO();
             $this->checkDAO = new CheckDAO();
+            $this->servicexmobileparasolDAO = new ServicexMobileParasolDAO();
         }               
 
         

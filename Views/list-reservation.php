@@ -121,12 +121,12 @@
                                                             <?php endif; ?>                                                        
                                                         </li>
                                                         <li>
-                                                            • Sombrillas:  
+                                                            • Sombrillas moviles:  
 
                                                             <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>
-                                                                <?php if ($parasoles = $this->servicexparasolDAO->getParasolByService($service->getId())): ?>
-                                                                    <?php foreach ($parasoles as $parasol): ?>
-                                                                            • <?= $parasol->getParasolNumber(); ?> 
+                                                                <?php if ($mobileParasoles = $this->servicexmobileparasolDAO->getMobileParasolByService($service->getId())): ?>
+                                                                    <?php foreach ($mobileParasoles as $parasol): ?>
+                                                                            • <?= $parasol->getMobileParasolNumber(); ?> 
                                                                     <?php endforeach; ?>                                            
                                                                 <?php else: ?>
                                                                     N/A
