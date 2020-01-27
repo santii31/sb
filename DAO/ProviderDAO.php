@@ -290,7 +290,7 @@
 		
 		public function update(Provider $provider, Admin $updateBy) {
 			try {								
-				$query = "CALL provider_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
+				$query = "CALL provider_update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["name"] = $provider->getName();
 				$parameters["lastname"] = $provider->getLastName();
 				$parameters["tel"] = $provider->getPhone();
@@ -308,6 +308,7 @@
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}
 		

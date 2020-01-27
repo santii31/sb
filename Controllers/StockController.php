@@ -22,9 +22,7 @@
                 
                 $title = "Stock";                
                 $productsCount = $this->productController->getActiveCount();         
-                $pages = ceil ($productsCount / MAX_ITEMS_PAGE);                                                                  
-
-                // This variable will contain the number of the current page
+                $pages = ceil ($productsCount / MAX_ITEMS_PAGE);                                                                                  
                 $current = 0;                  
 
                 if ($page == 1) {                                        

@@ -123,8 +123,6 @@
                     $title = "Personal";
                     $staffsCount = $this->staffDAO->getActiveCount();         
                     $pages = ceil ($staffsCount / MAX_ITEMS_PAGE);                                                                  
-
-                    // This variable will contain the number of the current page
                     $current = 0;                  
     
                     if ($page == 1) {                                        
@@ -137,8 +135,6 @@
                     $title = "Personal - Deshabilitados";
                     $d_staffsCount = $this->staffDAO->getDisableCount();         
                     $d_pages = ceil ($d_staffsCount / MAX_ITEMS_PAGE);                                                                            
-
-                    // This variable will contain the number of the current page
                     $d_current = 0;                  
     
                     if ($page == 1) {                                        
@@ -219,7 +215,7 @@
                 $staff = new Staff();
                 $staff->setId($id);
                 if ($this->staffDAO->disableById($staff, $admin)) {
-                    return $this->listStaffPath(1, null, null, STAFF_DISABLE);
+                    return $this->listStaffPath(1, true, null, STAFF_DISABLE);
                 } else {
                     return $this->listStaffPath(1, null, DB_ERROR, null);
                 }              

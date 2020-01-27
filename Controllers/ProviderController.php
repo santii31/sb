@@ -118,8 +118,6 @@
                     $title = "Proveedores";
                     $providersCount = $this->providerDAO->getActiveCount();         
                     $pages = ceil ($providersCount / MAX_ITEMS_PAGE);                                                                  
-
-                    // This variable will contain the number of the current page
                     $current = 0;                  
     
                     if ($page == 1) {                                        
@@ -132,8 +130,6 @@
                     $title = "Proveedores - Deshabilitados";
                     $d_providersCount = $this->providerDAO->getDisableCount();         
                     $d_pages = ceil ($d_providersCount / MAX_ITEMS_PAGE);                                                                         
-
-                    // This variable will contain the number of the current page
                     $d_current = 0;                  
     
                     if ($page == 1) {                                        
@@ -155,7 +151,7 @@
 
         public function searchPath($alert = "") {
             if ($admin = $this->adminController->isLogged()) {      
-                $title = "Proveedor - Buscar";                       
+                $title = "Proveedor - Buscar por rubro";                       
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "search-provider.php");
@@ -214,7 +210,7 @@
                 $provider = new Provider();
                 $provider->setId($id);
                 if ($this->providerDAO->disableById($provider, $admin)) {
-                    return $this->listProviderPath(1, null, null, PROVIDER_DISABLE);
+                    return $this->listProviderPath(1, true, null, PROVIDER_DISABLE);
                 } else {
                     return $this->listProviderPath(1, null, DB_ERROR, null);
                 }              

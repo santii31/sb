@@ -608,7 +608,7 @@ CREATE TABLE client_potential (
     `city` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `tel` INT NOT NULL,    
-    `num_tent` INT NOT NULL,
+    `num_tent` VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
     
     `date_register` DATE NOT NULL,
@@ -635,7 +635,7 @@ CREATE PROCEDURE client_potential_add (
                                         IN city VARCHAR(255),
                                         IN email VARCHAR(255),
                                         IN tel INT,  
-                                        IN num_tent INT,                                                          
+                                        IN num_tent VARCHAR(255),                                                          
                                         IN date_register DATE,
                                         IN register_by INT
                                     )
@@ -759,7 +759,7 @@ CREATE PROCEDURE client_potential_update (
                                             IN city VARCHAR(255),
                                             IN email VARCHAR(255),
                                             IN tel INT, 
-                                            IN num_tent INT,                                                           
+                                            IN num_tent VARCHAR(255),                                                           
                                             IN date_update DATE,
                                             IN update_by INT,
                                             IN id INT
