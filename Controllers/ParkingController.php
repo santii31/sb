@@ -131,7 +131,7 @@
                         $this->reservationxserviceDAO->add($reservationxservice);
 
                         $this->reservationDAO->update($reservationAux ,$register_by);
-                        
+
                         $servicexparking->setIdService($lastId);
                         $servicexparking->setIdParking($parking->getId());
                         $this->servicexparkingDAO->add($servicexparking);
@@ -191,6 +191,7 @@
 
             } else {
 
+                $serv = $this->reservationxserviceDAO->getServiceByReservation($reservation);
                 $parking = new Parking();
                 $parking->setId($id_parking);
                 $reservationByParking = $this->reservationxParkingDAO->getAllByParkingId($parking);

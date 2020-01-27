@@ -148,7 +148,7 @@
                 $service->setTotal($totalService);
                 $reservation->setPrice($totalReserve);
                 $update_by = $this->adminController->isLogged();
-                
+                if($this->reservationDAO->update($reservation, $update_by)){ 
                 if ($this->additionalServiceDAO->update($service, $update_by)) {
                     
                     $servicexmobileParasol->setIdService($service->getId());
@@ -158,6 +158,7 @@
                         return $this->hasAdditionalService($id_reserve);
                     }
                 }
+            }
             }
             return $this->addMobileParasolPath($id_reserve, DB_ERROR);
         }

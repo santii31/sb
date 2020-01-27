@@ -159,7 +159,7 @@
                                             Locker
                                         </a>
                                         
-                                        <a href="<?= FRONT_ROOT ?>additionalService/addParasolPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                        <a href="<?= FRONT_ROOT ?>additionalService/addMobileParasolPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
                                             <i class="material-icons left"></i>
                                             Sombrilla
                                         </a>  
