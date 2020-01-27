@@ -77,16 +77,14 @@
                     $totalReserve = $reservation->getPrice() + $price;
                     
                     $service->setTotal($totalService);
-                    $reservation->setPrice($totalReserve);
-                    // echo $reservation->getPrice() . "|";
+                    $reservation->setPrice($totalReserve);                    
                     $update_by = $this->adminController->isLogged();
                     $this->additionalServiceDAO->update($service, $update_by);
                     $this->reservationDAO->update($reservation, $update_by);
                     
                     $servicexlocker->setIdService($service->getId());
                     $servicexlocker->setIdLocker($locker->getId());
-                    $reservationAux = $this->reservationDAO->getById($reservation);
-                    // echo $reservationAux->getPrice();
+                    $reservationAux = $this->reservationDAO->getById($reservation);                    
                     $this->servicexlockerDAO->add($servicexlocker);
                     $flag++;
                 }
@@ -202,11 +200,11 @@
         public function addSelectServicePath($id_reservation = "", $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione servicio adicional";
-                    require_once(VIEWS_PATH . "head.php");
-                    require_once(VIEWS_PATH . "sidenav.php");
-                    require_once(VIEWS_PATH . "select-service.php");
-                    require_once(VIEWS_PATH . "footer.php");
-                }  else {                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "select-service.php");
+                require_once(VIEWS_PATH . "footer.php");
+            }  else {                
                 return $this->adminController->userPath();
 			}
         }

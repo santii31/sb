@@ -111,32 +111,39 @@
 
                     $reservationxParking = new ReservationxParking();
                     
-                    $reservationAux = $this->reservationDAO->getById($reservationTemp);
-                    $reservationxParking->setReservation($reservationTemp);
-                    $reservationxParking->setParking($parking);
+                    if ($reservationAux = $this->reservationDAO->getById($reservationTemp)) {
                     
-                    if ($this->reservationxParkingDAO->add($reservationxParking)) {                    
+                        $reservationxParking->setReservation($reservationTemp);
+                        $reservationxParking->setParking($parking);
                         
-                        $register_by = $this->adminController->isLogged();
-                        $additionalService = new AdditionalService();
-                        $reservationxservice = new ReservationxService();
-                        $servicexparking = new ServicexParking();                        
-                        $additionalService->setTotal($price);
-                        $reservationAux->setPrice($reservationAux->getPrice() + $price);
-                        $lastId = $this->additionalServiceDAO->add($additionalService,$register_by);
-                        $reservationxservice->setIdReservation($reservation);
-                        $reservationxservice->setIdService($lastId);
-                        $this->reservationxserviceDAO->add($reservationxservice);
+                        if ($this->reservationxParkingDAO->add($reservationxParking)) {                    
+                            
+                            $register_by = $this->adminController->isLogged();
+                            $additionalService = new AdditionalService();
+                            $reservationxservice = new ReservationxService();
+                            $servicexparking = new ServicexParking();                        
+                            $additionalService->setTotal($price);
+                            $reservationAux->setPrice($reservationAux->getPrice() + $price);
+                            
+                            if ($lastId = $this->additionalServiceDAO->add($additionalService, $register_by)) {
 
-                        $this->reservationDAO->update($reservationAux ,$register_by);
+                                $reservationxservice->setIdReservation($reservation);
+                                $reservationxservice->setIdService($lastId);
+                                $this->reservationxserviceDAO->add($reservationxservice);
+    
+                                if ($this->reservationDAO->update($reservationAux, $register_by)) {
 
-                        $servicexparking->setIdService($lastId);
-                        $servicexparking->setIdParking($parking->getId());
-                        $this->servicexparkingDAO->add($servicexparking);
+                                    $servicexparking->setIdService($lastId);
+                                    $servicexparking->setIdParking($parking->getId());
+                                    if ($this->servicexparkingDAO->add($servicexparking)) {
 
-                        $this->additionalController = new AdditionalServiceController();
-                        return $this->additionalController->hasAdditionalService($reservation, null, null);                        
-                    }                                   
+                                        $this->additionalController = new AdditionalServiceController();
+                                        return $this->additionalController->hasAdditionalService($reservation, null, null);                       
+                                    }        
+                                }    
+                            }
+                        } 
+                    }                                  
                     return $this->parkingMap($reservation, $price, DB_ERROR);
 
                 } else {            
@@ -152,32 +159,43 @@
         
                         $reservationxParking = new ReservationxParking();
                         
-                        $reservationAux = $this->reservationDAO->getById($reservationTemp);
-                        $reservationxParking->setReservation($reservationTemp);
-                        $reservationxParking->setParking($parking);
+                        if ($reservationAux = $this->reservationDAO->getById($reservationTemp)) {
+                        
+                            $reservationxParking->setReservation($reservationTemp);
+                            $reservationxParking->setParking($parking);
 
-                        if ($this->reservationxParkingDAO->add($reservationxParking)) {    
-                            
-                            $register_by = $this->adminController->isLogged();
-                            $additionalService = new AdditionalService();
-                            $reservationxservice = new ReservationxService();
-                            $servicexparking = new ServicexParking();                            
-                            $additionalService->setTotal($price);
-                            $reservationAux->setPrice($reservationAux->getPrice() + $price);
-                            $lastId = $this->additionalServiceDAO->add($additionalService,$register_by);
-                            $reservationxservice->setIdReservation($reservation);
-                            $reservationxservice->setIdService($lastId);
-                            $this->reservationxserviceDAO->add($reservationxservice);
-                            
-                            $this->reservationDAO->update($reservationAux ,$register_by);
+                            if ($this->reservationxParkingDAO->add($reservationxParking)) {    
+                                
+                                $register_by = $this->adminController->isLogged();
+                                $additionalService = new AdditionalService();
+                                $reservationxservice = new ReservationxService();
+                                $servicexparking = new ServicexParking();                            
+                                $additionalService->setTotal($price);
+                                $reservationAux->setPrice($reservationAux->getPrice() + $price);
+                                
+                                if ($lastId = $this->additionalServiceDAO->add($additionalService, $register_by)) {
 
-                            $servicexparking->setIdService($lastId);
-                            $servicexparking->setIdParking($parking->getId());
-                            $this->servicexparkingDAO->add($servicexparking);
-                            
-                            $this->additionalController = new AdditionalServiceController();
-                            return $this->additionalController->hasAdditionalService($reservation, null, null);                        
-                        }
+                                    $reservationxservice->setIdReservation($reservation);
+                                    $reservationxservice->setIdService($lastId);
+                                    if ($this->reservationxserviceDAO->add($reservationxservice)) {
+
+                                        if ($this->reservationDAO->update($reservationAux ,$register_by)) {
+
+                                            $servicexparking->setIdService($lastId);
+                                            $servicexparking->setIdParking($parking->getId());
+                                            
+                                            if ($this->servicexparkingDAO->add($servicexparking)) {
+
+                                                $this->additionalController = new AdditionalServiceController();
+                                                return $this->additionalController->hasAdditionalService($reservation, null, null);               
+
+                                            }                                            
+                                        }        
+                                    }                                    
+                                }
+                            }
+                        }                        
+                        return $this->parkingMap($reservation, $price, DB_ERROR);
 
                     } else {                                 
                         return $this->parkingMap($reservation, PARKING_ERROR);
@@ -191,86 +209,106 @@
                 $parking->setId($id_parking);
                 $reservationByParking = $this->reservationxParkingDAO->getAllByParkingId($parking);
                 
-                $serv = new AdditionalService();
+                // $serv = new AdditionalService();
 
                 if ($reservationByParking == null) {
                     
                     $reservationTemp = new Reservation();
                     $reservationTemp->setId($reservation);
-                    $reservationAux = $this->reservationDAO->getById($reservationTemp);
-                    $reservationxParking = new ReservationxParking();
-                    $reservationxParking->setReservation($reservationTemp);
-                    $reservationxParking->setParking($parking);
 
-                    if ($this->reservationxParkingDAO->add($reservationxParking)) {                    
-                                                                
-                        $update_by = $this->adminController->isLogged();
-                        $reservationxservice = new ReservationxService();
-                        $servicexparking = new ServicexParking();
-                        $serv->setTotal($serv->getTotal() + $price);
-                        $reservationAux->setPrice($reservationAux->getPrice() + $price);
+                    if ($reservationAux = $this->reservationDAO->getById($reservationTemp)) {
 
-                        $this->additionalServiceDAO->update($serv, $update_by);
-
-                        $reservationxservice->setIdReservation($reservation);
-                        $reservationxservice->setIdService($serv->getId());
-                        $this->reservationxserviceDAO->add($reservationxservice);
-
-                        $this->reservationDAO->update($reservationAux ,$update_by);
-                        
-                        $servicexparking->setIdService($serv->getId());
-                        $servicexparking->setIdParking($parking->getId());
-                        $this->servicexparkingDAO->add($servicexparking);
-                        
-                        $this->additionalController = new AdditionalServiceController();
-                        return $this->additionalController->hasAdditionalService($reservation, null, null);                        
-                    }
-
-                } else {            
-
-                    $this->reservationController = new ReservationController();
-                    $reserve = $this->reservationController->getById($reservation);
-
-                    if ($this->checkInterval($reserve->getDateStart(), $reserve->getDateEnd(), $id_parking)) {
-
-                        $reservationTemp = new Reservation();
-                        $reservationTemp->setId($reservation);
-                        $register_by = $this->adminController->isLogged();
-        
                         $reservationxParking = new ReservationxParking();
                         $reservationxParking->setReservation($reservationTemp);
-                        
-                        $reservationAux = $this->reservationDAO->getById($reservationTemp);
                         $reservationxParking->setParking($parking);
-
-                        if ($this->reservationxParkingDAO->add($reservationxParking)) {    
-                              
-                            $register_by = $this->adminController->isLogged();
+    
+                        if ($this->reservationxParkingDAO->add($reservationxParking)) {                    
+                                                                    
+                            $update_by = $this->adminController->isLogged();
                             $reservationxservice = new ReservationxService();
                             $servicexparking = new ServicexParking();
                             $serv->setTotal($serv->getTotal() + $price);
                             $reservationAux->setPrice($reservationAux->getPrice() + $price);
-                            $this->additionalServiceDAO->update($serv, $update_by);
-                            $reservationxservice->setIdReservation($reservation);
-                            $reservationxservice->setIdService($serv->getId());
+    
+                            if ($this->additionalServiceDAO->update($serv, $update_by)) {
 
-                            $this->reservationDAO->update($reservationAux ,$update_by);
+                                $reservationxservice->setIdReservation($reservation);
+                                $reservationxservice->setIdService($serv->getId());
 
-                            $this->reservationxserviceDAO->add($reservationxservice);
-                            $servicexparking->setIdService($serv->getId());
-                            $servicexparking->setIdParking($parking->getId());
-                            $this->servicexparkingDAO->add($servicexparking);
-                            
-                            $this->additionalController = new AdditionalServiceController();
-                            return $this->additionalController->hasAdditionalService($reservation, null, null);                        
+                                if ($this->reservationxserviceDAO->add($reservationxservice)) {
+
+                                    if ($this->reservationDAO->update($reservationAux, $update_by)) {
+
+                                        $servicexparking->setIdService($serv->getId());
+                                        $servicexparking->setIdParking($parking->getId());
+                                        
+                                        if ($this->servicexparkingDAO->add($servicexparking)) {
+
+                                            $this->additionalController = new AdditionalServiceController();
+                                            return $this->additionalController->hasAdditionalService($reservation, null, null);                        
+                                        }                                        
+                                    }                                    
+                                }        
+                            }
                         }
+                    }
+                    return $this->parkingMap($reservation, $price, DB_ERROR);
 
-                    } else {                                 
-                        return $this->parkingMap($reservation, PARKING_ERROR);
-                    }                
-                }
-            }
+                } else {            
+
+                    $this->reservationController = new ReservationController();
+
+                    if ($reserve = $this->reservationController->getById($reservation)) {
+
+                        if ($this->checkInterval($reserve->getDateStart(), $reserve->getDateEnd(), $id_parking)) {
+    
+                            $reservationTemp = new Reservation();
+                            $reservationTemp->setId($reservation);
+                            $register_by = $this->adminController->isLogged();
             
+                            $reservationxParking = new ReservationxParking();
+                            $reservationxParking->setReservation($reservationTemp);
+                            
+                            $reservationAux = $this->reservationDAO->getById($reservationTemp);
+                            $reservationxParking->setParking($parking);
+    
+                            if ($this->reservationxParkingDAO->add($reservationxParking)) {    
+                                  
+                                $register_by = $this->adminController->isLogged();
+                                $reservationxservice = new ReservationxService();
+                                $servicexparking = new ServicexParking();
+                                $serv->setTotal($serv->getTotal() + $price);
+                                $reservationAux->setPrice($reservationAux->getPrice() + $price);
+                                
+                                if ($this->additionalServiceDAO->update($serv, $update_by)) {
+
+                                    $reservationxservice->setIdReservation($reservation);
+                                    $reservationxservice->setIdService($serv->getId());
+        
+                                    if ($this->reservationDAO->update($reservationAux, $update_by)) {
+
+                                        if ($this->reservationxserviceDAO->add($reservationxservice)) {
+
+                                            $servicexparking->setIdService($serv->getId());
+                                            $servicexparking->setIdParking($parking->getId());
+
+                                            if ($this->servicexparkingDAO->add($servicexparking)) {
+                                                
+                                                $this->additionalController = new AdditionalServiceController();
+                                                return $this->additionalController->hasAdditionalService($reservation, null, null);                        
+                                            }                                            
+                                        }
+                                    }        
+                                }
+                            }
+                            return $this->parkingMap($reservation, $price, DB_ERROR);
+
+                        } else {                                 
+                            return $this->parkingMap($reservation, PARKING_ERROR);
+                        }                
+                    }
+                }
+            }            
         }
 
         public function hasReservation($id_parking) {     

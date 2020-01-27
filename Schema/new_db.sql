@@ -2474,7 +2474,7 @@ END$$
 
 ---------------------------- MOBILE PARASOL ---------------------------
 
-INSERT INTO mobile_parasol (id,mobileParasol_number,price)  VALUES (1,1,0.00),(2,2,0.00),(3,3,0.00),(4,4,0.00),(5,5,0.00),(6,6,0.00)
+INSERT INTO mobile_parasol (id, mobileParasol_number, price)  VALUES (1,1,0.00),(2,2,0.00),(3,3,0.00),(4,4,0.00),(5,5,0.00),(6,6,0.00)
 
 CREATE TABLE mobile_parasol (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -2969,6 +2969,7 @@ BEGIN
 	WHERE (reservationxservice.FK_id_reservation = id_reservation);             
 END$$
 
+
 DROP procedure IF EXISTS `reservationxservice_getAll`;
 DELIMITER $$
 CREATE PROCEDURE reservationxservice_getAll ()
@@ -2981,8 +2982,6 @@ END$$
 
 
 ---------------------------- PARASOL ---------------------------
-
--- PREGUNTAR
 
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`, ) VALUES (1, 100, 1, 1);
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (2, 100, 2, 1);

@@ -105,7 +105,8 @@
                                                     <ul>
                                                         <li>
                                                             • Lockers:   
-                                                            <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>       
+                                                            <?php if ($service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId())): ?>                                                          
+                                                            
                                                                 <?php if ($lockers = $this->servicexlockerDAO->getLockerByService($service->getId())): ?>                             
                                                                     <?php foreach ($lockers as $locker): ?>
                                                                         
