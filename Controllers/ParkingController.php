@@ -96,7 +96,7 @@
 
         public function reserve($price, $reservation, $id_parking) {
             
-            if ($serv = $this->reservationxserviceDAO->getServiceByReservation($reservation) != false) {
+            if ($serv = $this->reservationxserviceDAO->getServiceByReservation($reservation) == false) {
                 
                 $parking = new Parking();
                 $parking->setId($id_parking);
