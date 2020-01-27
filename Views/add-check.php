@@ -55,16 +55,15 @@
                         
                         <input type="hidden" name="id_client" value="<?= $reserveTemp->getClient()->getId(); ?>" >
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
-                        
-                        
-
+                                            
                         <div class="row">
-                        <div class="col s12 center-align">
+                            <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>
                         </div>
+                        
                     </form>
                 </div>
             </div>

@@ -1,4 +1,6 @@
-		<!-- Main content  -->
+		<?= $id_reservation; ?>
+        <?= $price; ?>
+        <!-- Main content  -->
 		<div class="col s12 m8 l10">
 			<div class="main-content">			
 				<div class="map-container">
@@ -279,7 +281,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <?php if (isset($id_reservation)): ?>
-                                                <a href="<?= FRONT_ROOT ?>parking/reserve/<?= $id_reservation ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                <a href="<?= FRONT_ROOT ?>parking/reserve/<?= $id_reservation; ?>/<?= $price; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                     Reservar
                                                 </a>                                                                                             
                                             <?php endif; ?>

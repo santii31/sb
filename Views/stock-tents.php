@@ -44,33 +44,43 @@
                 
                 <div class="divider mb-divider"></div>             
                 
+                <?php if (sizeof($rsvFuture) > 0): ?>
                 <div class="row">    
-                    <div class="col s12">
-                    
-                    <table class="responsive-table centered" id="table-filter">
-                        <thead>
-                        <tr>                       
-                            <th>Fecha inicio</th>
-                            <th>Fecha fin</th>
-                            <th>Nº Carpa</th>     
-                            <th>Cliente</th>
-                            <th>Telefono</th>
-                        </tr>
-                        </thead>
+                    <div class="col s12">                    
+                        <table class="responsive-table centered" id="table-filter">
+                            <thead>
+                            <tr>                       
+                                <th>Fecha inicio</th>
+                                <th>Fecha fin</th>
+                                <th>Nº Carpa</th>     
+                                <th>Cliente</th>
+                                <th>Telefono</th>
+                            </tr>
+                            </thead>
 
-                        <tbody>       
-                            <?php foreach ($rsvFuture as $rsv): ?>
-                                <tr>
-                                    <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
-                                    <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                    
-                                    <td> <?= $rsv->getBeachTent()->getNumber(); ?></td>
-                                    <td> <?= ucfirst( $rsv->getClient()->getName() ) . ' ' . $rsv->getClient()->getLastName(); ?></td>
-                                    <td> <?= $rsv->getClient()->getPhone(); ?> </td>
-                                </tr>                                 
-                            <?php endforeach; ?>                
-                        </tbody>
-                    </table>
-                    </div>                
+                            <tbody>       
+                                <?php foreach ($rsvFuture as $rsv): ?>
+                                    <tr>
+                                        <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
+                                        <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                    
+                                        <td> <?= $rsv->getBeachTent()->getNumber(); ?></td>
+                                        <td> <?= ucfirst( $rsv->getClient()->getName() ) . ' ' . $rsv->getClient()->getLastName(); ?></td>
+                                        <td> <?= $rsv->getClient()->getPhone(); ?> </td>
+                                    </tr>                                 
+                                <?php endforeach; ?>                
+                            </tbody>
+                        </table>
+                    </div>      
+                    <?php else: ?>
+                        <div class="row">
+                            <div class="col s6">
+                                <div class="card-panel lime lighten-4">
+                                    <i class="material-icons left">error</i>
+                                    <span class="card-text card-warning">No se encontraron futuras reservas.</span>                       
+                                </div>        
+                            </div>                    
+                        </div>    
+                    <?php endif; ?>          
                 </div>
             </div>
 

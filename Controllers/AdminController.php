@@ -268,7 +268,7 @@
             if ($admin = $this->isLogged()) {
                 $admin = $_SESSION["loggedAdmin"];
                 if ($admin->getId() == $id) {                
-                    return $this->listAdminPath(null, DISABLE_YOURSELF, null);
+                    return $this->listAdminPath(1, null, DISABLE_YOURSELF, null);
                 } else {
                     $admin_disable = new Admin();
                     $admin_disable->setId($id);           

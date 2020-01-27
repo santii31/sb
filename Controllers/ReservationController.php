@@ -45,8 +45,7 @@
             $this->checkDAO = new CheckDAO();
         }               
 
-
-        // falta descuento
+        
         private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_tent, $price) {                        
 
             $this->clientController = new ClientController();                              
@@ -81,6 +80,8 @@
                 $reservation->setDateEnd($end);            
                 $reservation->setStay($stay);
                 $reservation->setPrice($price);
+                
+                // DESCUENTO ???????
                 $reservation->setDiscount(0);
                 
                 $tent = new BeachTent();
@@ -119,7 +120,7 @@
                     if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
 
                         $this->parkingController = new ParkingController();                    
-                        return $this->parkingController->parkingMap($lastId);                                                
+                        return $this->parkingController->parkingMap($lastId, $price);                                                
 
                     } else {                        
                         return $this->addReservationPath(null, DB_ERROR, null, $inputs);        
@@ -184,9 +185,7 @@
                 if ($showDisables == null) {
                     $title = "Reservas";    
                     $rsvCount = $this->reservationDAO->getActiveCount();                    
-                    $pages = ceil ($rsvCount / MAX_ITEMS_PAGE);                                                                  
-
-                    // This variable will contain the number of the current page
+                    $pages = ceil ($rsvCount / MAX_ITEMS_PAGE);                                                                                   
                     $current = 0;                  
     
                     if ($page == 1) {                                        
@@ -199,8 +198,6 @@
                     $title = "Reservas - Deshabilitadas";
                     $d_rsvCount = $this->reservationDAO->getDisableCount();         
                     $d_pages = ceil ($d_rsvCount / MAX_ITEMS_PAGE);                                                                           
-
-                    // This variable will contain the number of the current page
                     $d_current = 0;                  
     
                     if ($page == 1) {                                        
@@ -406,12 +403,27 @@
             return $this->reservationDAO->getSalesMonthly();
         }
 
-        public function PaymentMethod($paymentMethod, $id_reserve, $alert = "", $success = ""){
-            $update_by = $this->adminController->isLogged();
+        public function paymentMethod($paymentMethod, $id_reserve, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {
-                if(!empty($paymentMethod)){
-                    if($paymentMethod == "check"){
-                        $title = "Metodo de pago";
+                
+                $update_by = $this->adminController->isLogged();
+
+                if (!empty($paymentMethod)) {
+                    if ($paymentMethod == "check") {
+                        
+                        $title = "Metodo de pago - Cheque";                        
+                        $reserveTemp = new Reservation();
+                        $reserveTemp->setId($id_reserve);
+                        $reservation = $this->reservationDAO->getById($reserveTemp);
+                        $clientTemp = $reservation->getClient();
+                        $clientTemp->setPaymentMethod($paymentMethod);
+                        $this->clientDAO->update($clientTemp, $update_by);
+
+                        require_once(VIEWS_PATH . "head.php");
+                        require_once(VIEWS_PATH . "sidenav.php");
+                        require_once(VIEWS_PATH . "add-check.php");
+                        require_once(VIEWS_PATH . "footer.php");
+                    } else {
                         
                         $reserveTemp = new Reservation();
                         $reserveTemp->setId($id_reserve);
@@ -419,19 +431,10 @@
                         $clientTemp = $reservation->getClient();
                         $clientTemp->setPaymentMethod($paymentMethod);
                         $this->clientDAO->update($clientTemp, $update_by);
-                        require_once(VIEWS_PATH . "head.php");
-                        require_once(VIEWS_PATH . "sidenav.php");
-                        require_once(VIEWS_PATH . "add-check.php");
-                        require_once(VIEWS_PATH . "footer.php");
-                    }else{
-                        $reserveTemp = new Reservation();
-                        $reserveTemp->setId($id_reserve);
-                        $reservation = $this->reservationDAO->getById($reserveTemp);
-                        $clientTemp = $reservation->getClient();
-                        $clientTemp->setPaymentMethod($paymentMethod);
-                        $this->clientDAO->update($clientTemp, $update_by);
-                    }
-                    
+
+                        // termina aca?
+
+                    }                    
                 }   
             } else {
                 return $this->adminController->userPath();
@@ -439,7 +442,7 @@
         }
 
         public function addCheck($bank, $account_number, $check_number, $id_client, $id_reserve){
-            if(!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($id_client)){
+            if (!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($id_client)) {
                 $check = new Check();
                 $clientTemp = new Client();
                 $check->setBank($bank);
@@ -448,10 +451,13 @@
                 $clientTemp->setId($id_client);
                 $client = $this->clientDAO->getById($clientTemp);
                 $check->setClient($client);
-                $this->checkDAO->add($check);
+                if ($this->checkDAO->add($check)) {
+                    // vista a pagar?
+                    return true;
+                }
             }
-
-
+            return $this->paymentMethod("check", $id_reserve, EMPTY_FIELDS, null);
         }
+        
     }
 ?>

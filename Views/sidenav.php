@@ -26,8 +26,7 @@
             </div>
         </nav>
     </div>                
-    
-    <!-- ARREGLAR - DESACTUALIZADO - BARRA MOVIL -->
+        
     <!-- Links mobile/table -->
     <ul id="slide-out" class="sidenav">
         <li>
@@ -40,16 +39,13 @@
                 </a>
             </div>
         </li>
-        <li><a href="<?= FRONT_ROOT ?>admin/logout"><i class="material-icons">keyboard_backspace</i>Desconectarse</a></li>        
-        <li><div class="divider"></div></li>                
+        <li>
+            <a href="<?= FRONT_ROOT ?>admin/logout"><i class="material-icons">keyboard_backspace</i>Desconectarse</a>
+        </li>        
+        <li>
+            <div class="divider"></div>
+        </li>                
         <ul>
-            <!-- aca empiezan los links -->
-            <li>
-                <a href="<?= FRONT_ROOT ?>admin/dashboard" class="valign-wrapper waves-effect">
-                    <i class="material-icons left">dashboard</i>
-                    Dashboard
-                </a>
-            </li>
 
             <ul class="collapsible">
                 <li>
@@ -57,27 +53,23 @@
                     <div class="collapsible-body">
                         <ul>
                             <li>
-                                <a href="<?= FRONT_ROOT ?>beachTent/addReservePath" class="valign-wrapper waves-effect">
-                                    <i class="material-icons left">add_circle</i>
-                                    Añadir reserva
+                                <a href="<?= FRONT_ROOT ?>beachTent/showMap" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">map</i>
+                                    Ver mapa de reservas
                                 </a>
-                            </li>                                           
-                        </ul>
-                    </div>
-                </li>                    
-            </ul>  
-
-            <ul class="collapsible">
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">beach_access</i>Reservas</div>
-                    <div class="collapsible-body">
-                        <ul>
+                            </li>   
                             <li>
                                 <a href="<?= FRONT_ROOT ?>reservation/listReservationPath" class="valign-wrapper waves-effect">
                                 <i class="material-icons left">format_list_numbered</i>
                                     Listar reservas
                                 </a>
-                            </li>                                           
+                            </li>   
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>beachTent/stock" class="valign-wrapper waves-effect">
+                                <i class="material-icons left">assignment</i>
+                                    Stock de carpas
+                                </a>
+                            </li>                                        
                         </ul>
                     </div>
                 </li>                    
@@ -87,13 +79,7 @@
                 <li>
                     <div class="collapsible-header"><i class="material-icons">directions_car</i>Estacionamiento</div>
                     <div class="collapsible-body">
-                        <ul>
-                            <li>
-                                <a href="<?= FRONT_ROOT ?>parking/addParkingPath" class="valign-wrapper waves-effect">
-                                    <i class="material-icons left">add_circle_outline</i>
-                                    Añadir reserva
-                                </a>
-                            </li>                                     
+                        <ul>                                           
                             <li>
                                 <a href="<?= FRONT_ROOT ?>parking/parkingMap" class="valign-wrapper waves-effect">
                                     <i class="material-icons left">map</i>
@@ -107,19 +93,72 @@
 
             <ul class="collapsible">
                 <li>
+                    <div class="collapsible-header"><i class="material-icons left">attach_money</i>Contabilidad</div>
+                    <div class="collapsible-body">
+                        <ul>    
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>accounting/diaryPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">chrome_reader_mode</i>
+                                    Caja diaria
+                                </a>
+                            </li>                                         
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>accounting/salesDailyPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">date_range</i>
+                                    Ventas diarias
+                                </a>
+                            </li>         
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>accounting/salesMonthlyPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">description</i>
+                                    Ventas mensuales
+                                </a>
+                            </li>    
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>accounting/salesByAdminsPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">folder_shared</i>
+                                    Ventas por administradores
+                                </a>
+                            </li>                                                                                                                                                    
+                                <li>
+                                <a href="<?= FRONT_ROOT ?>accounting/salesByDatesPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">search</i>
+                                    Filtrar por fechas
+                                </a>
+                            </li>         
+
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>accounting/staffSalaryPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">account_circle</i>
+                                    Sueldo del personal
+                                </a>
+                            </li>                                                              
+                        </ul>
+                    </div>
+                </li>                    
+            </ul> 
+
+            <ul class="collapsible">
+                <li>
                     <div class="collapsible-header"><i class="material-icons">insert_chart</i>Stock</div>
                     <div class="collapsible-body">
                         <ul>
                             <li>
-                                <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                                    <i class="material-icons left">person_add</i>
+                                <a href="<?= FRONT_ROOT ?>product/addProductPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">add_circle_outline</i>
                                     Añadir producto
                                 </a>
                             </li>
+                            <li>            
+                                <a href="<?= FRONT_ROOT ?>product/searchPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">search</i>
+                                    Buscar productos
+                                </a>
+                            </li> 
                             <li>
-                                <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
+                                <a href="<?= FRONT_ROOT ?>stock/listStockPath" class="valign-wrapper waves-effect">
                                     <i class="material-icons left">format_list_numbered</i>
-                                    Listar/Modificar productos
+                                    Listar/Modificar stock
                                 </a>
                             </li>                                
                         </ul>
@@ -138,6 +177,12 @@
                                     Añadir proveedor
                                 </a>
                             </li>
+                            <li>            
+                                <a href="<?= FRONT_ROOT ?>provider/searchPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">search</i>
+                                    Buscar proveedores
+                                </a>
+                            </li> 
                             <li>
                                 <a href="<?= FRONT_ROOT ?>provider/listProviderPath" class="valign-wrapper waves-effect">
                                     <i class="material-icons left">format_list_numbered</i>
@@ -149,34 +194,99 @@
                 </li>                    
             </ul>
 
-            <li>
-                <a href="<?= FRONT_ROOT ?>" class="valign-wrapper waves-effect">
-                    <i class="material-icons left">attach_money</i>
-                    Contabilidad
-                </a>
-            </li>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">person_pin_circle</i>Clientes</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>            
+                                <a href="<?= FRONT_ROOT ?>client/searchPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">search</i>
+                                    Buscar clientes
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>client/listClientPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">format_list_numbered</i>
+                                    Listar clientes
+                                </a>
+                            </li>                                                                     
+                        </ul>
+                    </div>
+                </li>                    
+            </ul> 
 
             <ul class="collapsible">
                 <li>
-                    <div class="collapsible-header"><i class="material-icons">directions_walk</i>Clientes</div>
+                    <div class="collapsible-header"><i class="material-icons">directions_walk</i>Clientes Potenciales</div>
                     <div class="collapsible-body">
                         <ul>
                             <li>
-                                <a href="<?= FRONT_ROOT ?>client/listPotentialClientPath" class="valign-wrapper waves-effect">
+                                <a href="<?= FRONT_ROOT ?>clientPotential/addPotentialClientPath" class="valign-wrapper waves-effect">
                                     <i class="material-icons left">person_add</i>
                                     Añadir cliente potencial
                                 </a>
                             </li>
+                            <li>            
+                                <a href="<?= FRONT_ROOT ?>clientPotential/searchPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">search</i>
+                                    Buscar clientes potenciales
+                                </a>
+                            </li> 
                             <li>
-                                <a href="<?= FRONT_ROOT ?>client/addPotentialClientPath" class="valign-wrapper waves-effect">
+                                <a href="<?= FRONT_ROOT ?>clientPotential/listPotentialClientPath" class="valign-wrapper waves-effect">
                                     <i class="material-icons left">format_list_numbered</i>
                                     Listar clientes potenciales
+                                </a>
+                            </li>                                                                     
+                        </ul>
+                    </div>
+                </li>                    
+            </ul>  
+
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">group</i>Personal</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>staff/addStaffPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">person_add</i>
+                                    Añadir personal
+                                </a>
+                            </li>
+                            <li>            
+                                <a href="<?= FRONT_ROOT ?>staff/searchPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">search</i>
+                                    Buscar personal
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>staff/listStaffPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">format_list_numbered</i>
+                                    Listar/Modificar personal
                                 </a>
                             </li>                                
                         </ul>
                     </div>
                 </li>                    
-            </ul>  
+            </ul>                     
+
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">email</i>Correo</div>
+                    <div class="collapsible-body">
+                        <ul>                                
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>email/sendEmailPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">send</i>
+                                    Enviar nuevo correo
+                                </a>
+                            </li> 
+                        </ul>
+                    </div>
+                </li>                    
+            </ul>                     
 
             <ul class="collapsible">
                 <li>
@@ -198,9 +308,25 @@
                         </ul>
                     </div>
                 </li>                    
-            </ul>                                       
+            </ul>       
+            
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">settings</i>Configuracion</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>config/updateValuesPath" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">subdirectory_arrow_right</i>
+                                    Actualizar valores
+                                </a>
+                            </li>                                                                  
+                        </ul>
+                    </div>
+                </li>                    
+            </ul>                          
 
-        </ul> 
+        </ul>  
     </ul>
             	
     <div class="row">

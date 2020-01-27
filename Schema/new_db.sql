@@ -5,14 +5,14 @@ CREATE DATABASE southbeach;
 USE southbeach;
 
 -- USUARIO
-CREATE USER 'sb_admin'@'localhost' IDENTIFIED BY 'sb_admin_30485934';
+CREATE USER `sb_admin`@`localhost` IDENTIFIED BY `sb_admin_30485934`;
 
-GRANT SELECT, INSERT, UPDATE ON southbeach2.* TO 'sb_admin'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON southbeach2.* TO `sb_admin`@`localhost`;
 
 
 ----------------------------- CONFIG -----------------------------
 
-INSERT INTO config (date_start_season,date_end_season,price_tent_season,price_tent_january,price_tent_january_day,price_tent_january_fortnigh,price_tent_february,price_tent_february_day,price_tent_february_first_fortnigh,price_tent_february_second_fortnigh,price_parasol) VALUES ('2020-01-01' , '2020-03-01' , 50000.00 , 35000.00 , 2500.00 , 20000.00 , 25000.00 , 2000.00, 20000.00, 13000.00, 1800.00);
+INSERT INTO config (date_start_season,date_end_season,price_tent_season,price_tent_january,price_tent_january_day,price_tent_january_fortnigh,price_tent_february,price_tent_february_day,price_tent_february_first_fortnigh,price_tent_february_second_fortnigh,price_parasol) VALUES ("2020-01-01" , "2020-03-01" , 50000.00 , 35000.00 , 2500.00 , 20000.00 , 25000.00 , 2000.00, 20000.00, 13000.00, 1800.00);
 
 CREATE TABLE config (    
     `date_start_season` DATE NOT NULL,    
@@ -461,7 +461,7 @@ BEGIN
     INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
     INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
     INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
-	WHERE `client`.`name` LIKE CONCAT('%', name , '%');
+	WHERE `client`.`name` LIKE CONCAT(`%`, name , `%`);
 END$$
 
 
@@ -493,7 +493,7 @@ BEGIN
     INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
     INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
     INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
-	WHERE `beach_tent`.`number` LIKE CONCAT('%', number , '%');
+	WHERE `beach_tent`.`number` LIKE CONCAT(`%`, number , `%`);
 END$$
 
 
@@ -669,7 +669,7 @@ DELIMITER $$
 CREATE PROCEDURE client_potential_getByName (IN name VARCHAR(255))
 BEGIN
 	SELECT * FROM `client_potential` 
-    WHERE `client_potential`.`name` LIKE CONCAT('%', name , '%');
+    WHERE `client_potential`.`name` LIKE CONCAT(`%`, name , `%`);
 END$$
 
 
@@ -1098,8 +1098,7 @@ BEGIN
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   admin.email AS admin_email,		   
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
@@ -1210,8 +1209,7 @@ BEGIN
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   admin.email AS admin_email,		   
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
@@ -1227,7 +1225,7 @@ DROP procedure IF EXISTS `reservation_getSalesMonthly`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getSalesMonthly ()
 BEGIN
-    SET lc_time_names = 'es_ES';
+    SET lc_time_names = `es_ES`;
 	SELECT
         YEAR(date_register) AS `year`,
         MONTHNAME(date_register) AS `month`,
@@ -1235,7 +1233,7 @@ BEGIN
         count(*) AS orders
     FROM reservation
     GROUP BY YEAR(date_register), MONTH(date_register);
-    -- WHERE date_register BETWEEN '2020-01-21' AND '2020-01-24'
+    -- WHERE date_register BETWEEN `2020-01-21` AND `2020-01-24`
 END$$
 
 
@@ -1264,8 +1262,7 @@ BEGIN
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   admin.email AS admin_email,		   
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
@@ -1303,8 +1300,7 @@ BEGIN
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   admin.email AS admin_email,		   
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
@@ -1412,8 +1408,7 @@ BEGIN
            admin.name AS admin_name,
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   admin.email AS admin_email,		   
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
            beach_tent.price AS tent_price
@@ -1835,7 +1830,7 @@ BEGIN
         `admin`.`lastname` AS admin_lastname
     FROM `provider` 
     INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`    
-    WHERE `provider`.`item` LIKE CONCAT('%', item , '%');    
+    WHERE `provider`.`item` LIKE CONCAT(`%`, item , `%`);    
 END$$
 
 
@@ -2477,70 +2472,6 @@ END$$
 
 
 
----------------------------- PARASOL ---------------------------
-
-CREATE TABLE parasol (
-    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `parasol_number` INT NOT NULL UNIQUE,
-    `price` FLOAT NOT NULL,
-    `position` INT NOT NULL,    
-    `FK_id_hall` INT NOT NULL,
-    CONSTRAINT `FK_id_hall_parasol` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`)
-);
-
-
-DROP procedure IF EXISTS `parasol_getById`;
-DELIMITER $$
-CREATE PROCEDURE parasol_getById (IN id INT)
-BEGIN
-	SELECT *             
-    FROM `parasol` 
-    WHERE `parasol`.`id` = id;
-END$$
-
-
-DROP procedure IF EXISTS `parasol_getAll`;
-DELIMITER $$
-CREATE PROCEDURE parasol_getAll ()
-BEGIN
-	SELECT *
-    FROM `parasol` 
-    ORDER BY parasol_number ASC;
-END$$
-
-
-DROP procedure IF EXISTS `parasol_getN_row`;
-DELIMITER $$
-CREATE PROCEDURE parasol_getN_row (IN start INT)
-BEGIN
-	SELECT *
-    FROM `parasol` 
-    WHERE `parasol`.`FK_id_hall` = start
-    ORDER BY `parasol`.`position` ASC;
-END$$
-    
-
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (1, 100, 1, 1);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (2, 100, 2, 1);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (3, 100, 3, 1);
-
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (4, 100, 4, 2);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (5, 100, 5, 2);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (6, 100, 6, 2);
-
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (7, 100, 7, 3);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (8, 100, 8, 3);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (9, 100, 9, 3);
-
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (10, 100, 10, 4);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (11, 100, 11, 4);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (12, 100, 12, 4);
-
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (13, 100, 13, 5);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (14, 100, 14, 5);
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (15, 100, 15, 5);
-
-
 ---------------------------- MOBILE PARASOL ---------------------------
 
 INSERT INTO mobile_parasol (id,mobileParasol_number,price)  VALUES (1,1,0.00),(2,2,0.00),(3,3,0.00),(4,4,0.00),(5,5,0.00),(6,6,0.00)
@@ -2569,6 +2500,7 @@ BEGIN
     FROM `mobile_parasol`
     ORDER BY id ASC;
 END$$
+
 
 
 ---------------------------- SERVICEXMOBILEPARASOL ---------------------------
@@ -3038,7 +2970,7 @@ BEGIN
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   
            admin.is_active AS admin_isActive,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
@@ -3082,17 +3014,77 @@ BEGIN
 END$$
 
 
+
+
+---------------------------- PARASOL ---------------------------
+
+-- PREGUNTAR
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`, ) VALUES (1, 100, 1, 1);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (2, 100, 2, 1);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (3, 100, 3, 1);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (4, 100, 4, 2);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (5, 100, 5, 2);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (6, 100, 6, 2);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (7, 100, 7, 3);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (8, 100, 8, 3);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (9, 100, 9, 3);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (10, 100, 10, 4);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (11, 100, 11, 4);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (12, 100, 12, 4);
+
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (13, 100, 13, 5);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (14, 100, 14, 5);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (15, 100, 15, 5);
+
+
 ---------------------------- PARASOL ---------------------------
 
 CREATE TABLE parasol (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `parasol_number` INT NOT NULL UNIQUE,
     `price` FLOAT NOT NULL,
-    `FK_id_service` INT NOT NULL,
-    CONSTRAINT `FK_id_service_parasol` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service`(`id`)
+    `position` INT NOT NULL,    
+    `FK_id_hall` INT NOT NULL,
+    CONSTRAINT `FK_id_hall_parasol` FOREIGN KEY (`FK_id_hall`) REFERENCES `hall` (`id`)
 );
 
 
+DROP procedure IF EXISTS `parasol_getById`;
+DELIMITER $$
+CREATE PROCEDURE parasol_getById (IN id INT)
+BEGIN
+	SELECT *             
+    FROM `parasol` 
+    WHERE `parasol`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `parasol_getAll`;
+DELIMITER $$
+CREATE PROCEDURE parasol_getAll ()
+BEGIN
+	SELECT *
+    FROM `parasol` 
+    ORDER BY parasol_number ASC;
+END$$
+
+
+DROP procedure IF EXISTS `parasol_getN_row`;
+DELIMITER $$
+CREATE PROCEDURE parasol_getN_row (IN start INT)
+BEGIN
+	SELECT *
+    FROM `parasol` 
+    WHERE `parasol`.`FK_id_hall` = start
+    ORDER BY `parasol`.`position` ASC;
+END$$
+
+
+-- PROCEDIMIENTOS DE LA OTRA TABLA 'PARASOL'
 DROP procedure IF EXISTS `parasol_getById`;
 DELIMITER $$
 CREATE PROCEDURE parasol_getById (IN id INT)
@@ -3123,7 +3115,7 @@ BEGIN
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   
            admin.is_active AS admin_isActive,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
@@ -3174,7 +3166,7 @@ BEGIN
 		   admin.lastname AS admin_lastName,
 		   admin.dni AS admin_dni,
 		   admin.email AS admin_email,
-		   admin.password AS admin_password,
+		   
            admin.is_active AS admin_isActive,
            beach_tent.id AS tent_id,
            beach_tent.number AS tent_number,
@@ -3284,7 +3276,7 @@ BEGIN
             `admin`.`lastname` AS admin_lastname 
     FROM `staff` 
     INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
-    WHERE `staff`.`name` LIKE CONCAT('%', name , '%');
+    WHERE `staff`.`name` LIKE CONCAT(`%`, name , `%`);
 END$$
 
 
@@ -3479,38 +3471,6 @@ END$$
 
 ---------------------------- CHECK ---------------------------
 
-CREATE TABLE check (
-    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `bank` VARCHAR(255) NOT NULL,
-    'account_number' INT NOT NULL,
-    'check_number' INT NOT NULL,
-    'FK_id_client' INT NOT NULL,
-    CONSTRAINT `FK_id_client_check` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`)
-);
-
-DROP procedure IF EXISTS `check_add`;
-DELIMITER $$
-CREATE PROCEDURE check_add (
-                                IN bank VARCHAR(255),
-                                IN account_number INT,
-                                IN check_number INT,
-                                IN FK_id_client INT,
-                                OUT lastId INT  
-                            )                             
-BEGIN
-	INSERT INTO check (
-			check.bank,
-			check.account_number,
-			check.check_number,
-            check.FK_id_client
-	)
-    VALUES
-        (bank,account_number,check_number,FK_id_client);
-        SET lastId = LAST_INSERT_ID();	
-	    SELECT lastId;
-END$$
-
-
 CREATE TABLE checkC (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `bank` VARCHAR(255) NOT NULL,
@@ -3519,6 +3479,7 @@ CREATE TABLE checkC (
     `FK_id_client` INT NOT NULL,
     CONSTRAINT `FK_id_client_check` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`)
 );
+
 
 DROP procedure IF EXISTS `checkC_add`;
 DELIMITER $$
@@ -3542,6 +3503,7 @@ BEGIN
 	    SELECT lastId;
 END$$
 
+
 DROP procedure IF EXISTS `checkC_getById`;
 DELIMITER $$
 CREATE PROCEDURE checkC_getById (IN id INT)
@@ -3563,6 +3525,7 @@ BEGIN
     WHERE `checkC`.`id` = id;
 END$$
 
+
 DROP procedure IF EXISTS `checkC_getByClientId`;
 DELIMITER $$
 CREATE PROCEDURE checkC_getByClientId (IN id INT)
@@ -3583,6 +3546,7 @@ BEGIN
     INNER JOIN client ON checkC.FK_id_client = client.id
     WHERE `checkC`.`FK_id_client` = id;
 END$$
+
 
 DROP procedure IF EXISTS `checkC_getByBank`;
 DELIMITER $$
@@ -3626,6 +3590,8 @@ BEGIN
     INNER JOIN client ON checkC.FK_id_client = client.id
     ORDER BY id ASC;
 END$$
+
+
 
 ---------------------------- ACCOUTING ---------------------------
 

@@ -1,8 +1,8 @@
-<!-- Main content  -->
-<div class="col s12 m8 l10">
+        <!-- Main content  -->
+        <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>reservation/PaymentMethod" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/paymentMethod" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -34,9 +34,8 @@
                         </div>                
                         <?php endif; ?>
 
-                        <div class="row">
-                        
-                        <div class="input-field col s4">
+                        <div class="row">                        
+                            <div class="input-field col s4">
                                 <select name="payment_method">
                                     <option value="" disabled selected>Seleccione su opcion</option>
                                     <option value="cash">Efectivo</option>
@@ -45,10 +44,6 @@
                                 <label>Metodo de pago</label>
                             </div>                                                                                 
                         </div>    
-
-                        
-
-                        
 
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
                         

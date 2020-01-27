@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?></title>
+    <link rel="shortcut icon" href="<?= IMG_PATH ?>favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap" rel="stylesheet">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -37,8 +38,7 @@
 
                     <div class="row">
                         <div class="input-field col s12">    
-                            <img src="<?= IMG_PATH ?>logo.png" alt="Logo" class="logo-brand">                        
-                            <!-- <h3 class="title-1">Ingrese sus datos</h3> -->
+                            <img src="<?= IMG_PATH ?>logo.png" alt="Logo" class="logo-brand">                                                    
                         </div>
                     </div>
 
