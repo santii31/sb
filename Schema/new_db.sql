@@ -940,7 +940,7 @@ BEGIN
         `hall`.`number` AS hall_number 
     FROM `beach_tent` 
     INNER JOIN `hall` ON `beach_tent`.`FK_id_hall` = `hall`.`id`
-    WHERE (`beach_tent`.`FK_id_hall` = start ) AND  (`beach_tent`.`sea` = 0)
+    WHERE (`beach_tent`.`FK_id_hall` = start ) AND (`beach_tent`.`sea` = 0)
     ORDER BY `beach_tent`.`position` ASC;     
 END$$
 
@@ -1538,7 +1538,7 @@ BEGIN
     FROM reservation         
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN client ON reservation.FK_id_client = client.id
-    WHERE beach_tent.id = id;    
+    WHERE (beach_tent.id = id) AND (reservation.is_active = true);    
 END$$
 
 
