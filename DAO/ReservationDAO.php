@@ -53,13 +53,15 @@
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
+					
 					$reservationTemp = new Reservation();
 					$reservationTemp->setId($row["reservation_id"]);
 					$reservationTemp->setDateStart($row["reservation_dateStart"]);
 					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
 					$reservationTemp->setStay($row["reservation_stay"]);
 					$reservationTemp->setDiscount($row["reservation_discount"]);
-                    $reservationTemp->setPrice($row["reservation_totalPrice"]);
+					$reservationTemp->setPrice($row["reservation_totalPrice"]);
+					
 					$client = new Client();
 					$client->setId($row["client_id"]);
 					$client->setName($row["client_name"]);
@@ -71,6 +73,7 @@
 					$client->setPaymentMethod($row["client_paymentMethod"]);
 					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
 					$client->setVehicleType($row["client_vehicleType"]);
+
 					$reservationTemp->setClient($client);
 
 					$admin = new Admin();
@@ -607,12 +610,12 @@
 				$parameters["total_price"] = $reservation->getPrice();
 				$parameters["date_update"] = date("Y-m-d");
 				$parameters["update_by"] = $updateBy->getId();  
-				$parameters["id"] = $reservation->getId();  
+				$parameters["id"] = $reservation->getId();  				
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
 			} catch (Exception $e) {
-				//return false;		
-				echo $e;		
+				return false;		
+				// echo $e;		
 			}
 		}
 
@@ -656,9 +659,6 @@
 			}
 		}
 		
-		
-
-		// 
 		public function getActiveCount() {
             try {				
                 $query = "CALL reservation_getActiveCount()";				

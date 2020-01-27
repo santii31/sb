@@ -306,6 +306,7 @@ nav .input-field label.active i {
     color: #000;
 }
 
+
 /* BEACH MAP COLORS */
 .beach-map-colors {    
     font-size: 1.1rem;
@@ -877,4 +878,8 @@ table.striped>tbody>tr:nth-child(odd) {
 
 .card-action a {
     font-style: italic;
+}
+
+.modal-footer a {
+    background-color: rgba(106, 86, 165, .2);
 }

@@ -53,7 +53,10 @@
                             </div>
 
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
-                        <input type="hidden" name="aux" value="<?= $aux ?>">
+                        
+                        <?php if (isset($fromList)): ?>
+                        <input type="hidden" name="fromList" value="<?= $fromList ?>">
+                        <?php endif; ?>
                                                      
                         </div>                        
                         <div class="row">

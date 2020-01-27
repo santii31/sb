@@ -63,8 +63,11 @@
                         </div>                        
 
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
-                        <input type="hidden" name="aux" value="<?= $aux ?>">
                         
+                        <?php if (isset($fromList)): ?>
+                        <input type="hidden" name="fromList" value="<?= $fromList ?>">
+                        <?php endif; ?>
+
                         <div class="row">
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir

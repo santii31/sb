@@ -1508,8 +1508,7 @@ BEGIN
         `reservation`.`discount` = discount,
         `reservation`.`total_price` = total_price,
         `reservation`.`date_update` = date_update,
-        `reservation`.`update_by` = update_by,
-        `reservation`.`id` = id    
+        `reservation`.`update_by` = update_by          
     WHERE 
         `reservation`.`id` = id;	
 END$$
@@ -2696,16 +2695,15 @@ END$$
 DROP procedure IF EXISTS `service_update`;
 DELIMITER $$
 CREATE PROCEDURE service_update (
-                                    IN total INT,
-                                    IN id INT,
+                                    IN total FLOAT,
                                     IN date_update DATE,
-                                    IN update_by INT
+                                    IN update_by INT,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `additional_service` 
     SET         
-        `additional_service`.`total` = total,
-        `additional_service`.`id` = id,    
+        `additional_service`.`total` = total,        
         `additional_service`.`date_update` = date_update,
         `additional_service`.`update_by` = update_by
     WHERE 

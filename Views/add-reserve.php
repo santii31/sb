@@ -188,16 +188,20 @@
 
                         </div>
 
-                        <input type="hidden" name="tent" value="<?= $id_tent ?>">
+                        <?php if (isset($inputs["tent"])): ?>     
+                        <input type="hidden" name="tent" value="<?= $inputs["tent"]; ?>">
+                        <?php else: ?>                        
+                        <input type="hidden" name="tent" value="<?= $id_tent; ?>">
+                        <?php endif; ?>                        
 
                         <div class="row">
                             <div class="input-field col s12">
                             <?php if (isset($inputs["price"])): ?>         
-                                <input id="price" type="number" name="price" class="validate" value="<?= $inputs["price"]; ?>" required>
-                                <?php else: ?>
-                                <input id="price" type="number" name="price" class="validate" required>
-                                <?php endif; ?>                                                                           
-                                <label for="price">Precio</label>
+                            <input id="price" type="number" name="price" class="validate" value="<?= $inputs["price"]; ?>" required>
+                            <?php else: ?>
+                            <input id="price" type="number" name="price" class="validate" required>
+                            <?php endif; ?>                                                                           
+                            <label for="price">Precio</label>
                             </div>
                         </div>
 

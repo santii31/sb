@@ -46,7 +46,9 @@
                         <input type="hidden" name="reservation" value="<?= $reservation;; ?>" >
                         <input type="hidden" name="id_parking" value="<?= $id_parking; ?>">
                         
-                        
+                        <?php if (isset($fromList)): ?>                        
+                        <input type="hidden" name="fromList" value="<?= $fromList ?>">
+                        <?php endif; ?>
 
                         <div class="row">
                         <div class="col s12 center-align">

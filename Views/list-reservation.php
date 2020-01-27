@@ -156,16 +156,16 @@
                                     </td>       
 
                                     <td class="actions">
-                                        <a href="<?= FRONT_ROOT ?>additionalService/addLockerPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
+                                        <a href="<?= FRONT_ROOT ?>additionalService/addLockerPath/<?= $reservation->getId(); ?>/list" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left"></i>
                                             Locker
                                         </a>
                                         
-                                        <a href="<?= FRONT_ROOT ?>additionalService/addMobileParasolPath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                        <a href="<?= FRONT_ROOT ?>additionalService/addMobileParasolPath/<?= $reservation->getId(); ?>/list" class="waves-effect waves-light btn-small btn-safe">
                                             <i class="material-icons left"></i>
                                             Sombrilla
                                         </a>  
-                                        <a href="<?= FRONT_ROOT ?>parking/parkingMap/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
+                                        <a href="<?= FRONT_ROOT ?>parking/parkingMap/<?= $reservation->getId(); ?>/list" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left"></i>
                                             Cochera
                                         </a>                                        

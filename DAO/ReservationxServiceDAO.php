@@ -34,6 +34,7 @@
 			}
 			catch (Exception $e) {
 				return false;
+				// echo $e;
 			}			
         }
 					

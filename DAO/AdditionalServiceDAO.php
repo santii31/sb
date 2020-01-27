@@ -32,7 +32,8 @@
                 
                 return $lastId;
             } catch(Exception $e) {
-                return false;
+				return false;
+				// echo $e;
             }            
         }	
 
@@ -106,15 +107,14 @@
 		}						
 
 		public function update(AdditionalService $additionalService, Admin $updateBy) {
-			try {								
+			try {												
 				$query = "CALL service_update(?, ?, ?, ?)";						
 				$parameters["total"] = $additionalService->getTotal();				
-				$parameters["id"] = $additionalService->getId();				
 				$parameters["date_update"] = date("Y-m-d");
-				$parameters["update_by"] = $updateBy->getId();
-				$this->connection = Connection::GetInstance();
+				$parameters["update_by"] = $updateBy->getId();				
+				$parameters["id"] = $additionalService->getId();				
+				$this->connection = Connection::GetInstance();				
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
-
 			} catch (Exception $e) {
 				return false;				
 				// echo $e;

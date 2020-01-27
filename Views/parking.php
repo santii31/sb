@@ -278,10 +278,19 @@
                                             <?php endif; ?>
                                         </div>
                                         <div class="modal-footer">
-                                            <?php if (isset($id_reservation)): ?>
+                                            <?php if (isset($id_reservation)): ?>                                                
+                                                
+                                                <?php if (isset($fromList)): ?>
+                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                    Reservar
+                                                </a>   
+                                                <?php else: ?>
+                                                
                                                 <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                     Reservar
-                                                </a>                                                                                             
+                                                </a>                             
+                                                <?php endif; ?>
+
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -517,9 +526,15 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($fromList)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                        <?php else: ?>
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                     
+                                                        </a>                                                                                             
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -744,9 +759,15 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($fromList)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                        <?php else: ?>
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                     
+                                                        </a>                                                                                             
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -976,9 +997,15 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <?php if (isset($id_reservation)): ?>
+                                                            <?php if (isset($fromList)): ?>
+                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                    Reservar
+                                                                </a>   
+                                                            <?php else: ?>
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                 
+                                                            </a>                                                                                             
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -1201,9 +1228,15 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <?php if (isset($id_reservation)): ?>
+                                                            <?php if (isset($fromList)): ?>
+                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                    Reservar
+                                                                </a>   
+                                                            <?php else: ?>
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                 
+                                                            </a>                                                                                             
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -1429,9 +1462,15 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($fromList)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                        <?php else: ?>
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                     
+                                                        </a>                                                                                             
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -1658,9 +1697,15 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <?php if (isset($id_reservation)): ?>
+                                                            <?php if (isset($fromList)): ?>
+                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                    Reservar
+                                                                </a>   
+                                                            <?php else: ?>
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                 
+                                                            </a>                                                                                             
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -1884,9 +1929,15 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <?php if (isset($id_reservation)): ?>
+                                                            <?php if (isset($fromList)): ?>
+                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                    Reservar
+                                                                </a>   
+                                                            <?php else: ?>
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                 
+                                                            </a>                                                                                             
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -2112,9 +2163,15 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($fromList)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                        <?php else: ?>
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                    
+                                                        </a>                                                                                             
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -2343,9 +2400,15 @@
                                         </div>
                                         <div class="modal-footer">
                                             <?php if (isset($id_reservation)): ?>
+                                                <?php if (isset($fromList)): ?>
+                                                    <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                        Reservar
+                                                    </a>   
+                                                <?php else: ?>
                                                 <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                     Reservar
                                                 </a>                                                                                             
+                                                <?php endif; ?>
                                             <?php endif; ?>
                                         </div>
                                     </div>

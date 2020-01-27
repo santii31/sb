@@ -21,10 +21,10 @@
 	
 	//DB
 	define("DB_HOST", "localhost");
-	define("DB_NAME", "southbeach");	
+	define("DB_NAME", "southbeach");		
 	define("DB_USER", "root");
 	define("DB_PASS", "");
-
+	
 	// define("DB_USER", "sb_admin@localhost");
 	// define("DB_PASS", "sb_admin_30485934");
 

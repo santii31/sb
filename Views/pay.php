@@ -22,7 +22,7 @@
                                     <li>• Fecha fin: <?= date("d-m-Y", strtotime($reservation->getDateEnd())); ?> </li>
                                     <li>• Carpa: <?= $reservation->getBeachTent()->getNumber(); ?> </li>
                                     <li>• Precio: $<?= number_format($reservation->getPrice(), 2, ',', '.'); ?> </li>
-                                    <li>• Carpa:                                                                                         
+                                    <li>• Estadia:                                                                                         
                                         <?= ucfirst(
                                                 str_replace('_', ' ', $reservation->getStay()) 
                                             ); 

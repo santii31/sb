@@ -104,17 +104,18 @@
 
             // Saves the inputs in case of validation error
             $inputs = array(
-                "start"=> $start, 
-                "end"=> $end,
-                "name"=> $name,
-                "l_name"=> $l_name,
-                "addr"=> $addr,
-                "city"=> $city,
-                "cp"=> $cp,
-                "email"=> $email,
-                "phone"=> $phone,
-                "fam"=> $fam,
-                "aux_phone"=> $auxiliary_phone,
+                "start" => $start, 
+                "end" => $end,
+                "name" => $name,
+                "l_name" => $l_name,
+                "addr" => $addr,
+                "city" => $city,
+                "cp" => $cp,
+                "email" => $email,
+                "phone" => $phone,
+                "fam" => $fam,
+                "aux_phone" => $auxiliary_phone,
+                "tent" => $tent,
                 "price"=> $price
             );
             
@@ -124,8 +125,8 @@
 
                     if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
 
-                        $this->parkingController = new ParkingController();                    
-                        return $this->parkingController->parkingMap($lastId, $price);                                                
+                        $this->parkingController = new ParkingController();                                         
+                        return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
 
                     } else {                        
                         return $this->addReservationPath(null, DB_ERROR, null, $inputs);        
@@ -466,19 +467,18 @@
                 $clientTemp = new Client();
                 $check->setBank($bank);
                 $check->setAccountNumber($account_number);
-                $check->setCheckNumber($check_number);
+                $check->setCheckNumber($check_number);                
                 $clientTemp->setId($id_client);
-                $client = $this->clientDAO->getById($clientTemp);
+                $client = $this->clientDAO->getById($clientTemp);                
                 $check->setClient($client);
                 
-                if ($this->checkDAO->add($check)) {                    
+                if ($this->checkDAO->add($check)) {                         
                     return $this->payPath($id_reserve);
                 }
                 return $this->paymentMethod("check", $id_reserve, DB_ERROR, null);
             }
             return $this->paymentMethod("check", $id_reserve, EMPTY_FIELDS, null);
-        }
-        
+        }        
 
         public function payPath($id_reservation) {
             if ($admin = $this->adminController->isLogged()) {                                       
@@ -486,6 +486,11 @@
                 $reservationTemp = new Reservation();
                 $reservationTemp->setId($id_reservation);
                 $reservation = $this->reservationDAO->getById($reservationTemp);
+
+                // echo '<pre>';
+                // var_dump($id_reservation);
+                // echo '</pre>';
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "pay.php");

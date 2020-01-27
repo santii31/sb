@@ -41,9 +41,9 @@
         }        
 
 
-        public function parkingMap($id_reservation = null, $price = null, $alert = "") {
+        public function parkingMap($id_reservation = null, $fromList = null, $price = null, $alert = "") {
             if ($admin = $this->adminController->isLogged()) {                
-                
+
                 $title = "Plano de cocheras";       
                 // parkings
                 $firstRow = $this->parkingDAO->getN_row(1);
@@ -84,7 +84,7 @@
             return $flag;
         }
         
-        public function addPrice($reservation, $id_parking, $alert = "", $success = ""){
+        public function addPrice($reservation, $id_parking, $fromList = null, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {                
                 $title = "Precio de cochera";
                 require_once(VIEWS_PATH . "head.php");
@@ -96,7 +96,7 @@
             }
         }
 
-        public function reserve($price, $reservation, $id_parking) {
+        public function reserve($price, $reservation, $id_parking, $fromList = null) {
             
             if ($serv = $this->reservationxserviceDAO->getServiceByReservation($reservation) != false) {
                 
@@ -105,14 +105,14 @@
                 $reservationByParking = $this->reservationxParkingDAO->getAllByParkingId($parking);
                 
                 if ($reservationByParking == null) {
-                                        
+
                     $reservationTemp = new Reservation();
                     $reservationTemp->setId($reservation);
 
                     $reservationxParking = new ReservationxParking();
                     
                     if ($reservationAux = $this->reservationDAO->getById($reservationTemp)) {
-                    
+                                            
                         $reservationxParking->setReservation($reservationTemp);
                         $reservationxParking->setParking($parking);
                         
@@ -126,33 +126,41 @@
                             $reservationAux->setPrice($reservationAux->getPrice() + $price);
                             
                             if ($lastId = $this->additionalServiceDAO->add($additionalService, $register_by)) {
-
+                                
                                 $reservationxservice->setIdReservation($reservation);
                                 $reservationxservice->setIdService($lastId);
-                                $this->reservationxserviceDAO->add($reservationxservice);
-    
-                                if ($this->reservationDAO->update($reservationAux, $register_by)) {
+                                
+                                if ($this->reservationxserviceDAO->add($reservationxservice)) {
+                                    
+                                    if ($this->reservationDAO->update($reservationAux, $register_by)) {
+                                        
+                                        $servicexparking->setIdService($lastId);
+                                        $servicexparking->setIdParking($parking->getId());
+                                        
+                                        if ($this->servicexparkingDAO->add($servicexparking)) {          
+                                        
+                                            if ($fromList != null) {           
+                                                $this->reservationController = new ReservationController();
+                                                return $this->reservationController->listReservationPath(1, null, null, "Estacionamiento añadido con exito");     
+                                            } else {                                                
+                                                $this->additionalController = new AdditionalServiceController();
+                                                return $this->additionalController->hasAdditionalService($reservation, null, null);               
+                                            }                                              
+                                        }        
+                                    }    
 
-                                    $servicexparking->setIdService($lastId);
-                                    $servicexparking->setIdParking($parking->getId());
-                                    if ($this->servicexparkingDAO->add($servicexparking)) {
-
-                                        $this->additionalController = new AdditionalServiceController();
-                                        return $this->additionalController->hasAdditionalService($reservation, null, null);                       
-                                    }        
-                                }    
+                                }
                             }
                         } 
-                    }                                  
-                    return $this->parkingMap($reservation, $price, DB_ERROR);
+                    }                                
+                    return $this->parkingMap($reservation, $fromList, $price, DB_ERROR);
 
-                } else {            
-
+                } else {                                
                     $this->reservationController = new ReservationController();
                     $reserve = $this->reservationController->getById($reservation);
 
                     if ($this->checkInterval($reserve->getDateStart(), $reserve->getDateEnd(), $id_parking)) {
-
+                                                
                         $reservationTemp = new Reservation();
                         $reservationTemp->setId($reservation);
                         $register_by = $this->adminController->isLogged();
@@ -186,19 +194,22 @@
                                             
                                             if ($this->servicexparkingDAO->add($servicexparking)) {
 
-                                                $this->additionalController = new AdditionalServiceController();
-                                                return $this->additionalController->hasAdditionalService($reservation, null, null);               
-
+                                                if ($fromList != null) {           
+                                                    $this->reservationController = new ReservationController();
+                                                    return $this->reservationController->listReservationPath(1, null, null, "Estacionamiento añadido con exito");     
+                                                } else {                                                
+                                                    $this->additionalController = new AdditionalServiceController();
+                                                    return $this->additionalController->hasAdditionalService($reservation, null, null);               
+                                                }   
                                             }                                            
                                         }        
                                     }                                    
                                 }
                             }
-                        }                        
-                        return $this->parkingMap($reservation, $price, DB_ERROR);
-
-                    } else {                                 
-                        return $this->parkingMap($reservation, PARKING_ERROR);
+                        }                                
+                        return $this->parkingMap($reservation, $fromList, $price, DB_ERROR);
+                    } else {                               
+                        return $this->parkingMap($reservation, $fromList, $price, PARKING_ERROR);
                     }                
                 }
 
@@ -243,15 +254,20 @@
                                             
                                             if ($this->servicexparkingDAO->add($servicexparking)) {
     
-                                                $this->additionalController = new AdditionalServiceController();
-                                                return $this->additionalController->hasAdditionalService($reservation, null, null);                   
+                                                if ($fromList != null) {           
+                                                    $this->reservationController = new ReservationController();
+                                                    return $this->reservationController->listReservationPath(1, null, null, "Estacionamiento añadido con exito");     
+                                                } else {                                                
+                                                    $this->additionalController = new AdditionalServiceController();
+                                                    return $this->additionalController->hasAdditionalService($reservation, null, null);               
+                                                }              
                                             }                                        
                                         }                                    
                                     }        
                                 }
                             }
-                        }
-                        return $this->parkingMap($reservation, $price, DB_ERROR);
+                        }                        
+                        return $this->parkingMap($reservation, $fromList, $price, DB_ERROR);
     
                     } else {            
     
@@ -293,23 +309,28 @@
     
                                                 if ($this->servicexparkingDAO->add($servicexparking)) {
                                                     
-                                                    $this->additionalController = new AdditionalServiceController();
-                                                    return $this->additionalController->hasAdditionalService($reservation, null, null);           
+                                                    if ($fromList != null) {           
+                                                        $this->reservationController = new ReservationController();
+                                                        return $this->reservationController->listReservationPath(1, null, null, "Estacionamiento añadido con exito");     
+                                                    } else {                                                
+                                                        $this->additionalController = new AdditionalServiceController();
+                                                        return $this->additionalController->hasAdditionalService($reservation, null, null);               
+                                                    }   
                                                 }                                            
                                             }
                                         }        
                                     }
-                                }
-                                return $this->parkingMap($reservation, $price, DB_ERROR);
+                                }                                
+                                return $this->parkingMap($reservation, $fromList, $price, DB_ERROR);
     
-                            } else {                                 
-                                return $this->parkingMap($reservation, $price, PARKING_ERROR);
+                            } else {                                                             
+                                return $this->parkingMap($reservation, $fromList, $price, PARKING_ERROR);
                             }                
                         }
                     }
                 }
-            }            
-            return $this->parkingMap($reservation, $price, DB_ERROR);
+            }                               
+            return $this->parkingMap($reservation, $fromList, $price, DB_ERROR);
         }
 
 
