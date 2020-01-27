@@ -55,10 +55,14 @@
                     </table>
                 </div>
                 <?php else: ?>
-                <div class="not-results z-depth-1">                
-                    <i class="material-icons left">priority_high</i>      
-                    No se encontraron resultados.
-                </div>                                   
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="card-panel lime lighten-4">
+                                <i class="material-icons left">error</i>
+                                <span class="card-text card-warning">No se realizaron ventas en el día de hoy.</span>                       
+                            </div>        
+                        </div>                    
+                    </div>    
                 <?php endif; ?>
             </div>
 

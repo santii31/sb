@@ -3,8 +3,8 @@
     namespace Config;
     
     define("ROOT", dirname(__DIR__) . "/");
-	//define("FRONT_ROOT", "/SouthBeach/");	
-	define("FRONT_ROOT", "http://localhost/sb/");
+	define("FRONT_ROOT", "/SouthBeach/");	
+	// define("FRONT_ROOT", "http://localhost/sb/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
@@ -21,9 +21,12 @@
 	
 	//DB
 	define("DB_HOST", "localhost");
-	define("DB_NAME", "southbeach");
+	define("DB_NAME", "southbeach");	
 	define("DB_USER", "root");
 	define("DB_PASS", "");
+
+	// define("DB_USER", "sb_admin@localhost");
+	// define("DB_PASS", "sb_admin_30485934");
 
 	//ERR MSGS
 	define("DB_ERROR", "Un error ha ocurrido. Intente mas tarde!");	

@@ -9,6 +9,7 @@
                 </div>
                 <div class="divider mb-divider"></div>         
 
+                <?php if (sizeof($admins) > 0): ?>
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
@@ -50,6 +51,16 @@
                         </tbody>
                     </table>
                 </div>
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="card-panel lime lighten-4">
+                                <i class="material-icons left">error</i>
+                                <span class="card-text card-warning">Los administradores no han realizado ventas.</span>                       
+                            </div>        
+                        </div>                    
+                    </div>    
+                <?php endif; ?>    
             </div>
 
         </div>
