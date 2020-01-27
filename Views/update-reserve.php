@@ -34,44 +34,40 @@
                         </div>                
                         <?php endif; ?>
                          
-                        <input type="hidden" name="id_rsv" value="<?= $id_rsv ?>">
+                        <input type="hidden" name="id_rsv" value="<?= $id_rsv; ?>">
                         
-                        <input type="hidden" name="id_tent" value="<?= $id_tent ?>">
+                        <input type="hidden" name="id_tent" value="<?= $id_tent; ?>">
 
                         <div class="row">
-                            <div class="input-field col s4">
-                                <select name="stay">
+                            <div class="input-field col s3">
+                                <select name="stay" id="stay-select" required>
                                     <option value="" disabled selected>Seleccione su opcion</option>                                    
-                                        <option value="season">
-                                            Temporada
-                                        </option>                                    
-                                        <option value="day">
-                                            Diario
-                                        </option>
-                                        <option value="january">
-                                            Enero
-                                        </option>
-                                        <option value="rest">
-                                            Feriados
-                                        </option>
-                                        <option value="period">
-                                            Periodo
-                                        </option>
+                                    <option value="temporada">Temporada</option>                                    
+                                    <option value="enero">Enero</option>
+                                    <option value="enero_dia">Enero - Dia</option>
+                                    <option value="enero_quincena">Enero - Quincena</option>
+                                    <option value="febrero">Febrero</option>
+                                    <option value="febrero_dia">Febrero - Dia</option>
+                                    <option value="febero_primer_quincena">Febrero - Primer quincena</option>
+                                    <option value="febrero_segunda_quincena">Febrero - Segunda quincena</option>
+                                    <option value="diario">Día</option>
+                                    <option value="periodo">Periodo</option>
+                                    <option value="fin_semana">Fin de semana</option>
                                 </select>
-                                <label>Estadia</label>  
+                                <label>Estadia</label>   
                             </div>  
-                            <div class="input-field col s4">
-                                <input id="start" type="Date" name="start" class="validate" value="<?= $reservation->getDateStart(); ?>" required>
+                            <div class="input-field col s3">
+                                <input id="start" type="date" name="start" class="validate" value="<?= $reservation->getDateStart(); ?>" required>
                                 <label for="start">Fecha de ingreso</label>
                             </div>
 
-                            <div class="input-field col s4">
-                                <input id="end" type="Date" name="end" class="validate" value="<?= $reservation->getDateEnd(); ?>" required>
+                            <div class="input-field col s3">
+                                <input id="end" type="date" name="end" class="validate" value="<?= $reservation->getDateEnd(); ?>" required>
                                 <label for="end">Fecha de egreso</label>
                             </div>     
 
-                            <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate" value="<?= $reservation->getDateEnd(); ?>" required>
+                            <div class="input-field col s3">
+                                <input id="price" type="number" name="price" class="validate" value="<?= $reservation->getPrice(); ?>" required>
                                 <label for="price">Precio</label>
                             </div>                           
                         </div>                                                                   

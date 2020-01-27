@@ -255,7 +255,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -485,7 +485,7 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -793,7 +793,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -1024,7 +1024,7 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -1480,7 +1480,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -1711,7 +1711,7 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -2044,7 +2044,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -2275,7 +2275,7 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -2608,7 +2608,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -2839,7 +2839,7 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -3172,7 +3172,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -3403,7 +3403,7 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -3668,7 +3668,7 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                            <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
                                                             </a>
@@ -3898,7 +3898,7 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>

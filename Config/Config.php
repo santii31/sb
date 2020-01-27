@@ -88,6 +88,7 @@
 	define("RESERVATION_ERROR", "Carpa reservada durante estas fechas.");		
 	define("RESERVATION_DISABLE", "Reserva dada de baja con éxito.");
 	define("RESERVATION_ENABLE", "Reserva habilitada con éxito.");
+	define("RESERVATION_UPDATE", "Reserva actualizada con éxito.");
 		
 	define("PARKING_ERROR", "El estacionamiento seleccionado se encuentra reservado.");		
 

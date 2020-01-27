@@ -242,7 +242,7 @@
                 $reservation = new Reservation();
                 $reservation->setId($id);
                 if ($this->reservationDAO->disableById($reservation, $admin)) {
-                    return $this->listReservationPath(1, null, null, RESERVATION_DISABLE);
+                    return $this->listReservationPath(1, true, null, RESERVATION_DISABLE);
                 } else {
                     return $this->listReservationPath(1, null, DB_ERROR, null);
                 }              
@@ -256,7 +256,7 @@
                 $title = "Reserva - Modificar informacion";       
                 $reservationTemp = new Reservation();
                 $reservationTemp->setId($id_rsv);                
-                $reservation = $this->reservationDAO->getById($reservationTemp);               
+                $reservation = $this->reservationDAO->getById($reservationTemp);   
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "update-reserve.php");
@@ -265,20 +265,51 @@
                 return $this->adminController->userPath();
             }           
         }
+        
+        public function update($id_rsv, $id_tent, $stay, $start, $end, $price) {    
+                        
+            if ($this->isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end, $price)) {                                 
 
-        private function isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end) {
+				if ($this->checkIntervalToUpdate($start, $end, $id_tent, $id_rsv) == 1) {                                                         
+
+                    $reservation = new Reservation();    
+                    $reservation->setId($id_rsv);                  
+                    $reservation->setStay($stay);
+                    $reservation->setDateStart($start);
+                    $reservation->setDateEnd($end);
+                    $reservation->setPrice($price);
+
+                    $tent = new BeachTent();
+                    $tent->setId($id_tent);
+
+                    $reservation->setBeachTent($tent);                    
+                    
+                    $update_by = $this->adminController->isLogged();
+
+                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
+                        return $this->updatePath($id_rsv, $id_tent, null, RESERVATION_UPDATE);
+                    } else {       
+                        return $this->updatePath($id_rsv, $id_tent, DB_ERROR, null);        
+                    }
+                }                
+                return $this->updatePath($id_rsv, $id_tent, RESERVATION_ERROR, null);
+            }                        
+            return $this->updatePath($id_rsv, $id_tent, EMPTY_FIELDS, null);
+        }
+
+        private function isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end, $price) {
             if (empty($id_rsv) || 
                 empty($id_tent) || 
                 empty($stay) || 
                 empty($start) || 
-                empty($end)) {
+                empty($end) || 
+                empty($price)) {
                     return false;
             }
             return true;
         } 
-                
-        // borrar o probar
-        public function checkIntervalToUpdate($date_start, $date_end, $id_tent, $id_rsv) {
+                        
+        private function checkIntervalToUpdate($date_start, $date_end, $id_tent, $id_rsv) {
 			$existance = $this->getByIdTent($id_tent);			
 			$flag = 1;
 			if ($existance != null) {
@@ -293,53 +324,6 @@
 				}
             }
             return $flag;
-        }
-        
-        public function update($id_rsv, $id_tent, $stay, $start, $end) {    
-            
-            if ($this->isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end)) {     
-                
-				if ($this->checkIntervalToUpdate($start, $end, $id_tent, $id_rsv) == 1) {                                                         
-
-                    $reservation = new Reservation();    
-                    $reservation->setId($id_rsv);                  
-                    $reservation->setStay($stay);
-                    $reservation->setDateStart($start);
-                    $reservation->setDateEnd($end);
-
-                    $tent = new BeachTent();
-                    $tent->setId($id_tent);
-
-                    $reservation->setBeachTent($tent);                    
-                    
-                    $update_by = $this->adminController->isLogged();
-
-                    // echo '<pre>';
-                    // var_dump($reservation);
-                    // echo '</pre>';
-
-                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
-                        return $this->updatePath(null, null, RESERVATION_UPDATE);
-                    } else {       
-                        return $this->updatePath(null, DB_ERROR, null);        
-                    }
-                }                
-                // return $this->updatePath($id_tent, RESERVATION_ERROR, null);
-            }            
-            // return $this->updatePath($id_tent, EMPTY_FIELDS, null);
-        }
-
-        public function checkIsDateReserved(Reservation $reservation) {                        
-            $today = date("Y-m-d");
-            $dateStart = strtotime( $reservation->getDateStart() ) ;
-            $dateEnd = strtotime( $reservation->getDateEnd() );
-            $dateToCompare = strtotime( $today );
-
-            if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
-                $reservation->setIsReserved(true);                                   
-                return $reservation;
-            }            
-            return false;
         }
 
         public function listReservationByAdminPath($id_admin, $alert = "", $success = "") {
@@ -356,8 +340,22 @@
                 return $this->adminController->userPath();
             }
         }
-        
+
+
         // 
+        public function checkIsDateReserved(Reservation $reservation) {                        
+            $today = date("Y-m-d");
+            $dateStart = strtotime( $reservation->getDateStart() ) ;
+            $dateEnd = strtotime( $reservation->getDateEnd() );
+            $dateToCompare = strtotime( $today );
+
+            if ($dateToCompare >= $dateStart && $dateToCompare <= $dateEnd) {
+                $reservation->setIsReserved(true);                                   
+                return $reservation;
+            }            
+            return false;
+        }
+                
         public function getByIdTent($id_tent) {
             $tent = new BeachTent();
             $tent->setId($id_tent);
@@ -486,11 +484,6 @@
                 $reservationTemp = new Reservation();
                 $reservationTemp->setId($id_reservation);
                 $reservation = $this->reservationDAO->getById($reservationTemp);
-
-                // echo '<pre>';
-                // var_dump($id_reservation);
-                // echo '</pre>';
-
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "pay.php");
