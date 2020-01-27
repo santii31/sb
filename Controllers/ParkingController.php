@@ -116,8 +116,7 @@
                         $register_by = $this->adminController->isLogged();
                         $additionalService = new AdditionalService();
                         $reservationxservice = new ReservationxService();
-                        $servicexparking = new ServicexParking();
-                        $additionalService->setDescription("descripcion 1 ejemplo");
+                        $servicexparking = new ServicexParking();                        
                         $additionalService->setTotal($price);
                         $lastId = $this->additionalServiceDAO->add($additionalService,$register_by);
                         $reservationxservice->setIdReservation($reservation);
@@ -154,8 +153,7 @@
                             $register_by = $this->adminController->isLogged();
                             $additionalService = new AdditionalService();
                             $reservationxservice = new ReservationxService();
-                            $servicexparking = new ServicexParking();
-                            $additionalService->setDescription("descripcion 1 ejemplo");
+                            $servicexparking = new ServicexParking();                            
                             $additionalService->setTotal($price);
                             $lastId = $this->additionalServiceDAO->add($additionalService,$register_by);
                             $reservationxservice->setIdReservation($reservation);

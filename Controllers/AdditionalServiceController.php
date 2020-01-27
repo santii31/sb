@@ -165,7 +165,7 @@
         public function hasAdditionalService($id_reservation, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {                                       
                 if (!empty($id_reservation)){ 
-                    $title = "Desea agregar un servicio adicional a la reserva?";
+                    $title = "¿Desea agregar un servicio adicional a la reserva?";
                     require_once(VIEWS_PATH . "head.php");
                     require_once(VIEWS_PATH . "sidenav.php");
                     require_once(VIEWS_PATH . "has-additional-service.php");

@@ -6,8 +6,7 @@
 
     class AdditionalService extends Basic {
 
-        private $id;
-        private $description;        
+        private $id;         
         private $total;        
         private $is_active;
 
@@ -17,14 +16,6 @@
 
         public function setId($id) {
             $this->id = $id;            
-        }
-
-        public function getDescription() {
-            return $this->description;
-        }
-
-        public function setDescription($description) {
-            $this->description = $description;            
         }
 
         public function getTotal() {

@@ -2596,8 +2596,7 @@ END$$
 ------------------------- ADDITIONAL SERVICE ---------------------
 
 CREATE TABLE additional_service (
-    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `description` VARCHAR(255) NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,    
     `total` FLOAT NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
     
@@ -2619,21 +2618,19 @@ CREATE TABLE additional_service (
 
 DROP PROCEDURE IF EXISTS `service_add`;
 DELIMITER $$
-CREATE PROCEDURE service_add(
-								IN description VARCHAR(255),                                
+CREATE PROCEDURE service_add(								                             
                                 IN total FLOAT,
                                 IN date_register DATE,
                                 IN register_by INT,
 								OUT lastId int
 							)
 BEGIN
-    INSERT INTO additional_service (
-			additional_service.description,
+    INSERT INTO additional_service (			
             additional_service.total,                   
             additional_service.date_register,
             additional_service.register_by
 	)
-    VALUES (description, total, date_register, register_by);
+    VALUES (total, date_register, register_by);
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
@@ -2643,8 +2640,7 @@ DROP procedure IF EXISTS `service_getById`;
 DELIMITER $$
 CREATE PROCEDURE service_getById (IN id INT)
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
+	SELECT additional_service.id AS service_id,           
            additional_service.total AS service_total,
            additional_service.is_active AS service_is_active 
            
@@ -2656,26 +2652,11 @@ DROP procedure IF EXISTS `service_getAll`;
 DELIMITER $$
 CREATE PROCEDURE service_getAll()
 BEGIN
-	SELECT additional_service.id AS service_id,
-           additional_service.description AS service_description,
+	SELECT additional_service.id AS service_id,           
            additional_service.total AS service_total,
            additional_service.is_active AS service_is_active        
     FROM `additional_service` 
     WHERE `additional_service`.`is_active` = true;
-END$$
-
-
-DROP procedure IF EXISTS `service_getByDescription`;
-DELIMITER $$
-CREATE PROCEDURE service_getByDescription (IN description VARCHAR(255))
-BEGIN
-	SELECT  
-        additional_service.id AS service_id,
-        additional_service.description AS service_description,
-        additional_service.total AS service_total,
-        additional_service.is_active AS service_is_active        
-    FROM `additional_service`     
-    WHERE `additional_service`.`description` = description;
 END$$
 
 
@@ -2713,21 +2694,9 @@ BEGIN
 END$$
 
 
-DROP procedure IF EXISTS `service_checkDescription`;
-DELIMITER $$
-CREATE PROCEDURE service_checkDescription (
-                                            IN description VARCHAR(255),
-                                            IN id INT
-                                        )
-BEGIN
-    SELECT `additional_service`.`id` FROM `additional_service` WHERE `additional_service`.`description` = description AND `additional_service`.`id` != id;	
-END$$
-
-
 DROP procedure IF EXISTS `service_update`;
 DELIMITER $$
 CREATE PROCEDURE service_update (
-                                    IN description VARCHAR(255),
                                     IN total INT,
                                     IN id INT,
                                     IN date_update DATE,
@@ -2735,8 +2704,7 @@ CREATE PROCEDURE service_update (
                                 )
 BEGIN
     UPDATE `additional_service` 
-    SET 
-        `additional_service`.`description` = description,
+    SET         
         `additional_service`.`total` = total,
         `additional_service`.`id` = id,    
         `additional_service`.`date_update` = date_update,
