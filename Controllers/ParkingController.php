@@ -81,7 +81,7 @@
             return $flag;
         }
         
-        public function addPrice($reservation, $id_parking, $alert = "", $success = "", $alert = "", $success = ""){
+        public function addPrice($reservation, $id_parking, $alert = "", $success = ""){
             if ($admin = $this->adminController->isLogged()) {                
                 $title = "Precio de cochera";
                 require_once(VIEWS_PATH . "head.php");
