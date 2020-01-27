@@ -215,7 +215,7 @@
                 $staff = new Staff();
                 $staff->setId($id);
                 if ($this->staffDAO->disableById($staff, $admin)) {
-                    return $this->listStaffPath(1, null, null, STAFF_DISABLE);
+                    return $this->listStaffPath(1, true, null, STAFF_DISABLE);
                 } else {
                     return $this->listStaffPath(1, null, DB_ERROR, null);
                 }              

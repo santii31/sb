@@ -196,7 +196,7 @@
                 $client = new ClientPotential();
                 $client->setId($id);
                 if ($this->clientPotentialDAO->disableById($client, $admin)) {
-                    return $this->listPotentialClientPath(1, null, null, CLIENT_DISABLE);
+                    return $this->listPotentialClientPath(1, true, null, CLIENT_DISABLE);
                 } else {
                     return $this->listPotentialClientPath(1, null, DB_ERROR, null);
                 }              

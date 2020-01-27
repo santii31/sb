@@ -90,9 +90,9 @@
                             </div>      
                             <div class="input-field col s4">
                                 <?php if (isset($inputs["num_tent"])): ?>              
-                                <input id="num_tent" type="number" name="num_tent" class="validate" value="<?= $inputs["num_tent"]; ?>" required>
+                                <input id="num_tent" type="text" name="num_tent" class="validate" value="<?= $inputs["num_tent"]; ?>" required>
                                 <?php else: ?>
-                                <input id="num_tent" type="number" name="num_tent" class="validate" required>
+                                <input id="num_tent" type="text" name="num_tent" class="validate" required>
                                 <?php endif; ?>                                   
                                 <label for="num_tent">Numero de carpa de interes</label>
                             </div>                         

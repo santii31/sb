@@ -84,7 +84,7 @@
                                 <td> <?= ucfirst( $client->getCity() ); ?> </td>
                                 <td> <?= $client->getEmail(); ?> </td>
                                 <td> <?= $client->getPhone(); ?> </td>
-                                <td> <?= $client->getNumTent(); ?> </td>
+                                <td> <?= strtoupper($client->getNumTent()); ?> </td>
                                                                    
                                 <td class="actions">
                                     <?php if ($client->getIsActive()): ?>
@@ -232,7 +232,7 @@
         tr = table.getElementsByTagName('tr');
         
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {

@@ -56,7 +56,7 @@
                                 <label for="phone">Telefono</label>
                             </div>      
                             <div class="input-field col s4">
-                                <input id="num_tent" type="number" name="num_tent" value="<?= $client->getNumTent(); ?>" class="validate" required>
+                                <input id="num_tent" type="text" name="num_tent" value="<?= $client->getNumTent(); ?>" class="validate" required>
                                 <label for="num_tent">Numero de carpa</label>
                             </div>                         
                         </div>                                            
