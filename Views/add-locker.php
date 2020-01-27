@@ -63,6 +63,7 @@
                         </div>                        
 
                         <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
+                        <input type="hidden" name="aux" value="<?= $aux ?>">
                         
                         <div class="row">
                             <div class="col s12 center-align">

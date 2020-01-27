@@ -598,7 +598,7 @@
 		}
 
 		public function update(Reservation $reservation, Admin $updateBy) {
-			try {								
+			try {		
 				$query = "CALL reservation_update(?, ?, ?, ?, ?, ?, ?, ?)";		
 				$parameters["date_start"] = $reservation->getDateStart();
 				$parameters["date_end"] = $reservation->getDateEnd();

@@ -72,7 +72,8 @@
 				}
 				return $mobileParasoles;
 			} catch (Exception $e) {
-				return false;
+				//return false;
+				echo $e;
             }
 		}
 
