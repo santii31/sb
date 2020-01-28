@@ -9,13 +9,13 @@
     use Models\Check as Check;
     use DAO\CheckDAO as CheckDAO;
     use DAO\ClientDAO as ClientDAO;        
+    use DAO\ConfigDAO as ConfigDAO;
     use DAO\ReservationDAO as ReservationDAO;    
-    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
+    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ServicexMobileParasolDAO as ServicexMobileParasolDAO;
-    use DAO\ConfigDAO as ConfigDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\ParkingController as ParkingController;    

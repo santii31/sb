@@ -1060,12 +1060,12 @@
                                                                 Reserva actual                                                            
                                                             </a>
                                                         </li>
-                                                        <?php if ($rsv = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                        <?php if ($rsv = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
                                                         <li class="tab col s6">                                                            
                                                         <?php else: ?>
                                                         <li class="tab disabled col s6">                                                     
                                                         <?php endif; ?>
-                                                            <a href="#reser-<?= $tent->getId(); ?>">
+                                                            <a href="#reser-<?= $parasol->getId(); ?>">
                                                                 Futuras reservas
                                                             </a>
                                                         </li>                                                     
@@ -1073,9 +1073,9 @@
                                                     
                                                     <div id="statusP-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
                                                         <div>
-                                                            <?php if ($this->hasReservation( $tent->getId() )): ?>                           
+                                                            <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>                           
                                                                                                                                     
-                                                                <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                                <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
                                                                     
                                                                     <div class="reserve-container">
                                                                         
@@ -1103,11 +1103,7 @@
                                                                                 <span>
                                                                                     <span class="title">• Telefono:  </span>
                                                                                     <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>
-                                                                                <!-- <span>
-                                                                                    <span class="title">• Grupo Familiar:  </span>
-                                                                                    <?= $rsv->getClient()->getFamilyGroup(); ?> 
-                                                                                </span> -->
+                                                                                </span>                                                          
                                                                                 <span>
                                                                                     <span class="title">• Fecha inicio:  </span>
                                                                                     <?= $rsv->getDateStart(); ?> 
@@ -1122,7 +1118,7 @@
                                                                         </div>                                                               
                                                                     </div>                                                                   
 
-                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
+                                                                <?php elseif ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
                                                                     Reservas futuras
                                                                 <?php else: ?>
                                                                     La sombrilla no tiene reservas.    
@@ -1134,9 +1130,9 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <?php if ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>
-                                                        <div id="reser-<?= $tent->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                   
+                                                    <?php if ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
+                                                        <div id="reser-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
+                                                            <div class="future-container">                                                                                           
                                                                 <?php foreach ($rsvList as $rsv): ?>
                                                                     <div class="future-item">
                                                                         <div class="client">
@@ -1168,16 +1164,16 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>parasol/addReservationPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
-                                                    <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>" 
+                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>parasol/updatePath/<?= $rsv->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>parasol/disable/<?= $rsv->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Deshabilitar
                                                         </a>

@@ -3045,104 +3045,265 @@ BEGIN
 END$$
 
 
--- PROCEDIMIENTOS DE LA OTRA TABLA 'PARASOL'
-DROP procedure IF EXISTS `parasol_getById`;
+
+---------------------- PARASOL_RESERVATION -------------------
+
+CREATE TABLE parasol_reservation (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `date_start` DATE NOT NULL,
+    `date_end` DATE NOT NULL,
+    `stay` VARCHAR(255) NOT NULL,    
+    `total_price` FLOAT NOT NULL,
+    `FK_id_client` INT NOT NULL,    
+    `FK_id_parasol` INT NOT NULL,       
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,        
+    `date_register` DATE NOT NULL,
+    `register_by` INT NOT NULL, 
+    `date_disable` DATE DEFAULT NULL,    
+    `disable_by` INT DEFAULT NULL,
+    `date_enable` DATE DEFAULT NULL,
+    `enable_by` INT DEFAULT NULL,
+    `date_update` DATE DEFAULT NULL, 
+    `update_by` INT DEFAULT NULL,
+    CONSTRAINT `FK_id_client_parasol_reservation` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`),    
+    CONSTRAINT `FK_id_parasol_parasol_reservation` FOREIGN KEY (`FK_id_parasol`) REFERENCES `parasol` (`id`),    
+    CONSTRAINT `FK_parasol_reservation_register_by` FOREIGN KEY (`register_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_parasol_reservation_disable_by` FOREIGN KEY (`disable_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_parasol_reservation_enable_by` FOREIGN KEY (`enable_by`) REFERENCES `admin` (`id`),
+    CONSTRAINT `FK_parasol_reservation_update_by` FOREIGN KEY (`update_by`) REFERENCES `admin` (`id`)
+);
+
+
+DROP PROCEDURE IF EXISTS `parasol_reservation_add`;
 DELIMITER $$
-CREATE PROCEDURE parasol_getById (IN id INT)
+CREATE PROCEDURE parasol_reservation_add(
+								    IN date_start DATE,
+                                    IN date_end DATE,
+                                    IN stay VARCHAR(255),                                    
+                                    IN total_price FLOAT,
+                                    IN FK_id_client INT,                            
+                                    IN FK_id_parasol INT,                              
+                                    IN date_register DATE,
+                                    IN register_by INT,
+								    OUT lastId int
+							)
 BEGIN
-	SELECT parasol.id AS parasol_id,
-           parasol.parasol_number AS parasol_number,
-           parasol.price AS parasol_price,
-           additional_service.id AS service_id,           
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive             
-    FROM `parasol` 
-    INNER JOIN additional_service ON parasol.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
-    WHERE `parasol`.`id` = id;
+    INSERT INTO parasol_reservation (
+			parasol_reservation.date_start,
+            parasol_reservation.date_end,
+            parasol_reservation.stay,            
+            parasol_reservation.total_price,
+            parasol_reservation.FK_id_client,            
+            parasol_reservation.FK_id_parasol,            
+            parasol_reservation.date_register,
+            parasol_reservation.register_by
+	)
+    VALUES (date_start, date_end, stay, total_price, FK_id_client, FK_id_parasol, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
 END$$
 
 
-DROP procedure IF EXISTS `parasol_getAll`;
+DROP procedure IF EXISTS `parasol_reservation_getById`;
 DELIMITER $$
-CREATE PROCEDURE parasol_getAll ()
+CREATE PROCEDURE parasol_reservation_getById (IN id INT)
 BEGIN
-	SELECT parasol.id AS parasol_id,
-           parasol.parasol_number AS parasol_number,
-           parasol.price AS parasol_price,
-           additional_service.id AS service_id,           
-           additional_service.price AS service_price,
-           additional_service.is_active AS service_isActive,
-           reservation.id AS reservation_id,
-           reservation.date_start AS reservation_dateStart,
-           reservation.date_end AS reservation_dateEnd,
-           reservation.total_price AS reservation_totalPrice,
-           reservation.is_active AS reservation_isActive,
-           client.id AS client_id,
-           client.name AS client_name,
-		   client.lastname AS client_lastName,
-		   client.email AS client_email,
-           client.tel AS client_tel,
-           client.city AS client_city,
-           client.address AS client_city,
-           client.is_potential AS client_isPotential,
-		   client.is_active AS client_isActive,
-           admin.id AS admin_id,
-           admin.name AS admin_name,
-		   admin.lastname AS admin_lastName,
-		   admin.dni AS admin_dni,
-		   admin.email AS admin_email,
-		   
-           admin.is_active AS admin_isActive,
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number,
-           beach_tent.price AS tent_price,
-           beach_tent AS tent_isActive,
-           parking.id AS parking_id,
-           parking.number AS parking_number,
-           parking.price AS parking_price,
-           parking.is_active AS parking_isActive
-    FROM `parasol` 
-    INNER JOIN additional_service ON parasol.FK_id_service = additional_service.id
-    INNER JOIN reservation ON additional_service.FK_id_reservation = reservation.id
-    INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.FK_id_admin = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
-    INNER JOIN parking ON reservation.FK_id_parking = parking.id
-    ORDER BY price ASC;
+	SELECT 
+            parasol_reservation.id AS parasol_reservation_id,
+            parasol_reservation.date_start AS parasol_reservation_dateStart,
+            parasol_reservation.date_end AS parasol_reservation_dateEnd,
+            parasol_reservation.stay AS parasol_reservation_stay,           
+            parasol_reservation.total_price AS parasol_reservation_totalPrice,
+            parasol_reservation.is_active AS parasol_reservation_is_active,
+            client.id AS client_id,
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,
+            admin.id AS admin_id,
+            admin.name AS admin_name,
+            admin.lastname AS admin_lastName,		   		      
+            parasol.id AS parasol_id,
+            parasol.parasol_number AS parasol_number           
+    FROM `parasol_reservation`
+    INNER JOIN `client` ON `parasol_reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `parasol_reservation`.`register_by` = `admin`.`id`
+    INNER JOIN `parasol` ON `parasol_reservation`.`FK_id_parasol` = `parasol`.`id`
+    WHERE `parasol_reservation`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservation_getAll`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservation_getAll ()
+BEGIN
+	SELECT
+            parasol_reservation.id AS parasol_reservation_id,
+            parasol_reservation.date_start AS parasol_reservation_dateStart,
+            parasol_reservation.date_end AS parasol_reservation_dateEnd,
+            parasol_reservation.stay AS parasol_reservation_stay,           
+            parasol_reservation.total_price AS parasol_reservation_totalPrice,
+            parasol_reservation.is_active AS parasol_reservation_is_active,
+            client.id AS client_id,
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,
+            admin.id AS admin_id,
+            admin.name AS admin_name,
+            admin.lastname AS admin_lastName,		   		      
+            parasol.id AS parasol_id,
+            parasol.parasol_number AS parasol_number           
+    FROM `parasol_reservation`
+    INNER JOIN client ON parasol_reservation.FK_id_client = client.id
+    INNER JOIN admin ON parasol_reservation.register_by = admin.id
+    INNER JOIN parasol ON parasol_reservation.FK_id_parasol = parasol.id    
+    ORDER BY date_start ASC;
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservation_getAllWithClients`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservation_getAllWithClients ()
+BEGIN
+	SELECT 
+            parasol_reservation.id AS parasol_reservation_id,
+            parasol_reservation.date_start AS parasol_reservation_dateStart,
+            parasol_reservation.date_end AS parasol_reservation_dateEnd,
+            parasol_reservation.stay AS parasol_reservation_stay,           
+            parasol_reservation.total_price AS parasol_reservation_totalPrice,                            
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,         
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,  
+            parasol.id AS parasol_id,
+            parasol.parasol_number AS parasol_number 
+    FROM `parasol_reservation`
+    INNER JOIN client ON parasol_reservation.FK_id_client = client.id
+    INNER JOIN admin ON parasol_reservation.register_by = admin.id
+    INNER JOIN parasol ON parasol_reservation.FK_id_parasol = parasol.id
+    ORDER BY date_start ASC;
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservation_disableById`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservation_disableById (
+                                            IN id INT,
+                                            IN date_disable DATE,
+                                            IN disable_by INT                                            
+                                        )
+BEGIN
+	UPDATE `parasol_reservation` 
+    SET 
+        `parasol_reservation`.`is_active` = false, 
+        `parasol_reservation`.`date_disable` = date_disable,
+        `parasol_reservation`.`disable_by` = disable_by
+    WHERE `parasol_reservation`.`id` = id;
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservation_enableById`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservation_enableById (
+                                            IN id INT,
+                                            IN date_enable DATE,
+                                            IN enable_by INT
+                                        )
+BEGIN
+    UPDATE `parasol_reservation` 
+    SET 
+        `parasol_reservation`.`is_active` = true,
+        `parasol_reservation`.`date_enable` = date_enable,
+        `parasol_reservation`.`enable_by` = enable_by 
+    WHERE `parasol_reservation`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservation_checkDateStart`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservation_checkDateStart (
+                                        IN date_start DATE,
+                                        IN id INT
+                                    )
+BEGIN
+    SELECT `parasol_reservation`.`id` 
+    FROM `parasol_reservation` 
+    WHERE `parasol_reservation`.`date_start` = date_start AND `parasol_reservation`.`id` != id;	
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservation_update`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservation_update (
+                                    IN date_start DATE,
+                                    IN date_end DATE,
+                                    IN stay VARCHAR(255),                                    
+                                    IN total_price FLOAT,
+                                    IN date_update DATE,                                    
+                                    IN update_by INT,
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `parasol_reservation` 
+    SET 
+        `parasol_reservation`.`date_start` = date_start, 
+        `parasol_reservation`.`date_end` = date_end,
+        `parasol_reservation`.`stay` = stay,        
+        `parasol_reservation`.`total_price` = total_price,
+        `parasol_reservation`.`date_update` = date_update,
+        `parasol_reservation`.`update_by` = update_by          
+    WHERE 
+        `parasol_reservation`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS parasol_reservation_geByIdParasol;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservation_geByIdParasol (IN id INT)
+BEGIN
+    SELECT        
+        parasol_reservation.id AS parasol_reservation_id,
+        parasol_reservation.date_start AS parasol_reservation_dateStart,
+        parasol_reservation.date_end AS parasol_reservation_dateEnd,
+        parasol_reservation.stay AS parasol_reservation_stay,           
+        parasol_reservation.total_price AS parasol_reservation_totalPrice,
+        parasol_reservation.is_active AS parasol_reservation_is_active,
+        client.id AS client_id,
+        client.name AS client_name,
+        client.lastname AS client_lastName,
+        client.email AS client_email,
+        client.tel AS client_tel,
+        client.city AS client_city,
+        client.address AS client_address,
+        client.payment_method AS client_paymentMethod,
+        client.auxiliary_phone AS client_auxiliaryPhone,
+        client.vehicle_type AS client_vehicleType,
+        admin.id AS admin_id,
+        admin.name AS admin_name,
+        admin.lastname AS admin_lastName,		   		      
+        parasol.id AS parasol_id,
+        parasol.parasol_number AS parasol_number   
+    FROM parasol_reservation         
+    INNER JOIN parasol ON parasol_reservation.FK_id_parasol = parasol.id
+    INNER JOIN client ON parasol_reservation.FK_id_client = client.id
+    INNER JOIN admin ON parasol_reservation.register_by = admin.id
+    WHERE (parasol.id = id) AND (parasol_reservation.is_active = true);    
 END$$
 
 

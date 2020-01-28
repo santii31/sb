@@ -60,6 +60,175 @@
             
             $reservationTemp = new Reservation();
             $reservationTemp->setId($id_reserve);
+            $servicexlockerW = new ServicexLocker();
+            $servicexlockerM = new ServicexLocker();
+            
+            if ($reservation = $this->reservationDAO->getById($reservationTemp)) {
+            
+                if (!empty($id_locker_man) || !empty($id_locker_woman)) {
+                    
+                    $flag = 0;
+
+                    if ($service = $this->reservationxserviceDAO->getServiceByReservation($id_reserve)) {                
+
+                        if (!empty($id_locker_man) && empty($id_locker_woman)) {
+                            $lockerMan = new Locker();
+                            
+                            
+                            $lockerMan->setId($id_locker_man);
+                            
+                            if ($locker = $this->lockerDAO->getById($lockerMan)) {
+
+                                if ($price != 0) {
+
+                                    $totalService = $service->getTotal() + $price;
+                                    $totalReserve = $reservation->getPrice() + $price;
+                                    
+                                    $service->setTotal($totalService);
+                                    $reservation->setPrice($totalReserve);                    
+                                    $update_by = $this->adminController->isLogged();
+        
+                                    if ($this->additionalServiceDAO->update($service, $update_by)) {
+                                        if ($this->reservationDAO->update($reservation, $update_by)) {
+        
+                                            $servicexlockerM->setIdService($service->getId());
+                                            $servicexlockerM->setIdLocker($locker->getId());                    
+                                        
+                                            if ($this->servicexlockerDAO->add($servicexlockerM)) {
+                                                $flag++;
+                                            }    
+                                        }
+                                    }
+
+                                } else {
+                                    $servicexlockerM->setIdService($service->getId());
+                                    $servicexlockerM->setIdLocker($locker->getId());               
+                                    if ($this->servicexlockerDAO->add($servicexlockerM)) {
+                                        $flag++;
+                                    }
+                                }
+                            }                                                        
+                        }
+
+                        if (!empty($id_locker_woman) && empty($id_locker_man)) {
+                            $lockerWoman = new Locker();
+                            
+                            $lockerWoman->setId($id_locker_woman);
+                            
+                            if ($locker = $this->lockerDAO->getById($lockerWoman)) {
+
+                                if ($price != 0) {
+                                    
+                                    $totalService = $service->getTotal() + $price;
+                                    $totalReserve = $reservation->getPrice() + $price;
+                                    
+                                    $service->setTotal($totalService);
+                                    $reservation->setPrice($totalReserve);                            
+                                    $update_by = $this->adminController->isLogged();
+                                    
+                                    if ($this->additionalServiceDAO->update($service, $update_by)) {
+
+                                        if ($this->reservationDAO->update($reservation, $update_by)) {
+
+                                            $servicexlockerW->setIdService($service->getId());
+                                            $servicexlockerW->setIdLocker($locker->getId());      
+
+                                            if ($this->servicexlockerDAO->add($servicexlockerW)) {
+                                                $flag++;
+                                            }
+                                        }
+                                    }  
+
+                                } else {
+                                    $servicexlockerW->setIdService($service->getId());
+                                    $servicexlockerW->setIdLocker($locker->getId());               
+                                    if ($this->servicexlockerDAO->add($servicexlockerW)) {
+                                        $flag++;
+                                    }
+                                }                              
+                            }                            
+                        }
+
+                        if (!empty($id_locker_woman) && !empty($id_locker_man)) {                            
+
+                            $lockerWoman = new Locker();
+                            $lockerMan = new Locker();
+                            $lockerWoman->setId($id_locker_woman);
+                            
+                            if ($lockerW = $this->lockerDAO->getById($lockerWoman)) {
+
+                                $lockerMan->setId($id_locker_man);
+                                
+                                if ($lockerM = $this->lockerDAO->getById($lockerMan)) {
+
+                                    if ($price != 0) {
+                                        $totalService = $service->getTotal() + $price;
+                                        $totalReserve = $reservation->getPrice() + $price;
+                                        
+                                        $service->setTotal($totalService);
+                                        $reservation->setPrice($totalReserve);                            
+                                        $update_by = $this->adminController->isLogged();                                                                                                      
+                                        if ($this->additionalServiceDAO->update($service, $update_by)) {
+
+                                            if ($this->reservationDAO->update($reservation, $update_by)) {
+
+                                                $servicexlockerW->setIdService($service->getId());
+                                                $servicexlockerW->setIdLocker($lockerW->getId());
+                    
+                                                $servicexlockerM->setIdService($service->getId());
+                                                $servicexlockerM->setIdLocker($lockerM->getId());
+
+                                                if ($this->servicexlockerDAO->add($servicexlockerW)) {
+
+                                                    if ($this->servicexlockerDAO->add($servicexlockerM)) {
+                                                        $flag++;
+                                                    }
+                                                }
+                                            }
+                                        }   
+
+                                    } else {
+
+                                        $servicexlockerW->setIdService($service->getId());
+                                        $servicexlockerW->setIdLocker($lockerW->getId());
+                    
+                                        $servicexlockerM->setIdService($service->getId());
+                                        $servicexlockerM->setIdLocker($lockerM->getId());
+
+                                        if ($this->servicexlockerDAO->add($servicexlockerW)) {
+
+                                            if ($this->servicexlockerDAO->add($servicexlockerM)) {
+                                                $flag++;
+                                            }
+                                        }
+                                    }                                      
+                                }                                
+                            }
+                        }                              
+                    }
+                }
+            }            
+
+            if ($fromList != null) {                
+                if ($flag > 0) { 
+                    return $this->reservationController->listReservationPath(1, null, null, "Locker añadido con exito");                         
+                } else {
+                    return $this->reservationController->listReservationPath(1, null, DB_ERROR, null);                         
+                }                
+            } else {
+                if ($flag > 0) {                                
+                    return $this->hasAdditionalService($id_reserve, null, null, null);
+                } else {
+                    return $this->addLockerPath($id_reserve, null, DB_ERROR, null);
+                }
+            }
+        }
+
+        /* 
+        public function addLocker($id_locker_man = "", $id_locker_woman = "", $price, $id_reserve, $fromList = null) {
+            
+            $reservationTemp = new Reservation();
+            $reservationTemp->setId($id_reserve);
             
             if ($reservation = $this->reservationDAO->getById($reservationTemp)) {
             
@@ -217,7 +386,8 @@
                     return $this->addLockerPath($id_reserve, null, DB_ERROR, null);
                 }
             }
-        }
+        } 
+        */
 
         public function addParasol($id_mobileParasol = "", $price, $id_reserve, $fromList = null) {            
             if (!empty($id_mobileParasol)) {
@@ -266,15 +436,18 @@
                                     }
                                 }
                             } else {
-
+                                
                                 $servicexmobileParasol->setIdService($service->getId());
                                 $servicexmobileParasol->setIdMobileParasol($mobileParasol->getId());
                                 
-                                if ($fromList != null) {                                                                
-                                    return $this->reservationController->listReservationPath(1, null, null, "Sombrilla añadida con exito");     
-                                } else {
-                                    return $this->hasAdditionalService($id_reserve);                                        
-                                }                 
+                                if ($this->servicexmobileParasolDAO->add($servicexmobileParasol)) {                                       
+                                            
+                                    if ($fromList != null) {                
+                                        return $this->reservationController->listReservationPath(1, null, null, "Sombrilla añadida con exito");   
+                                    } else {
+                                        return $this->hasAdditionalService($id_reserve);                                        
+                                    }                                                        
+                                }                                   
                             } 
                         }
                     }                        

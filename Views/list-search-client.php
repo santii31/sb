@@ -35,7 +35,7 @@
                                 <td> <?= $rsv->getClient()->getEmail(); ?> </td>
                                 <td> <?= $rsv->getClient()->getPhone(); ?> </td>
                                 <td> <?= $rsv->getBeachTent()->getNumber(); ?> </td>
-                                <td> <?= ucfirst( $rsv->getStay() ); ?> </td>
+                                <td> <?= ucfirst( str_replace('_', ' ', $rsv->getStay()) ); ?> </td>
                                 <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
                                 <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                
                                 <td>

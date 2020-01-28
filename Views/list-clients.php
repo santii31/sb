@@ -68,7 +68,7 @@
                                 <td> <?= $reservation->getClient()->getEmail(); ?> </td>
                                 <td> <?= $reservation->getClient()->getPhone(); ?> </td>
                                 <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
-                                <td> <?= ucfirst( $reservation->getStay() ); ?> </td>                                
+                                <td> <?= ucfirst( str_replace('_', ' ', $reservation->getStay()) ); ?> </td>                                
                                 <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
                                 <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>          
                                 <td>
