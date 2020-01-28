@@ -8,6 +8,7 @@
         private $bank;
         private $account_number;
         private $check_number;
+        private $charged;
         private $client;
         
         public function getId() {
@@ -41,6 +42,15 @@
 
         public function setCheckNumber($check_number) {
             $this->check_number = $check_number;
+            return $this;
+        }
+
+        public function getCharged() {
+            return $this->charged;
+        }
+
+        public function setCharged($charged) {
+            $this->charged = $charged;
             return $this;
         }
 

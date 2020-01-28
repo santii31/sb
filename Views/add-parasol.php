@@ -48,14 +48,14 @@
                             </div>
 
                             <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate">
+                                <input id="price" type="number" name="price" min="0" class="validate">
                                 <label for="price">Precio</label>
                             </div>
 
-                        <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">
+                        <input type="hidden" name="id_reserve" value="<?= $id_reservation; ?>">
                         
                         <?php if (isset($fromList)): ?>
-                        <input type="hidden" name="fromList" value="<?= $fromList ?>">
+                        <input type="hidden" name="fromList" value="<?= $fromList; ?>">
                         <?php endif; ?>
                                                      
                         </div>                        

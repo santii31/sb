@@ -66,7 +66,7 @@
                                 <?php if (isset($inputs["salary"])): ?>              
                                 <input id="salary" type="number" name="salary" class="validate" value="<?= $inputs["salary"]; ?>" required>
                                 <?php else: ?>
-                                <input id="salary" type="number" name="salary" class="validate" required>
+                                <input id="salary" type="number" name="salary" min="0" class="validate" required>
                                 <?php endif; ?>                                 
                                 <label for="salary">Sueldo</label>
                             </div> 
@@ -96,7 +96,7 @@
                                 <?php if (isset($inputs["dni"])): ?>              
                                 <input id="dni" type="number" name="dni" class="validate" value="<?= $inputs["dni"]; ?>" required>
                                 <?php else: ?>
-                                <input id="dni" type="number" name="dni" class="validate" required>
+                                <input id="dni" type="number" name="dni" min="0" class="validate" required>
                                 <?php endif; ?>                                  
                                 <label for="dni">DNI</label>
                             </div>               
@@ -112,7 +112,7 @@
                                 <?php if (isset($inputs["phone"])): ?>              
                                 <input id="phone" type="number" name="phone" class="validate" value="<?= $inputs["phone"]; ?>" required>
                                 <?php else: ?>
-                                <input id="phone" type="number" name="phone" class="validate" required>
+                                <input id="phone" type="number" name="phone" min="0" class="validate" required>
                                 <?php endif; ?>                                  
                                 <label for="phone">Telefono</label>
                             </div>  

@@ -341,6 +341,43 @@
             }
         }
 
+        public function checkList($alert = "", $success = ""){
+            if ($admin = $this->adminController->isLogged()) {
+                $title = "Cheques - Buscar";
+                $checks = $this->checkDAO->getAll();                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "list-check.php");
+                require_once(VIEWS_PATH . "footer.php");
+            }
+        }
+
+        public function payed($id_check){
+            $checkTemp = new Check();
+            $checkTemp->setId($id_check);
+            $check = $this->checkDAO->getById($checkTemp);
+            $check->setCharged("cobrado");
+            
+            if ($this->checkDAO->update($check)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function unpayed($id_check){
+            $checkTemp = new Check();
+            $checkTemp->setId($id_check);
+            $check = $this->checkDAO->getById($checkTemp);
+            $check->setCharged("rechazado");
+            
+            if ($this->checkDAO->update($check)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
 
         // 
         public function checkIsDateReserved(Reservation $reservation) {                        

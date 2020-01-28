@@ -38,7 +38,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s4">
-                                <input id="tel" type="number" name="tel" value="<?= $provider->getPhone(); ?>" class="validate" required>
+                                <input id="tel" type="number" name="tel" min="0" value="<?= $provider->getPhone(); ?>" class="validate" required>
                                 <label for="tel">Telefono</label>
                             </div>
                             <div class="input-field col s4">
@@ -46,7 +46,7 @@
                                 <label for="email">Email</label>
                             </div>    
                             <div class="input-field col s4">
-                                <input id="dni" type="number" name="dni" value="<?= $provider->getDni(); ?>" class="validate">
+                                <input id="dni" type="number" name="dni" min="0" value="<?= $provider->getDni(); ?>" class="validate">
                                 <label for="dni">DNI</label>
                             </div>                                                       
                         </div>                        
@@ -56,7 +56,7 @@
                                 <label for="factura">Tipo de factura</label>
                             </div>   
                             <div class="input-field col s4">
-                                <input id="cuil" type="number" name="cuil" value="<?= $provider->getCuilNumber(); ?>" class="validate" required>
+                                <input id="cuil" type="number" name="cuil" min="0" value="<?= $provider->getCuilNumber(); ?>" class="validate" required>
                                 <label for="cuil">Numero de CUIL</label>
                             </div>
                             <div class="input-field col s4">

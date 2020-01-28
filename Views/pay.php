@@ -12,7 +12,7 @@
 
                 <div class="row">
                     <div class="col s12 m6">
-                        <div class="card medium blue-grey darken-1 indigo lighten-4">
+                        <div class="card medium blue-grey darken-3">
                             <div class="card-content white-text">
                                 <span class="card-title">Reserva realizada con éxito!</span>
                                 

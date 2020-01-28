@@ -41,7 +41,7 @@
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="dni" type="number" name="dni" class="validate" value="<?= $adm->getDni(); ?>" required>
+                                <input id="dni" type="number" name="dni" min="0" class="validate" value="<?= $adm->getDni(); ?>" required>
                                 <label for="dni">DNI</label>
                             </div>                                                         
                         </div>                                           

@@ -42,7 +42,7 @@
                                 <label for="position">Cargo</label>
                             </div>                                    
                             <div class="input-field col s6">
-                                <input id="salary" type="number" name="salary" value="<?= $staff->getSalary(); ?>" class="validate" required>
+                                <input id="salary" type="number" name="salary" min="0" value="<?= $staff->getSalary(); ?>" class="validate" required>
                                 <label for="salary">Sueldo</label>
                             </div>                                                             
                         </div>
@@ -60,7 +60,7 @@
 
                         <div class="row">
                             <div class="input-field col s4">
-                                <input id="dni" type="number" name="dni" value="<?= $staff->getDni(); ?>" class="validate" required>
+                                <input id="dni" type="number" name="dni" min="0" value="<?= $staff->getDni(); ?>" class="validate" required>
                                 <label for="dni">DNI</label>
                             </div>               
                             <div class="input-field col s4">
@@ -68,7 +68,7 @@
                                 <label for="address">Direccion</label>
                             </div>    
                             <div class="input-field col s4">
-                                <input id="phone" type="number" name="phone" value="<?= $staff->getPhone(); ?>" class="validate" required>
+                                <input id="phone" type="number" name="phone" min="0" value="<?= $staff->getPhone(); ?>" class="validate" required>
                                 <label for="phone">Telefono</label>
                             </div>  
                         </div>      

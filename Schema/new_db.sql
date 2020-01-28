@@ -355,8 +355,8 @@ CREATE TABLE client (
     `lastname` VARCHAR(255) NOT NULL,        
     `address` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
-    `cp` INT NOT NULL,  -- cp
-    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `cp` INT NOT NULL,  
+    `email` VARCHAR(255) NOT NULL,
     `tel` INT NOT NULL,
     `family_group` VARCHAR(255) NOT NULL,   
     `auxiliary_phone` INT NOT NULL,
@@ -2711,8 +2711,8 @@ BEGIN
 END$$
 
 
----------------------------- SERVICEXPARKING ---------------------------
 
+---------------------------- SERVICEXPARKING ---------------------------
 
 CREATE TABLE servicexparking (
     `FK_id_service` INT NOT NULL,
@@ -2766,6 +2766,7 @@ BEGIN
 	WHERE (servicexparking.FK_id_service = id_service)
 	GROUP BY parking.id;
 END$$
+
 
 
 ---------------------------- SERVICEXPARASOL ---------------------------
@@ -3002,8 +3003,6 @@ INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUE
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (15, 100, 15, 5);
 
 
----------------------------- PARASOL ---------------------------
-
 CREATE TABLE parasol (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `parasol_number` INT NOT NULL UNIQUE,
@@ -3047,6 +3046,7 @@ END$$
 
 
 ---------------------- PARASOL_RESERVATION -------------------
+
 
 CREATE TABLE parasol_reservation (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -3304,6 +3304,89 @@ BEGIN
     INNER JOIN client ON parasol_reservation.FK_id_client = client.id
     INNER JOIN admin ON parasol_reservation.register_by = admin.id
     WHERE (parasol.id = id) AND (parasol_reservation.is_active = true);    
+END$$
+
+
+
+---------------------------- PARASOL_RESERVATIONXSERVICE ---------------------------
+
+CREATE TABLE `parasol_reservationxservice` (
+    `FK_id_reservation` INT NOT NULL,
+    `FK_id_service` INT NOT NULL,
+    CONSTRAINT `FK_id_reservation_parasol_reservationxservice` FOREIGN KEY (`FK_id_reservation`) REFERENCES `parasol_reservation` (`id`),
+    CONSTRAINT `FK_id_service_parasol_reservationxservice` FOREIGN KEY (`FK_id_service`) REFERENCES `additional_service` (`id`)
+);
+
+
+DROP procedure IF EXISTS `parasol_reservationxservice_add`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservationxservice_add (
+                                            IN FK_id_reservation INT,                                
+                                            IN FK_id_service INT
+                                        )
+BEGIN
+	INSERT INTO parasol_reservationxservice (
+			parasol_reservationxservice.FK_id_reservation,
+            parasol_reservationxservice.FK_id_service                   
+	)
+    VALUES
+        (FK_id_reservation, FK_id_service);
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservationxservice_getReservationByService`;					    
+DELIMITER $$
+CREATE PROCEDURE parasol_reservationxservice_getReservationByService (IN id_service INT)
+BEGIN
+	SELECT         
+        parasol_reservation.id AS reservation_id,
+        parasol_reservation.date_start AS reservation_dateStart,
+        parasol_reservation.date_end AS reservation_dateEnd,
+        parasol_reservation.total_price AS reservation_totalPrice,
+        parasol_reservation.is_active AS reservation_isActive,
+        client.id AS client_id,
+        client.name AS client_name,
+        client.lastname AS client_lastName,
+        client.email AS client_email,                
+        admin.id AS admin_id,
+        admin.name AS admin_name,
+        admin.lastname AS admin_lastName,       
+        admin.is_active AS admin_isActive,
+        parasol.id AS parasol_id,
+        parasol.parasol_number AS parasol_number,        
+        parking.id AS parking_id,
+        parking.number AS parking_number,
+        parking.price AS parking_price
+	FROM parasol_reservationxservice
+	INNER JOIN parasol_reservation ON parasol_reservationxservice.FK_id_reservation = parasol_reservation.id
+    INNER JOIN client ON parasol_reservation.FK_id_client = client.id
+    INNER JOIN admin ON parasol_reservation.register_by = admin.id
+    INNER JOIN parasol ON parasol_reservation.FK_id_parasol = parasol.id
+    INNER JOIN parking ON parasol_reservation.FK_id_parking = parking.id	
+	WHERE (parasol_reservationxservice.FK_id_service = id_service);	
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservationxservice_getServiceByReservation`;					    
+DELIMITER $$
+CREATE PROCEDURE parasol_reservationxservice_getServiceByReservation (IN id_reservation INT)
+BEGIN
+	SELECT 
+        additional_service.id AS service_id,           
+        additional_service.total AS service_total,
+        additional_service.is_active AS service_is_active          
+	FROM parasol_reservationxservice
+	INNER JOIN additional_service ON parasol_reservationxservice.FK_id_service = additional_service.id	
+	WHERE (parasol_reservationxservice.FK_id_reservation = id_reservation);             
+END$$
+
+
+DROP procedure IF EXISTS `parasol_reservationxservice_getAll`;
+DELIMITER $$
+CREATE PROCEDURE parasol_reservationxservice_getAll ()
+BEGIN
+	SELECT *
+    FROM `parasol_reservationxservice`;
 END$$
 
 
@@ -3596,6 +3679,7 @@ CREATE TABLE checkC (
     `bank` VARCHAR(255) NOT NULL,
     `account_number` INT NOT NULL,
     `check_number` INT NOT NULL,
+    `charged` BOOLEAN DEFAULT FALSE,
     `FK_id_client` INT NOT NULL,
     CONSTRAINT `FK_id_client_check` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`)
 );
@@ -3632,6 +3716,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3654,6 +3739,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3676,6 +3762,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3698,6 +3785,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3708,7 +3796,74 @@ BEGIN
 		   client.is_active AS client_isActive
     FROM `checkC` 
     INNER JOIN client ON checkC.FK_id_client = client.id
-    ORDER BY id ASC;
+    ORDER BY checkC.id ASC;
+END$$
+
+
+DROP procedure IF EXISTS `checkC_getAllUnpaidChecks`;
+DELIMITER $$
+CREATE PROCEDURE checkC_getAllUnpaidChecks ()
+BEGIN
+	SELECT checkC.id AS check_id,
+           checkC.bank AS check_bank,
+           checkC.account_number AS check_accountNumber,
+           checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+		   client.is_active AS client_isActive
+    FROM `checkC` 
+    INNER JOIN client ON checkC.FK_id_client = client.id
+    WHERE `checkC`.`charged` = false;
+END$$
+
+
+DROP procedure IF EXISTS `checkC_getAllPaidChecks`;
+DELIMITER $$
+CREATE PROCEDURE checkC_getAllPaidChecks ()
+BEGIN
+	SELECT checkC.id AS check_id,
+           checkC.bank AS check_bank,
+           checkC.account_number AS check_accountNumber,
+           checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+		   client.is_active AS client_isActive
+    FROM `checkC` 
+    INNER JOIN client ON checkC.FK_id_client = client.id
+    WHERE `checkC`.`charged` = true;
+END$$
+
+
+DROP procedure IF EXISTS `checkC_update`;
+DELIMITER $$
+CREATE PROCEDURE checkC_update (
+                                    IN bank VARCHAR(255),
+                                    IN account_number INT,
+                                    IN check_number INT,
+                                    IN charged BOOLEAN
+                                )
+BEGIN
+    UPDATE `checkC` 
+    SET 
+        `checkC`.`bank` = bank, 
+        `checkC`.`account_number` = account_number,
+        `checkC`.`check_number` = check_number,
+        `checkC`.`charged` = charged
+        
+    WHERE 
+        `checkC`.`id` = id;	
 END$$
 
 

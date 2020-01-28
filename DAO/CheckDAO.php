@@ -15,7 +15,8 @@
 		private $tableName = "checkC";		
 
 		public function __construct() { }
-        
+		
+		
         public function add(Check $check) {								
 			try {													
 				$query = "CALL checkC_add(?, ?, ?, ?, @lastId)";
@@ -50,7 +51,8 @@
                     $checkTemp->setId($row["checkC_id"]);
                     $checkTemp->setBank($row["checkC_bank"]);
                     $checkTemp->setAccountNumber($row["checkC_accountNumber"]);
-                    $checkTemp->setCheckNumber($row["check_number"]);
+					$checkTemp->setCheckNumber($row["check_number"]);
+					$checkTemp->setCharged($row["check_charged"]);
                     $client = new Client();
                     $client->set($row["client_id"]);
                     $client->setName($row["client_name"]);
@@ -78,7 +80,8 @@
                     $check->setId($row["checkC_id"]);
                     $check->setBank($row["checkC_bank"]);
                     $check->setAccountNumber($row["checkC_accountNumber"]);
-                    $check->setCheckNumber($row["check_number"]);
+					$check->setCheckNumber($row["check_number"]);
+					$check->setCharged($row["check_charged"]);
                     $client = new Client();
                     $client->set($row["client_id"]);
                     $client->setName($row["client_name"]);
@@ -95,6 +98,7 @@
 				return $this->checkList;	
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}		
 				
@@ -110,7 +114,8 @@
                     $check->setId($row["checkC_id"]);
                     $check->setBank($row["checkC_bank"]);
                     $check->setAccountNumber($row["checkC_accountNumber"]);
-                    $check->setCheckNumber($row["check_number"]);
+					$check->setCheckNumber($row["check_number"]);
+					$check->setCharged($row["check_charged"]);
                     $client = new Client();
                     $client->set($row["client_id"]);
                     $client->setName($row["client_name"]);
@@ -141,7 +146,8 @@
                     $check->setId($row["checkC_id"]);
                     $check->setBank($row["checkC_bank"]);
                     $check->setAccountNumber($row["checkC_accountNumber"]);
-                    $check->setCheckNumber($row["check_number"]);
+					$check->setCheckNumber($row["check_number"]);
+					$check->setCharged($row["check_charged"]);
                     $client = new Client();
                     $client->set($row["client_id"]);
                     $client->setName($row["client_name"]);
@@ -158,7 +164,22 @@
 			} catch (Exception $e) {
 				return false;								
 			}
-        }
+		}
+		
+		public function update(Check $check) {
+			try {								
+				$query = "CALL provider_update(?, ?, ?, ?)";		
+				$parameters["bank"] = $check->getBank();
+				$parameters["account_number"] = $check->getAccountNumber();
+				$parameters["check_number"] = $check->getCheckNumber();
+				$parameters["charged"] = $check->getCharged();
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
 	
     }
 

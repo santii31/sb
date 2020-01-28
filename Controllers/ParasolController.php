@@ -103,8 +103,8 @@
                 if ($this->checkInterval($start, $end, $parasol) == 1) {                                 
 
                     if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $parasol, $price)) {                                                    
-
-                        // cambiar aca
+                        
+                        // aca arreglar
                         $this->parkingController = new ParkingController();                                         
                         return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
 
@@ -164,6 +164,44 @@
 				return $this->adminController->userPath();
 			}
         }
+        
+        public function addPriceFromParasol($reservation, $id_parking, $alert = "", $success = ""){
+            if ($admin = $this->adminController->isLogged()) {                
+                $title = "Precio de sombrilla";
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "add-parking-price-parasol.php");
+                require_once(VIEWS_PATH . "footer.php");
+            } else {
+                return $this->adminController->userPath();
+            }
+        }
+
+        public function reserve($price, $reservation, $id_parking) {                        
+            
+            if ($this->hasReservation($id_parking) != false) {
+
+                echo ' no tiene reservas de sombrillas';
+
+            } else {                
+                $this->parasolDAO = new ParasolDAO();
+                $parasol_rsv = new ParasolReservation();
+                $parasol_rsv->setId($reservation);     
+
+                $reservation = $this->parasolDAO->getById($parasol_rsv);
+
+                echo '<pre>';
+                var_dump($reservation);
+                echo '</pre>';
+
+
+
+                echo 'tiene reseervas de sombrillas';
+
+            }
+            
+            // return $this->parkingMap($reservation, $fromList, $price, DB_ERROR);
+        } 
 
         // 
         public function hasReservation($id_parasol) {            

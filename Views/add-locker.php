@@ -57,7 +57,7 @@
                             </div>                                                                                 
 
                             <div class="input-field col s4">
-                                <input id="price" type="number" name="price" class="validate">
+                                <input id="price" type="number" name="price" min="0" class="validate">
                                 <label for="price">Precio</label>
                             </div>
                         </div>                        

@@ -57,7 +57,7 @@
                                 <?php if (isset($inputs["phone"])): ?>              
                                 <input id="tel" type="number" name="tel" class="validate" value="<?= $inputs["phone"]; ?>" required>
                                 <?php else: ?>
-                                <input id="tel" type="number" name="tel" class="validate" required>
+                                <input id="tel" type="number" name="tel" min="0" class="validate" required>
                                 <?php endif; ?>                                   
                                 <label for="tel">Telefono</label>
                             </div>
@@ -73,7 +73,7 @@
                                 <?php if (isset($inputs["dni"])): ?>              
                                 <input id="dni" type="number" name="dni" class="validate" value="<?= $inputs["dni"]; ?>" required>
                                 <?php else: ?>
-                                <input id="dni" type="number" name="dni" class="validate" required>
+                                <input id="dni" type="number" name="dni" min="0" class="validate" required>
                                 <?php endif; ?>                                     
                                 <label for="dni">DNI</label>
                             </div>                                                       
@@ -91,7 +91,7 @@
                                 <?php if (isset($inputs["cuil_number"])): ?>              
                                 <input id="cuil" type="number" name="cuil" class="validate" value="<?= $inputs["cuil_number"]; ?>" required>
                                 <?php else: ?>
-                                <input id="cuil" type="number" name="cuil" class="validate" required>
+                                <input id="cuil" type="number" name="cuil" min="0" class="validate" required>
                                 <?php endif; ?>                                  
                                 <label for="cuil">Número de CUIL</label>
                             </div>

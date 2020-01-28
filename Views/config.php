@@ -65,7 +65,7 @@
                                 <label for="date_e">Fecha fin de temporada</label>                                 
                             </div>
                             <div class="input-field col s4">
-                                <input id="season" type="number" name="season" class="validate" value="<?= $cfg->getPriceTentSeason()?>" required>
+                                <input id="season" type="number" name="season" min="0" class="validate" value="<?= $cfg->getPriceTentSeason()?>" required>
                                 <label for="season">Valor carpa por temporada</label>
                             </div>                                                   
                         </div>           
@@ -80,16 +80,16 @@
 
                         <div class="row">
                             <div class="input-field col s4">
-                                <input id="day" type="number" name="january" class="validate" value="<?= $cfg->getPriceTentJanuary()?>" required>
+                                <input id="day" type="number" name="january" min="0" class="validate" value="<?= $cfg->getPriceTentJanuary()?>" required>
                                 <label for="day">Valor carpa enero</label>                                 
                             </div>
              
                             <div class="input-field col s4">
-                                <input id="january_day" type="number" name="january_day" class="validate" value="<?= $cfg->getPriceTentJanuaryDay()?>" required>
+                                <input id="january_day" type="number" name="january_day" min="0" class="validate" value="<?= $cfg->getPriceTentJanuaryDay()?>" required>
                                 <label for="january_day">Valor carpa dia enero</label>
                             </div>     
                             <div class="input-field col s4">
-                                <input id="january_fortnigh" type="number" name="january_fortnigh" class="validate" value="<?= $cfg->getPriceTentJanuaryFortnigh()?>" required>
+                                <input id="january_fortnigh" type="number" name="january_fortnigh" min="0" class="validate" value="<?= $cfg->getPriceTentJanuaryFortnigh()?>" required>
                                 <label for="january_fortnigh">Valor carpa quincena enero</label>
                             </div>                                                   
                         </div>
@@ -104,23 +104,23 @@
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="february" type="number" name="february" class="validate" value="<?= $cfg->getPriceTentFebruary()?>" required>
+                                <input id="february" type="number" name="february" min="0" class="validate" value="<?= $cfg->getPriceTentFebruary()?>" required>
                                 <label for="february">Valor carpa febrero</label>                                 
                             </div>
                             <div class="input-field col s6">
-                                <input id="february_day" type="number" name="february_day" class="validate" value="<?= $cfg->getPriceTentFebruaryDay()?>" required>
+                                <input id="february_day" type="number" name="february_day" min="0" class="validate" value="<?= $cfg->getPriceTentFebruaryDay()?>" required>
                                 <label for="february_day">Valor carpa dia febrero</label>
                             </div>                        
                         </div>
 
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="february_first_fortnigh" type="number" name="february_first_fortnigh" class="validate" value="<?= $cfg->getPriceTentFebruaryFirstFortnigh()?>" required>
+                                <input id="february_first_fortnigh" type="number" name="february_first_fortnigh" min="0" class="validate" value="<?= $cfg->getPriceTentFebruaryFirstFortnigh()?>" required>
                                 <label for="february_first_fortnigh">Valor carpa primer quincena febrero</label>                                 
                             </div>
              
                             <div class="input-field col s6">
-                                <input id="february_second_fortnigh" type="number" name="february_second_fortnigh" class="validate" value="<?= $cfg->getPriceTentFebruarySecondFortnigh()?>" required>
+                                <input id="february_second_fortnigh" type="number" name="february_second_fortnigh" min="0" class="validate" value="<?= $cfg->getPriceTentFebruarySecondFortnigh()?>" required>
                                 <label for="february_second_fortnigh">Valor carpa segunda quincena febrero</label>
                             </div>                                                   
                         </div>
@@ -135,7 +135,7 @@
                         
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="parasol" type="number" name="parasol" class="validate" value="<?= $cfg->getPriceParasol()?>" required>
+                                <input id="parasol" type="number" name="parasol" min="0" class="validate" value="<?= $cfg->getPriceParasol()?>" required>
                                 <label for="parasol">Valor sombrilla</label>                                 
                             </div>
                         </div>

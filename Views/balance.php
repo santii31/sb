@@ -28,7 +28,7 @@
                                             • Nº Carpa: <?= $reservation->getBeachTent()->getNumber(); ?>
                                         </span>
                                         <span>
-                                            • Precio final: $<?= $reservation->getPrice(); ?>
+                                            • Precio final: $<?= number_format($reservation->getPrice(), 2, ',', '.'); ?>
                                         </span>
                                         <span>
                                             • Fecha inicio: <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?>
@@ -127,9 +127,9 @@
                                 <td> <?= date("d-m-Y" , strtotime($balance->getDate())); ?> </td>
                                 <td> <?= ucfirst( $balance->getConcept() ); ?> </td>
                                 <td> <?= $balance->getNumberReceipt(); ?> </td>
-                                <td> $<?= $balance->getTotal(); ?> </td>
-                                <td> $<?= $balance->getPartial(); ?> </td>
-                                <td> $<?= $balance->getRemainder(); ?> </td>
+                                <td> $<?= number_format($balance->getTotal(), 2, ',', '.'); ?> </td>
+                                <td> $<?= number_format($balance->getPartial(), 2, ',', '.'); ?> </td>
+                                <td> $<?= number_format($balance->getRemainder(), 2, ',', '.'); ?> </td>
                             <?php endforeach; ?>         
                         </tbody>
                     </table>                                          

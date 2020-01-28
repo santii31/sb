@@ -68,19 +68,19 @@
 					
 		public function getById(ParasolReservation $reservation) {
 			try {				
-				$reservation = null;
+				$reservationTemp = null;
 				$query = "CALL parasol_reservation_getById(?)";
 				$parameters["id"] = $reservation->getId();
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
 					
-					$reservation = new ParasolReservation();
-					$reservation->setId($row["parasol_reservation_id"]);
-					$reservation->setDateStart($row["parasol_reservation_dateStart"]);
-					$reservation->setDateEnd($row["parasol_reservation_dateEnd"]);
-					$reservation->setStay($row["parasol_reservation_stay"]);					
-					$reservation->setPrice($row["parasol_reservation_totalPrice"]);
+					$reservationTemp = new ParasolReservation();
+					$reservationTemp->setId($row["parasol_reservation_id"]);
+					$reservationTemp->setDateStart($row["parasol_reservation_dateStart"]);
+					$reservationTemp->setDateEnd($row["parasol_reservation_dateEnd"]);
+					$reservationTemp->setStay($row["parasol_reservation_stay"]);					
+					$reservationTemp->setPrice($row["parasol_reservation_totalPrice"]);
 					
 					$client = new Client();
 					$client->setId($row["client_id"]);
@@ -94,7 +94,7 @@
 					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
 					$client->setVehicleType($row["client_vehicleType"]);
 
-					$reservation->setClient($client);
+					$reservationTemp->setClient($client);
 
 					$admin = new Admin();
 					$admin->setId($row["admin_id"]);
@@ -105,11 +105,11 @@
 					$parasol->setId($row["parasol_id"]);
 					$parasol->setParasolNumber($row["parasol_number"]);					
 
-					$reservation->setRegisterBy($admin);
+					$reservationTemp->setRegisterBy($admin);
 
-					$reservation->setParasol($parasol);					
+					$reservationTemp->setParasol($parasol);					
 				}
-				return $reservation;
+				return $reservationTemp;
 			} catch (Exception $e) {
 				return false;
 				// echo $e;

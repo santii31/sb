@@ -3,6 +3,8 @@
 			<div class="main-content">			
 				<div class="map-container">
         
+                <?= var_dump($fromParasol); ?>
+
 					<!-- Box's colors -->
 					<div class="beach-map-colors">
 						<div class="beach-color">
@@ -30,6 +32,17 @@
 							<span>Periodo</span>
 						</div>
 					</div>               
+
+                    <?php if (isset($id_reservation)): ?>
+                    <div class="more-list">
+                        <a href="<?= FRONT_ROOT ?>additionalService/hasAdditionalService/<?= $id_reservation; ?>">              
+                            <i class="material-icons left">arrow_forward</i>
+                            <span>
+                                Dar de alta sin estacionamiento
+                            </span>    
+                        </a>
+                    </div>  
+                    <?php endif; ?>
 
                     <?php if ($alert != null): ?>
                     <div class="row">
@@ -165,10 +178,10 @@
                                     <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                         <div class="modal-content">
                                             <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                            <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                
-                                                <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                    <div class="reserve-container">                                                               
+
+                                            <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                    <div class="reserve-container">                                                              
                                                         <div class="reserve-title">
                                                             <i class="material-icons">info_outline</i>
                                                             <p>
@@ -225,51 +238,55 @@
                                                         </div>                                                               
                                                     </div>  
                                                 <?php else: ?>
-                                                    <p class="no-reservation z-depth-4">
-                                                        <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                    <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                        <p class="no-reservation z-depth-4">
                                                             <i class="material-icons">info_outline</i>
                                                             El estacionamiento tiene futuras reservas
                                                             <div class="future-reservation-parking">
                                                                 <?php foreach ($f_rsv as $rsv): ?>
-                                                                <div>
-                                                                    <div class="client">
-                                                                        <i class="material-icons">person_pin</i>                                 
+                                                                    <div>
+                                                                        <div class="client">
+                                                                            <i class="material-icons">person_pin</i>                                 
+                                                                        </div>
+                                                                        <div class="date">
+                                                                            <span>
+                                                                                <span class="title-2">• Nombre:  </span>
+                                                                                <?= 
+                                                                                    ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                    ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                ?> 
+                                                                            </span>                                                     
+                                                                            <span>
+                                                                                <span class="title-2">• Carpa:  </span>
+                                                                                <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                            </span>
+                                                                            <span>
+                                                                                <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                            </span>
+                                                                            <span>
+                                                                                <span class="title-2">• Fecha fin:  </span>
+                                                                                <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                            </span>
+                                                                            <span>
+                                                                                <span class="title-2">• Estadia:  </span>
+                                                                                <?= ucfirst(
+                                                                                        str_replace('_', ' ', $rsv->getStay()) 
+                                                                                    ); 
+                                                                                ?>   
+                                                                            </span>
+                                                                        </div>                                                                    
                                                                     </div>
-                                                                    <div class="date">
-                                                                        <span>
-                                                                            <span class="title-2">• Nombre:  </span>
-                                                                            <?= 
-                                                                                ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                            ?> 
-                                                                        </span>                                                     
-                                                                        <span>
-                                                                            <span class="title-2">• Carpa:  </span>
-                                                                            <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                        </span>
-                                                                        <span>
-                                                                            <span class="title-2">• Fecha inicio:  </span>                       
-                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                        </span>
-                                                                        <span>
-                                                                            <span class="title-2">• Fecha fin:  </span>
-                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                        </span>
-                                                                        <span>
-                                                                            <span class="title-2">• Estadia:  </span>
-                                                                            <?= ucfirst(
-                                                                                    str_replace('_', ' ', $rsv->getStay()) 
-                                                                                ); 
-                                                                            ?>   
-                                                                        </span>
-                                                                    </div>                                                                    
-                                                                </div>
                                                                 <?php endforeach; ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </p>                                                                                          
+                                                            </div>                                                       
+                                                        </p>         
+                                                    <?php else: ?>
+                                                        <p class="no-reservation z-depth-4">
+                                                            <i class="material-icons">info_outline</i>
+                                                            Estacionamiento disponible.                     
+                                                        </p>                                                                                     
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
-
                                             <?php else: ?>
                                                 <p class="no-reservation z-depth-4">
                                                     <i class="material-icons">info_outline</i>
@@ -284,8 +301,11 @@
                                                 <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
                                                     Reservar
                                                 </a>   
-                                                <?php else: ?>
-                                                
+                                                <?php elseif (isset($fromParasol)): ?>
+                                                <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                    Reservar sombrilla
+                                                </a>                                                            
+                                                <?php else: ?>                                                
                                                 <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                     Reservar
                                                 </a>                             
@@ -294,7 +314,6 @@
                                             <?php endif; ?>
                                         </div>
                                     </div>
-
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -401,7 +420,7 @@
                                                                 </div>                                                                                   
                                                             <?php break; ?>  
                                                             
-                                                        <?php endswitch; ?>     
+                                                        <?php endswitch; ?>                                                                              
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="item">
@@ -423,10 +442,10 @@
                                             <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content">
                                                     <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                    <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                        
-                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                            <div class="reserve-container">                                                               
+
+                                                    <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                            <div class="reserve-container">                                                              
                                                                 <div class="reserve-title">
                                                                     <i class="material-icons">info_outline</i>
                                                                     <p>
@@ -466,6 +485,10 @@
                                                                             <span class="title">• Fecha fin:  </span>
                                                                             <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                         </span>
+
+                                                                        <!-- SIGO ACA -->
+                                                                        <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                        <!-- VER COMO SE MUESTRA -->
                                                                         <span>
                                                                             <span class="title">• Estadia:  </span>
                                                                             <?= ucfirst(
@@ -479,44 +502,55 @@
                                                                 </div>                                                               
                                                             </div>  
                                                         <?php else: ?>
-                                                            <p class="no-reservation z-depth-4">
-                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                            <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <p class="no-reservation z-depth-4">
                                                                     <i class="material-icons">info_outline</i>
                                                                     El estacionamiento tiene futuras reservas
                                                                     <div class="future-reservation-parking">
                                                                         <?php foreach ($f_rsv as $rsv): ?>
-                                                                        <div>
-                                                                            <div class="client">
-                                                                                <i class="material-icons">person_pin</i>                                 
+                                                                            <div>
+                                                                                <div class="client">
+                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                </div>
+                                                                                <div class="date">
+                                                                                    <span>
+                                                                                        <span class="title-2">• Nombre:  </span>
+                                                                                        <?= 
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                        ?> 
+                                                                                    </span>                                                     
+                                                                                    <span>
+                                                                                        <span class="title-2">• Carpa:  </span>
+                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha fin:  </span>
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Estadia:  </span>
+                                                                                        <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            ); 
+                                                                                        ?>   
+                                                                                    </span>
+                                                                                </div>                                                                    
                                                                             </div>
-                                                                            <div class="date">
-                                                                                <span>
-                                                                                    <span class="title-2">• Nombre:  </span>
-                                                                                    <?= 
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                    ?> 
-                                                                                </span>                                                     
-                                                                                <span>
-                                                                                    <span class="title-2">• Carpa:  </span>
-                                                                                    <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha fin:  </span>
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                </span>
-                                                                            </div>                                                                    
-                                                                        </div>
                                                                         <?php endforeach; ?>
-                                                                    </div>
-                                                                <?php endif; ?>
-                                                            </p>                                                                                          
+                                                                    </div>                                                       
+                                                                </p>         
+                                                            <?php else: ?>
+                                                                <p class="no-reservation z-depth-4">
+                                                                    <i class="material-icons">info_outline</i>
+                                                                    Estacionamiento disponible.                     
+                                                                </p>                                                                                     
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
-
                                                     <?php else: ?>
                                                         <p class="no-reservation z-depth-4">
                                                             <i class="material-icons">info_outline</i>
@@ -525,20 +559,25 @@
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <?php if (isset($id_reservation)): ?>
+                                                    <?php if (isset($id_reservation)): ?>                                                
+                                                        
                                                         <?php if (isset($fromList)): ?>
-                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                Reservar
-                                                            </a>   
-                                                        <?php else: ?>
+                                                        <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>   
+                                                        <?php elseif (isset($fromParasol)): ?>
+                                                        <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar sombrilla
+                                                        </a>                                                            
+                                                        <?php else: ?>                                                
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                             
+                                                        </a>                             
                                                         <?php endif; ?>
+
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
-
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -641,7 +680,7 @@
                                                                 </div>                                                                                   
                                                             <?php break; ?>  
                                                             
-                                                        <?php endswitch; ?>      
+                                                        <?php endswitch; ?>                                                                              
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="item">
@@ -663,10 +702,10 @@
                                             <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content">
                                                     <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                    <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                        
-                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                            <div class="reserve-container">                                                               
+
+                                                    <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                            <div class="reserve-container">                                                              
                                                                 <div class="reserve-title">
                                                                     <i class="material-icons">info_outline</i>
                                                                     <p>
@@ -706,50 +745,72 @@
                                                                             <span class="title">• Fecha fin:  </span>
                                                                             <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                         </span>
+
+                                                                        <!-- SIGO ACA -->
+                                                                        <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                        <!-- VER COMO SE MUESTRA -->
+                                                                        <span>
+                                                                            <span class="title">• Estadia:  </span>
+                                                                            <?= ucfirst(
+                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                ); 
+                                                                            ?>                    
+                                                                        </span>
                                                                     </div>
 
                                                                     <?php ?>
                                                                 </div>                                                               
                                                             </div>  
                                                         <?php else: ?>
-                                                            <p class="no-reservation z-depth-4">
-                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                            <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <p class="no-reservation z-depth-4">
                                                                     <i class="material-icons">info_outline</i>
                                                                     El estacionamiento tiene futuras reservas
                                                                     <div class="future-reservation-parking">
                                                                         <?php foreach ($f_rsv as $rsv): ?>
-                                                                        <div>
-                                                                            <div class="client">
-                                                                                <i class="material-icons">person_pin</i>                                 
+                                                                            <div>
+                                                                                <div class="client">
+                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                </div>
+                                                                                <div class="date">
+                                                                                    <span>
+                                                                                        <span class="title-2">• Nombre:  </span>
+                                                                                        <?= 
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                        ?> 
+                                                                                    </span>                                                     
+                                                                                    <span>
+                                                                                        <span class="title-2">• Carpa:  </span>
+                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha fin:  </span>
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Estadia:  </span>
+                                                                                        <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            ); 
+                                                                                        ?>   
+                                                                                    </span>
+                                                                                </div>                                                                    
                                                                             </div>
-                                                                            <div class="date">
-                                                                                <span>
-                                                                                    <span class="title-2">• Nombre:  </span>
-                                                                                    <?= 
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                    ?> 
-                                                                                </span>                                                     
-                                                                                <span>
-                                                                                    <span class="title-2">• Carpa:  </span>
-                                                                                    <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha fin:  </span>
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                </span>
-                                                                            </div>                                                                    
-                                                                        </div>
                                                                         <?php endforeach; ?>
-                                                                    </div>
-                                                                <?php endif; ?>
-                                                            </p>                                                                                          
+                                                                    </div>                                                       
+                                                                </p>         
+                                                            <?php else: ?>
+                                                                <p class="no-reservation z-depth-4">
+                                                                    <i class="material-icons">info_outline</i>
+                                                                    Estacionamiento disponible.                     
+                                                                </p>                                                                                     
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
-
                                                     <?php else: ?>
                                                         <p class="no-reservation z-depth-4">
                                                             <i class="material-icons">info_outline</i>
@@ -758,20 +819,25 @@
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <?php if (isset($id_reservation)): ?>
+                                                    <?php if (isset($id_reservation)): ?>                                                
+                                                        
                                                         <?php if (isset($fromList)): ?>
-                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                Reservar
-                                                            </a>   
-                                                        <?php else: ?>
+                                                        <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>   
+                                                        <?php elseif (isset($fromParasol)): ?>
+                                                        <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar sombrilla
+                                                        </a>                                                            
+                                                        <?php else: ?>                                                
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                             
+                                                        </a>                             
                                                         <?php endif; ?>
+
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
-
                                         </div>
                                     <?php endforeach; ?>
                                 </div>                                
@@ -784,7 +850,7 @@
                                 <div class="center-first">
                                     <div class="upper">                             
                                         <?php foreach($fourthRow as $parking): ?>
-                                            <div class="parking-container">                                                                  
+                                            <div class="parking-container">                                                                      
                                                 <a class="modal-trigger" href="#modal<?= $parking->getId(); ?>">                                            
                                                     <?php if ($this->hasReservation($parking->getId())): ?>  
                                                         <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                          
@@ -880,7 +946,7 @@
                                                                     </div>                                                                                   
                                                                 <?php break; ?>  
                                                                 
-                                                            <?php endswitch; ?>     
+                                                            <?php endswitch; ?>                                                                              
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="item">
@@ -897,14 +963,15 @@
                                                             </span>		
                                                         </div>  
                                                     <?php endif; ?>   
-                                                </a>                                                                                    
+                                                </a>                                    
+                                                
                                                 <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content">
                                                         <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                        <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                            
-                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                                <div class="reserve-container">                                                               
+
+                                                        <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                                <div class="reserve-container">                                                              
                                                                     <div class="reserve-title">
                                                                         <i class="material-icons">info_outline</i>
                                                                         <p>
@@ -944,50 +1011,72 @@
                                                                                 <span class="title">• Fecha fin:  </span>
                                                                                 <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                             </span>
+
+                                                                            <!-- SIGO ACA -->
+                                                                            <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                            <!-- VER COMO SE MUESTRA -->
+                                                                            <span>
+                                                                                <span class="title">• Estadia:  </span>
+                                                                                <?= ucfirst(
+                                                                                        str_replace('_', ' ', $rsv->getStay()) 
+                                                                                    ); 
+                                                                                ?>                    
+                                                                            </span>
                                                                         </div>
 
                                                                         <?php ?>
                                                                     </div>                                                               
                                                                 </div>  
                                                             <?php else: ?>
-                                                                <p class="no-reservation z-depth-4">
-                                                                    <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                    <p class="no-reservation z-depth-4">
                                                                         <i class="material-icons">info_outline</i>
                                                                         El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
-                                                                            <div>
-                                                                                <div class="client">
-                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                <div>
+                                                                                    <div class="client">
+                                                                                        <i class="material-icons">person_pin</i>                                 
+                                                                                    </div>
+                                                                                    <div class="date">
+                                                                                        <span>
+                                                                                            <span class="title-2">• Nombre:  </span>
+                                                                                            <?= 
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                            ?> 
+                                                                                        </span>                                                     
+                                                                                        <span>
+                                                                                            <span class="title-2">• Carpa:  </span>
+                                                                                            <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha fin:  </span>
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Estadia:  </span>
+                                                                                            <?= ucfirst(
+                                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                ); 
+                                                                                            ?>   
+                                                                                        </span>
+                                                                                    </div>                                                                    
                                                                                 </div>
-                                                                                <div class="date">
-                                                                                    <span>
-                                                                                        <span class="title-2">• Nombre:  </span>
-                                                                                        <?= 
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                        ?> 
-                                                                                    </span>                                                     
-                                                                                    <span>
-                                                                                        <span class="title-2">• Carpa:  </span>
-                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha fin:  </span>
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                    </span>
-                                                                                </div>                                                                    
-                                                                            </div>
                                                                             <?php endforeach; ?>
-                                                                        </div>
-                                                                    <?php endif; ?>
-                                                                </p>                                                                                          
+                                                                        </div>                                                       
+                                                                    </p>         
+                                                                <?php else: ?>
+                                                                    <p class="no-reservation z-depth-4">
+                                                                        <i class="material-icons">info_outline</i>
+                                                                        Estacionamiento disponible.                     
+                                                                    </p>                                                                                     
+                                                                <?php endif; ?>
                                                             <?php endif; ?>
-
                                                         <?php else: ?>
                                                             <p class="no-reservation z-depth-4">
                                                                 <i class="material-icons">info_outline</i>
@@ -996,16 +1085,22 @@
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($id_reservation)): ?>                                                
+                                                            
                                                             <?php if (isset($fromList)): ?>
-                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                    Reservar
-                                                                </a>   
-                                                            <?php else: ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                            <?php elseif (isset($fromParasol)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar sombrilla
+                                                            </a>                                                            
+                                                            <?php else: ?>                                                
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                             
+                                                            </a>                             
                                                             <?php endif; ?>
+
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -1110,7 +1205,7 @@
                                                                     </div>                                                                                   
                                                                 <?php break; ?>  
                                                                 
-                                                            <?php endswitch; ?>     
+                                                            <?php endswitch; ?>                                                                              
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="item">
@@ -1132,10 +1227,10 @@
                                                 <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content">
                                                         <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                        <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                            
-                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                                <div class="reserve-container">                                                               
+
+                                                        <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                                <div class="reserve-container">                                                              
                                                                     <div class="reserve-title">
                                                                         <i class="material-icons">info_outline</i>
                                                                         <p>
@@ -1175,50 +1270,72 @@
                                                                                 <span class="title">• Fecha fin:  </span>
                                                                                 <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                             </span>
+
+                                                                            <!-- SIGO ACA -->
+                                                                            <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                            <!-- VER COMO SE MUESTRA -->
+                                                                            <span>
+                                                                                <span class="title">• Estadia:  </span>
+                                                                                <?= ucfirst(
+                                                                                        str_replace('_', ' ', $rsv->getStay()) 
+                                                                                    ); 
+                                                                                ?>                    
+                                                                            </span>
                                                                         </div>
 
                                                                         <?php ?>
                                                                     </div>                                                               
                                                                 </div>  
                                                             <?php else: ?>
-                                                                <p class="no-reservation z-depth-4">
-                                                                    <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                    <p class="no-reservation z-depth-4">
                                                                         <i class="material-icons">info_outline</i>
                                                                         El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
-                                                                            <div>
-                                                                                <div class="client">
-                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                <div>
+                                                                                    <div class="client">
+                                                                                        <i class="material-icons">person_pin</i>                                 
+                                                                                    </div>
+                                                                                    <div class="date">
+                                                                                        <span>
+                                                                                            <span class="title-2">• Nombre:  </span>
+                                                                                            <?= 
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                            ?> 
+                                                                                        </span>                                                     
+                                                                                        <span>
+                                                                                            <span class="title-2">• Carpa:  </span>
+                                                                                            <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha fin:  </span>
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Estadia:  </span>
+                                                                                            <?= ucfirst(
+                                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                ); 
+                                                                                            ?>   
+                                                                                        </span>
+                                                                                    </div>                                                                    
                                                                                 </div>
-                                                                                <div class="date">
-                                                                                    <span>
-                                                                                        <span class="title-2">• Nombre:  </span>
-                                                                                        <?= 
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                        ?> 
-                                                                                    </span>                                                     
-                                                                                    <span>
-                                                                                        <span class="title-2">• Carpa:  </span>
-                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha fin:  </span>
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                    </span>
-                                                                                </div>                                                                    
-                                                                            </div>
                                                                             <?php endforeach; ?>
-                                                                        </div>
-                                                                    <?php endif; ?>
-                                                                </p>                                                                                          
+                                                                        </div>                                                       
+                                                                    </p>         
+                                                                <?php else: ?>
+                                                                    <p class="no-reservation z-depth-4">
+                                                                        <i class="material-icons">info_outline</i>
+                                                                        Estacionamiento disponible.                     
+                                                                    </p>                                                                                     
+                                                                <?php endif; ?>
                                                             <?php endif; ?>
-
                                                         <?php else: ?>
                                                             <p class="no-reservation z-depth-4">
                                                                 <i class="material-icons">info_outline</i>
@@ -1227,16 +1344,22 @@
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($id_reservation)): ?>                                                
+                                                            
                                                             <?php if (isset($fromList)): ?>
-                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                    Reservar
-                                                                </a>   
-                                                            <?php else: ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                            <?php elseif (isset($fromParasol)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar sombrilla
+                                                            </a>                                                            
+                                                            <?php else: ?>                                                
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                             
+                                                            </a>                             
                                                             <?php endif; ?>
+
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -1344,7 +1467,7 @@
                                                                 </div>                                                                                   
                                                             <?php break; ?>  
                                                             
-                                                        <?php endswitch; ?>     
+                                                        <?php endswitch; ?>                                                                              
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="item">
@@ -1366,10 +1489,10 @@
                                             <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content">
                                                     <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                    <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                        
-                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                            <div class="reserve-container">                                                               
+
+                                                    <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                            <div class="reserve-container">                                                              
                                                                 <div class="reserve-title">
                                                                     <i class="material-icons">info_outline</i>
                                                                     <p>
@@ -1409,50 +1532,72 @@
                                                                             <span class="title">• Fecha fin:  </span>
                                                                             <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                         </span>
+
+                                                                        <!-- SIGO ACA -->
+                                                                        <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                        <!-- VER COMO SE MUESTRA -->
+                                                                        <span>
+                                                                            <span class="title">• Estadia:  </span>
+                                                                            <?= ucfirst(
+                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                ); 
+                                                                            ?>                    
+                                                                        </span>
                                                                     </div>
 
                                                                     <?php ?>
                                                                 </div>                                                               
                                                             </div>  
                                                         <?php else: ?>
-                                                            <p class="no-reservation z-depth-4">
-                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                            <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <p class="no-reservation z-depth-4">
                                                                     <i class="material-icons">info_outline</i>
                                                                     El estacionamiento tiene futuras reservas
                                                                     <div class="future-reservation-parking">
                                                                         <?php foreach ($f_rsv as $rsv): ?>
-                                                                        <div>
-                                                                            <div class="client">
-                                                                                <i class="material-icons">person_pin</i>                                 
+                                                                            <div>
+                                                                                <div class="client">
+                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                </div>
+                                                                                <div class="date">
+                                                                                    <span>
+                                                                                        <span class="title-2">• Nombre:  </span>
+                                                                                        <?= 
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                        ?> 
+                                                                                    </span>                                                     
+                                                                                    <span>
+                                                                                        <span class="title-2">• Carpa:  </span>
+                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha fin:  </span>
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Estadia:  </span>
+                                                                                        <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            ); 
+                                                                                        ?>   
+                                                                                    </span>
+                                                                                </div>                                                                    
                                                                             </div>
-                                                                            <div class="date">
-                                                                                <span>
-                                                                                    <span class="title-2">• Nombre:  </span>
-                                                                                    <?= 
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                    ?> 
-                                                                                </span>                                                     
-                                                                                <span>
-                                                                                    <span class="title-2">• Carpa:  </span>
-                                                                                    <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha fin:  </span>
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                </span>
-                                                                            </div>                                                                    
-                                                                        </div>
                                                                         <?php endforeach; ?>
-                                                                    </div>
-                                                                <?php endif; ?>
-                                                            </p>                                                                                          
+                                                                    </div>                                                       
+                                                                </p>         
+                                                            <?php else: ?>
+                                                                <p class="no-reservation z-depth-4">
+                                                                    <i class="material-icons">info_outline</i>
+                                                                    Estacionamiento disponible.                     
+                                                                </p>                                                                                     
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
-
                                                     <?php else: ?>
                                                         <p class="no-reservation z-depth-4">
                                                             <i class="material-icons">info_outline</i>
@@ -1461,20 +1606,25 @@
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <?php if (isset($id_reservation)): ?>
+                                                    <?php if (isset($id_reservation)): ?>                                                
+                                                        
                                                         <?php if (isset($fromList)): ?>
-                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                Reservar
-                                                            </a>   
-                                                        <?php else: ?>
+                                                        <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>   
+                                                        <?php elseif (isset($fromParasol)): ?>
+                                                        <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar sombrilla
+                                                        </a>                                                            
+                                                        <?php else: ?>                                                
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                             
+                                                        </a>                             
                                                         <?php endif; ?>
+
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
-
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -1579,7 +1729,7 @@
                                                                     </div>                                                                                   
                                                                 <?php break; ?>  
                                                                 
-                                                            <?php endswitch; ?>    
+                                                            <?php endswitch; ?>                                                                              
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="item">
@@ -1601,10 +1751,10 @@
                                                 <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content">
                                                         <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                        <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                            
-                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                                <div class="reserve-container">                                                               
+
+                                                        <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                                <div class="reserve-container">                                                              
                                                                     <div class="reserve-title">
                                                                         <i class="material-icons">info_outline</i>
                                                                         <p>
@@ -1644,50 +1794,72 @@
                                                                                 <span class="title">• Fecha fin:  </span>
                                                                                 <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                             </span>
+
+                                                                            <!-- SIGO ACA -->
+                                                                            <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                            <!-- VER COMO SE MUESTRA -->
+                                                                            <span>
+                                                                                <span class="title">• Estadia:  </span>
+                                                                                <?= ucfirst(
+                                                                                        str_replace('_', ' ', $rsv->getStay()) 
+                                                                                    ); 
+                                                                                ?>                    
+                                                                            </span>
                                                                         </div>
 
                                                                         <?php ?>
                                                                     </div>                                                               
                                                                 </div>  
                                                             <?php else: ?>
-                                                                <p class="no-reservation z-depth-4">
-                                                                    <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                    <p class="no-reservation z-depth-4">
                                                                         <i class="material-icons">info_outline</i>
                                                                         El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
-                                                                            <div>
-                                                                                <div class="client">
-                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                <div>
+                                                                                    <div class="client">
+                                                                                        <i class="material-icons">person_pin</i>                                 
+                                                                                    </div>
+                                                                                    <div class="date">
+                                                                                        <span>
+                                                                                            <span class="title-2">• Nombre:  </span>
+                                                                                            <?= 
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                            ?> 
+                                                                                        </span>                                                     
+                                                                                        <span>
+                                                                                            <span class="title-2">• Carpa:  </span>
+                                                                                            <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha fin:  </span>
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Estadia:  </span>
+                                                                                            <?= ucfirst(
+                                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                ); 
+                                                                                            ?>   
+                                                                                        </span>
+                                                                                    </div>                                                                    
                                                                                 </div>
-                                                                                <div class="date">
-                                                                                    <span>
-                                                                                        <span class="title-2">• Nombre:  </span>
-                                                                                        <?= 
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                        ?> 
-                                                                                    </span>                                                     
-                                                                                    <span>
-                                                                                        <span class="title-2">• Carpa:  </span>
-                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha fin:  </span>
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                    </span>
-                                                                                </div>                                                                    
-                                                                            </div>
                                                                             <?php endforeach; ?>
-                                                                        </div>
-                                                                    <?php endif; ?>
-                                                                </p>                                                                                          
+                                                                        </div>                                                       
+                                                                    </p>         
+                                                                <?php else: ?>
+                                                                    <p class="no-reservation z-depth-4">
+                                                                        <i class="material-icons">info_outline</i>
+                                                                        Estacionamiento disponible.                     
+                                                                    </p>                                                                                     
+                                                                <?php endif; ?>
                                                             <?php endif; ?>
-
                                                         <?php else: ?>
                                                             <p class="no-reservation z-depth-4">
                                                                 <i class="material-icons">info_outline</i>
@@ -1696,16 +1868,22 @@
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($id_reservation)): ?>                                                
+                                                            
                                                             <?php if (isset($fromList)): ?>
-                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                    Reservar
-                                                                </a>   
-                                                            <?php else: ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                            <?php elseif (isset($fromParasol)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar sombrilla
+                                                            </a>                                                            
+                                                            <?php else: ?>                                                
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                             
+                                                            </a>                             
                                                             <?php endif; ?>
+
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -1811,7 +1989,7 @@
                                                                     </div>                                                                                   
                                                                 <?php break; ?>  
                                                                 
-                                                            <?php endswitch; ?>   
+                                                            <?php endswitch; ?>                                                                              
                                                                                                                             
                                                         <?php else: ?>
                                                         <div class="item">
@@ -1833,10 +2011,10 @@
                                                 <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                     <div class="modal-content">
                                                         <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                        <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                            
-                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                                <div class="reserve-container">                                                               
+
+                                                        <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                            <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                                <div class="reserve-container">                                                              
                                                                     <div class="reserve-title">
                                                                         <i class="material-icons">info_outline</i>
                                                                         <p>
@@ -1876,50 +2054,72 @@
                                                                                 <span class="title">• Fecha fin:  </span>
                                                                                 <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                             </span>
+
+                                                                            <!-- SIGO ACA -->
+                                                                            <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                            <!-- VER COMO SE MUESTRA -->
+                                                                            <span>
+                                                                                <span class="title">• Estadia:  </span>
+                                                                                <?= ucfirst(
+                                                                                        str_replace('_', ' ', $rsv->getStay()) 
+                                                                                    ); 
+                                                                                ?>                    
+                                                                            </span>
                                                                         </div>
 
                                                                         <?php ?>
                                                                     </div>                                                               
                                                                 </div>  
                                                             <?php else: ?>
-                                                                <p class="no-reservation z-depth-4">
-                                                                    <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                    <p class="no-reservation z-depth-4">
                                                                         <i class="material-icons">info_outline</i>
                                                                         El estacionamiento tiene futuras reservas
                                                                         <div class="future-reservation-parking">
                                                                             <?php foreach ($f_rsv as $rsv): ?>
-                                                                            <div>
-                                                                                <div class="client">
-                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                <div>
+                                                                                    <div class="client">
+                                                                                        <i class="material-icons">person_pin</i>                                 
+                                                                                    </div>
+                                                                                    <div class="date">
+                                                                                        <span>
+                                                                                            <span class="title-2">• Nombre:  </span>
+                                                                                            <?= 
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                                ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                            ?> 
+                                                                                        </span>                                                     
+                                                                                        <span>
+                                                                                            <span class="title-2">• Carpa:  </span>
+                                                                                            <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Fecha fin:  </span>
+                                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            <span class="title-2">• Estadia:  </span>
+                                                                                            <?= ucfirst(
+                                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                ); 
+                                                                                            ?>   
+                                                                                        </span>
+                                                                                    </div>                                                                    
                                                                                 </div>
-                                                                                <div class="date">
-                                                                                    <span>
-                                                                                        <span class="title-2">• Nombre:  </span>
-                                                                                        <?= 
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                        ?> 
-                                                                                    </span>                                                     
-                                                                                    <span>
-                                                                                        <span class="title-2">• Carpa:  </span>
-                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                    </span>
-                                                                                    <span>
-                                                                                        <span class="title-2">• Fecha fin:  </span>
-                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                    </span>
-                                                                                </div>                                                                    
-                                                                            </div>
                                                                             <?php endforeach; ?>
-                                                                        </div>
-                                                                    <?php endif; ?>
-                                                                </p>                                                                                          
+                                                                        </div>                                                       
+                                                                    </p>         
+                                                                <?php else: ?>
+                                                                    <p class="no-reservation z-depth-4">
+                                                                        <i class="material-icons">info_outline</i>
+                                                                        Estacionamiento disponible.                     
+                                                                    </p>                                                                                     
+                                                                <?php endif; ?>
                                                             <?php endif; ?>
-
                                                         <?php else: ?>
                                                             <p class="no-reservation z-depth-4">
                                                                 <i class="material-icons">info_outline</i>
@@ -1928,16 +2128,22 @@
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <?php if (isset($id_reservation)): ?>
+                                                        <?php if (isset($id_reservation)): ?>                                                
+                                                            
                                                             <?php if (isset($fromList)): ?>
-                                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                    Reservar
-                                                                </a>   
-                                                            <?php else: ?>
+                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar
+                                                            </a>   
+                                                            <?php elseif (isset($fromParasol)): ?>
+                                                            <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                                Reservar sombrilla
+                                                            </a>                                                            
+                                                            <?php else: ?>                                                
                                                             <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                                 Reservar
-                                                            </a>                                                                                             
+                                                            </a>                             
                                                             <?php endif; ?>
+
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -2045,7 +2251,7 @@
                                                                 </div>                                                                                   
                                                             <?php break; ?>  
                                                             
-                                                        <?php endswitch; ?>    
+                                                        <?php endswitch; ?>                                                                              
                                                                                                                         
                                                     <?php else: ?>
                                                     <div class="item">
@@ -2067,10 +2273,10 @@
                                             <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content">
                                                     <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                                    <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                        
-                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                            <div class="reserve-container">                                                               
+
+                                                    <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                        <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                            <div class="reserve-container">                                                              
                                                                 <div class="reserve-title">
                                                                     <i class="material-icons">info_outline</i>
                                                                     <p>
@@ -2110,50 +2316,72 @@
                                                                             <span class="title">• Fecha fin:  </span>
                                                                             <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                         </span>
+
+                                                                        <!-- SIGO ACA -->
+                                                                        <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                        <!-- VER COMO SE MUESTRA -->
+                                                                        <span>
+                                                                            <span class="title">• Estadia:  </span>
+                                                                            <?= ucfirst(
+                                                                                    str_replace('_', ' ', $rsv->getStay()) 
+                                                                                ); 
+                                                                            ?>                    
+                                                                        </span>
                                                                     </div>
 
                                                                     <?php ?>
                                                                 </div>                                                               
                                                             </div>  
                                                         <?php else: ?>
-                                                            <p class="no-reservation z-depth-4">
-                                                                <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                            <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                                <p class="no-reservation z-depth-4">
                                                                     <i class="material-icons">info_outline</i>
                                                                     El estacionamiento tiene futuras reservas
                                                                     <div class="future-reservation-parking">
                                                                         <?php foreach ($f_rsv as $rsv): ?>
-                                                                        <div>
-                                                                            <div class="client">
-                                                                                <i class="material-icons">person_pin</i>                                 
+                                                                            <div>
+                                                                                <div class="client">
+                                                                                    <i class="material-icons">person_pin</i>                                 
+                                                                                </div>
+                                                                                <div class="date">
+                                                                                    <span>
+                                                                                        <span class="title-2">• Nombre:  </span>
+                                                                                        <?= 
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                            ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                        ?> 
+                                                                                    </span>                                                     
+                                                                                    <span>
+                                                                                        <span class="title-2">• Carpa:  </span>
+                                                                                        <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Fecha fin:  </span>
+                                                                                        <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                                    </span>
+                                                                                    <span>
+                                                                                        <span class="title-2">• Estadia:  </span>
+                                                                                        <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            ); 
+                                                                                        ?>   
+                                                                                    </span>
+                                                                                </div>                                                                    
                                                                             </div>
-                                                                            <div class="date">
-                                                                                <span>
-                                                                                    <span class="title-2">• Nombre:  </span>
-                                                                                    <?= 
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                        ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                                    ?> 
-                                                                                </span>                                                     
-                                                                                <span>
-                                                                                    <span class="title-2">• Carpa:  </span>
-                                                                                    <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha inicio:  </span>                       
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title-2">• Fecha fin:  </span>
-                                                                                    <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                                </span>
-                                                                            </div>                                                                    
-                                                                        </div>
                                                                         <?php endforeach; ?>
-                                                                    </div>
-                                                                <?php endif; ?>
-                                                            </p>                                                                                          
+                                                                    </div>                                                       
+                                                                </p>         
+                                                            <?php else: ?>
+                                                                <p class="no-reservation z-depth-4">
+                                                                    <i class="material-icons">info_outline</i>
+                                                                    Estacionamiento disponible.                     
+                                                                </p>                                                                                     
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
-
                                                     <?php else: ?>
                                                         <p class="no-reservation z-depth-4">
                                                             <i class="material-icons">info_outline</i>
@@ -2162,20 +2390,25 @@
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <?php if (isset($id_reservation)): ?>
+                                                    <?php if (isset($id_reservation)): ?>                                                
+                                                        
                                                         <?php if (isset($fromList)): ?>
-                                                            <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                                Reservar
-                                                            </a>   
-                                                        <?php else: ?>
+                                                        <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar
+                                                        </a>   
+                                                        <?php elseif (isset($fromParasol)): ?>
+                                                        <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                            Reservar sombrilla
+                                                        </a>                                                            
+                                                        <?php else: ?>                                                
                                                         <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                             Reservar
-                                                        </a>                                                                                             
+                                                        </a>                             
                                                         <?php endif; ?>
+
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
-
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -2183,6 +2416,7 @@
                             </div>
                         </div>
 
+                        
                         <!-- Right -->
                         <div class="right">
                             <?php foreach($tenthRow as $parking): ?>
@@ -2192,7 +2426,7 @@
                                             <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                          
         
                                                 <?php $stay = $rsv->getStay(); ?>
-                                                                                                    
+                                                                                                     
                                                 <?php switch ($stay): 
                                                     case "temporada": ?>
                                                         <div class="item yellow">   
@@ -2282,7 +2516,7 @@
                                                         </div>                                                                                   
                                                     <?php break; ?>  
                                                     
-                                                <?php endswitch; ?>    
+                                                <?php endswitch; ?>                                                                              
                                                                                                                 
                                             <?php else: ?>
                                             <div class="item">
@@ -2304,10 +2538,10 @@
                                     <div id="modal<?= $parking->getId(); ?>" class="modal modal-fixed-footer">
                                         <div class="modal-content">
                                             <h4>Estacionamiento Nº <?= $parking->getNumber(); ?></h4>
-                                            <?php if ($this->hasReservation($parking->getId())):  ?>
-                                                
-                                                <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                  
-                                                    <div class="reserve-container">                                                               
+
+                                            <?php if ($this->hasReservation($parking->getId())):  ?>                                         
+                                                <?php if ($rsv = $this->reservationToday($parking->getId())): ?>                                 
+                                                    <div class="reserve-container">                                                              
                                                         <div class="reserve-title">
                                                             <i class="material-icons">info_outline</i>
                                                             <p>
@@ -2347,50 +2581,72 @@
                                                                     <span class="title">• Fecha fin:  </span>
                                                                     <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?>                      
                                                                 </span>
+
+                                                                <!-- SIGO ACA -->
+                                                                <!-- VER UN ESTACIONAMIENTO CON RESERVA ACTUAL Y FUTURA -->
+                                                                <!-- VER COMO SE MUESTRA -->
+                                                                <span>
+                                                                    <span class="title">• Estadia:  </span>
+                                                                    <?= ucfirst(
+                                                                            str_replace('_', ' ', $rsv->getStay()) 
+                                                                        ); 
+                                                                    ?>                    
+                                                                </span>
                                                             </div>
 
                                                             <?php ?>
                                                         </div>                                                               
                                                     </div>  
                                                 <?php else: ?>
-                                                    <p class="no-reservation z-depth-4">
-                                                        <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                    <?php if ($f_rsv = $this->hasFutureReservation($parking->getId())): ?>
+                                                        <p class="no-reservation z-depth-4">
                                                             <i class="material-icons">info_outline</i>
                                                             El estacionamiento tiene futuras reservas
                                                             <div class="future-reservation-parking">
                                                                 <?php foreach ($f_rsv as $rsv): ?>
-                                                                <div>
-                                                                    <div class="client">
-                                                                        <i class="material-icons">person_pin</i>                                 
+                                                                    <div>
+                                                                        <div class="client">
+                                                                            <i class="material-icons">person_pin</i>                                 
+                                                                        </div>
+                                                                        <div class="date">
+                                                                            <span>
+                                                                                <span class="title-2">• Nombre:  </span>
+                                                                                <?= 
+                                                                                    ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
+                                                                                    ucfirst($rsv->getReservation()->getClient()->getLastName()); 
+                                                                                ?> 
+                                                                            </span>                                                     
+                                                                            <span>
+                                                                                <span class="title-2">• Carpa:  </span>
+                                                                                <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
+                                                                            </span>
+                                                                            <span>
+                                                                                <span class="title-2">• Fecha inicio:  </span>                       
+                                                                                <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
+                                                                            </span>
+                                                                            <span>
+                                                                                <span class="title-2">• Fecha fin:  </span>
+                                                                                <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
+                                                                            </span>
+                                                                            <span>
+                                                                                <span class="title-2">• Estadia:  </span>
+                                                                                <?= ucfirst(
+                                                                                        str_replace('_', ' ', $rsv->getStay()) 
+                                                                                    ); 
+                                                                                ?>   
+                                                                            </span>
+                                                                        </div>                                                                    
                                                                     </div>
-                                                                    <div class="date">
-                                                                        <span>
-                                                                            <span class="title-2">• Nombre:  </span>
-                                                                            <?= 
-                                                                                ucfirst($rsv->getReservation()->getClient()->getName()) . ' ' .
-                                                                                ucfirst($rsv->getReservation()->getClient()->getLastName()); 
-                                                                            ?> 
-                                                                        </span>                                                     
-                                                                        <span>
-                                                                            <span class="title-2">• Carpa:  </span>
-                                                                            <?= $rsv->getReservation()->getBeachTent()->getNumber(); ?>
-                                                                        </span>
-                                                                        <span>
-                                                                            <span class="title-2">• Fecha inicio:  </span>                       
-                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateStart())); ?>
-                                                                        </span>
-                                                                        <span>
-                                                                            <span class="title-2">• Fecha fin:  </span>
-                                                                            <?= date("d-m-Y" , strtotime($rsv->getReservation()->getDateEnd())); ?>                                                                   
-                                                                        </span>
-                                                                    </div>                                                                    
-                                                                </div>
                                                                 <?php endforeach; ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </p>                                                                                          
+                                                            </div>                                                       
+                                                        </p>         
+                                                    <?php else: ?>
+                                                        <p class="no-reservation z-depth-4">
+                                                            <i class="material-icons">info_outline</i>
+                                                            Estacionamiento disponible.                     
+                                                        </p>                                                                                     
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
-
                                             <?php else: ?>
                                                 <p class="no-reservation z-depth-4">
                                                     <i class="material-icons">info_outline</i>
@@ -2398,17 +2654,24 @@
                                                 </p>
                                             <?php endif; ?>
                                         </div>
+                                        
                                         <div class="modal-footer">
-                                            <?php if (isset($id_reservation)): ?>
+                                            <?php if (isset($id_reservation)): ?>                                                
+                                                
                                                 <?php if (isset($fromList)): ?>
-                                                    <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>   
-                                                <?php else: ?>
+                                                <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>/list" class="modal-close waves-effect waves-green btn-flat ">
+                                                    Reservar
+                                                </a>   
+                                                <?php elseif (isset($fromParasol)): ?>
+                                                <a href="<?= FRONT_ROOT ?>parasol/addPriceFromParasol/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
+                                                    Reservar sombrilla
+                                                </a>                                                            
+                                                <?php else: ?>                                                
                                                 <a href="<?= FRONT_ROOT ?>parking/addPrice/<?= $id_reservation; ?>/<?= $parking->getId(); ?>" class="modal-close waves-effect waves-green btn-flat ">
                                                     Reservar
-                                                </a>                                                                                             
+                                                </a>                             
                                                 <?php endif; ?>
+
                                             <?php endif; ?>
                                         </div>
                                     </div>

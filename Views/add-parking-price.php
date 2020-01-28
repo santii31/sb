@@ -35,12 +35,10 @@
                         <?php endif; ?>
 
                         <div class="row">
-
                             <div class="input-field col s12">
-                                <input id="price" type="number" name="price" class="validate" required>
+                                <input id="price" type="number" name="price" min="0" class="validate" required>
                                 <label for="price">Precio</label>
                             </div>
-
                         </div>    
                         
                         <input type="hidden" name="reservation" value="<?= $reservation;; ?>" >
@@ -51,7 +49,7 @@
                         <?php endif; ?>
 
                         <div class="row">
-                        <div class="col s12 center-align">
+                            <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Añadir
                                     <i class="material-icons right">send</i>
                                 </button>

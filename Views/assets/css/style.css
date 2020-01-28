@@ -271,6 +271,21 @@ a:hover {
     color: #6a56a5;
 }
 
+.more-list-parking {    
+    margin: 0 auto;
+    text-align: center;
+}
+
+.more-list-parking a {
+    color: #22252e;    
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.more-list-parking a:hover {
+    color: #6a56a5;
+}
 
 /* Form */
 label.active {

@@ -111,7 +111,7 @@
                             <?php if (isset($inputs["cp"])): ?>         
                                 <input id="cp" type="number" name="cp" class="validate" value="<?= $inputs["cp"]; ?>" required>
                                 <?php else: ?>
-                                <input id="cp" type="number" name="cp" class="validate" required>
+                                <input id="cp" type="number" name="cp" min="0" class="validate" required>
                                 <?php endif; ?>                                                                           
                                 <label for="cp">Codigo Postal</label>
                             </div>                                                        
@@ -129,7 +129,7 @@
                             <?php if (isset($inputs["phone"])): ?>         
                                 <input id="phone" type="number" name="phone" class="validate" value="<?= $inputs["phone"]; ?>" required>
                                 <?php else: ?>
-                                <input id="phone" type="number" name="phone" class="validate" required>
+                                <input id="phone" type="number" name="phone" min="0" class="validate" required>
                                 <?php endif; ?>                                                                           
                                 <label for="phone">Telefono</label>
                             </div>                            
@@ -149,7 +149,7 @@
                             <?php if (isset($inputs["aux_phone"])): ?>         
                                 <input id="phone2" type="number" name="auxiliary_phone" class="validate" value="<?= $inputs["aux_phone"]; ?>" required>
                                 <?php else: ?>
-                                <input id="phone2" type="number" name="auxiliary_phone" class="validate" required>
+                                <input id="phone2" type="number" name="auxiliary_phone" min="0" class="validate" required>
                                 <?php endif; ?>                                                                           
                                 <label for="phone2">Telefono auxiliar</label>
                             </div>                                  
@@ -199,7 +199,7 @@
                             <?php if (isset($inputs["price"])): ?>         
                             <input id="price" type="number" name="price" class="validate" value="<?= $inputs["price"]; ?>" required>
                             <?php else: ?>
-                            <input id="price" type="number" name="price" class="validate" required>
+                            <input id="price" type="number" name="price" min="0" class="validate" required>
                             <?php endif; ?>                                                                           
                             <label for="price">Precio</label>
                             </div>

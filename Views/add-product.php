@@ -71,7 +71,7 @@
                                 <?php if (isset($inputs["price"])): ?>              
                                 <input id="price" type="number" name="price" class="validate" value="<?= $inputs["price"]; ?>" required>
                                 <?php else: ?>
-                                <input id="price" type="number" name="price" class="validate" required>
+                                <input id="price" type="number" name="price" min="0" class="validate" required>
                                 <?php endif; ?>                                  
                                 <label for="price">Precio</label>
                             </div>
@@ -79,7 +79,7 @@
                                 <?php if (isset($inputs["quantity"])): ?>              
                                 <input id="quantity" type="number" name="quantity" class="validate" value="<?= $inputs["quantity"]; ?>" required>
                                 <?php else: ?>
-                                <input id="quantity" type="number" name="quantity" class="validate" required>
+                                <input id="quantity" type="number" name="quantity" min="0" class="validate" required>
                                 <?php endif; ?>                                  
                                 <label for="quantity">Cantidad</label>
                             </div>

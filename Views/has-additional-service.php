@@ -34,6 +34,8 @@
                         </div>                
                         <?php endif; ?>
 
+                        <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">   
+
                         <div class="row center-align">
                             <div class="input-field col s6">
                                 <p>
@@ -51,9 +53,7 @@
                                         <span>No</span>
                                     </label>
                                 </p>
-                            </div>
-
-                            <input type="hidden" name="id_reserve" value="<?= $id_reservation ?>">                                               
+                            </div>                                                                        
                         </div>                        
 
                         <div class="row">

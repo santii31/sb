@@ -34,8 +34,7 @@
                         </div>                
                         <?php endif; ?>
                          
-                        <input type="hidden" name="id_rsv" value="<?= $id_rsv; ?>">
-                        
+                        <input type="hidden" name="id_rsv" value="<?= $id_rsv; ?>">                        
                         <input type="hidden" name="id_tent" value="<?= $id_tent; ?>">
 
                         <div class="row">
@@ -67,7 +66,7 @@
                             </div>     
 
                             <div class="input-field col s3">
-                                <input id="price" type="number" name="price" class="validate" value="<?= $reservation->getPrice(); ?>" required>
+                                <input id="price" type="number" name="price" min="0" class="validate" value="<?= $reservation->getPrice(); ?>" required>
                                 <label for="price">Precio</label>
                             </div>                           
                         </div>                                                                   

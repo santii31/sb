@@ -132,7 +132,14 @@
                                     <i class="material-icons left">account_circle</i>
                                     Sueldo del personal
                                 </a>
-                            </li>                                                              
+                            </li>    
+                            
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>reservation/checkList" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">contacts</i>
+                                    Buscar cheques
+                                </a>
+                            </li>                                                            
                         </ul>
                     </div>
                 </li>                    
@@ -420,7 +427,14 @@
                                             <i class="material-icons left">account_circle</i>
                                             Sueldo del personal
                                         </a>
-                                    </li>                                                              
+                                    </li>                                       
+                                    
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>reservation/checkList" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">contacts</i>
+                                            Buscar cheques
+                                        </a>
+                                    </li>  
                                 </ul>
                             </div>
                         </li>                    
