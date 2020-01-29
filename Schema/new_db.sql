@@ -1807,7 +1807,7 @@ BEGIN
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
     INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`
     INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
-    WHERE `reservationxparking`.`FK_id_parking` = id;
+    WHERE `reservationxparking`.`FK_id_reservation` = id;
 END$$
 
 
@@ -1826,7 +1826,8 @@ BEGIN
         client.tel as client_tel,
         parking.id as parking_id,
         parking.number as parking_number,
-        parking.price as parking_price        
+        parking.price as parking_price,
+        beach_tent.number as beach_tent_number        
     FROM `reservationxparking` 
     INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`

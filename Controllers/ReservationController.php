@@ -12,6 +12,7 @@
     use DAO\ClientDAO as ClientDAO;        
     use DAO\ReservationDAO as ReservationDAO;    
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
+    use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
@@ -729,6 +730,30 @@
 
         public function getSalesMonthly() {
             return $this->reservationDAO->getSalesMonthly();
+        }
+
+        public function getNumberParkingByReservation($rsv) {
+            $parkings = array();
+            $rsvParkingDAO = new ReservationxParkingDAO();
+            $list = $rsvParkingDAO->getAllByReservationId($rsv);
+
+            foreach ($list as $rsv_t) {
+                array_push($parkings, $rsv_t->getParking()->getNumber());                
+            }
+
+            return implode( ", ", $parkings);            
+        }
+
+        public function getSizeNumberParkingByReservation($rsv) {
+            $parkings = array();
+            $rsvParkingDAO = new ReservationxParkingDAO();
+            $list = $rsvParkingDAO->getAllByReservationId($rsv);
+
+            foreach ($list as $rsv_t) {
+                array_push($parkings, $rsv_t->getParking()->getNumber());                
+            }
+
+            return sizeof($parkings);            
         }
 
     }

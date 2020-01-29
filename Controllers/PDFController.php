@@ -5,6 +5,7 @@
     require('libs/FPDF/fpdf.php');
     use libs\FPDF\FPDF as FPDF;
 
+    use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
     use Controllers\ReservationController as ReservationController;  
 
     class PDFController extends FPDF {
@@ -40,18 +41,23 @@
             $this->Ln();
         }
 
-        function viewTable($rsvList) {
-            $this->setFont('Times', '', 12);            
+        function viewTable($controller, $rsvList) {
+            $this->setFont('Times', '', 12);    
+
             foreach ($rsvList as $rsv) {
                 $client = strtoupper( $rsv->getClient()->getLastName() . " " . $rsv->getClient()->getName() );
                 $stay = strtoupper( str_replace('_', ' ', $rsv->getStay()) );
+                $quantity = $controller->getSizeNumberParkingByReservation($rsv); 
+                $numbers = $controller->getNumberParkingByReservation($rsv);
+                
                 $this->Cell(40, 10, $rsv->getBeachTent()->getNumber(), 1, 0, 'C');
-                $this->Cell(80, 10, $client, 1, 0, 'L');
-                $this->Cell(80, 10, $stay, 1, 0, 'L');
-                $this->Cell(40, 10, 'CANTIDAD', 1, 0, 'L');
-                $this->Cell(40, 10, 'NUMERO', 1, 0, 'L');                           
+                $this->Cell(80, 10, $client, 1, 0, 'C');
+                $this->Cell(80, 10, $stay, 1, 0, 'C');
+                $this->Cell(40, 10, $quantity, 1, 0, 'C');
+                $this->Cell(40, 10, $numbers, 1, 0, 'C');                           
                 $this->Ln();
             }
+
         }
     }
 
@@ -62,7 +68,7 @@
     $pdf->AliasNbPages();
     $pdf->AddPage('L', 'A4', '');
     $pdf->headerTable();
-    $pdf->viewTable($rsvList);        
+    $pdf->viewTable($reservationController, $rsvList);        
     $pdf->Output();
 
 ?>

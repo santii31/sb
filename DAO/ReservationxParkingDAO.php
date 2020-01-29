@@ -138,23 +138,23 @@
                     $reservation->setDateEnd($row["reservation_date_end"]);
                     $reservation->setStay($row["reservation_stay"]);
 
+                    $tent = new BeachTent();
+                    $tent->setNumber($row["beach_tent_number"]);
 
                     $reservation->setBeachTent($tent);
 
                     $client = new Client();
                     $client->setName($row["client_name"]);
-                    $client->setLastname($row["client_lastname"]);
-                    $client->setEmail($row["client_email"]);
-                    $client->setPhone($row["client_tel"]);
+                    $client->setLastname($row["client_lastname"]);                    
 
                     $reservation->setClient($client);
 
                     $parking = new Parking();
                     $parking->setId($row["parking_id"]);
-                    $parking->setNumber($row["parking_number"]);
-                    $parking->setPrice($row["parking_price"]);
+                    $parking->setNumber($row["parking_number"]);                    
                     
                     $reservationxParking->setReservation($reservation);
+
                     $reservationxParking->setParking($parking);      
                     
                     array_push($reservationxParkingList, $reservationxParking);
