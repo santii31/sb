@@ -394,7 +394,7 @@
                 $reservation->setParasol($parasol);
                 $reservation->setClient($client);
 
-                return $this->reservationDAO->add($reservation, $register_by); 
+                return $this->reservationDAO->addSecundary($reservation, $register_by); 
             }
             return false;
         }

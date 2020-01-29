@@ -1081,6 +1081,38 @@ BEGIN
 END$$
 
 
+DROP PROCEDURE IF EXISTS `reservation_addSecundary`;
+DELIMITER $$
+CREATE PROCEDURE reservation_addSecundary(
+								    IN date_start DATE,
+                                    IN date_end DATE,
+                                    IN stay VARCHAR(255),
+                                    IN discount FLOAT,
+                                    IN total_price FLOAT,
+                                    IN FK_id_client INT,                            
+                                    IN FK_id_parasol INT,                              
+                                    IN date_register DATE,
+                                    IN register_by INT,
+								    OUT lastId int
+							)
+BEGIN
+    INSERT INTO reservation (
+			reservation.date_start,
+            reservation.date_end,
+            reservation.stay,
+            reservation.discount,
+            reservation.total_price,
+            reservation.FK_id_client,            
+            reservation.FK_id_parasol,            
+            reservation.date_register,
+            reservation.register_by
+	)
+    VALUES (date_start, date_end, stay, discount, total_price, FK_id_client, FK_id_parasol, date_register, register_by);
+	SET lastId = LAST_INSERT_ID();	
+	SELECT lastId;
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getById`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getById (IN id INT)
@@ -1550,6 +1582,34 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS reservation_geByIdParasol;
+DELIMITER $$
+CREATE PROCEDURE reservation_geByIdParasol (IN id INT)
+BEGIN
+    SELECT        
+        reservation.id AS reservation_id,
+        reservation.date_start AS reservation_dateStart,
+        reservation.date_end AS reservation_dateEnd,
+        reservation.stay AS reservation_stay,
+        reservation.discount AS reservation_discount,
+        reservation.total_price AS reservation_totalPrice,
+        client.id AS client_id,
+        client.name AS client_name,
+        client.lastname AS client_lastName,
+        client.email AS client_email,
+        client.tel AS client_tel,
+        client.city AS client_city,
+        client.address AS client_address,
+        client.payment_method AS client_paymentMethod,
+        client.auxiliary_phone AS client_auxiliaryPhone,
+        client.vehicle_type AS client_vehicleType
+    FROM reservation         
+    INNER JOIN parasol ON reservation.FK_id_parasol = parasol.id
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    WHERE (parasol.id = id) AND (reservation.is_active = true);    
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getAllActiveWithLimit`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getAllActiveWithLimit (
@@ -1748,6 +1808,31 @@ BEGIN
     INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`
     INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
     WHERE `reservationxparking`.`FK_id_parking` = id;
+END$$
+
+
+DROP procedure IF EXISTS `reservationxparking_getByIdReserve`;
+DELIMITER $$
+CREATE PROCEDURE reservationxparking_getByIdReserve (IN id INT)
+BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        reservation.stay as reservation_stay,
+        client.name as client_name,
+        client.lastname as client_lastname,
+        client.email as client_email,
+        client.tel as client_tel,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`
+    INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
+    WHERE `reservationxparking`.`FK_id_reservation` = id;
 END$$
 
 

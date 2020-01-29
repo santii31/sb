@@ -121,7 +121,52 @@
             }        
         }
 
+        public function getAllByReservationId(Reservation $reservation) {
+            try {
+                $reservationxParkingList = array();
+                $query = "CALL reservationxparking_getByIdReserve(?)";
+                $parameters["id"] = $reservation->getId();
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                foreach ($results as $row) {
+                    
+                    $reservationxParking = new ReservationxParking();
 
+                    $reservation = new Reservation();
+                    $reservation->setId($row["reservation_id"]);
+                    $reservation->setDateStart($row["reservation_date_start"]);
+                    $reservation->setDateEnd($row["reservation_date_end"]);
+                    $reservation->setStay($row["reservation_stay"]);
+
+
+                    $reservation->setBeachTent($tent);
+
+                    $client = new Client();
+                    $client->setName($row["client_name"]);
+                    $client->setLastname($row["client_lastname"]);
+                    $client->setEmail($row["client_email"]);
+                    $client->setPhone($row["client_tel"]);
+
+                    $reservation->setClient($client);
+
+                    $parking = new Parking();
+                    $parking->setId($row["parking_id"]);
+                    $parking->setNumber($row["parking_number"]);
+                    $parking->setPrice($row["parking_price"]);
+                    
+                    $reservationxParking->setReservation($reservation);
+                    $reservationxParking->setParking($parking);      
+                    
+                    array_push($reservationxParkingList, $reservationxParking);
+                }
+                
+                return $reservationxParkingList;	
+
+            } catch (Exception $e) {
+                return false;
+                // echo $e;
+            }        
+        }    
 
     }
 

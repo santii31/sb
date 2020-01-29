@@ -99,7 +99,6 @@
         public function reserve($price, $reservation, $id_parking, $fromList = null) {
             
             if ($serv = $this->reservationxserviceDAO->getServiceByReservation($reservation) == false) {
-
                 
                 $parking = new Parking();
                 $parking->setId($id_parking);
@@ -159,6 +158,7 @@
                     return $this->parkingMap($reservation, $fromList, $price, DB_ERROR);
 
                 } else {  
+                    
                     $this->reservationController = new ReservationController();
                     $reserve = $this->reservationController->getById($reservation);
 

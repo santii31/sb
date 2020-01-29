@@ -45,7 +45,33 @@
 				// echo $e;				
 			}			
 		}		
-					
+				
+		public function addSecundary(Reservation $reservation, Admin $registerBy) {								
+			try {					
+				$query = "CALL reservation_addSecundary(?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
+				$parameters["date_start"] = $reservation->getDateStart();
+				$parameters["date_end"] = $reservation->getDateEnd();
+				$parameters["stay"] = $reservation->getStay();
+				$parameters["discount"] = $reservation->getDiscount();
+				$parameters["total_price"] = $reservation->getPrice();
+				$parameters["FK_id_client"] = $reservation->getClient()->getId();
+				$parameters["FK_id_parasol"] = $reservation->getParasol()->getId();
+				$parameters["date_register"] = date("Y-m-d");
+				$parameters["register_by"] = $registerBy->getId();                
+				$this->connection = Connection::getInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
+                
+                foreach ($results as $row) {
+                    $lastId = $row['lastId'];                
+                }
+				return $lastId;
+			}
+			catch (Exception $e) {
+				// return false;				
+				echo $e;				
+			}			
+		}	
+
 		public function getById(Reservation $reservation) {
 			try {				
 				$reservationTemp = null;
