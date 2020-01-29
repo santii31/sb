@@ -758,7 +758,47 @@
             catch (Exception $ex) {
                 return false;
             }
-        }
+		}
+		
+		public function getByIdParasol(Parasol $parasol) {
+			try {
+				$parasolReservations = array();
+				$query = "CALL reservation_geByIdParasol(?)";
+				$parameters["id"] = $parasol->getId();				
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
+				foreach ($results as $row) {		
+					
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+
+					$client = new Client();
+					$client->setId($row["client_id"]);
+                    $client->setName($row["client_name"]);
+                    $client->setLastName($row["client_lastName"]);
+                    $client->setEmail($row["client_email"]);
+                    $client->setPhone($row["client_tel"]);
+                    $client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					
+					$reservation->setClient($client);
+										
+					array_push($parasolReservations, $reservation);
+				}
+				return $parasolReservations;	
+			} catch (Exception $e) {
+				return false;			
+				//echo $e;					
+			}
+		}
 		
     }
 

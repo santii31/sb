@@ -19,8 +19,14 @@
                                 Mostrar reservas habilitadas
                             </span>    
                         </a>
-                        <?php else: ?>                        
-                            <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/1/disables">                    
+                        <?php else: ?>           
+                        <a href="<?= FRONT_ROOT ?>reservation/generatePDF">                    
+                            <i class="material-icons left">picture_as_pdf</i>
+                            <span>
+                                Generar lista de reservas en PDF
+                            </span>    
+                        </a>             <br>
+                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/1/disables">                    
                             <i class="material-icons left">arrow_forward</i>
                             <span>
                                 Mostrar reservas deshabilitadas

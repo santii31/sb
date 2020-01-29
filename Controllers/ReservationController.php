@@ -15,7 +15,8 @@
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
     use DAO\ServicexMobileParasolDAO as ServicexMobileParasolDAO;
-    use DAO\ConfigDAO as ConfigDAO;
+    use DAO\ConfigDAO as ConfigDAO;    
+    use Controllers\PDFController as PDFController;  
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\ParkingController as ParkingController;    
@@ -85,8 +86,7 @@
                 $reservation->setDateEnd($end);            
                 $reservation->setStay($stay);
                 $reservation->setPrice($price);
-                
-                // DESCUENTO ???????
+                                
                 $reservation->setDiscount(0);
                 
                 $tent = new BeachTent();
@@ -341,6 +341,13 @@
             }
         }
 
+        public function generatePDF() {  
+            if ($admin = $this->adminController->isLogged()) {                                                               
+                $pdfController = new PDFController();
+            } else {
+                return $this->adminController->userPath();
+            }          
+        }
 
         // parasol
         private function addParasol($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price) {                        
@@ -531,6 +538,11 @@
             return $flag;
         }
 
+        public function getByIdParasol($id_parasol) {
+            $parasol = new Parasol();
+            $parasol->setId($id_parasol);
+            return $this->reservationDAO->getByIdParasol($parasol);
+        }
 
         // 
         public function checkIsDateReserved(Reservation $reservation) {                        
@@ -585,20 +597,7 @@
             return $futureReserve;
         }
         
-        public function getRsvClientsCount() {
-            return $this->reservationDAO->getCount();
-        }
-
-        public function getAllReservationsWithClients($start) {
-            return $this->reservationDAO->getAllRsvWithClientsWithLimit($start);
-        }
-
-        public function getSalesMonthly() {
-            return $this->reservationDAO->getSalesMonthly();
-        }
-
-        // 
-        public function paymentMethod($paymentMethod, $id_reserve, $alert = "", $success = ""){
+        public function paymentMethod($paymentMethod, $id_reserve, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 
                 $this->additionalServiceController = new AdditionalServiceController();
@@ -649,7 +648,7 @@
             }
         }
 
-        public function addCheck($bank, $account_number, $check_number, $id_client, $id_reserve){
+        public function addCheck($bank, $account_number, $check_number, $id_client, $id_reserve) {
             if (!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($id_client)) {
                 $check = new Check();
                 $clientTemp = new Client();
@@ -715,6 +714,19 @@
             } else {
                 return false;
             }
+        }
+
+        // 
+        public function getRsvClientsCount() {
+            return $this->reservationDAO->getCount();
+        }
+
+        public function getAllReservationsWithClients($start) {
+            return $this->reservationDAO->getAllRsvWithClientsWithLimit($start);
+        }
+
+        public function getSalesMonthly() {
+            return $this->reservationDAO->getSalesMonthly();
         }
 
     }
