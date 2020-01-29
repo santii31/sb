@@ -1108,8 +1108,7 @@
                                                     </span>		
                                                 </div>     
                                             </a>
-
-                                            <!-- arreglar metodos parasol controladora  -->
+                                            
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content center-align">
                                                     <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                             
@@ -1249,12 +1248,12 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $parasol->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -1876,8 +1875,7 @@
                                                     </span>		
                                                 </div>     
                                             </a>
-
-                                            <!-- arreglar metodos parasol controladora  -->
+                                            
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content center-align">
                                                     <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                             
@@ -2017,12 +2015,12 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $parasol->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -2033,7 +2031,7 @@
                                                     <?php endif; ?>
                                                 </div>
                                             </div>                                           
-                                        </div>                               
+                                        </div>                             
                                     <?php endforeach; ?>                                                                                         
                                 </div>
 
@@ -2645,8 +2643,7 @@
                                                     </span>		
                                                 </div>     
                                             </a>
-
-                                            <!-- arreglar metodos parasol controladora  -->
+                                            
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content center-align">
                                                     <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                             
@@ -2786,12 +2783,12 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $parasol->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -3414,8 +3411,7 @@
                                                     </span>		
                                                 </div>     
                                             </a>
-
-                                            <!-- arreglar metodos parasol controladora  -->
+                                            
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content center-align">
                                                     <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                             
@@ -3555,12 +3551,12 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $parasol->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -3571,7 +3567,7 @@
                                                     <?php endif; ?>
                                                 </div>
                                             </div>                                           
-                                        </div>                                
+                                        </div>                                 
                                     <?php endforeach; ?>                                                                                         
                                 </div>
 
@@ -4183,8 +4179,7 @@
                                                     </span>		
                                                 </div>     
                                             </a>
-
-                                            <!-- arreglar metodos parasol controladora  -->
+                                            
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content center-align">
                                                     <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                             
@@ -4324,12 +4319,12 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $parasol->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
@@ -4340,7 +4335,7 @@
                                                     <?php endif; ?>
                                                 </div>
                                             </div>                                           
-                                        </div>                                
+                                        </div>                                 
                                     <?php endforeach; ?>                                                                                         
                                 </div>
 

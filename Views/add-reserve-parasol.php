@@ -156,10 +156,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="input-field col s3">
+                            <div class="input-field col s4">
                                 <label>Tipo de vehiculo:</label>
                             </div>
-                            <div class="input-field col s3">
+                            <div class="input-field col s2">
                                 <p>
                                     <label>
                                         <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="car">
@@ -168,7 +168,7 @@
                                 </p>                                        
                             </div>
                             
-                            <div class="input-field col s3">
+                            <div class="input-field col s2">
                                 <p>
                                     <label>
                                         <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="van">
@@ -177,14 +177,23 @@
                                 </p>
                             </div>
                             
-                            <div class="input-field col s3">
+                            <div class="input-field col s2">
                                 <p>
                                     <label>
                                         <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="motorcycle">
                                         <span>Moto</span>
                                     </label>
                                 </p>
-                            </div>                                                                
+                            </div>                
+                            
+                            <div class="input-field col s2">
+                                <p>
+                                    <label>
+                                        <input id="none" type="radio" name="none" class="with-gap" value="none">
+                                        <span>Sin vehiculo</span>
+                                    </label>
+                                </p>
+                            </div>                                                  
 
                         </div>
 
