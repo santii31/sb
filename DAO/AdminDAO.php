@@ -273,8 +273,9 @@
 				foreach ($results as $row) {					
 					return $row["total"];
 				}							
-			} catch (Exception $e) {
-				return false;				
+			} catch (Exception $e) {				
+				return false;		
+				// echo $e;		
 			}
 		}
 

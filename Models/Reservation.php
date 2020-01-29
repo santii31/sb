@@ -5,6 +5,7 @@
     use Models\Basic as Basic;
     use Models\Client as Client;    
     use Models\Parking as Parking;    
+    use Models\Parasol as Parasol;
     use Models\BeachTent as BeachTent;    
 
     class Reservation extends Basic {
@@ -17,6 +18,7 @@
         private $price;    
         private $client;            
         private $beachTent;
+        private $parasol;
         private $parking;
         private $is_reserved;
         private $is_active;
@@ -88,6 +90,15 @@
 
         public function setBeachTent(BeachTent $beachTent) {
             $this->beachTent = $beachTent;
+            return $this;
+        }
+
+        public function getParasol() {
+            return $this->parasol;
+        }
+
+        public function setParasol(Parasol $parasol) {
+            $this->parasol = $parasol;
             return $this;
         }
 

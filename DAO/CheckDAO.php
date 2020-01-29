@@ -15,8 +15,7 @@
 		private $tableName = "checkC";		
 
 		public function __construct() { }
-		
-		
+        
         public function add(Check $check) {								
 			try {													
 				$query = "CALL checkC_add(?, ?, ?, ?, @lastId)";
@@ -98,7 +97,6 @@
 				return $this->checkList;	
 			} catch (Exception $e) {
 				return false;
-				// echo $e;
 			}
 		}		
 				

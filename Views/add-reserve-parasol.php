@@ -2,7 +2,7 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>parasol/addReservation" method="post" class="col s10 form-test">
+                    <form action="<?= FRONT_ROOT ?>reservation/addParasolMap" method="post" class="col s10 form-test">
 
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
@@ -228,8 +228,7 @@
                         </div>
                         <div class="col s4">
                             <span>
-                                • Precio sombrilla: $<?= $config->getPriceParasol(); ?>
-                                
+                                • Precio sombrilla: $<?= $config->getPriceParasol(); ?>                                
                             </span>
                         </div>
                     </div>                                                                                                                                         
@@ -272,6 +271,15 @@
             dateStart.value = f_day;            
             dateEnd.value = l_day; 
 
+        } else if (selectStay.value == 'diario') {
+            
+            const date = new Date();                                              
+            const f_day = date.toISOString().slice(0, 10);            
+            const l_day = date.toISOString().slice(0, 10);            
+
+            dateStart.value = f_day;            
+            dateEnd.value = l_day; 
+            
         } else {
 
             dateStart.value = 0;            

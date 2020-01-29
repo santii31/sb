@@ -1044,8 +1044,8 @@
                                     <?php foreach ($firtsParasol as $parasol): ?>
                                         <div>
                                             <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>  
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>              
+                                                <?php if ($this->hasReservation( $parasol->getId() )): ?>  
+                                                    <?php if ($rsv = $this->reservationToday( $parasol->getId() )): ?>              
                                                         
                                                         <?php $stay = $rsv->getStay(); ?>
                                                             
@@ -1106,40 +1106,47 @@
                                                     <span>
                                                     <?= $parasol->getParasolNumber(); ?>
                                                     </span>		
-                                                </div>      
-                                            </a> 
+                                                </div>     
+                                            </a>
 
+                                            <!-- arreglar metodos parasol controladora  -->
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
                                                 <div class="modal-content center-align">
-                                                    <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                   
+                                                    <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                             
                                                     <ul id="tabs-swipe-demo" class="tabs z-depth-1">
                                                         <li class="tab col s6">
-                                                            <a class="active" href="#statusP-<?= $parasol->getId();; ?>">                        
+                                                            <a class="active" href="#status-<?= $parasol->getId(); ?>">                         
                                                                 Reserva actual                                                            
                                                             </a>
                                                         </li>
-                                                        <?php if ($rsv = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <li class="tab col s6">                                                            
+                                                        <?php if ($rsv = $this->hasFutureReservation( $parasol->getId() )): ?>
+                                                        <li class="tab col s6">                                              
+                                                            <a href="#reser-<?= $parasol->getId(); ?>">
+                                                                <span class="fut-rsv-alert">                                                 
+                                                                    <i class="material-icons">warning</i>
+                                                                    Futuras reservas
+                                                                </span>
+                                                            </a>                                                       
                                                         <?php else: ?>
                                                         <li class="tab disabled col s6">                                                     
-                                                        <?php endif; ?>
-                                                            <a href="#reser-<?= $parasol->getId(); ?>">
-                                                                Futuras reservas
-                                                            </a>
+                                                            <a href="#reser-<?= $parasol->getId(); ?>">                                         
+                                                                Futuras reservas                                                         
+                                                            </a>  
+                                                        <?php endif; ?>                                                            
                                                         </li>                                                     
                                                     </ul>
                                                     
-                                                    <div id="statusP-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
+                                                    <div id="status-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
                                                         <div>
-                                                            <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>                           
+                                                            <?php if ($this->hasReservation( $parasol->getId() )): ?>                           
                                                                                                                                     
-                                                                <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
+                                                                <?php if ($rsv = $this->reservationToday( $parasol->getId() )): ?>
                                                                     
                                                                     <div class="reserve-container">
                                                                         
-                                                                        <div class="reserve-title">
+                                                                        <div class="reserve-title">                                          
                                                                             <i class="material-icons">info_outline</i>
-                                                                            La sombrilla se encuentra actualmente reservada.                     
+                                                                            La sombrilla se encuentra actualmente reservada.
                                                                         </div>        
                                                                         
                                                                         <div class="reserve-client">
@@ -1161,17 +1168,17 @@
                                                                                 <span>
                                                                                     <span class="title">• Telefono:  </span>
                                                                                     <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>                                                          
+                                                                                </span>  
                                                                                 <span>
                                                                                     <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
+                                                                                    <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> 
                                                                                 </span>
                                                                                 <span>
                                                                                     <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
+                                                                                    <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> 
                                                                                 </span>
                                                                                 <span>
-                                                                                    <span class="title">• Estadia:  </span>
+                                                                                <span class="title">• Estadia:  </span>
                                                                                     <?= ucfirst(
                                                                                             str_replace('_', ' ', $rsv->getStay()) 
                                                                                         ); 
@@ -1183,8 +1190,11 @@
                                                                         </div>                                                               
                                                                     </div>                                                                   
 
-                                                                <?php elseif ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                                    Reservas futuras
+                                                                <?php elseif ($rsvList = $this->hasFutureReservation( $parasol->getId() )): ?>  
+                                                                    <span class="fut-rsv-alert">                                         
+                                                                        <i class="material-icons">warning</i>
+                                                                        La sombrilla tiene futuras reservas.
+                                                                    </span>
                                                                 <?php else: ?>
                                                                     La sombrilla no tiene reservas.    
                                                                 <?php endif; ?>                                                          
@@ -1195,9 +1205,9 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <?php if ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
+                                                    <?php if ($rsvList = $this->hasFutureReservation( $parasol->getId() )): ?>
                                                         <div id="reser-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                                                           
+                                                            <div class="future-container">                                                   
                                                                 <?php foreach ($rsvList as $rsv): ?>
                                                                     <div class="future-item">
                                                                         <div class="client">
@@ -1208,18 +1218,28 @@
                                                                         <div class="date">
                                                                             <div>
                                                                                 <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
+                                                                                <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
 
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
+                                                                                <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
 
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
+                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
+
+                                                                            <div>
+                                                                                <span class="title-2">• Estadia: </span>
+                                                                                <span>  
+                                                                                    <?= ucfirst(
+                                                                                            str_replace('_', ' ', $rsv->getStay()) 
+                                                                                        ); 
+                                                                                    ?> 
+                                                                                </span>         
+                                                                            </div>                                                           
                                                                         </div>
                                                                     </div>
                                                                 <?php endforeach; ?>                                                         
@@ -1229,22 +1249,22 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>parasol/addReservationPath/<?= $parasol->getId(); ?>" 
+                                                    <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                         Reservar
                                                     </a>
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/updatePath/<?= $rsv->getId(); ?>" 
+                                                    <?php if ($rsv = $this->reservationToday( $parasol->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/disable/<?= $rsv->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Deshabilitar
                                                         </a>
                                                     <?php endif; ?>
                                                 </div>
-                                            </div>                                             
+                                            </div>                                           
                                         </div>                                
                                     <?php endforeach; ?>                                                                                         
                                 </div>
@@ -1792,208 +1812,23 @@
                                     <?php foreach ($secondParasol as $parasol): ?>
                                         <div>
                                             <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>  
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>              
-                                                        
-                                                        <?php $stay = $rsv->getStay(); ?>
-                                                            
-                                                        <?php switch ($stay): 
-                                                            case "temporada": ?>
-                                                                <div class="parasol-item yellow">                                                
-                                                            <?php break; ?> 
-                                                        
-                                                            <?php case "enero": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_dia": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_quincena": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "febrero": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                                
-
-                                                            <?php case "febrero_dia": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febero_primer_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febrero_segunda_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                            
-
-                                                            <?php case "diario": ?>
-                                                                <div class="parasol-item green">                                                
-                                                            <?php break; ?>                                                                
-                                                            
-                                                            <?php case "fin_semana": ?>
-                                                                <div class="parasol-item orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "periodo": ?>
-                                                                <div class="parasol-item blue">                                                
-                                                            <?php break; ?>  
-                                                            
-                                                        <?php endswitch; ?>      
-                                                                                                                        
-                                                    <?php else: ?>
-                                                    <div class="parasol-item">
-                                                    <?php endif; ?>
-
-                                                <?php else: ?>
-                                                <div class="parasol-item">
-                                                <?php endif; ?>
+                                                <div class="parasol-item tent-sea">
                                                     <span>
-                                                    <?= $parasol->getParasolNumber(); ?>
+                                                        <?= $parasol->getParasolNumber(); ?>
                                                     </span>		
                                                 </div>      
-                                            </a> 
+                                            </a>
 
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                   
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#statusP-<?= $parasol->getId();; ?>">                        
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <li class="tab col s6">                                                            
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                        <?php endif; ?>
-                                                            <a href="#reser-<?= $parasol->getId(); ?>">
-                                                                Futuras reservas
-                                                            </a>
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="statusP-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La sombrilla se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>                                                          
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Estadia:  </span>
-                                                                                    <?= ucfirst(
-                                                                                            str_replace('_', ' ', $rsv->getStay()) 
-                                                                                        ); 
-                                                                                    ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                                    Reservas futuras
-                                                                <?php else: ?>
-                                                                    La sombrilla no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La sombrilla no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <div id="reser-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                                                           
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
                                                 </div>
-
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>parasol/addReservationPath/<?= $parasol->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
                                                 </div>
-                                            </div>                                             
-                                        </div>                                 
+                                            </div> 	
+                                        </div>                                
                                     <?php endforeach; ?>                                                                                         
                                 </div>
 
@@ -2541,208 +2376,23 @@
                                     <?php foreach ($thirdParasol as $parasol): ?>
                                         <div>
                                             <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>  
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>              
-                                                        
-                                                        <?php $stay = $rsv->getStay(); ?>
-                                                            
-                                                        <?php switch ($stay): 
-                                                            case "temporada": ?>
-                                                                <div class="parasol-item yellow">                                                
-                                                            <?php break; ?> 
-                                                        
-                                                            <?php case "enero": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_dia": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_quincena": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "febrero": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                                
-
-                                                            <?php case "febrero_dia": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febero_primer_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febrero_segunda_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                            
-
-                                                            <?php case "diario": ?>
-                                                                <div class="parasol-item green">                                                
-                                                            <?php break; ?>                                                                
-                                                            
-                                                            <?php case "fin_semana": ?>
-                                                                <div class="parasol-item orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "periodo": ?>
-                                                                <div class="parasol-item blue">                                                
-                                                            <?php break; ?>  
-                                                            
-                                                        <?php endswitch; ?>      
-                                                                                                                        
-                                                    <?php else: ?>
-                                                    <div class="parasol-item">
-                                                    <?php endif; ?>
-
-                                                <?php else: ?>
-                                                <div class="parasol-item">
-                                                <?php endif; ?>
+                                                <div class="parasol-item tent-sea">
                                                     <span>
-                                                    <?= $parasol->getParasolNumber(); ?>
+                                                        <?= $parasol->getParasolNumber(); ?>
                                                     </span>		
                                                 </div>      
-                                            </a> 
+                                            </a>
 
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                   
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#statusP-<?= $parasol->getId();; ?>">                        
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <li class="tab col s6">                                                            
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                        <?php endif; ?>
-                                                            <a href="#reser-<?= $parasol->getId(); ?>">
-                                                                Futuras reservas
-                                                            </a>
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="statusP-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La sombrilla se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>                                                          
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Estadia:  </span>
-                                                                                    <?= ucfirst(
-                                                                                            str_replace('_', ' ', $rsv->getStay()) 
-                                                                                        ); 
-                                                                                    ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                                    Reservas futuras
-                                                                <?php else: ?>
-                                                                    La sombrilla no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La sombrilla no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <div id="reser-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                                                           
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
                                                 </div>
-
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>parasol/addReservationPath/<?= $parasol->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
                                                 </div>
-                                            </div>                                             
-                                        </div>                                  
+                                            </div> 	
+                                        </div>                                
                                     <?php endforeach; ?>                                                                                         
                                 </div>
 
@@ -3290,208 +2940,23 @@
                                     <?php foreach ($fourthParasol as $parasol): ?>
                                         <div>
                                             <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>  
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>              
-                                                        
-                                                        <?php $stay = $rsv->getStay(); ?>
-                                                            
-                                                        <?php switch ($stay): 
-                                                            case "temporada": ?>
-                                                                <div class="parasol-item yellow">                                                
-                                                            <?php break; ?> 
-                                                        
-                                                            <?php case "enero": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_dia": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_quincena": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "febrero": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                                
-
-                                                            <?php case "febrero_dia": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febero_primer_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febrero_segunda_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                            
-
-                                                            <?php case "diario": ?>
-                                                                <div class="parasol-item green">                                                
-                                                            <?php break; ?>                                                                
-                                                            
-                                                            <?php case "fin_semana": ?>
-                                                                <div class="parasol-item orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "periodo": ?>
-                                                                <div class="parasol-item blue">                                                
-                                                            <?php break; ?>  
-                                                            
-                                                        <?php endswitch; ?>      
-                                                                                                                        
-                                                    <?php else: ?>
-                                                    <div class="parasol-item">
-                                                    <?php endif; ?>
-
-                                                <?php else: ?>
-                                                <div class="parasol-item">
-                                                <?php endif; ?>
+                                                <div class="parasol-item tent-sea">
                                                     <span>
-                                                    <?= $parasol->getParasolNumber(); ?>
+                                                        <?= $parasol->getParasolNumber(); ?>
                                                     </span>		
                                                 </div>      
-                                            </a> 
+                                            </a>
 
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                   
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#statusP-<?= $parasol->getId();; ?>">                        
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <li class="tab col s6">                                                            
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                        <?php endif; ?>
-                                                            <a href="#reser-<?= $parasol->getId(); ?>">
-                                                                Futuras reservas
-                                                            </a>
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="statusP-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La sombrilla se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>                                                          
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Estadia:  </span>
-                                                                                    <?= ucfirst(
-                                                                                            str_replace('_', ' ', $rsv->getStay()) 
-                                                                                        ); 
-                                                                                    ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                                    Reservas futuras
-                                                                <?php else: ?>
-                                                                    La sombrilla no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La sombrilla no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <div id="reser-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                                                           
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
                                                 </div>
-
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>parasol/addReservationPath/<?= $parasol->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
                                                 </div>
-                                            </div>                                             
-                                        </div>                                  
+                                            </div> 	
+                                        </div>                                
                                     <?php endforeach; ?>                                                                                         
                                 </div>
 
@@ -4039,208 +3504,23 @@
                                     <?php foreach ($fifthParasol as $parasol): ?>
                                         <div>
                                             <a class="modal-trigger" href="#parasol<?= $parasol->getId(); ?>">
-                                                <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>  
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>              
-                                                        
-                                                        <?php $stay = $rsv->getStay(); ?>
-                                                            
-                                                        <?php switch ($stay): 
-                                                            case "temporada": ?>
-                                                                <div class="parasol-item yellow">                                                
-                                                            <?php break; ?> 
-                                                        
-                                                            <?php case "enero": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_dia": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-
-                                                            <?php case "enero_quincena": ?>
-                                                                <div class="parasol-item fuchsia">                                               
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "febrero": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                                
-
-                                                            <?php case "febrero_dia": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febero_primer_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>
-
-                                                            <?php case "febrero_segunda_quincena": ?>
-                                                                <div class="parasol-item violet">                                                
-                                                            <?php break; ?>                                                            
-
-                                                            <?php case "diario": ?>
-                                                                <div class="parasol-item green">                                                
-                                                            <?php break; ?>                                                                
-                                                            
-                                                            <?php case "fin_semana": ?>
-                                                                <div class="parasol-item orange">                                                
-                                                            <?php break; ?>
-                                                            
-                                                            <?php case "periodo": ?>
-                                                                <div class="parasol-item blue">                                                
-                                                            <?php break; ?>  
-                                                            
-                                                        <?php endswitch; ?>      
-                                                                                                                        
-                                                    <?php else: ?>
-                                                    <div class="parasol-item">
-                                                    <?php endif; ?>
-
-                                                <?php else: ?>
-                                                <div class="parasol-item">
-                                                <?php endif; ?>
+                                                <div class="parasol-item tent-sea">
                                                     <span>
-                                                    <?= $parasol->getParasolNumber(); ?>
+                                                        <?= $parasol->getParasolNumber(); ?>
                                                     </span>		
                                                 </div>      
-                                            </a> 
+                                            </a>
 
                                             <div id="parasol<?= $parasol->getId(); ?>" class="modal modal-fixed-footer">
-                                                <div class="modal-content center-align">
-                                                    <h4>Sombrilla Nº <?= $parasol->getParasolNumber(); ?></h4>                                   
-                                                    <ul id="tabs-swipe-demo" class="tabs z-depth-1">
-                                                        <li class="tab col s6">
-                                                            <a class="active" href="#statusP-<?= $parasol->getId();; ?>">                        
-                                                                Reserva actual                                                            
-                                                            </a>
-                                                        </li>
-                                                        <?php if ($rsv = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <li class="tab col s6">                                                            
-                                                        <?php else: ?>
-                                                        <li class="tab disabled col s6">                                                     
-                                                        <?php endif; ?>
-                                                            <a href="#reser-<?= $parasol->getId(); ?>">
-                                                                Futuras reservas
-                                                            </a>
-                                                        </li>                                                     
-                                                    </ul>
-                                                    
-                                                    <div id="statusP-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                        <div>
-                                                            <?php if ($parasolController->hasReservation( $parasol->getId() )): ?>                           
-                                                                                                                                    
-                                                                <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                                    
-                                                                    <div class="reserve-container">
-                                                                        
-                                                                        <div class="reserve-title">
-                                                                            <i class="material-icons">info_outline</i>
-                                                                            La sombrilla se encuentra actualmente reservada.                     
-                                                                        </div>        
-                                                                        
-                                                                        <div class="reserve-client">
-                                                                            
-                                                                            <div class="client-subinfo">
-                                                                                <i class="material-icons">person_pin</i>                     
-                                                                                Cliente                                                      
-                                                                            </div>
-
-                                                                            <div>                                                            
-                                                                                <span>
-                                                                                    <span class="title">• Nombre:  </span>
-                                                                                    <?= ucfirst($rsv->getClient()->getName()) . ' ' . $rsv->getClient()->getLastName(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Email:  </span>
-                                                                                    <?= $rsv->getClient()->getEmail(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Telefono:  </span>
-                                                                                    <?= $rsv->getClient()->getPhone(); ?> 
-                                                                                </span>                                                          
-                                                                                <span>
-                                                                                    <span class="title">• Fecha inicio:  </span>
-                                                                                    <?= $rsv->getDateStart(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Fecha fin:  </span>
-                                                                                    <?= $rsv->getDateEnd(); ?> 
-                                                                                </span>
-                                                                                <span>
-                                                                                    <span class="title">• Estadia:  </span>
-                                                                                    <?= ucfirst(
-                                                                                            str_replace('_', ' ', $rsv->getStay()) 
-                                                                                        ); 
-                                                                                    ?> 
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <?php ?>
-                                                                        </div>                                                               
-                                                                    </div>                                                                   
-
-                                                                <?php elseif ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                                    Reservas futuras
-                                                                <?php else: ?>
-                                                                    La sombrilla no tiene reservas.    
-                                                                <?php endif; ?>                                                          
-
-                                                            <?php else: ?>
-                                                                La sombrilla no tiene reservas.
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <?php if ($rsvList = $parasolController->hasFutureReservation( $parasol->getId() )): ?>
-                                                        <div id="reser-<?= $parasol->getId(); ?>" class="col s12 tab-extra">
-                                                            <div class="future-container">                                                                                           
-                                                                <?php foreach ($rsvList as $rsv): ?>
-                                                                    <div class="future-item">
-                                                                        <div class="client">
-                                                                            <i class="material-icons">person_pin</i>
-                                                                            <?= ucfirst($rsv->getClient()->getName()) . ' ' . 
-                                                                                $rsv->getClient()->getLastName(); ?>
-                                                                        </div>
-                                                                        <div class="date">
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha inicio: </span>
-                                                                                <span> <?= $rsv->getDateStart(); ?> </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Fecha fin: </span>
-                                                                                <span> <?= $rsv->getDateEnd(); ?> </span>                     
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span class="title-2">• Telefono: </span>
-                                                                                <span> <?= $rsv->getClient()->getPhone(); ?> </span>           
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php endforeach; ?>                                                         
-                                                            </div>    
-                                                        </div>
-                                                    <?php endif; ?>                 
+                                                <div class="modal-content">
+                                                    <h4>sdas</h4>
+                                                    <p>asdasd</p>
                                                 </div>
-
                                                 <div class="modal-footer">
-                                                    <a href="<?= FRONT_ROOT ?>parasol/addReservationPath/<?= $parasol->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                        Reservar
-                                                    </a>
-                                                    <?php if ($rsv = $parasolController->reservationToday( $parasol->getId() )): ?>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/updatePath/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Modificar
-                                                        </a>
-                                                        <a href="<?= FRONT_ROOT ?>parasol/disable/<?= $rsv->getId(); ?>" 
-                                                        class="modal-close waves-effect waves-green btn-flat ">
-                                                            Deshabilitar
-                                                        </a>
-                                                    <?php endif; ?>
+                                                    <a href="<?= FRONT_ROOT ?>" class="modal-close waves-effect waves-green btn-flat ">Agree</a>
                                                 </div>
-                                            </div>                                             
-                                        </div>                                 
+                                            </div> 	
+                                        </div>                                
                                     <?php endforeach; ?>                                                                                         
                                 </div>
 

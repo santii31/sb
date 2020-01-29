@@ -89,14 +89,20 @@
 
         public function hasReservation($id_tent) {            
             $reserveList = $this->reservationController->getByIdTent($id_tent);
-            return sizeof($reserveList);
+            if ($reserveList != null) {
+                return sizeof($reserveList);
+            }
+
+            return false;
         }
 
         public function reservationToday($id_tent) {
             $reserveList = $this->reservationController->getByIdTent($id_tent);            
-            foreach ($reserveList as $reserve) {
-                if ($reservation = $this->reservationController->checkIsDateReserved($reserve)) {
-                    return $reservation;
+            if ($reserveList != null) {
+                foreach ($reserveList as $reserve) {
+                    if ($reservation = $this->reservationController->checkIsDateReserved($reserve)) {
+                        return $reservation;
+                    }
                 }
             }
             return false;
@@ -105,17 +111,57 @@
         public function hasFutureReservation($id_tent) {            
             $futureReserve = array();
             $reserveList = $this->reservationController->getByIdTent($id_tent);
-            $today = date("Y-m-d");
-            $dateToCompare = strtotime( $today );            
-            
-            foreach ($reserveList as $reserve) {                
-                $reserveDate = strtotime( $reserve->getDateStart() );
-                if ($reserveDate > $dateToCompare) {
-                    array_push($futureReserve, $reserve);
-                }                
+            if ($reserveList != null) {                  
+                $today = date("Y-m-d");
+                $dateToCompare = strtotime( $today );      
+                foreach ($reserveList as $reserve) {                
+                    $reserveDate = strtotime( $reserve->getDateStart() );
+                    if ($reserveDate > $dateToCompare) {
+                        array_push($futureReserve, $reserve);
+                    }                
+                }
             }
             return $futureReserve;
         }
+
+        // parasol
+        public function hasReservationParasol($id_parasol) {            
+            $reserveList = $this->reservationController->getByIdParasol($id_parasol);
+            if ($reserveList != null) {
+                return sizeof($reserveList);
+            }
+            
+            return false;
+        }
+
+        public function reservationTodayParasol($id_parasol) {
+            $reserveList = $this->reservationController->getByIdParasol($id_parasol);            
+            if ($reserveList != null) {
+                foreach ($reserveList as $reserve) {
+                    if ($reservation = $this->reservationController->checkIsDateReserved($reserve)) {
+                        return $reservation;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public function hasFutureReservationParasol($id_parasol) {            
+            $futureReserve = array();
+            $reserveList = $this->reservationController->getByIdParasol($id_parasol);
+            if ($reserveList != null) {                  
+                $today = date("Y-m-d");
+                $dateToCompare = strtotime( $today );      
+                foreach ($reserveList as $reserve) {                
+                    $reserveDate = strtotime( $reserve->getDateStart() );
+                    if ($reserveDate > $dateToCompare) {
+                        array_push($futureReserve, $reserve);
+                    }                
+                }
+            }
+            return $futureReserve;
+        }
+
 
         private function getAllTents() {                       
             return sizeof( $this->beachTentDAO->getAll() );

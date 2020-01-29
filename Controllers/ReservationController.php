@@ -9,13 +9,13 @@
     use Models\Check as Check;
     use DAO\CheckDAO as CheckDAO;
     use DAO\ClientDAO as ClientDAO;        
-    use DAO\ConfigDAO as ConfigDAO;
     use DAO\ReservationDAO as ReservationDAO;    
+    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
-    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ServicexMobileParasolDAO as ServicexMobileParasolDAO;
+    use DAO\ConfigDAO as ConfigDAO;
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
     use Controllers\ParkingController as ParkingController;    
@@ -341,41 +341,194 @@
             }
         }
 
-        public function checkList($alert = "", $success = ""){
+
+        // parasol
+        private function addParasol($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price) {                        
+
+            $this->clientController = new ClientController();                              
+            
+            $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+            $l_name_s = filter_var($l_name, FILTER_SANITIZE_STRING);
+            $addr_s = filter_var($addr, FILTER_SANITIZE_STRING);
+            $city_s = filter_var($city, FILTER_SANITIZE_STRING);
+            $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);     
+            $vehicle_s = filter_var($vehicle, FILTER_SANITIZE_STRING);                                
+
+            $client = new Client();
+            $client->setName( strtolower($name_s) );
+            $client->setLastName( strtolower($l_name_s) );
+            $client->setAddress( strtolower($addr_s) );            
+            $client->setCity( strtolower($city_s) );
+            $client->setCp($cp);
+            $client->setEmail($email_s);
+            $client->setPhone($phone);
+            $client->setFamilyGroup( strtolower($fam) );
+            $client->setAuxiliaryPhone($auxiliary_phone);
+            $client->setVehicleType( strtolower($vehicle_s) );       
+
+            $register_by = $this->adminController->isLogged();
+
+            if ($clientId = $this->clientController->addObj($client, $register_by)) {
+
+                $client->setId($clientId);
+                                
+                $reservation = new Reservation();
+                $reservation->setDateStart($start);
+                $reservation->setDateEnd($end);            
+                $reservation->setStay($stay);
+                $reservation->setPrice($price);
+                                
+                $reservation->setDiscount(0);
+                
+                $parasol = new Parasol();
+                $parasol->setId($id_parasol);  
+
+                $reservation->setParasol($parasol);
+                $reservation->setClient($client);
+
+                return $this->reservationDAO->add($reservation, $register_by); 
+            }
+            return false;
+        }
+
+        public function addParasolMap($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price) { 
+
+            // Saves the inputs in case of validation error
+            $inputs = array(
+                "start" => $start, 
+                "end" => $end,
+                "name" => $name,
+                "l_name" => $l_name,
+                "addr" => $addr,
+                "city" => $city,
+                "cp" => $cp,
+                "email" => $email,
+                "phone" => $phone,
+                "fam" => $fam,
+                "aux_phone" => $auxiliary_phone,
+                "parasol" => $id_parasol,
+                "price"=> $price
+            );
+            
+            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price)) {
+                
+                if ($this->checkIntervalParasol($start, $end, $id_parasol) == 1) {                                 
+
+                    if ($lastId = $this->addParasol($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price)) {                                                    
+
+                        $this->parkingController = new ParkingController();                                         
+                        return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
+
+                    } else {                        
+                        return $this->addReservationPath(null, DB_ERROR, null, $inputs);        
+                    }
+                }                             
+                return $this->addReservationPath(null, RESERVATION_ERROR, null, $inputs);
+            }            
+            return $this->addReservationPath($id_parasol, EMPTY_FIELDS, null, $inputs);            
+        }
+        
+        public function checkIntervalParasol($date_start, $date_end, $id_parasol) {
+			$existance = $this->getByIdParasol($id_parasol);			
+			$flag = 1;
+			if ($existance != null) {
+				foreach ($existance as $reserve) {
+					if ( ($date_end < $reserve->getDateStart()) xor ($date_start > $reserve->getDateEnd()) ) {
+						$flag *= 1;	
+					} else {
+						$flag *= 0;
+					}
+				}
+            }
+            return $flag;
+        }
+        
+        public function addReservationParasolPath($id_parasol = "", $alert = "", $success = "", $inputs = array()) { 
             if ($admin = $this->adminController->isLogged()) {
-                $title = "Cheques - Buscar";
-                $checks = $this->checkDAO->getAll();                
+                $config = $this->configDAO->get();                     
+                $title = "Reserva - Añadir";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "list-check.php");
-                require_once(VIEWS_PATH . "footer.php");
-            }
+                require_once(VIEWS_PATH . "add-reserve-parasol.php");
+                require_once(VIEWS_PATH . "footer.php");                
+			} else {
+				return $this->adminController->userPath();
+			}
         }
 
-        public function payed($id_check){
-            $checkTemp = new Check();
-            $checkTemp->setId($id_check);
-            $check = $this->checkDAO->getById($checkTemp);
-            $check->setCharged("cobrado");
-            
-            if ($this->checkDAO->update($check)) {
-                return true;
+        public function updateParasolPath($id_rsv, $id_parasol, $alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {      
+                $title = "Reserva - Modificar informacion";       
+                $reservationTemp = new Reservation();
+                $reservationTemp->setId($id_rsv);                
+                $reservation = $this->reservationDAO->getById($reservationTemp);   
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "update-reserve-parasol.php");
+                require_once(VIEWS_PATH . "footer.php");                
             } else {
-                return false;
-            }
+                return $this->adminController->userPath();
+            }           
+        }
+        
+        public function updateParasol($id_rsv, $id_parasol, $stay, $start, $end, $price) {    
+                        
+            if ($this->isFormUpdateParasolNotEmpty($id_rsv, $id_parasol, $stay, $start, $end, $price)) {                                 
+
+				if ($this->checkIntervalToUpdateParasol($start, $end, $id_parasol, $id_rsv) == 1) {                                               
+
+                    $reservation = new Reservation();    
+                    $reservation->setId($id_rsv);                  
+                    $reservation->setStay($stay);
+                    $reservation->setDateStart($start);
+                    $reservation->setDateEnd($end);
+                    $reservation->setPrice($price);
+
+                    $parasol = new Parasol();
+                    $parasol->setId($id_parasol);
+
+                    $reservation->setParasol($parasol);                    
+                    
+                    $update_by = $this->adminController->isLogged();
+
+                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
+                        return $this->updatePath($id_rsv, $id_parasol, null, RESERVATION_UPDATE);
+                    } else {       
+                        return $this->updatePath($id_rsv, $id_parasol, DB_ERROR, null);        
+                    }
+                }                
+                return $this->updatePath($id_rsv, $id_parasol, RESERVATION_ERROR, null);
+            }                        
+            return $this->updatePath($id_rsv, $id_parasol, EMPTY_FIELDS, null);
         }
 
-        public function unpayed($id_check){
-            $checkTemp = new Check();
-            $checkTemp->setId($id_check);
-            $check = $this->checkDAO->getById($checkTemp);
-            $check->setCharged("rechazado");
-            
-            if ($this->checkDAO->update($check)) {
-                return true;
-            } else {
-                return false;
+        private function isFormUpdateParasolNotEmpty($id_rsv, $id_parasol, $stay, $start, $end, $price) {
+            if (empty($id_rsv) || 
+                empty($id_parasol) || 
+                empty($stay) || 
+                empty($start) || 
+                empty($end) || 
+                empty($price)) {
+                    return false;
             }
+            return true;
+        } 
+                        
+        private function checkIntervalToUpdateParasol($date_start, $date_end, $id_parasol, $id_rsv) {
+			$existance = $this->getByIdParasol($id_parasol);			
+			$flag = 1;
+			if ($existance != null) {
+				foreach ($existance as $reserve) {
+                    if ($reserve->getId() != $id_rsv) {
+                        if ( ($date_end < $reserve->getDateStart()) xor ($date_start > $reserve->getDateEnd())  ) {
+                            $flag *= 1;	
+                        } else {
+                            $flag *= 0;
+                        }
+                    }
+				}
+            }
+            return $flag;
         }
 
 
@@ -515,6 +668,16 @@
             return $this->paymentMethod("check", $id_reserve, EMPTY_FIELDS, null);
         }        
 
+        public function checkList($alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {
+                $checks = $this->checkDAO->getAll();
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "list-check.php");
+                require_once(VIEWS_PATH . "footer.php");
+            }
+        }
+
         public function payPath($id_reservation) {
             if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Reserva - Precio final";
@@ -528,6 +691,30 @@
             }  else {                
                 return $this->adminController->userPath();
 			}
+        }
+
+        public function payed($id_check) {
+            $checkTemp = new Check();
+            $checkTemp->setId($id_check);
+            $check = $this->checkDAO->getById($checkTemp);
+            $check->setCharged("cobrado");
+            if ($this->checkDAO->update($check)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function unpayed($id_check) {
+            $checkTemp = new Check();
+            $checkTemp->setId($id_check);
+            $check = $this->checkDAO->getById($checkTemp);
+            $check->setCharged("rechazado");
+            if ($this->checkDAO->update($check)) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     }

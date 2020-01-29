@@ -33,8 +33,8 @@
 				return true;
 			}
 			catch (Exception $e) {
-				return false;
-				// echo $e;
+				//return false;
+				echo $e;
 			}			
         }
 					
@@ -89,9 +89,9 @@
 					$parking->setIsActive($row["parking_isActive"]);
 					$reservation->setParking($parking);
                     
-                    array_push($reservationList, $reservation);
+                    
 				}
-				return $reservationList;
+				return $reservation;
 			} catch (Exception $e) {
 				return false;
             }
@@ -100,11 +100,12 @@
         public function getServiceByReservation($id) {
 			try {				
 				$query = "CALL reservationxservice_getServiceByReservation(?)";
-				$additionalService = new AdditionalService();
+				$additionalService = null;
 				$parameters["id"] = $id;
 				$this->connection = Connection::GetInstance();
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
+					$additionalService = new AdditionalService();
                     $additionalService->setId($row["service_id"]);                    
                     $additionalService->setTotal($row["service_total"]);
 				}

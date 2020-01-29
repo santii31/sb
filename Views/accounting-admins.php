@@ -35,7 +35,7 @@
 
                         <tbody>
                             <?php foreach ($admins as $admin): ?>
-                                <tr>                                    
+                                <tr>                                                                  
                                     <td> <?= ucfirst( $admin->getName() ); ?> </td>
                                     <td> <?= ucfirst( $admin->getLastName() ); ?> </td>
                                     <td> <?= $this->adminController->getAllCountRsvByAdmin($admin); ?></td>
