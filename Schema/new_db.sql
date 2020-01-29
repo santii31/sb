@@ -185,7 +185,11 @@ DROP procedure IF EXISTS `admin_getAllWithRsv`;
 DELIMITER $$
 CREATE PROCEDURE admin_getAllWithRsv ()
 BEGIN
-	SELECT * 
+	SELECT 
+        admin.id as admin_id,
+        admin.name as admin_name,
+        admin.lastname as admin_lastname,
+        admin.is_active as admin_is_active 
     FROM `admin` 
     INNER JOIN `reservation` ON `admin`.`id` = `reservation`.`register_by`
     GROUP BY `admin`.`id`;
@@ -3338,6 +3342,7 @@ CREATE TABLE checkC (
     `bank` VARCHAR(255) NOT NULL,
     `account_number` INT NOT NULL,
     `check_number` INT NOT NULL,
+    `charged` VARCHAR(255) DEFAULT "entregado",
     `FK_id_client` INT NOT NULL,
     CONSTRAINT `FK_id_client_check` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`)
 );
@@ -3374,6 +3379,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3396,6 +3402,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3418,6 +3425,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3440,6 +3448,7 @@ BEGIN
            checkC.bank AS check_bank,
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3450,7 +3459,74 @@ BEGIN
 		   client.is_active AS client_isActive
     FROM `checkC` 
     INNER JOIN client ON checkC.FK_id_client = client.id
-    ORDER BY id ASC;
+    ORDER BY client.name, client.lastname ASC;
+END$$
+
+
+DROP procedure IF EXISTS `checkC_getAllUnpaidChecks`;
+DELIMITER $$
+CREATE PROCEDURE checkC_getAllUnpaidChecks ()
+BEGIN
+	SELECT checkC.id AS check_id,
+           checkC.bank AS check_bank,
+           checkC.account_number AS check_accountNumber,
+           checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+		   client.is_active AS client_isActive
+    FROM `checkC` 
+    INNER JOIN client ON checkC.FK_id_client = client.id
+    WHERE `checkC`.`charged` = false;
+END$$
+
+
+DROP procedure IF EXISTS `checkC_getAllPaidChecks`;
+DELIMITER $$
+CREATE PROCEDURE checkC_getAllPaidChecks ()
+BEGIN
+	SELECT checkC.id AS check_id,
+           checkC.bank AS check_bank,
+           checkC.account_number AS check_accountNumber,
+           checkC.check_number AS check_number,
+           checkC.charged AS check_charged,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+		   client.is_active AS client_isActive
+    FROM `checkC` 
+    INNER JOIN client ON checkC.FK_id_client = client.id
+    WHERE `checkC`.`charged` = true;
+END$$
+
+
+DROP procedure IF EXISTS `checkC_update`;
+DELIMITER $$
+CREATE PROCEDURE checkC_update (
+                                    IN bank VARCHAR(255),
+                                    IN account_number INT,
+                                    IN check_number INT,
+                                    IN charged BOOLEAN
+                                )
+BEGIN
+    UPDATE `checkC` 
+    SET 
+        `checkC`.`bank` = bank, 
+        `checkC`.`account_number` = account_number,
+        `checkC`.`check_number` = check_number,
+        `checkC`.`charged` = charged
+        
+    WHERE 
+        `checkC`.`id` = id;	
 END$$
 
 

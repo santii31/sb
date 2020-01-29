@@ -4,6 +4,7 @@
     
     use Models\Admin as Admin;
     use Models\Client as Client;    
+    use Models\Parasol as Parasol;    
     use Models\BeachTent as BeachTent;
     use Models\Reservation as Reservation;
     use Models\Check as Check;
@@ -669,7 +670,8 @@
 
         public function checkList($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
-                $checks = $this->checkDAO->getAll();
+                $title = "Cheques - Buscar";
+                $checks = $this->checkDAO->getAll();                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-check.php");

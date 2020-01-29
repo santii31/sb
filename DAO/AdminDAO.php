@@ -250,12 +250,10 @@
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
 					$admin = new Admin();
-					$admin->setId($row["id"]);
-					$admin->setName($row["name"]);
-					$admin->setLastName($row["lastname"]);
-					$admin->setEmail($row["email"]);
-					$admin->setDni($row["dni"]);								
-					$admin->setIsActive($row["is_active"]);
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastname"]);										
+					$admin->setIsActive($row["admin_is_active"]);
 					array_push($list, $admin);
 				}
 				return $list;	

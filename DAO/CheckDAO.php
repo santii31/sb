@@ -76,11 +76,12 @@
 				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
 				foreach ($results as $row) {
 					$check = new Check();
-                    $check->setId($row["checkC_id"]);
-                    $check->setBank($row["checkC_bank"]);
-                    $check->setAccountNumber($row["checkC_accountNumber"]);
+                    $check->setId($row["check_id"]);
+                    $check->setBank($row["check_bank"]);
+                    $check->setAccountNumber($row["check_accountNumber"]);
 					$check->setCheckNumber($row["check_number"]);
 					$check->setCharged($row["check_charged"]);
+
                     $client = new Client();
                     $client->set($row["client_id"]);
                     $client->setName($row["client_name"]);
@@ -90,13 +91,15 @@
                     $client->setCity($row["client_city"]);
                     $client->setAddress($row["client_address"]);
                     $client->setIsActive($row["client_isActive"]);
-                    $check->setClient($client);
+					
+					$check->setClient($client);
                     
 					array_push($this->checkList, $check);
 				}
 				return $this->checkList;	
 			} catch (Exception $e) {
 				return false;
+				// echo $e;
 			}
 		}		
 				

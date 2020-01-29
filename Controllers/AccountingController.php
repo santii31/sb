@@ -199,7 +199,7 @@
         public function salesByAdminsPath() {
             if ($admin = $this->adminController->isLogged()) {                       
                 $title = "Contabilidad - Ventas por administradores";     
-                $admins = $this->adminController->getAllWithRsv();
+                $adminList = $this->adminController->getAllWithRsv();
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "accounting-admins.php");

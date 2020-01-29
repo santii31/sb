@@ -9,7 +9,7 @@
                 </div>
                 <div class="divider mb-divider"></div>         
 
-                <?php if (sizeof($admins) > 0): ?>
+                <?php if (sizeof($adminList) > 0): ?>
                 <nav class="search-container">                
                     <div class="nav-wrapper s-color">                    
                         <div class="input-field">
@@ -34,14 +34,14 @@
                         </thead>
 
                         <tbody>
-                            <?php foreach ($admins as $admin): ?>
+                            <?php foreach ($adminList as $adminA): ?>
                                 <tr>                                                                  
-                                    <td> <?= ucfirst( $admin->getName() ); ?> </td>
-                                    <td> <?= ucfirst( $admin->getLastName() ); ?> </td>
-                                    <td> <?= $this->adminController->getAllCountRsvByAdmin($admin); ?></td>
-                                    <td> $<?= number_format($this->adminController->getTotalRsvById($admin), 2, ',', '.'); ?></td>
+                                    <td> <?= ucfirst( $adminA->getName() ); ?> </td>
+                                    <td> <?= ucfirst( $adminA->getLastName() ); ?> </td>
+                                    <td> <?= $this->adminController->getAllCountRsvByAdmin($adminA); ?></td>
+                                    <td> $<?= number_format($this->adminController->getTotalRsvById($adminA), 2, ',', '.'); ?></td>
                                     <td>
-                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationByAdminPath/<?= $admin->getId(); ?>" class="waves-effect waves-light btn-small">
+                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationByAdminPath/<?= $adminA->getId(); ?>" class="waves-effect waves-light btn-small">
                                             <i class="material-icons left">list</i>
                                             Ver reservas
                                         </a>
