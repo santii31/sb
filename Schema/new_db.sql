@@ -1150,6 +1150,40 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservation_getByIdToParasol`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getByIdToParasol (IN id INT)
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
+           reservation.discount AS reservation_discount,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,		   	   
+           parasol.id AS parasol_id,
+           parasol.parasol_number AS parasol_number           
+    FROM `reservation`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
+    INNER JOIN `parasol` ON `reservation`.`FK_id_parasol` = `parasol`.`id`
+    WHERE `reservation`.`id` = id;
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getByDate`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getByDate (IN date DATE)
@@ -1734,6 +1768,19 @@ BEGIN
         balance.remainder AS balance_remainder     
     FROM balance             
     WHERE balance.FK_id_reservation = id;    
+END$$
+
+
+DROP procedure IF EXISTS balance_getSumPartialFromReservationByClientId;
+DELIMITER $$
+CREATE PROCEDURE balance_getSumPartialFromReservationByClientId (IN id INT)
+BEGIN
+    SELECT
+        SUM(balance.partial) as sum_partial
+    FROM reservation
+    INNER JOIN balance ON reservation.id = balance.FK_id_reservation
+    WHERE reservation.FK_id_client = id
+    GROUP BY reservation.FK_id_client;    
 END$$
 
 

@@ -21,7 +21,7 @@
 	
 	//DB
 	define("DB_HOST", "localhost");
-	define("DB_NAME", "santisb");		
+	define("DB_NAME", "southbeach");		
 	define("DB_USER", "root");
 	define("DB_PASS", "");
 	

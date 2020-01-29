@@ -58,7 +58,22 @@
 				return false;
 			}
         }
-								
+		
+		public function getSumPartialByClient(Client $client) {
+			try {				
+				$additionalServiceTemp = null;
+				$query = "CALL balance_getSumPartialFromReservationByClientId(?)";
+				$parameters["id"] = $client->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+			        return $row["sum_partial"];
+				}				
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
 
     }
 

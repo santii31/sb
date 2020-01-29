@@ -3,21 +3,21 @@
     namespace Controllers;    
     
     use Models\Staff as Staff;
-    use Models\DiaryBalance as DiaryBalance;
+    use Models\DiaryBalance as DiaryBalance;    
     use DAO\DiaryBalanceDAO as DiaryBalanceDAO;
     use Controllers\StaffController as StaffController; 
-    use Controllers\AdminController as AdminController; 
+    use Controllers\AdminController as AdminController;     
     use Controllers\ReservationController as ReservationController; 
 
     class AccountingController {
 
-        private $adminController;       
-        private $staffController; 
+        private $adminController;          
+        private $staffController;         
         private $reservationController;        
         private $diaryBalanceDAO;    
 
         public function __construct() {            
-            $this->adminController = new AdminController();            
+            $this->adminController = new AdminController();                        
         }       
         
         

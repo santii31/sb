@@ -2,8 +2,9 @@
         <div class="col s12 m8 l10">
             <div class="main-content">
                 <div class="row">
-                    <form action="<?= FRONT_ROOT ?>parking/reserve" method="post" class="col s10 form-test">
-
+                    <!-- <form action="<?= FRONT_ROOT ?>parking/reserve" method="post" class="col s10 form-test"> -->
+                    <form action="<?= FRONT_ROOT ?>parking/reserveToParasol" method="post" class="col s10 form-test">
+                    
                         <div class="subtitle">
                             <i class="material-icons left">add_circle_outline</i>
                             <h2>
@@ -41,7 +42,7 @@
                             </div>
                         </div>    
                         
-                        <input type="hidden" name="reservation" value="<?= $reservation;; ?>" >
+                        <input type="hidden" name="reservation" value="<?= $reservation; ?>" >
                         <input type="hidden" name="id_parking" value="<?= $id_parking; ?>">
                         
                         <?php if (isset($fromList)): ?>                        

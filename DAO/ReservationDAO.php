@@ -118,8 +118,58 @@
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
-				return false;
-				// echo $e;
+				// return false;
+				echo $e;
+			}
+		}
+
+		public function getByIdToParasol(Reservation $reservation) {
+			try {				
+				$reservationTemp = null;
+				$query = "CALL reservation_getByIdToParasol(?)";
+				$parameters["id"] = $reservation->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					
+					$reservationTemp = new Reservation();
+					$reservationTemp->setId($row["reservation_id"]);
+					$reservationTemp->setDateStart($row["reservation_dateStart"]);
+					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+					$reservationTemp->setStay($row["reservation_stay"]);
+					$reservationTemp->setDiscount($row["reservation_discount"]);
+					$reservationTemp->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+
+					$reservationTemp->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$parasol = new Parasol();
+					$parasol->setId($row["parasol_id"]);
+					$parasol->setParasolNumber($row["parasol_number"]);					
+
+					$reservationTemp->setRegisterBy($admin);
+					$reservationTemp->setParasol($parasol);					
+				}
+				return $reservationTemp;
+			} catch (Exception $e) {
+				// return false;
+				echo $e;
 			}
 		}
 

@@ -28,9 +28,6 @@
                                             • Nº Carpa: <?= $reservation->getBeachTent()->getNumber(); ?>
                                         </span>
                                         <span>
-                                            • Precio final: $<?= number_format($reservation->getPrice(), 2, ',', '.'); ?>
-                                        </span>
-                                        <span>
                                             • Fecha inicio: <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?>
                                         </span>
                                         <span>
@@ -38,6 +35,12 @@
                                         </span>
                                         <span>
                                             • Telefono: <?= $reservation->getClient()->getPhone(); ?>
+                                        </span><br>
+                                        <span>
+                                            • Precio final: $<?= number_format($reservation->getPrice(), 2, ',', '.'); ?>
+                                        </span>
+                                        <span>
+                                            • Depositado: $<?= number_format($partialByClient, 2, ',', '.'); ?>
                                         </span>
                                     </div>                                    
                                 </div>
@@ -46,6 +49,7 @@
                     </div>
                 </div>
 
+                <?php if ($flag === true): ?>
                 <div class="row">
                     <div class="col s12 center-align centered">
                         <div>                                            
@@ -77,18 +81,18 @@
                                         <div class="row">                                            
                                             <div class="input-field col s4">
                                                 <?php if (sizeof($balances) == 0): ?>
-                                                <input id="total" type="number" name="total" class="validate" value="<?= $reservation->getPrice() ?>" required> 
+                                                <input id="total" type="number" name="total" class="validate" value="<?= $reservation->getPrice(); ?>" required> 
                                                 <?php else: ?>
-                                                <input id="total" type="number" name="total" class="validate" required>
+                                                <input id="total" type="number" name="total" min="0" class="validate" value="<?= $remainderByClient; ?>" required>
                                                 <?php endif; ?>
                                                 <label for="total">Debe</label>
                                             </div>            
                                             <div class="input-field col s4">
-                                                <input id="partial" type="number" name="partial" class="validate" required>
+                                                <input id="partial" type="number" name="partial" min="0" class="validate" required>
                                                 <label for="partial">Haber</label>
                                             </div>            
                                             <div class="input-field col s4">
-                                                <input id="remainder" type="number" name="remainder" class="validate" value=0 required>
+                                                <input id="remainder" type="number" name="remainder" min="0" class="validate" value=0 required>
                                                 <label for="remainder">Saldo</label>
                                             </div>            
                                         </div>
@@ -106,6 +110,16 @@
                         </div> 
                     </div>
                 </div>
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="card-panel green lighten-4">
+                                <i class="material-icons left">check</i>                            
+                                <span class="card-text card-success"> Cuenta saldada! </span>
+                            </div>        
+                        </div>                    
+                    </div>  
+                <?php endif; ?>
 
                 <div class="row">    
                 <?php if (sizeof($balances)): ?>
@@ -124,12 +138,14 @@
                         <tbody>
                             <?php foreach ($balances as $balance): ?>
                             <tr>                                
+                                
                                 <td> <?= date("d-m-Y" , strtotime($balance->getDate())); ?> </td>
                                 <td> <?= ucfirst( $balance->getConcept() ); ?> </td>
                                 <td> <?= $balance->getNumberReceipt(); ?> </td>
                                 <td> $<?= number_format($balance->getTotal(), 2, ',', '.'); ?> </td>
                                 <td> $<?= number_format($balance->getPartial(), 2, ',', '.'); ?> </td>
                                 <td> $<?= number_format($balance->getRemainder(), 2, ',', '.'); ?> </td>
+
                             <?php endforeach; ?>         
                         </tbody>
                     </table>                                          

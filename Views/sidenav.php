@@ -97,6 +97,12 @@
                     <div class="collapsible-body">
                         <ul>    
                             <li>
+                                <a href="<?= FRONT_ROOT ?>balance/totalBalance" class="valign-wrapper waves-effect">
+                                    <i class="material-icons left">assignment_ind</i>
+                                    Balance de saldos
+                                </a>
+                            </li>  
+                            <li>
                                 <a href="<?= FRONT_ROOT ?>accounting/diaryPath" class="valign-wrapper waves-effect">
                                     <i class="material-icons left">chrome_reader_mode</i>
                                     Caja diaria
@@ -390,7 +396,13 @@
                         <li>
                             <div class="collapsible-header"><i class="material-icons left">attach_money</i>Contabilidad</div>
                             <div class="collapsible-body">
-                                <ul>    
+                                <ul> 
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>balance/totalBalance" class="valign-wrapper waves-effect">
+                                            <i class="material-icons left">assignment_ind</i>
+                                            Balance de saldos
+                                        </a>
+                                    </li>     
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>accounting/diaryPath" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">chrome_reader_mode</i>

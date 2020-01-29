@@ -290,6 +290,10 @@
             return $this->clientDAO->add($client, $admin);
         }
 
+        public function getAll() {
+            return $this->clientDAO->getAll();
+        }
+
     }
         
 ?>
