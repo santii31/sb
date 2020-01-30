@@ -883,3 +883,237 @@ table.striped>tbody>tr:nth-child(odd) {
 .modal-footer a {
     background-color: rgba(106, 86, 165, .2);
 }
+
+
+
+
+
+/* FULL MAP */
+.beach-map-full {    
+    transform: rotate(-90deg); 
+}
+
+.beach-map-full .beach-map {                
+    /* width: 100%;     */
+    height: 100%;
+}
+
+.beach-map-container {                
+    background-color: #dbd1b4;        
+    border-right: 5em solid #006699;     
+}
+
+.beach-map-full .map-container a {
+    color: #2b2f3a;
+}
+
+.beach-map-full .tents-sea-container {    
+    background-color: #dbd1b4;    
+    /* margin: 3rem 0 0 0; */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;    
+}
+
+.beach-map-full .tent-sea {    
+    font-size: 1rem;    
+    /* height: 2rem;
+    width: 3.5rem; 
+    margin: .2rem;     */
+    /* height: 1.5rem; */
+    -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.beach-map-full .parasol {     
+    background-color: #dbd1b4;             
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; 
+    margin: 3rem 0 0 0;   
+}
+
+.beach-map-full .parasol-item {    
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    -webkit-clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+    clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.beach-map-full .parasol-item .tent-sea {
+    background-color: transparent;
+}
+
+.beach-map-full .beach-hall {         
+   display: grid;
+   grid-template-columns: 8fr 1fr 1fr;   
+   /* height: 7.5em; */
+}
+
+.beach-map-full .hall-name {    
+    padding: .4rem;    
+    /* padding: 0; */
+    background-color: #8E8171;      
+    color: #fff;
+    text-shadow: 1px 1px 4px #22252e;
+    font-size: 1.2rem;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-align: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.beach-map-full .beach-tents {        
+    display: grid;    
+    /* padding: 4rem 0 2.5rem .5rem; */
+    padding-top: 1rem;
+    grid-template-columns: repeat(16, 1fr);    
+    align-items: center;    
+    justify-content: center;    
+    background-color: #dbd1b4;    
+}
+
+.beach-map-full .tent {
+    /* font-size: 1rem;     */
+    /* height: 3rem; */
+    /* margin: .2rem; */
+    font-size: .8rem;
+    height: 1.5rem;    
+    width: 3.5rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    cursor: pointer;
+    -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 75%, 50% 100%, 0% 75%, 0 0);
+    clip-path: polygon(50% 0%, 100% 0, 100% 75%, 50% 100%, 0% 75%, 0 0);
+}
+
+.beach-map-full .tent-inverse {
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 50% 100%, 0 100%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 50% 100%, 0 100%, 0% 25%);    
+}
+
+.beach-map-full .hall-container {
+    border-left: 2em solid #8E8171;   
+}
+
+.beach-map-full .last-hall .hall-container {
+    border-left: 2.5em solid transparent;
+}
+
+.beach-map-full .last-hall .hall-name {    
+    position: relative;
+    width: 104%;
+    left: -4%;
+}
+
+/* Extra tents */
+.beach-map-full .extra-beach-tents {    
+    display: grid;
+    grid-template-columns: 8fr 1fr 1fr; 
+}
+
+.beach-map-full .extra-beach-tents > .beach-tents {    
+    padding: 0 0 0 2.5rem;        
+    /* padding-top: 1rem; */
+    display: inline;    
+    /* padding-top: .5rem;     */
+}
+
+.beach-map-full .extra-beach-tents .tent-container {
+    display: grid;        
+    grid-template-columns: repeat(16, 1fr);    
+    align-items: center;    
+    justify-content: center;           
+}
+
+.extra-beach-tents > .tents-sea-container {    
+    margin: 0;
+    justify-content: flex-start;
+}
+
+.beach-map-full .tent-special-container {    
+    position: relative;
+    /* top: -24%; */
+    top: 0;
+}
+
+.tent-special-container a {
+    color: #2b2f3a;
+}
+
+.beach-map-full .last-hall .tents-sea-container {    
+    justify-content: flex-start;    
+    margin: 3.4rem 0 0 0;
+}
+
+
+
+@media screen and (max-width: 993px) {
+    .main-content {
+        left: 0;
+    }    
+
+    .map-container {
+        width: 100%;
+    }
+    
+     .beach-map {
+        width: 100%;
+    }
+    
+     .beach-map-container {
+        border: none;
+    }
+    
+    .row .col.m8 {
+        width: 100% ;        
+    }
+        
+    .row .col.s12 {
+        width: 100%;        
+    }
+
+    .row .col {        
+        padding: 0;        
+    }
+
+    .sidenav li>a {        
+        font-size: 12px;
+    }
+    
+    .last-hall .hall-name {        
+        width: 106%;
+        left: -6.5%;
+    }
+
+    .beach-map-colors {
+        width: 100%;
+    }
+
+    /* parking */
+    .parking-map {        
+        margin: 0;        
+    }
+
+    .parking-map .item {        
+        height: 1.2rem;
+        width: 1.7em;
+        border: 1px solid #2b2f3a;
+        margin: 0.2;        
+    }
+
+} 

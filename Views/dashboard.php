@@ -1,46 +1,47 @@
-		<!-- Main content  -->
+        <!-- Main content  -->
 		<div class="col s12 m8 l10">
-			<div class="main-content">			
-				<div class="map-container">
-				
-					<!-- Box's colors -->
-					<div class="beach-map-colors">
-						<div class="beach-color">
-							<div class="box-color yellow"></div>
-							<span>Temporada</span>
-						</div>
-						<div class="beach-color">
-							<div class="box-color green"></div>
-							<span>Diario</span>
-						</div>
-						<div class="beach-color">
-							<div class="box-color fuchsia"></div>
-							<span>Enero</span>
-						</div>
-                        <div class="beach-color">
-							<div class="box-color violet"></div>
-							<span>Febrero</span>
-						</div>
-						<div class="beach-color">
-							<div class="box-color orange"></div>
-							<span>Fin de semana</span>
-						</div>
-						<div class="beach-color">
-							<div class="box-color blue"></div>
-							<span>Periodo</span>
-						</div>
-					</div>
 
-					<div class="beach-map">
-						
-						<div class="beach-map-container">                
-							
-							<!-- Only for the first hall -->
-							<div class="extra-beach-tents">
-								
+            <div class="main-content">			
+                <div class="map-container">
+                
+                    <!-- Box's colors -->
+                    <div class="beach-map-colors">
+                        <div class="beach-color">
+                            <div class="box-color yellow"></div>
+                            <span>Temporada</span>
+                        </div>
+                        <div class="beach-color">
+                            <div class="box-color green"></div>
+                            <span>Diario</span>
+                        </div>
+                        <div class="beach-color">
+                            <div class="box-color fuchsia"></div>
+                            <span>Enero</span>
+                        </div>
+                        <div class="beach-color">
+                            <div class="box-color violet"></div>
+                            <span>Febrero</span>
+                        </div>
+                        <div class="beach-color">
+                            <div class="box-color orange"></div>
+                            <span>Fin de semana</span>
+                        </div>
+                        <div class="beach-color">
+                            <div class="box-color blue"></div>
+                            <span>Periodo</span>
+                        </div>
+                    </div>
+    
+                    <div class="beach-map">
+                        
+                        <div class="beach-map-container">                
+                            
+                            <!-- Only for the first hall -->
+                            <div class="extra-beach-tents">
+                                
                                 <!-- Normal flow tents -->
-								<div class="beach-tents">									
-									<div class="tent-container">											
+                                <div class="beach-tents">									
+                                    <div class="tent-container">											
                                         <?php foreach ($firstRow as $tent): ?>
                                             <div>                                                                                                
                                                 <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
@@ -57,33 +58,33 @@
                                                                 <?php case "enero": ?>
                                                                     <div class="tent fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_dia": ?>
                                                                     <div class="tent fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_quincena": ?>
                                                                     <div class="tent fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <!-- FEBRERO - VER COLOR -->
                                                                 <?php case "febrero": ?>
                                                                     <div class="tent violet">                                                
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "febrero_dia": ?>
                                                                     <div class="tent violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febero_primer_quincena": ?>
                                                                     <div class="tent violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febrero_segunda_quincena": ?>
                                                                     <div class="tent violet">                                                
                                                                 <?php break; ?>
                                                                 <!--  -->
-
+    
                                                                 <?php case "diario": ?>
                                                                     <div class="tent green">                                                
                                                                 <?php break; ?>                                                                
@@ -97,11 +98,11 @@
                                                                 <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>    
-                                                                                                                          
+                                                                                                                            
                                                         <?php else: ?>
                                                         <div class="tent">
                                                         <?php endif; ?>
-
+    
                                                     <?php else: ?>
                                                     <div class="tent">
                                                     <?php endif; ?>
@@ -140,7 +141,7 @@
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                     
+                                                                                                                                        
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -156,7 +157,7 @@
                                                                                     <i class="material-icons">person_pin</i>                     
                                                                                     Cliente                                                      
                                                                                 </div>
-
+    
                                                                                 <div>                                                            
                                                                                     <span>
                                                                                         <span class="title">• Nombre:  </span>
@@ -181,16 +182,16 @@
                                                                                     <span>
                                                                                     <span class="title">• Estadia:  </span>
                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>
                                                                                 </div>
-
+    
                                                                                 <?php ?>
                                                                             </div>                                                               
                                                                         </div>                                                                   
-
+    
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
@@ -199,7 +200,7 @@
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
                                                                     <?php endif; ?>                                                          
-
+    
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.
                                                                 <?php endif; ?>
@@ -221,22 +222,22 @@
                                                                                     <span class="title-2">• Fecha inicio: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Telefono: </span>
                                                                                     <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Estadia: </span>
                                                                                     <span>  
-                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>         
@@ -248,7 +249,7 @@
                                                             </div>
                                                         <?php endif; ?>                 
                                                     </div>
-
+    
                                                     <div class="modal-footer">
                                                         <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
@@ -268,11 +269,11 @@
                                                 </div> 
                                             </div>
                                         <?php endforeach; ?> 																					
-									</div>
-								</div>
-
-								<!-- Sea tent -->
-								<div class="tents-sea-container">                                									
+                                    </div>
+                                </div>
+    
+                                <!-- Sea tent -->
+                                <div class="tents-sea-container">                                									
                                     <?php foreach ($firstSeaRow as $tent): ?>
                                         <div>                                                                                                
                                             <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
@@ -289,11 +290,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
@@ -301,19 +302,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="tent-sea green">                                                
                                                             <?php break; ?>                                                                
@@ -331,7 +332,7 @@
                                                     <?php else: ?>
                                                     <div class="tent-sea">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="tent-sea">
                                                 <?php endif; ?>
@@ -386,7 +387,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -416,11 +417,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -429,7 +430,7 @@
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La carpa no tiene reservas.
                                                             <?php endif; ?>
@@ -451,17 +452,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -478,7 +479,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -498,21 +499,21 @@
                                             </div> 
                                         </div>
                                     <?php endforeach; ?>
-								</div>								
-
-							</div>                
-
-							<!-- 1 Halls -->
-							<div class="beach-hall">
-							
+                                </div>								
+    
+                            </div>                
+    
+                            <!-- 1 Halls -->
+                            <div class="beach-hall">
+                            
                                 <!-- Normal flow -->
-								<div class="hall-container">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 1
-									</div>
-																	
-									<div class="beach-tents">
+                                <div class="hall-container">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 1
+                                    </div>
+                                                                    
+                                    <div class="beach-tents">
                                         <?php $i = 1; ?>   
                                         <?php foreach ($secondRow as $tent): ?>
                                             <div>                                                                                                
@@ -520,7 +521,7 @@
                                                     <?php if ($i <= 16): ?>
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
                                                             <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-
+    
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
                                                                 case "temporada": ?>
@@ -530,33 +531,33 @@
                                                                 <?php case "enero": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_dia": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_quincena": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <!-- FEBRERO - VER COLOR -->
                                                                 <?php case "febrero": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "febrero_dia": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febero_primer_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febrero_segunda_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
                                                                 <!--  -->
-
+    
                                                                 <?php case "diario": ?>
                                                                     <div class="tent tent-inverse green">                                                
                                                                 <?php break; ?>                                                                
@@ -570,15 +571,15 @@
                                                                 <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent tent-inverse">
                                                         <?php endif; ?> 
-
+    
                                                     <?php else: ?>
                                                     
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
@@ -594,33 +595,33 @@
                                                                     <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_dia": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_quincena": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <!-- FEBRERO - VER COLOR -->
                                                                     <?php case "febrero": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>                                                                
-
+    
                                                                     <?php case "febrero_dia": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febero_primer_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febrero_segunda_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
                                                                     <!--  -->
-
+    
                                                                     <?php case "diario": ?>
                                                                         <div class="tent green">                                                
                                                                     <?php break; ?>                                                                
@@ -633,11 +634,11 @@
                                                                         <div class="tent blue">                                                
                                                                     <?php break; ?>                                                              
                                                                 <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent">
                                                         <?php endif; ?>                                                     
@@ -678,7 +679,7 @@
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                     
+                                                                                                                                        
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -694,7 +695,7 @@
                                                                                     <i class="material-icons">person_pin</i>                     
                                                                                     Cliente                                                      
                                                                                 </div>
-
+    
                                                                                 <div>                                                            
                                                                                     <span>
                                                                                         <span class="title">• Nombre:  </span>
@@ -719,16 +720,16 @@
                                                                                     <span>
                                                                                     <span class="title">• Estadia:  </span>
                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>
                                                                                 </div>
-
+    
                                                                                 <?php ?>
                                                                             </div>                                                               
                                                                         </div>                                                                   
-
+    
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
@@ -737,7 +738,7 @@
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
                                                                     <?php endif; ?>                                                          
-
+    
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.
                                                                 <?php endif; ?>
@@ -759,22 +760,22 @@
                                                                                     <span class="title-2">• Fecha inicio: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Telefono: </span>
                                                                                     <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Estadia: </span>
                                                                                     <span>  
-                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>         
@@ -786,7 +787,7 @@
                                                             </div>
                                                         <?php endif; ?>                 
                                                     </div>
-
+    
                                                     <div class="modal-footer">
                                                         <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
@@ -807,9 +808,9 @@
                                             </div>
                                         <?php $i++; ?>                                                  
                                         <?php endforeach; ?> 
-									</div>
-								</div>
-								                                
+                                    </div>
+                                </div>
+                                                                
                                 <!-- Sea tent -->
                                 <div class="tents-sea-container">                                    									
                                     <?php foreach ($secondSeaRow as $tent): ?>
@@ -828,11 +829,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
@@ -840,19 +841,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="tent-sea green">                                                
                                                             <?php break; ?>                                                                
@@ -870,7 +871,7 @@
                                                     <?php else: ?>
                                                     <div class="tent-sea">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="tent-sea">
                                                 <?php endif; ?>
@@ -925,7 +926,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -955,11 +956,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -968,7 +969,7 @@
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La carpa no tiene reservas.
                                                             <?php endif; ?>
@@ -990,17 +991,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -1017,7 +1018,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -1038,7 +1039,7 @@
                                         </div>
                                     <?php endforeach; ?>
                                 </div>   
-
+    
                                 <!-- Parasol -->
                                 <div class="parasol">                        
                                     <?php foreach ($firtsParasol as $parasol): ?>
@@ -1057,11 +1058,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
@@ -1069,19 +1070,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="parasol-item green">                                                
                                                             <?php break; ?>                                                                
@@ -1099,7 +1100,7 @@
                                                     <?php else: ?>
                                                     <div class="parasol-item">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="parasol-item">
                                                 <?php endif; ?>
@@ -1154,7 +1155,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -1184,11 +1185,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservationParasol( $parasol->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -1197,7 +1198,7 @@
                                                                 <?php else: ?>
                                                                     La sombrilla no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La sombrilla no tiene reservas.
                                                             <?php endif; ?>
@@ -1219,17 +1220,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -1246,7 +1247,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -1267,19 +1268,19 @@
                                         </div>                                
                                     <?php endforeach; ?>                                                                                         
                                 </div>
-							</div>							
-
-							<!-- 2 Halls -->
-							<div class="beach-hall">
-							
+                            </div>							
+    
+                            <!-- 2 Halls -->
+                            <div class="beach-hall">
+                            
                                 <!-- Normal flow -->
-								<div class="hall-container">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 2
-									</div>
-																	
-									<div class="beach-tents">
+                                <div class="hall-container">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 2
+                                    </div>
+                                                                    
+                                    <div class="beach-tents">
                                         <?php $i = 1; ?>   
                                         <?php foreach ($thirdRow as $tent): ?>
                                             <div>                                                                                                
@@ -1287,7 +1288,7 @@
                                                     <?php if ($i <= 16): ?>
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
                                                             <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-
+    
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
                                                                 case "temporada": ?>
@@ -1297,33 +1298,33 @@
                                                                 <?php case "enero": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_dia": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_quincena": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <!-- FEBRERO - VER COLOR -->
                                                                 <?php case "febrero": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "febrero_dia": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febero_primer_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febrero_segunda_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
                                                                 <!--  -->
-
+    
                                                                 <?php case "diario": ?>
                                                                     <div class="tent tent-inverse green">                                                
                                                                 <?php break; ?>                                                                
@@ -1337,15 +1338,15 @@
                                                                 <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent tent-inverse">
                                                         <?php endif; ?> 
-
+    
                                                     <?php else: ?>
                                                     
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
@@ -1361,33 +1362,33 @@
                                                                     <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_dia": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_quincena": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <!-- FEBRERO - VER COLOR -->
                                                                     <?php case "febrero": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>                                                                
-
+    
                                                                     <?php case "febrero_dia": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febero_primer_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febrero_segunda_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
                                                                     <!--  -->
-
+    
                                                                     <?php case "diario": ?>
                                                                         <div class="tent green">                                                
                                                                     <?php break; ?>                                                                
@@ -1400,11 +1401,11 @@
                                                                         <div class="tent blue">                                                
                                                                     <?php break; ?>                                                              
                                                                 <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent">
                                                         <?php endif; ?>                                                     
@@ -1445,7 +1446,7 @@
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                     
+                                                                                                                                        
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -1461,7 +1462,7 @@
                                                                                     <i class="material-icons">person_pin</i>                     
                                                                                     Cliente                                                      
                                                                                 </div>
-
+    
                                                                                 <div>                                                            
                                                                                     <span>
                                                                                         <span class="title">• Nombre:  </span>
@@ -1486,16 +1487,16 @@
                                                                                     <span>
                                                                                     <span class="title">• Estadia:  </span>
                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>
                                                                                 </div>
-
+    
                                                                                 <?php ?>
                                                                             </div>                                                               
                                                                         </div>                                                                   
-
+    
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
@@ -1504,7 +1505,7 @@
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
                                                                     <?php endif; ?>                                                          
-
+    
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.
                                                                 <?php endif; ?>
@@ -1526,22 +1527,22 @@
                                                                                     <span class="title-2">• Fecha inicio: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Telefono: </span>
                                                                                     <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Estadia: </span>
                                                                                     <span>  
-                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>         
@@ -1553,7 +1554,7 @@
                                                             </div>
                                                         <?php endif; ?>                 
                                                     </div>
-
+    
                                                     <div class="modal-footer">
                                                         <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
@@ -1574,9 +1575,9 @@
                                             </div>
                                         <?php $i++; ?>                                            
                                         <?php endforeach; ?>                                                                               		
-									</div>
-								</div>
-								                                
+                                    </div>
+                                </div>
+                                                                
                                 <!-- Sea tent -->
                                 <div class="tents-sea-container">									
                                     <?php foreach ($thirdSeaRow as $tent): ?>
@@ -1595,11 +1596,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
@@ -1607,19 +1608,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="tent-sea green">                                                
                                                             <?php break; ?>                                                                
@@ -1637,7 +1638,7 @@
                                                     <?php else: ?>
                                                     <div class="tent-sea">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="tent-sea">
                                                 <?php endif; ?>
@@ -1692,7 +1693,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -1722,11 +1723,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -1735,7 +1736,7 @@
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La carpa no tiene reservas.
                                                             <?php endif; ?>
@@ -1757,17 +1758,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -1784,7 +1785,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -1824,11 +1825,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
@@ -1836,19 +1837,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="parasol-item green">                                                
                                                             <?php break; ?>                                                                
@@ -1866,7 +1867,7 @@
                                                     <?php else: ?>
                                                     <div class="parasol-item">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="parasol-item">
                                                 <?php endif; ?>
@@ -1921,7 +1922,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -1951,11 +1952,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservationParasol( $parasol->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -1964,7 +1965,7 @@
                                                                 <?php else: ?>
                                                                     La sombrilla no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La sombrilla no tiene reservas.
                                                             <?php endif; ?>
@@ -1986,17 +1987,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -2013,7 +2014,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -2034,20 +2035,20 @@
                                         </div>                             
                                     <?php endforeach; ?>                                                                                         
                                 </div>
-
-							</div>																				
-
-							<!-- 3 Halls -->
-							<div class="beach-hall">
+    
+                            </div>																				
+    
+                            <!-- 3 Halls -->
+                            <div class="beach-hall">
                                 
                                 <!-- Normal flow -->
-								<div class="hall-container">
-									<!-- Hall number -->
-									<div class="hall-name">
-										Pasillo 3
-									</div>
-																	
-									<div class="beach-tents">                                      
+                                <div class="hall-container">
+                                    <!-- Hall number -->
+                                    <div class="hall-name">
+                                        Pasillo 3
+                                    </div>
+                                                                    
+                                    <div class="beach-tents">                                      
                                         <?php $i = 1; ?>   
                                         <?php foreach ($fourthRow as $tent): ?>
                                             <div>                                                                                                
@@ -2055,7 +2056,7 @@
                                                     <?php if ($i <= 16): ?>
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
                                                             <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-
+    
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
                                                                 case "temporada": ?>
@@ -2065,33 +2066,33 @@
                                                                 <?php case "enero": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_dia": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_quincena": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <!-- FEBRERO - VER COLOR -->
                                                                 <?php case "febrero": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "febrero_dia": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febero_primer_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febrero_segunda_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
                                                                 <!--  -->
-
+    
                                                                 <?php case "diario": ?>
                                                                     <div class="tent tent-inverse green">                                                
                                                                 <?php break; ?>                                                                
@@ -2105,15 +2106,15 @@
                                                                 <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent tent-inverse">
                                                         <?php endif; ?> 
-
+    
                                                     <?php else: ?>
                                                     
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
@@ -2129,33 +2130,33 @@
                                                                     <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_dia": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_quincena": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <!-- FEBRERO - VER COLOR -->
                                                                     <?php case "febrero": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>                                                                
-
+    
                                                                     <?php case "febrero_dia": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febero_primer_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febrero_segunda_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
                                                                     <!--  -->
-
+    
                                                                     <?php case "diario": ?>
                                                                         <div class="tent green">                                                
                                                                     <?php break; ?>                                                                
@@ -2168,11 +2169,11 @@
                                                                         <div class="tent blue">                                                
                                                                     <?php break; ?>                                                              
                                                                 <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent">
                                                         <?php endif; ?>                                                     
@@ -2213,7 +2214,7 @@
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                     
+                                                                                                                                        
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -2229,7 +2230,7 @@
                                                                                     <i class="material-icons">person_pin</i>                     
                                                                                     Cliente                                                      
                                                                                 </div>
-
+    
                                                                                 <div>                                                            
                                                                                     <span>
                                                                                         <span class="title">• Nombre:  </span>
@@ -2254,16 +2255,16 @@
                                                                                     <span>
                                                                                     <span class="title">• Estadia:  </span>
                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>
                                                                                 </div>
-
+    
                                                                                 <?php ?>
                                                                             </div>                                                               
                                                                         </div>                                                                   
-
+    
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
@@ -2272,7 +2273,7 @@
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
                                                                     <?php endif; ?>                                                          
-
+    
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.
                                                                 <?php endif; ?>
@@ -2294,22 +2295,22 @@
                                                                                     <span class="title-2">• Fecha inicio: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Telefono: </span>
                                                                                     <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Estadia: </span>
                                                                                     <span>  
-                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>         
@@ -2321,7 +2322,7 @@
                                                             </div>
                                                         <?php endif; ?>                 
                                                     </div>
-
+    
                                                     <div class="modal-footer">
                                                         <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
@@ -2342,11 +2343,11 @@
                                             </div>
                                         <?php $i++; ?>                                            
                                         <?php endforeach; ?>                                                                              		
-									</div>
-								</div>
-								                                
+                                    </div>
+                                </div>
+                                                                
                                 <!-- Sea tent -->
-								<div class="tents-sea-container">									
+                                <div class="tents-sea-container">									
                                     <?php foreach ($fourthSeaRow as $tent): ?>
                                         <div>                                                                                                
                                             <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
@@ -2363,11 +2364,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="tent-sea-seant fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
@@ -2375,19 +2376,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="tent-sea green">                                                
                                                             <?php break; ?>                                                                
@@ -2405,7 +2406,7 @@
                                                     <?php else: ?>
                                                     <div class="tent-sea">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="tent-sea">
                                                 <?php endif; ?>
@@ -2460,7 +2461,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -2490,11 +2491,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -2503,7 +2504,7 @@
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La carpa no tiene reservas.
                                                             <?php endif; ?>
@@ -2525,17 +2526,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -2552,7 +2553,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -2572,8 +2573,8 @@
                                             </div> 
                                         </div>
                                     <?php endforeach; ?>
-								</div>
-
+                                </div>
+    
                                 <!-- Parasol -->
                                 <div class="parasol">                                    
                                     <?php foreach ($thirdParasol as $parasol): ?>
@@ -2592,11 +2593,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
@@ -2604,19 +2605,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="parasol-item green">                                                
                                                             <?php break; ?>                                                                
@@ -2634,7 +2635,7 @@
                                                     <?php else: ?>
                                                     <div class="parasol-item">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="parasol-item">
                                                 <?php endif; ?>
@@ -2689,7 +2690,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -2719,11 +2720,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservationParasol( $parasol->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -2732,7 +2733,7 @@
                                                                 <?php else: ?>
                                                                     La sombrilla no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La sombrilla no tiene reservas.
                                                             <?php endif; ?>
@@ -2754,17 +2755,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -2781,7 +2782,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -2802,12 +2803,12 @@
                                         </div>                               
                                     <?php endforeach; ?>                                                                                         
                                 </div>
-
-							</div>
-
+    
+                            </div>
+    
                             <!-- 4 Halls -->
-							<div class="beach-hall">
-							    
+                            <div class="beach-hall">
+                                
                                 <!-- Normal flow -->
                                 <div class="hall-container">
                                     <!-- Hall number -->
@@ -2823,7 +2824,7 @@
                                                     <?php if ($i <= 16): ?>
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
                                                             <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-
+    
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
                                                                 case "temporada": ?>
@@ -2833,33 +2834,33 @@
                                                                 <?php case "enero": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_dia": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_quincena": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <!-- FEBRERO - VER COLOR -->
                                                                 <?php case "febrero": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "febrero_dia": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febero_primer_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febrero_segunda_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
                                                                 <!--  -->
-
+    
                                                                 <?php case "diario": ?>
                                                                     <div class="tent tent-inverse green">                                                
                                                                 <?php break; ?>                                                                
@@ -2873,15 +2874,15 @@
                                                                 <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent tent-inverse">
                                                         <?php endif; ?> 
-
+    
                                                     <?php else: ?>
                                                     
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
@@ -2897,33 +2898,33 @@
                                                                     <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_dia": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_quincena": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <!-- FEBRERO - VER COLOR -->
                                                                     <?php case "febrero": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>                                                                
-
+    
                                                                     <?php case "febrero_dia": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febero_primer_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febrero_segunda_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
                                                                     <!--  -->
-
+    
                                                                     <?php case "diario": ?>
                                                                         <div class="tent green">                                                
                                                                     <?php break; ?>                                                                
@@ -2936,11 +2937,11 @@
                                                                         <div class="tent blue">                                                
                                                                     <?php break; ?>                                                              
                                                                 <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent">
                                                         <?php endif; ?>                                                     
@@ -2981,7 +2982,7 @@
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                     
+                                                                                                                                        
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -2997,7 +2998,7 @@
                                                                                     <i class="material-icons">person_pin</i>                     
                                                                                     Cliente                                                      
                                                                                 </div>
-
+    
                                                                                 <div>                                                            
                                                                                     <span>
                                                                                         <span class="title">• Nombre:  </span>
@@ -3022,16 +3023,16 @@
                                                                                     <span>
                                                                                     <span class="title">• Estadia:  </span>
                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>
                                                                                 </div>
-
+    
                                                                                 <?php ?>
                                                                             </div>                                                               
                                                                         </div>                                                                   
-
+    
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
@@ -3040,7 +3041,7 @@
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
                                                                     <?php endif; ?>                                                          
-
+    
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.
                                                                 <?php endif; ?>
@@ -3062,22 +3063,22 @@
                                                                                     <span class="title-2">• Fecha inicio: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Telefono: </span>
                                                                                     <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Estadia: </span>
                                                                                     <span>  
-                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>         
@@ -3089,7 +3090,7 @@
                                                             </div>
                                                         <?php endif; ?>                 
                                                     </div>
-
+    
                                                     <div class="modal-footer">
                                                         <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
@@ -3131,11 +3132,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
@@ -3143,19 +3144,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="tent-sea green">                                                
                                                             <?php break; ?>                                                                
@@ -3173,7 +3174,7 @@
                                                     <?php else: ?>
                                                     <div class="tent-sea">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="tent-sea">
                                                 <?php endif; ?>
@@ -3228,7 +3229,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -3258,11 +3259,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -3271,7 +3272,7 @@
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La carpa no tiene reservas.
                                                             <?php endif; ?>
@@ -3293,17 +3294,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -3320,7 +3321,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -3341,7 +3342,7 @@
                                         </div>
                                     <?php endforeach; ?>						
                                 </div>
-
+    
                                 <!-- Parasol -->
                                 <div class="parasol">                                      
                                     <?php foreach ($fourthParasol as $parasol): ?>
@@ -3360,11 +3361,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
@@ -3372,19 +3373,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="parasol-item green">                                                
                                                             <?php break; ?>                                                                
@@ -3402,7 +3403,7 @@
                                                     <?php else: ?>
                                                     <div class="parasol-item">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="parasol-item">
                                                 <?php endif; ?>
@@ -3457,7 +3458,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -3487,11 +3488,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservationParasol( $parasol->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -3500,7 +3501,7 @@
                                                                 <?php else: ?>
                                                                     La sombrilla no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La sombrilla no tiene reservas.
                                                             <?php endif; ?>
@@ -3522,17 +3523,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -3549,7 +3550,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -3570,12 +3571,12 @@
                                         </div>                                 
                                     <?php endforeach; ?>                                                                                         
                                 </div>
-
+    
                             </div>
-
+    
                             <!-- 5 Halls -->
-							<div class="beach-hall">
-							
+                            <div class="beach-hall">
+                            
                                 <!-- Normal flow -->
                                 <div class="hall-container">
                                     <!-- Hall number -->
@@ -3591,7 +3592,7 @@
                                                     <?php if ($i <= 16): ?>
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
                                                             <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-
+    
                                                                 <?php $stay = $rsv->getStay(); ?>                                                                
                                                                 <?php switch ($stay): 
                                                                 case "temporada": ?>
@@ -3601,33 +3602,33 @@
                                                                 <?php case "enero": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_dia": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_quincena": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <!-- FEBRERO - VER COLOR -->
                                                                 <?php case "febrero": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "febrero_dia": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febero_primer_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febrero_segunda_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                                
                                                                 <?php break; ?>
                                                                 <!--  -->
-
+    
                                                                 <?php case "diario": ?>
                                                                     <div class="tent tent-inverse green">                                                
                                                                 <?php break; ?>                                                                
@@ -3641,15 +3642,15 @@
                                                                 <?php break; ?>  
                                                                 
                                                             <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent tent-inverse">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent tent-inverse">
                                                         <?php endif; ?> 
-
+    
                                                     <?php else: ?>
                                                     
                                                         <?php if ($this->hasReservation( $tent->getId() )): ?>  
@@ -3665,33 +3666,33 @@
                                                                     <?php case "enero": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_dia": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "enero_quincena": ?>
                                                                         <div class="tent fuchsia">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <!-- FEBRERO - VER COLOR -->
                                                                     <?php case "febrero": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>                                                                
-
+    
                                                                     <?php case "febrero_dia": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febero_primer_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
-
+    
                                                                     <?php case "febrero_segunda_quincena": ?>
                                                                         <div class="tent violet">                                                
                                                                     <?php break; ?>
                                                                     <!--  -->
-
+    
                                                                     <?php case "diario": ?>
                                                                         <div class="tent green">                                                
                                                                     <?php break; ?>                                                                
@@ -3704,11 +3705,11 @@
                                                                         <div class="tent blue">                                                
                                                                     <?php break; ?>                                                              
                                                                 <?php endswitch; ?>   
-
+    
                                                             <?php else: ?>
                                                                 <div class="tent">
                                                             <?php endif; ?>
-
+    
                                                         <?php else: ?>
                                                         <div class="tent">
                                                         <?php endif; ?>                                                     
@@ -3749,7 +3750,7 @@
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                     
+                                                                                                                                        
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -3765,7 +3766,7 @@
                                                                                     <i class="material-icons">person_pin</i>                     
                                                                                     Cliente                                                      
                                                                                 </div>
-
+    
                                                                                 <div>                                                            
                                                                                     <span>
                                                                                         <span class="title">• Nombre:  </span>
@@ -3790,16 +3791,16 @@
                                                                                     <span>
                                                                                     <span class="title">• Estadia:  </span>
                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>
                                                                                 </div>
-
+    
                                                                                 <?php ?>
                                                                             </div>                                                               
                                                                         </div>                                                                   
-
+    
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
@@ -3808,7 +3809,7 @@
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
                                                                     <?php endif; ?>                                                          
-
+    
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.
                                                                 <?php endif; ?>
@@ -3830,22 +3831,22 @@
                                                                                     <span class="title-2">• Fecha inicio: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Telefono: </span>
                                                                                     <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Estadia: </span>
                                                                                     <span>  
-                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>         
@@ -3857,7 +3858,7 @@
                                                             </div>
                                                         <?php endif; ?>                 
                                                     </div>
-
+    
                                                     <div class="modal-footer">
                                                         <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
@@ -3899,11 +3900,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
@@ -3911,19 +3912,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="tent-sea green">                                                
                                                             <?php break; ?>                                                                
@@ -3941,7 +3942,7 @@
                                                     <?php else: ?>
                                                     <div class="tent-sea">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="tent-sea">
                                                 <?php endif; ?>
@@ -3996,7 +3997,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -4026,11 +4027,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -4039,7 +4040,7 @@
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La carpa no tiene reservas.
                                                             <?php endif; ?>
@@ -4061,17 +4062,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -4088,7 +4089,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -4109,7 +4110,7 @@
                                         </div>
                                     <?php endforeach; ?>	
                                 </div>
-
+    
                                 <!-- Parasol -->
                                 <div class="parasol">                        
                                     <?php foreach ($fifthParasol as $parasol): ?>
@@ -4128,11 +4129,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="parasol-item fuchsia">                                               
                                                             <?php break; ?>
@@ -4140,19 +4141,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="parasol-item violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="parasol-item green">                                                
                                                             <?php break; ?>                                                                
@@ -4170,7 +4171,7 @@
                                                     <?php else: ?>
                                                     <div class="parasol-item">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="parasol-item">
                                                 <?php endif; ?>
@@ -4225,7 +4226,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -4255,11 +4256,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservationParasol( $parasol->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -4268,7 +4269,7 @@
                                                                 <?php else: ?>
                                                                     La sombrilla no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La sombrilla no tiene reservas.
                                                             <?php endif; ?>
@@ -4290,17 +4291,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -4317,7 +4318,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationParasolPath/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -4338,19 +4339,19 @@
                                         </div>                                 
                                     <?php endforeach; ?>                                                                                         
                                 </div>
-
+    
                             </div>
-
-							<!-- 6 Last Hall -->
-							<div class="beach-hall last-hall">
-							
+    
+                            <!-- 6 Last Hall -->
+                            <div class="beach-hall last-hall">
+                            
                                 <!-- Normal flow -->
-								<div class="hall-container ">
+                                <div class="hall-container ">
                                     <!-- Hall number -->
                                     <div class="hall-name">
                                         Pasillo 6
                                     </div>
-																	
+                                                                    
                                     <div class="beach-tents">                
                                         <?php foreach ($seventhRow as $tent): ?>
                                             <div>                                                                                                
@@ -4368,11 +4369,11 @@
                                                                 <?php case "enero": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                      
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_dia": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                      
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "enero_quincena": ?>
                                                                     <div class="tent tent-inverse fuchsia">                                      
                                                                 <?php break; ?>
@@ -4380,19 +4381,19 @@
                                                                 <?php case "febrero": ?>
                                                                     <div class="tent tent-inverse violet">                                       
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "febrero_dia": ?>
                                                                     <div class="tent tent-inverse violet">                                       
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febero_primer_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                       
                                                                 <?php break; ?>
-
+    
                                                                 <?php case "febrero_segunda_quincena": ?>
                                                                     <div class="tent tent-inverse violet">                                       
                                                                 <?php break; ?>                                                                
-
+    
                                                                 <?php case "diario": ?>
                                                                     <div class="tent tent-inverse green">                                        
                                                                 <?php break; ?>                                                                
@@ -4410,7 +4411,7 @@
                                                         <?php else: ?>
                                                         <div class="tent tent-inverse">
                                                         <?php endif; ?>
-
+    
                                                     <?php else: ?>
                                                     <div class="tent tent-inverse">
                                                     <?php endif; ?>
@@ -4449,7 +4450,7 @@
                                                         <div id="status-<?= $tent->getId(); ?>" class="col s12 tab-extra">
                                                             <div>
                                                                 <?php if ($this->hasReservation( $tent->getId() )): ?>                           
-                                                                                                                                     
+                                                                                                                                        
                                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
                                                                         
                                                                         <div class="reserve-container">
@@ -4465,7 +4466,7 @@
                                                                                     <i class="material-icons">person_pin</i>                     
                                                                                     Cliente                                                      
                                                                                 </div>
-
+    
                                                                                 <div>                                                            
                                                                                     <span>
                                                                                         <span class="title">• Nombre:  </span>
@@ -4490,16 +4491,16 @@
                                                                                     <span>
                                                                                     <span class="title">• Estadia:  </span>
                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>
                                                                                 </div>
-
+    
                                                                                 <?php ?>
                                                                             </div>                                                               
                                                                         </div>                                                                   
-
+    
                                                                     <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                         <span class="fut-rsv-alert">                                         
                                                                             <i class="material-icons">warning</i>
@@ -4508,7 +4509,7 @@
                                                                     <?php else: ?>
                                                                         La carpa no tiene reservas.    
                                                                     <?php endif; ?>                                                          
-
+    
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.
                                                                 <?php endif; ?>
@@ -4530,22 +4531,22 @@
                                                                                     <span class="title-2">• Fecha inicio: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Fecha fin: </span>
                                                                                     <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Telefono: </span>
                                                                                     <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                                 </div>
-
+    
                                                                                 <div>
                                                                                     <span class="title-2">• Estadia: </span>
                                                                                     <span>  
-                                                                                         <?= ucfirst(
-                                                                                               str_replace('_', ' ', $rsv->getStay()) 
+                                                                                            <?= ucfirst(
+                                                                                                str_replace('_', ' ', $rsv->getStay()) 
                                                                                             ); 
                                                                                         ?> 
                                                                                     </span>         
@@ -4557,7 +4558,7 @@
                                                             </div>
                                                         <?php endif; ?>                 
                                                     </div>
-
+    
                                                     <div class="modal-footer">
                                                         <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
@@ -4578,10 +4579,10 @@
                                             </div>
                                         <?php endforeach; ?>                                         
                                     </div>
-								</div>
-								
+                                </div>
+                                
                                 <!-- Sea tent -->
-								<div class="tents-sea-container">									
+                                <div class="tents-sea-container">									
                                     <?php foreach ($seventhSeaRow as $tent): ?>
                                         <div>                                                                                                
                                             <a class="modal-trigger" href="#modal<?= $tent->getId(); ?>">
@@ -4598,11 +4599,11 @@
                                                             <?php case "enero": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_dia": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "enero_quincena": ?>
                                                                 <div class="tent-sea fuchsia">                                                
                                                             <?php break; ?>
@@ -4610,19 +4611,19 @@
                                                             <?php case "febrero": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                                
-
+    
                                                             <?php case "febrero_dia": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febero_primer_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>
-
+    
                                                             <?php case "febrero_segunda_quincena": ?>
                                                                 <div class="tent-sea violet">                                                
                                                             <?php break; ?>                                                            
-
+    
                                                             <?php case "diario": ?>
                                                                 <div class="tent-sea green">                                                
                                                             <?php break; ?>                                                                
@@ -4640,7 +4641,7 @@
                                                     <?php else: ?>
                                                     <div class="tent-sea">
                                                     <?php endif; ?>
-
+    
                                                 <?php else: ?>
                                                 <div class="tent-sea">
                                                 <?php endif; ?>
@@ -4695,7 +4696,7 @@
                                                                                 <i class="material-icons">person_pin</i>                     
                                                                                 Cliente                                                      
                                                                             </div>
-
+    
                                                                             <div>                                                            
                                                                                 <span>
                                                                                     <span class="title">• Nombre:  </span>
@@ -4725,11 +4726,11 @@
                                                                                     ?> 
                                                                                 </span>
                                                                             </div>
-
+    
                                                                             <?php ?>
                                                                         </div>                                                               
                                                                     </div>                                                                   
-
+    
                                                                 <?php elseif ($rsvList = $this->hasFutureReservation( $tent->getId() )): ?>  
                                                                     <span class="fut-rsv-alert">                                         
                                                                         <i class="material-icons">warning</i>
@@ -4738,7 +4739,7 @@
                                                                 <?php else: ?>
                                                                     La carpa no tiene reservas.    
                                                                 <?php endif; ?>                                                          
-
+    
                                                             <?php else: ?>
                                                                 La carpa no tiene reservas.
                                                             <?php endif; ?>
@@ -4760,17 +4761,17 @@
                                                                                 <span class="title-2">• Fecha inicio: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </span>
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Fecha fin: </span>
                                                                                 <span> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </span>                     
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Telefono: </span>
                                                                                 <span> <?= $rsv->getClient()->getPhone(); ?> </span>         
                                                                             </div>
-
+    
                                                                             <div>
                                                                                 <span class="title-2">• Estadia: </span>
                                                                                 <span>  
@@ -4787,7 +4788,7 @@
                                                         </div>
                                                     <?php endif; ?>                 
                                                 </div>
-
+    
                                                 <div class="modal-footer">
                                                     <a href="<?= FRONT_ROOT ?>reservation/addReservationPath/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
@@ -4807,14 +4808,15 @@
                                             </div> 
                                         </div>
                                     <?php endforeach; ?>
-								</div>
-
-							</div>	
-
-						</div>                        
+                                </div>
+    
+                            </div>	
+    
+                        </div>                        
                     </div>
-    			</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>        
+
 	</div>
 </div>

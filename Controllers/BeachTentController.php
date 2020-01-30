@@ -74,6 +74,46 @@
             }
         }                 
 
+        public function showFullMap() {
+            if ($admin = $this->adminController->isLogged()) {
+                
+                $title = 'Mapa de carpas';		
+                $parasolController = new ParasolController();                            
+
+                // Tents
+                $firstRow = $this->beachTentDAO->getN_row(1);
+                $secondRow = $this->beachTentDAO->getN_row(2);
+                $thirdRow = $this->beachTentDAO->getN_row(3);
+                $fourthRow = $this->beachTentDAO->getN_row(4);
+                $fifthRow = $this->beachTentDAO->getN_row(5);
+                $sixthRow = $this->beachTentDAO->getN_row(6);
+                $seventhRow = $this->beachTentDAO->getN_row(7);
+
+                // tents sea
+                $firstSeaRow = $this->beachTentDAO->getSea_N_row(1);
+                $secondSeaRow = $this->beachTentDAO->getSea_N_row(2);
+                $thirdSeaRow = $this->beachTentDAO->getSea_N_row(3);
+                $fourthSeaRow = $this->beachTentDAO->getSea_N_row(4);
+                $fifthSeaRow = $this->beachTentDAO->getSea_N_row(5);
+                $sixthSeaRow = $this->beachTentDAO->getSea_N_row(6);
+                $seventhSeaRow = $this->beachTentDAO->getSea_N_row(7);                
+
+                // parasols
+                $firtsParasol = $parasolController->getRowParasol(1);
+                $secondParasol = $parasolController->getRowParasol(2);
+                $thirdParasol = $parasolController->getRowParasol(3);
+                $fourthParasol = $parasolController->getRowParasol(4);
+                $fifthParasol = $parasolController->getRowParasol(5);
+                
+                require_once(VIEWS_PATH . "head.php");                
+                require_once(VIEWS_PATH . "tents-full-map.php");
+                require_once(VIEWS_PATH . "footer.php");
+
+            } else {
+                return $this->adminController->userPath();
+            }
+        }
+
         public function stock() {
             if ($admin = $this->adminController->isLogged()) {
                 $title = 'Carpas - Stock';

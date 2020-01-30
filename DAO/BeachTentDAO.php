@@ -31,7 +31,7 @@
                     $beachTentTemp->setId($row["id"]);
 					$beachTentTemp->setNumber($row["number"]);
 					$beachTent->setPrice($row["price"]);
-                    $beachTentTemp->setIsActive($row["is_active"]);
+                    // $beachTentTemp->setIsActive($row["is_active"]);
 				}
 				return $beachTentTemp;
 			} catch (Exception $e) {

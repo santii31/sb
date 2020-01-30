@@ -72,6 +72,7 @@
 			}			
 		}	
 
+		/*
 		public function getById(Reservation $reservation) {
 			try {				
 				$reservationTemp = null;
@@ -120,6 +121,55 @@
 			} catch (Exception $e) {
 				// return false;
 				echo $e;
+			}
+		}
+		*/
+
+		public function getById(Reservation $reservation) {
+			try {				
+
+				$reservationTemp = null;
+				$query = "CALL reservation_getById(?)";
+				$parameters["id"] = $reservation->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);		
+									
+				foreach ($results as $row) {
+					
+					$reservationTemp = new Reservation();
+					$reservationTemp->setId($row["reservation_id"]);
+					$reservationTemp->setDateStart($row["reservation_dateStart"]);
+					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
+					$reservationTemp->setStay($row["reservation_stay"]);
+					$reservationTemp->setDiscount($row["reservation_discount"]);
+					$reservationTemp->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+
+					$reservationTemp->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+
+					$reservationTemp->setRegisterBy($admin);				
+				}
+				return $reservationTemp;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
 			}
 		}
 
@@ -877,6 +927,48 @@
 			}
 		}
 		
+
+		public function getAllAux() {
+			try {
+				$reservList = array();
+				$query = "CALL reservation_getAllAux()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+                    $reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$client->setCity($row["client_city"]);
+					$client->setAddress($row["client_address"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setVehicleType($row["client_vehicleType"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					array_push($reservList, $reservation);
+				}
+				return $reservList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
     }
 
  ?>
