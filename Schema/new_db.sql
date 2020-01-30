@@ -3833,7 +3833,7 @@ BEGIN
 		   client.email AS client_email,
            client.tel AS client_tel,
            client.city AS client_city,
-           client.address AS client_addres,
+           client.address AS client_address,
 		   client.is_active AS client_isActive
     FROM `checkC` 
     INNER JOIN client ON checkC.FK_id_client = client.id
@@ -3967,7 +3967,7 @@ CREATE PROCEDURE checkC_update (
                                     IN bank VARCHAR(255),
                                     IN account_number INT,
                                     IN check_number INT,
-                                    IN charged BOOLEAN,
+                                    IN charged VARCHAR(255),
                                     IN payment_date DATE
                                 )
 BEGIN
