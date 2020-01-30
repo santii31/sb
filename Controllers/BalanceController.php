@@ -44,13 +44,13 @@
                 $balances = $this->balanceDAO->getByReservationId($reservation);
                 $partialByClient = $this->balanceDAO->getSumPartialByClient($reservation->getClient());                
 
-                if ($partialByClient == $reservation->getPrice()) {                     
+                if ($partialByClient == $reservation->getPrice()) {                         ;
                     $flag = false;
-                } else {                    
+                } else {                                        
                     $flag = true;
                     $remainderByClient = $reservation->getPrice() - $partialByClient;
                 }                
-
+                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "balance.php");

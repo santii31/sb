@@ -2,22 +2,22 @@
 
     namespace Controllers;    
     
+    use Models\Check as Check;
     use Models\Admin as Admin;
     use Models\Client as Client;    
     use Models\Parasol as Parasol;    
     use Models\BeachTent as BeachTent;
     use Models\Reservation as Reservation;
-    use Models\Check as Check;
     use DAO\CheckDAO as CheckDAO;
     use DAO\ClientDAO as ClientDAO;        
+    use DAO\ConfigDAO as ConfigDAO;    
     use DAO\ReservationDAO as ReservationDAO;    
-    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
-    use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
     use DAO\ServicexParkingDAO as ServicexParkingDAO;
+    use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
+    use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
     use DAO\ServicexMobileParasolDAO as ServicexMobileParasolDAO;
-    use DAO\ConfigDAO as ConfigDAO;    
     use Controllers\PDFController as PDFController;  
     use Controllers\AdminController as AdminController; 
     use Controllers\ClientController as ClientController;
@@ -333,7 +333,7 @@
                 $title = "Reservas por administrador";                    
                 $adminTemp = new Admin();
                 $adminTemp->setId($id_admin);
-                $reservations = $this->reservationDAO->getAllByAdmin($admin);                
+                $reservations = $this->reservationDAO->getAllByAdmin($adminTemp);                
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-reservation.php");
@@ -545,8 +545,7 @@
             $parasol->setId($id_parasol);
             return $this->reservationDAO->getByIdParasol($parasol);
         }
-
-        // 
+        
         public function checkIsDateReserved(Reservation $reservation) {                        
             $today = date("Y-m-d");
             $dateStart = strtotime( $reservation->getDateStart() ) ;
@@ -650,13 +649,14 @@
             }
         }
 
-        public function addCheck($bank, $account_number, $check_number, $id_client, $id_reserve) {
-            if (!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($id_client)) {
+        public function addCheck($bank, $account_number, $check_number, $payment_date, $id_client, $id_reserve) {
+            if (!empty($bank) && !empty($account_number) && !empty($check_number) && !empty($payment_date) && !empty($id_client)) {
                 $check = new Check();
                 $clientTemp = new Client();
                 $check->setBank($bank);
                 $check->setAccountNumber($account_number);
                 $check->setCheckNumber($check_number);                
+                $check->setPaymentDate($payment_date);
                 $clientTemp->setId($id_client);
                 $client = $this->clientDAO->getById($clientTemp);                
                 $check->setClient($client);
@@ -667,7 +667,7 @@
                 return $this->paymentMethod("check", $id_reserve, DB_ERROR, null);
             }
             return $this->paymentMethod("check", $id_reserve, EMPTY_FIELDS, null);
-        }        
+        }       
 
         public function checkList($alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
@@ -685,7 +685,7 @@
                 $title = "Reserva - Precio final";
                 $reservationTemp = new Reservation();
                 $reservationTemp->setId($id_reservation);
-                $reservation = $this->reservationDAO->getById($reservationTemp);
+                $reservation = $this->reservationDAO->getByIdWithTentOrParasol($reservationTemp);
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "pay.php");

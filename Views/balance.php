@@ -25,7 +25,7 @@
                                                         ucfirst($reservation->getClient()->getLastName()); ?>
                                         </span>
                                         <span>
-                                            • Nº Carpa: <?= $reservation->getBeachTent()->getNumber(); ?>
+                                            • Nº Carpa: <?php// $reservation->getBeachTent()->getNumber(); ?>
                                         </span>
                                         <span>
                                             • Fecha inicio: <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?>

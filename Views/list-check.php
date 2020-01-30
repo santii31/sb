@@ -56,6 +56,7 @@
                                 <th>Banco</th>
                                 <th>Nº Cuenta</th>
                                 <th>Nº Cheque</th>
+                                <th>Fecha de entrega</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -73,7 +74,8 @@
                                 <td> <?= ucfirst( $check->getBank() ); ?> </td>                                
                                 <td> <?= $check->getBank(); ?> </td>
                                 <td> <?= $check->getAccountNumber(); ?> </td>
-                                <td> <?= $check->getCheckNumber(); ?> </td>  
+                                <td> <?= $check->getCheckNumber(); ?> </td>
+                                <td> <?= $check->getPaymentDate(); ?> </td>  
                                 <td> <?= ucfirst( $check->getCharged()); ?> </td>        
                                 <td class="actions">
                                     <a href="<?= FRONT_ROOT ?>//<?= $check->getId(); ?>reservation/payed" class="waves-effect waves-light btn-small">
@@ -118,7 +120,7 @@
         tr = table.getElementsByTagName('tr');
         
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {

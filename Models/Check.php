@@ -9,6 +9,7 @@
         private $account_number;
         private $check_number;
         private $charged;
+        private $payment_date;
         private $client;
         
         public function getId() {
@@ -51,6 +52,15 @@
 
         public function setCharged($charged) {
             $this->charged = $charged;
+            return $this;
+        }
+
+        public function getPaymentDate() {
+            return $this->payment_date;
+        }
+
+        public function setPaymentDate($payment_date) {
+            $this->payment_date = $payment_date;
             return $this;
         }
 

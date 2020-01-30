@@ -440,7 +440,7 @@
                                             Sueldo del personal
                                         </a>
                                     </li>                                       
-                                    
+                                                                    
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>reservation/checkList" class="valign-wrapper waves-effect">
                                             <i class="material-icons left">contacts</i>

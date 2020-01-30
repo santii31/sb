@@ -19,8 +19,14 @@
                                 <ul>
                                     <li>• Cliente: <?= ucfirst($reservation->getClient()->getName()) . " " . ucfirst($reservation->getClient()->getLastName()); ?> </li>
                                     <li>• Fecha inicio: <?= date("d-m-Y", strtotime($reservation->getDateStart())); ?> </li>
-                                    <li>• Fecha fin: <?= date("d-m-Y", strtotime($reservation->getDateEnd())); ?> </li>
+                                    <li>• Fecha fin: <?= date("d-m-Y", strtotime($reservation->getDateEnd())); ?> </li>                           
+
+                                    <?php if ($reservation->getBeachTent() != null):  ?>
                                     <li>• Carpa: <?= $reservation->getBeachTent()->getNumber(); ?> </li>
+                                    <?php elseif ($reservation->getParasol() != null): ?>
+                                    <li>• Sombrilla: <?= $reservation->getParasol()->getParasolNumber(); ?> </li>
+                                    <?php endif; ?>
+                                    
                                     <li>• Precio: $<?= number_format($reservation->getPrice(), 2, ',', '.'); ?> </li>
                                     <li>• Estadia:                                                                                         
                                         <?= ucfirst(

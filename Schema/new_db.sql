@@ -1848,6 +1848,41 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservation_getByIdWithTentOrParasol`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getByIdWithTentOrParasol (IN id INT)
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
+           reservation.discount AS reservation_discount,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           reservation.FK_id_tent AS reservation_fk_id_tent,
+           reservation.FK_id_parasol AS reservation_fk_id_parasol,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email
+    FROM `reservation`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
+    WHERE `reservation`.`id` = id;
+END$$
+
+
 
 ------------------------- RESERVATION_X_PARKING ---------------------
 
@@ -3566,6 +3601,7 @@ CREATE TABLE checkC (
     `account_number` INT NOT NULL,
     `check_number` INT NOT NULL,
     `charged` VARCHAR(255) DEFAULT "entregado",
+    `payment_date` DATE NOT NULL,
     `FK_id_client` INT NOT NULL,
     CONSTRAINT `FK_id_client_check` FOREIGN KEY (`FK_id_client`) REFERENCES `client` (`id`)
 );
@@ -3577,6 +3613,7 @@ CREATE PROCEDURE checkC_add (
                                 IN bank VARCHAR(255),
                                 IN account_number INT,
                                 IN check_number INT,
+                                IN payment_date DATE,
                                 IN FK_id_client INT,
                                 OUT lastId INT  
                             )                             
@@ -3585,10 +3622,11 @@ BEGIN
 			checkC.bank,
 			checkC.account_number,
 			checkC.check_number,
+            checkC.payment_date,
             checkC.FK_id_client
 	)
     VALUES
-        (bank,account_number,check_number,FK_id_client);
+        (bank,account_number,check_number,payment_date,FK_id_client);
         SET lastId = LAST_INSERT_ID();	
 	    SELECT lastId;
 END$$
@@ -3603,6 +3641,7 @@ BEGIN
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
            checkC.charged AS check_charged,
+           checkC.payment_date AS check_paymentDate,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3626,6 +3665,7 @@ BEGIN
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
            checkC.charged AS check_charged,
+           checkC.payment_date AS check_paymentDate,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3649,6 +3689,7 @@ BEGIN
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
            checkC.charged AS check_charged,
+           checkC.payment_date AS check_paymentDate,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3672,6 +3713,7 @@ BEGIN
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
            checkC.charged AS check_charged,
+           checkC.payment_date AS check_paymentDate,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3695,6 +3737,7 @@ BEGIN
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
            checkC.charged AS check_charged,
+           checkC.payment_date AS check_paymentDate,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3718,6 +3761,7 @@ BEGIN
            checkC.account_number AS check_accountNumber,
            checkC.check_number AS check_number,
            checkC.charged AS check_charged,
+           checkC.payment_date AS check_paymentDate,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -3738,7 +3782,8 @@ CREATE PROCEDURE checkC_update (
                                     IN bank VARCHAR(255),
                                     IN account_number INT,
                                     IN check_number INT,
-                                    IN charged BOOLEAN
+                                    IN charged BOOLEAN,
+                                    IN payment_date DATE
                                 )
 BEGIN
     UPDATE `checkC` 
@@ -3746,7 +3791,8 @@ BEGIN
         `checkC`.`bank` = bank, 
         `checkC`.`account_number` = account_number,
         `checkC`.`check_number` = check_number,
-        `checkC`.`charged` = charged
+        `checkC`.`charged` = charged,
+        `checkC`.`payment_date` = payment_date
         
     WHERE 
         `checkC`.`id` = id;	

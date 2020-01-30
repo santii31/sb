@@ -50,6 +50,11 @@
                                 <input id="check_number" type="number" name="check_number" class="validate" required>
                                 <label for="check_number">Numero de cheque</label>
                             </div>
+
+                            <div class="input-field col s4">
+                                <input id="check_paymentDate" type="date" name="check_paymentDate" class="validate" required>
+                                <label for="check_paymentDate">Fecha de entrega</label>
+                            </div>
                             
                         </div>    
                         
