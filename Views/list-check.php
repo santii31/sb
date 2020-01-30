@@ -72,19 +72,18 @@
                                 <td> <?= $check->getClient()->getPhone(); ?> </td>
                                 <td> <?= ucfirst( $check->getClient()->getCity() ); ?> </td>
                                 <td> <?= ucfirst( $check->getBank() ); ?> </td>                                
-                                <td> <?= $check->getBank(); ?> </td>
                                 <td> <?= $check->getAccountNumber(); ?> </td>
                                 <td> <?= $check->getCheckNumber(); ?> </td>
-                                <td> <?= $check->getPaymentDate(); ?> </td>  
+                                <td> <?= $check->getPaymentDate(); ?> </td>
                                 <td> <?= ucfirst( $check->getCharged()); ?> </td>        
                                 <td class="actions">
-                                    <a href="<?= FRONT_ROOT ?>//<?= $check->getId(); ?>reservation/payed" class="waves-effect waves-light btn-small">
+                                    <a href="<?= FRONT_ROOT ?>reservation/payed/<?= $check->getId(); ?>" class="waves-effect waves-light btn-small">
                                         <i class="material-icons left"></i>
-                                        Cheque cobrado
+                                        Cobrado
                                     </a> 
-                                    <a href="<?= FRONT_ROOT ?>//<?= $check->getId(); ?>reservation/unpayed" class="waves-effect waves-light btn-small">
+                                    <a href="<?= FRONT_ROOT ?>reservation/unpayed/<?= $check->getId(); ?>" class="waves-effect waves-light btn-small">
                                         <i class="material-icons left"></i>
-                                        Cheque rebotado
+                                        Rebotado
                                     </a>                                     
                                 </td>                      
                             </tr>
