@@ -20,7 +20,11 @@
                         </div>                    
                     </div>
                 </nav>                                
-
+                <div class="row">
+                    <div class="col s12">
+                        <h5>• Saldo total: $<?= number_format($remainderTotal, 2, ',', '.'); ?></h5>
+                    </div>
+                </div>
                 <div class="row">                    
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>
@@ -28,6 +32,7 @@
                             <th>Nombre</th>
                             <th>Apellido</th>                            
                             <th>Nº Carpa</th>
+                            <th>Nº Sombrilla</th>
                             <th>Debe</th>
                             <th>Haber</th>
                             <th>Saldo</th>
@@ -40,8 +45,19 @@
                                 <tr>                                                                  
                                     <td> <?= ucfirst( $rsv->getClient()->getName() ); ?> </td>
                                     <td> <?= ucfirst( $rsv->getClient()->getLastName() ); ?> </td>
-                                    <td> <?= $rsv->getBeachTent()->getNumber(); ?> </td>
                                     
+                                    <?php if ($rsv->getBeachTent() != null): ?>
+                                    <td> <?= $rsv->getBeachTent()->getNumber(); ?> </td>
+                                    <?php else: ?>
+                                    <td> N/A </td>
+                                    <?php endif; ?>
+
+                                    <?php if ($rsv->getParasol() != null): ?>
+                                    <td> <?= $rsv->getParasol()->getParasolNumber(); ?> </td>
+                                    <?php else: ?>
+                                    <td> N/A </td>
+                                    <?php endif; ?>
+
                                     <?php $total = $rsv->getPrice(); ?>
                                     <td> $<?= number_format($total, 2, ',', '.'); ?> </td>    
 

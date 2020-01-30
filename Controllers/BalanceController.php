@@ -24,7 +24,17 @@
             if ($admin = $this->adminController->isLogged()) {                       
                 $title = "Contabilidad - Balance";         
                 $this->reservationController = new ReservationController();       
-                $rsvList = $this->reservationController->getAllReservations();
+                // $rsvList = $this->reservationController->getAllReservations();
+                $rsvList = $this->reservationController->getAllToBalanceReservations();    
+                $remainderTotal = 0;
+                foreach ($rsvList as $rsv) {                    
+                    $total = $rsv->getPrice();
+                    $partial = $this->balanceDAO->getSumPartialByClient($rsv->getClient());
+                    $remainder = $total - $partial;
+                    $remainderTotal += $remainder;
+                }
+                
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "accounting-balance.php");

@@ -1221,6 +1221,58 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservation_getByDateToBalance`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getByDateToBalance (IN date DATE)
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,           
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           reservation.FK_id_tent AS reservation_fk_id_tent,
+           reservation.FK_id_parasol AS reservation_fk_id_parasol,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName
+    FROM `reservation`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`    
+    WHERE `reservation`.`date_register` = date;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getBetweenDatesToBalance`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getBetweenDatesToBalance (IN date_start DATE, IN date_end DATE)
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,           
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           reservation.FK_id_tent AS reservation_fk_id_tent,
+           reservation.FK_id_parasol AS reservation_fk_id_parasol,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,		   
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName
+    FROM `reservation`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`    
+    WHERE (`reservation`.`date_register` >= date_start) AND (`reservation`.`date_register` <= date_end);
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getBetweenDates`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getBetweenDates (IN date_start DATE, IN date_end DATE)
@@ -1291,6 +1343,32 @@ BEGIN
     INNER JOIN client ON reservation.FK_id_client = client.id
     INNER JOIN admin ON reservation.register_by = admin.id
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id    
+    ORDER BY date_start ASC;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getAllToBalance`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllToBalance ()
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,           
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           reservation.FK_id_tent AS reservation_fk_id_tent,
+           reservation.FK_id_parasol AS reservation_fk_id_parasol,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName           
+    FROM `reservation`
+    INNER JOIN client ON reservation.FK_id_client = client.id
+    INNER JOIN admin ON reservation.register_by = admin.id    
     ORDER BY date_start ASC;
 END$$
 

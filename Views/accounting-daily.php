@@ -32,7 +32,8 @@
                         <thead>
                         <tr>                            
                             <th>Cliente</th>    
-                            <th>Nº Carpa</th>         
+                            <th>Nº Carpa</th>       
+                            <th>Nº Sombrilla</th>  
                             <th>Fecha inicio</th>                                           
                             <th>Fecha fin</th>
                             <th>Precio</th>                            
@@ -44,7 +45,19 @@
                             <?php foreach ($rsvList as $rsv): ?>
                                 <tr>                                    
                                     <td> <?= ucfirst($rsv->getClient()->getName()) . ' ' . ucfirst( $rsv->getClient()->getLastName() ); ?> </td>
+                                    
+                                    <?php if ($rsv->getBeachTent() != null): ?>
                                     <td> <?= $rsv->getBeachTent()->getNumber(); ?> </td>
+                                    <?php else: ?>
+                                    <td> N/A </td>
+                                    <?php endif; ?>
+
+                                    <?php if ($rsv->getParasol() != null): ?>
+                                    <td> <?= $rsv->getParasol()->getParasolNumber(); ?> </td>
+                                    <?php else: ?>
+                                    <td> N/A </td>
+                                    <?php endif; ?>                                    
+
                                     <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
                                     <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                    
                                     <td> $<?= number_format($rsv->getPrice(), 2, ',', '.');  ?> </td>

@@ -613,12 +613,24 @@
             return $this->reservationDAO->getAll();
         }
 
+        public function getAllToBalanceReservations() {
+            return $this->reservationDAO->getAllToBalance();
+        }        
+
         public function getReservationsByDate($date) {
             return $this->reservationDAO->getByDate($date);
         }
 
+        public function getReservationsByDateToBalance($date) {
+            return $this->reservationDAO->getByDateToBalance($date);
+        }
+
         public function getReservationsBetweenDates($date_start, $date_end) {
             return $this->reservationDAO->getBetweenDates($date_start, $date_end);
+        }
+
+        public function getReservationsBetweenDatesToBalance($date_start, $date_end) {
+            return $this->reservationDAO->getBetweenDatesToBalance($date_start, $date_end);
         }
 
         public function futureReservations() {

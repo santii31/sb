@@ -52,6 +52,7 @@
                                 <th>Email</th>
                                 <th>Telefono</th>
                                 <th>Nº Carpa</th>
+                                <th>Nº Sombrilla</th>
                                 <th>Estadia</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
@@ -67,7 +68,10 @@
                                 <td> <?= ucfirst( $reservation->getClient()->getAddress() ); ?> </td>                                
                                 <td> <?= $reservation->getClient()->getEmail(); ?> </td>
                                 <td> <?= $reservation->getClient()->getPhone(); ?> </td>
+                                
                                 <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
+                                <td></td>
+
                                 <td> <?= ucfirst( str_replace('_', ' ', $reservation->getStay()) ); ?> </td>                                
                                 <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>
                                 <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>          

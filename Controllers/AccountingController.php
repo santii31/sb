@@ -165,8 +165,8 @@
                 $today = date("Y-m-d");
                 $title = "Contabilidad - Ventas diarias - " . date("d/m/Y" , strtotime($today));   
                 $this->reservationController = new ReservationController();
-                $rsvList = $this->reservationController->getReservationsByDate($today);
-                
+                // $rsvList = $this->reservationController->getReservationsByDate($today);
+                $rsvList = $this->reservationController->getReservationsByDateToBalance($today);                
                 $total = 0;                
 
                 foreach ($rsvList as $rsv) {
@@ -228,7 +228,8 @@
                     $title = "Contabilidad - Ventas del día - " . date("d/m/Y" , strtotime($date));   
 
                     $this->reservationController = new ReservationController();
-                    $rsvList = $this->reservationController->getReservationsByDate($date);
+                    // $rsvList = $this->reservationController->getReservationsByDate($date);
+                    $rsvList = $this->reservationController->getReservationsByDateToBalance($date);
                     $total = 0;                
 
                     foreach ($rsvList as $rsv) {
@@ -256,7 +257,8 @@
                              " y el " . date("d/m/Y" , strtotime($date_end));   
 
                     $this->reservationController = new ReservationController();
-                    $rsvList = $this->reservationController->getReservationsBetweenDates($date_start, $date_end);
+                    // $rsvList = $this->reservationController->getReservationsBetweenDates($date_start, $date_end);
+                    $rsvList = $this->reservationController->getReservationsBetweenDatesToBalance($date_start, $date_end);
                     $total = 0;                
 
                     foreach ($rsvList as $rsv) {

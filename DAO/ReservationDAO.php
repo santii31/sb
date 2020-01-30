@@ -328,6 +328,117 @@
 			}
 		}
 
+		public function getByDateToBalance($date) {
+			try {				
+				$rsvList = array();
+				$query = "CALL reservation_getByDateToBalance(?)";
+				$parameters["date"] = $date;
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);					
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);					
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					if ($row["reservation_fk_id_tent"] != null) {
+                        
+						$this->tentDAO = new BeachTentDAO();                    
+						$tent = new BeachTent();                        
+						$tent->setId($row["reservation_fk_id_tent"]);
+			
+						$reservation->setBeachTent( $this->tentDAO->getById($tent) );
+			
+					} elseif ($row["reservation_fk_id_parasol"] != null) {
+						
+						$this->parasolDAO = new ParasolDAO();                        
+						$parasol = new Parasol();                        
+						$parasol->setId($row["reservation_fk_id_parasol"]);
+			
+						$reservation->setParasol( $this->parasolDAO->getById($parasol) );
+					}
+					
+					$reservation->setRegisterBy($admin);
+
+					array_push($rsvList, $reservation);
+				}
+				return $rsvList;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
+		public function getBetweenDatesToBalance($date_start, $date_end) {
+			try {				
+				$rsvList = array();
+				$query = "CALL reservation_getBetweenDatesToBalance(?, ?)";
+				$parameters["date_start"] = $date_start;
+				$parameters["date_end"] = $date_end;
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
+				foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);					
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					if ($row["reservation_fk_id_tent"] != null) {
+                        
+						$this->tentDAO = new BeachTentDAO();                    
+						$tent = new BeachTent();                        
+						$tent->setId($row["reservation_fk_id_tent"]);
+			
+						$reservation->setBeachTent( $this->tentDAO->getById($tent) );
+			
+					} elseif ($row["reservation_fk_id_parasol"] != null) {
+						
+						$this->parasolDAO = new ParasolDAO();                        
+						$parasol = new Parasol();                        
+						$parasol->setId($row["reservation_fk_id_parasol"]);
+			
+						$reservation->setParasol( $this->parasolDAO->getById($parasol) );
+					}
+					
+					$reservation->setRegisterBy($admin);
+
+					array_push($rsvList, $reservation);
+				}
+				return $rsvList;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
 		public function getBetweenDates($date_start, $date_end) {
 			try {				
 				$rsvList = array();
@@ -485,6 +596,57 @@
 				return false;
 			}
 		}		
+
+		public function getAllToBalance() {
+			try {
+				$reservList = array();
+				$query = "CALL reservation_getAllToBalance()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+                    $reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);					
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$reservation->setClient($client);
+
+					$admin = new Admin();
+					$admin->setId($row["admin_id"]);
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					if ($row["reservation_fk_id_tent"] != null) {
+                        
+						$this->tentDAO = new BeachTentDAO();                    
+						$tent = new BeachTent();                        
+						$tent->setId($row["reservation_fk_id_tent"]);
+			
+						$reservation->setBeachTent( $this->tentDAO->getById($tent) );
+			
+					} elseif ($row["reservation_fk_id_parasol"] != null) {
+						
+						$this->parasolDAO = new ParasolDAO();                        
+						$parasol = new Parasol();                        
+						$parasol->setId($row["reservation_fk_id_parasol"]);
+			
+						$reservation->setParasol( $this->parasolDAO->getById($parasol) );
+					}				
+                    
+					array_push($reservList, $reservation);
+				}
+				return $reservList;	
+			} catch (Exception $e) {
+				return false;
+			}
+		}
 
 		public function getAllActives() {
 			try {
