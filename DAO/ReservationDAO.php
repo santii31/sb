@@ -891,6 +891,110 @@
             }
 		}
 		
+
+		public function getParasolActiveCount() {
+            try {				
+                $query = "CALL reservation_getParasolActiveCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+        }
+
+        public function getParasolDisableCount() {
+            try {				
+                $query = "CALL reservation_getParasolDisableCount()";				
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);								
+                foreach ($results as $row) {
+                    return $row["total"];
+                }
+            }
+            catch (Exception $ex) {
+                return false;                
+            }
+        }
+
+        public function getParasolAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getParasolAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$parasol = new Parasol();					
+					$parasol->setParasolNumber($row["parasol_number"]);
+					
+					$reservation->setParasol($parasol);					
+                    
+					array_push($list, $reservation);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+				// return false;
+				echo $ex;
+            }
+        }
+
+        public function getParasolAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getParasolAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$parasol = new Parasol();					
+					$parasol->setParasolNumber($row["parasol_number"]);
+					
+					$reservation->setParasol($parasol);					
+                    
+					array_push($list, $reservation);                          
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+                return false;
+            }
+		}
+
+
+
 		public function getByIdParasol(Parasol $parasol) {
 			try {
 				$parasolReservations = array();

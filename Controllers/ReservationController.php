@@ -191,7 +191,7 @@
             if ($admin = $this->adminController->isLogged()) {
                 
                 if ($showDisables == null) {
-                    $title = "Reservas";    
+                    $title = "Reservas - Carpas";    
                     $rsvCount = $this->reservationDAO->getActiveCount();                    
                     $pages = ceil ($rsvCount / MAX_ITEMS_PAGE);                                                                                   
                     $current = 0;                  
@@ -219,6 +219,44 @@
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-reservation.php");
+                require_once(VIEWS_PATH . "footer.php");
+            } else {
+                return $this->adminController->userPath();
+            }
+        }
+
+        public function listReservationParasolPath($page = 1, $showDisables = null, $alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {
+                
+                if ($showDisables == null) {
+                    $title = "Reservas - Sombrillas";    
+                    $rsvCount = $this->reservationDAO->getParasolActiveCount();                    
+                    $pages = ceil ($rsvCount / MAX_ITEMS_PAGE);                                                                                   
+                    $current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $reservations = $this->reservationDAO->getParasolAllActiveWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $reservations = $this->reservationDAO->getParasolAllActiveWithLimit($startFrom);                    
+                    }
+                } else {                    
+                    $title = "Reservas - Deshabilitadas";
+                    $d_rsvCount = $this->reservationDAO->getParasolDisableCount();         
+                    $d_pages = ceil ($d_rsvCount / MAX_ITEMS_PAGE);                                                                           
+                    $d_current = 0;                  
+    
+                    if ($page == 1) {                                        
+                        $reservations = $this->reservationDAO->getParasolAllDisableWithLimit(0);
+                    } else {
+                        $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
+                        $reservations = $this->reservationDAO->getParasolAllDisableWithLimit($startFrom);                    
+                    }                                      
+                }   
+                      
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "list-reservation-parasol.php");
                 require_once(VIEWS_PATH . "footer.php");
             } else {
                 return $this->adminController->userPath();

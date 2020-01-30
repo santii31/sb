@@ -13,20 +13,21 @@
                 <?php if (!isset($adminTemp)): ?>
                     <div class="more-list">
                         <?php if (isset($showDisables)): ?>
-                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath">              
+                        <a href="<?= FRONT_ROOT ?>reservation/listReservationParasolPath">              
                             <i class="material-icons left">arrow_forward</i>
                             <span>
                                 Mostrar reservas habilitadas
                             </span>    
                         </a>
                         <?php else: ?>           
-                        <a href="<?= FRONT_ROOT ?>reservation/generatePDF" target="_blank">                    
+                        <a href="<?= FRONT_ROOT ?>reservation/generateParasolPDFP" target="_blank">                    
                             <i class="material-icons left">picture_as_pdf</i>
                             <span>
                                 Generar lista de reservas en PDF
                             </span>    
-                        </a>             <br>
-                        <a href="<?= FRONT_ROOT ?>reservation/listReservationPath/1/disables">                    
+                        </a>
+                        <br>
+                        <a href="<?= FRONT_ROOT ?>reservation/listReservationParasolPath/1/disables">                    
                             <i class="material-icons left">arrow_forward</i>
                             <span>
                                 Mostrar reservas deshabilitadas
@@ -79,7 +80,7 @@
                             <th>Fecha fin</th>
                             <th>Precio</th>
                             <th>Cliente</th>
-                            <th>Carpa</th>
+                            <th>Sombrilla</th>                            
                             <th>Servicios</th>                            
                             <th>Añadir</th>
                         </tr>
@@ -97,7 +98,7 @@
                                             . " " . 
                                             ucfirst($reservation->getClient()->getLastName()); ?> 
                                     </td>
-                                    <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
+                                    <td> <?= $reservation->getParasol()->getParasolNumber(); ?> </td>
                                     
                                     <td>
                                         <?php $service=null; ?>

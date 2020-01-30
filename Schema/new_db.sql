@@ -1714,6 +1714,78 @@ BEGIN
 END$$
 
 
+-- 
+DROP procedure IF EXISTS `reservation_getParasolAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getParasolAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                        
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            parasol.parasol_number AS parasol_number 
+    FROM reservation         
+    INNER JOIN parasol ON reservation.FK_id_parasol = parasol.id
+    INNER JOIN client ON reservation.FK_id_client = client.id            
+    WHERE `reservation`.`is_active` = true
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getParasolAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getParasolAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                        
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            parasol.parasol_number AS parasol_number 
+    FROM reservation         
+    INNER JOIN parasol ON reservation.FK_id_parasol = parasol.id
+    INNER JOIN client ON reservation.FK_id_client = client.id     
+    WHERE `reservation`.`is_active` = false
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getParasolActiveCount`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getParasolActiveCount ()
+BEGIN
+	SELECT count(reservation.id) AS total 
+    FROM `reservation`
+    WHERE `reservation`.`is_active` = true AND `reservation`.`FK_id_parasol` IS NOT NULL;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getParasolDisableCount`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getParasolDisableCount ()
+BEGIN
+	SELECT count(reservation.id) AS total 
+    FROM `reservation`
+    WHERE `reservation`.`is_active` = false AND `reservation`.`FK_id_parasol` IS NOT NULL;
+END$$
+
+-- 
+
 DROP procedure IF EXISTS `reservation_getAllAux`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getAllAux ()

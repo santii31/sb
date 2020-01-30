@@ -69,7 +69,13 @@
                                 <i class="material-icons left">assignment</i>
                                     Stock de carpas
                                 </a>
-                            </li>                                        
+                            </li>   
+                            <li>
+                                <a href="<?= FRONT_ROOT ?>reservation/listReservationParasolPath" class="valign-wrapper waves-effect">
+                                <i class="material-icons left">format_list_numbered</i>
+                                    Listar reservas de sombrillas
+                                </a>
+                            </li>                                      
                         </ul>
                     </div>
                 </li>                    
@@ -362,7 +368,7 @@
                                     <li>
                                         <a href="<?= FRONT_ROOT ?>reservation/listReservationPath" class="valign-wrapper waves-effect">
                                         <i class="material-icons left">format_list_numbered</i>
-                                            Listar reservas
+                                            Listar reservas de carpas
                                         </a>
                                     </li>   
                                     <li>
@@ -370,7 +376,13 @@
                                         <i class="material-icons left">assignment</i>
                                             Stock de carpas
                                         </a>
-                                    </li>                                        
+                                    </li>    
+                                    <li>
+                                        <a href="<?= FRONT_ROOT ?>reservation/listReservationParasolPath" class="valign-wrapper waves-effect">
+                                        <i class="material-icons left">format_list_numbered</i>
+                                            Listar reservas de sombrillas
+                                        </a>
+                                    </li>                                     
                                 </ul>
                             </div>
                         </li>                    
