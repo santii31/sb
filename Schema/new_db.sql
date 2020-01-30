@@ -359,8 +359,8 @@ CREATE TABLE client (
     `lastname` VARCHAR(255) NOT NULL,        
     `address` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
-    `cp` INT NOT NULL,  -- cp
-    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `cp` INT NOT NULL,  
+    `email` VARCHAR(255) NOT NULL,
     `tel` INT NOT NULL,
     `family_group` VARCHAR(255) NOT NULL,   
     `auxiliary_phone` INT NOT NULL,
