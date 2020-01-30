@@ -48,14 +48,14 @@
 				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
 				foreach ($results as $row) {
 					$checkTemp = new Check();
-                    $checkTemp->setId($row["checkC_id"]);
-                    $checkTemp->setBank($row["checkC_bank"]);
-                    $checkTemp->setAccountNumber($row["checkC_accountNumber"]);
+                    $checkTemp->setId($row["check_id"]);
+                    $checkTemp->setBank($row["check_bank"]);
+                    $checkTemp->setAccountNumber($row["check_accountNumber"]);
 					$checkTemp->setCheckNumber($row["check_number"]);
 					$checkTemp->setCharged($row["check_charged"]);
 					$checkTemp->setPaymentDate($row["check_paymentDate"]);
                     $client = new Client();
-                    $client->set($row["client_id"]);
+                    $client->setId($row["client_id"]);
                     $client->setName($row["client_name"]);
                     $client->setLastName($row["client_lastName"]);
                     $client->setEmail($row["client_email"]);
@@ -65,7 +65,7 @@
                     $client->setIsActive($row["client_isActive"]);
                     $checkTemp->setClient($client);
 				}
-				return $clientTemp;
+				return $checkTemp;
 			} catch (Exception $e) {
 				return false;
 			}
@@ -86,7 +86,7 @@
 					$check->setPaymentDate($row["check_paymentDate"]);
 
                     $client = new Client();
-                    $client->set($row["client_id"]);
+                    $client->setId($row["client_id"]);
                     $client->setName($row["client_name"]);
                     $client->setLastName($row["client_lastName"]);
                     $client->setEmail($row["client_email"]);
@@ -174,7 +174,7 @@
 		
 		public function update(Check $check) {
 			try {								
-				$query = "CALL provider_update(?, ?, ?, ?)";		
+				$query = "CALL checkC_update(?, ?, ?, ?, ?)";		
 				$parameters["bank"] = $check->getBank();
 				$parameters["account_number"] = $check->getAccountNumber();
 				$parameters["check_number"] = $check->getCheckNumber();
@@ -183,8 +183,8 @@
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {
-				return false;
-				// echo $e;
+				//return false;
+				echo $e;
 			}
 		}
 	

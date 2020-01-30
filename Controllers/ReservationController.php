@@ -757,9 +757,9 @@
             $check = $this->checkDAO->getById($checkTemp);
             $check->setCharged("cobrado");
             if ($this->checkDAO->update($check)) {
-                return true;
+                $this->checkList(null,null);
             } else {
-                return false;
+                $this->checkList(null,null);
             }
         }
 
@@ -769,9 +769,9 @@
             $check = $this->checkDAO->getById($checkTemp);
             $check->setCharged("rechazado");
             if ($this->checkDAO->update($check)) {
-                return true;
+                $this->checkList(null,null);
             } else {
-                return false;
+                $this->checkList(null,null);
             }
         }
 
