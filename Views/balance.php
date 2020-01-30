@@ -24,9 +24,17 @@
                                                         . ' ' . 
                                                         ucfirst($reservation->getClient()->getLastName()); ?>
                                         </span>
+
+                                        <?php if ($reservation->getBeachTent() != null): ?>
                                         <span>
-                                            • Nº Carpa: <?php// $reservation->getBeachTent()->getNumber(); ?>
+                                            • Nº Carpa: <?= $reservation->getBeachTent()->getNumber(); ?>
                                         </span>
+                                        <?php elseif ($reservation->getParasol() != null): ?>
+                                        <span>
+                                            • Nº Sombrilla: <?= $reservation->getParasol()->getParasolNumber(); ?>
+                                        </span>
+                                        <?php endif; ?>
+
                                         <span>
                                             • Fecha inicio: <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?>
                                         </span>

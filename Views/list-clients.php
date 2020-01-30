@@ -69,8 +69,17 @@
                                 <td> <?= $reservation->getClient()->getEmail(); ?> </td>
                                 <td> <?= $reservation->getClient()->getPhone(); ?> </td>
                                 
+                                <?php if ($reservation->getBeachTent() != null): ?>
                                 <td> <?= $reservation->getBeachTent()->getNumber(); ?> </td>
-                                <td></td>
+                                <?php else: ?>
+                                <td> N/A </td>
+                                <?php endif; ?>
+
+                                <?php if ($reservation->getParasol() != null): ?>
+                                <td> <?= $reservation->getParasol()->getParasolNumber(); ?> </td>
+                                <?php else: ?>
+                                <td> N/A </td>
+                                <?php endif; ?>                                   
 
                                 <td> <?= ucfirst( str_replace('_', ' ', $reservation->getStay()) ); ?> </td>                                
                                 <td> <?= date("d-m-Y" , strtotime($reservation->getDateStart())); ?> </td>

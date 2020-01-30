@@ -50,11 +50,14 @@
                 $title = "Cliente - Saldo";      
                 $this->reservationController = new ReservationController();
                 $flag = true;                                
-                $reservation = $this->reservationController->getById($id_reservation);
+                
+                // $reservation = $this->reservationController->getById($id_reservation);
+                $reservation = $this->reservationController->getByIdToBalance($id_reservation);
+
                 $balances = $this->balanceDAO->getByReservationId($reservation);
                 $partialByClient = $this->balanceDAO->getSumPartialByClient($reservation->getClient());                
 
-                if ($partialByClient == $reservation->getPrice()) {                         ;
+                if ($partialByClient == $reservation->getPrice()) {                   
                     $flag = false;
                 } else {                                        
                     $flag = true;

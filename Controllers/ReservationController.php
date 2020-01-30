@@ -609,6 +609,12 @@
             return $this->reservationDAO->getById($reservation);
         }
 
+        public function getByIdToBalance($id_reservation) {
+            $reservation = new Reservation();
+            $reservation->setId($id_reservation);
+            return $this->reservationDAO->getByIdToBalance($reservation);
+        }        
+
         public function getAllReservations() {
             return $this->reservationDAO->getAll();
         }

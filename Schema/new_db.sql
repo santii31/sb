@@ -1502,7 +1502,9 @@ BEGIN
 	SELECT reservation.id AS reservation_id,
            reservation.date_start AS reservation_dateStart,
            reservation.date_end AS reservation_dateEnd,
-           reservation.stay AS reservation_stay,                                 
+           reservation.stay AS reservation_stay,          
+           reservation.FK_id_tent AS reservation_fk_id_tent,                       
+           reservation.FK_id_parasol AS reservation_fk_id_parasol,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
 		   client.email AS client_email,
@@ -1511,13 +1513,10 @@ BEGIN
            client.address AS client_address,         
            client.payment_method AS client_paymentMethod,
            client.auxiliary_phone AS client_auxiliaryPhone,
-           client.vehicle_type AS client_vehicleType,  
-           beach_tent.id AS tent_id,
-           beach_tent.number AS tent_number           
+           client.vehicle_type AS client_vehicleType               
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.register_by = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN admin ON reservation.register_by = admin.id    
     ORDER BY date_start ASC
     LIMIT start, max_items;
 END$$
@@ -1530,8 +1529,7 @@ BEGIN
 	SELECT count(reservation.id) AS total
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
-    INNER JOIN admin ON reservation.register_by = admin.id
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id;    
+    INNER JOIN admin ON reservation.register_by = admin.id;    
 END$$
 
 
@@ -1928,6 +1926,43 @@ BEGIN
     INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
     WHERE `reservation`.`id` = id;
 END$$
+
+
+DROP procedure IF EXISTS `reservation_getByIdToBalance`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getByIdToBalance (IN id INT)
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,
+           reservation.discount AS reservation_discount,
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           reservation.fk_id_tent AS reservation_fk_id_tent,
+           reservation.fk_id_parasol AS reservation_fk_id_parasol,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel,
+           client.city AS client_city,
+           client.address AS client_address,
+           client.payment_method AS client_paymentMethod,
+           client.auxiliary_phone AS client_auxiliaryPhone,
+           client.vehicle_type AS client_vehicleType,
+           admin.id AS admin_id,
+           admin.name AS admin_name,
+		   admin.lastname AS admin_lastName,
+		   admin.dni AS admin_dni,
+		   admin.email AS admin_email
+    FROM `reservation`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
+    WHERE `reservation`.`id` = id;
+END$$
+
+
 
 ------------------------- BALANCE ---------------------
 
