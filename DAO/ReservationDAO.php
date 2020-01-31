@@ -71,8 +71,8 @@
 				return $lastId;
 			}
 			catch (Exception $e) {
-				// return false;				
-				echo $e;				
+				return false;				
+				// echo $e;				
 			}			
 		}	
 
@@ -286,8 +286,8 @@
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {
-				// return false;
-				echo $e;
+				return false;
+				// echo $e;
 			}
 		}
 
@@ -1189,8 +1189,8 @@
                 return $list;
             }
             catch (Exception $ex) {
-				// return false;
-				echo $ex;
+				return false;
+				// echo $ex;
             }
         }
 
@@ -1230,8 +1230,6 @@
             }
 		}
 
-
-
 		public function getByIdParasol(Parasol $parasol) {
 			try {
 				$parasolReservations = array();
@@ -1270,8 +1268,7 @@
 				return false;			
 				//echo $e;					
 			}
-		}
-		
+		}		
 
 		public function getAllAux() {
 			try {

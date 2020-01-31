@@ -20,13 +20,6 @@
                             </span>    
                         </a>
                         <?php else: ?>           
-                        <a href="<?= FRONT_ROOT ?>reservation/generateParasolPDFP" target="_blank">                    
-                            <i class="material-icons left">picture_as_pdf</i>
-                            <span>
-                                Generar lista de reservas en PDF
-                            </span>    
-                        </a>
-                        <br>
                         <a href="<?= FRONT_ROOT ?>reservation/listReservationParasolPath/1/disables">                    
                             <i class="material-icons left">arrow_forward</i>
                             <span>

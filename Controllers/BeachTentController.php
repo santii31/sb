@@ -23,7 +23,7 @@
         
         public function addReservePath($alert = "", $success = "") {                        
             if ($admin = $this->adminController->isLogged()) {
-                $title = 'Añadir reserva';			
+                $title = 'Reserva - Añadir';			
                 require_once(VIEWS_PATH . "head.php");                         
                 require_once(VIEWS_PATH . "sidenav.php");                         
                 require_once(VIEWS_PATH . "add-reserve.php");      
@@ -63,7 +63,7 @@
                 $thirdParasol = $parasolController->getRowParasol(3);
                 $fourthParasol = $parasolController->getRowParasol(4);
                 $fifthParasol = $parasolController->getRowParasol(5);
-                
+
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "dashboard.php");

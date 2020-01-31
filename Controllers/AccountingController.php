@@ -131,9 +131,7 @@
             if ($this->isFormNotEmpty($start, $type, $payment, $detail, $total)) {
 
                 $this->diaryBalanceDAO = new DiaryBalanceDAO();
-
                 $registerBy = $this->adminController->isLogged();
-
                 $diaryBalance = new DiaryBalance();
                 $diaryBalance->setDate($start);
                 $diaryBalance->setType($type);
@@ -226,7 +224,6 @@
                 if (!empty($date)) {
 
                     $title = "Contabilidad - Ventas del día - " . date("d/m/Y" , strtotime($date));   
-
                     $this->reservationController = new ReservationController();
                     // $rsvList = $this->reservationController->getReservationsByDate($date);
                     $rsvList = $this->reservationController->getReservationsByDateToBalance($date);
@@ -255,7 +252,6 @@
 
                     $title = "Contabilidad - Ventas entre el " . date("d/m/Y" , strtotime($date_start)) . 
                              " y el " . date("d/m/Y" , strtotime($date_end));   
-
                     $this->reservationController = new ReservationController();
                     // $rsvList = $this->reservationController->getReservationsBetweenDates($date_start, $date_end);
                     $rsvList = $this->reservationController->getReservationsBetweenDatesToBalance($date_start, $date_end);

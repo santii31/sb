@@ -132,7 +132,6 @@ BEGIN
 END$$
 
 
-
 DROP procedure IF EXISTS `admin_getById`;
 DELIMITER $$
 CREATE PROCEDURE admin_getById (IN id INT)
@@ -418,7 +417,6 @@ BEGIN
 	SET lastId = LAST_INSERT_ID();	
 	SELECT lastId;
 END$$
-
 
 
 DROP procedure IF EXISTS `client_getById`;
@@ -2138,7 +2136,7 @@ BEGIN
     INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
     INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`    
-    WHERE `reservationxparking`.`FK_id_reservation` = id;
+    WHERE `reservationxparking`.`FK_id_parking` = id;
 END$$
 
 
@@ -2177,19 +2175,19 @@ BEGIN
         reservation.date_start as reservation_date_start,
         reservation.date_end as reservation_date_end,
         reservation.stay as reservation_stay,
+        reservation.FK_id_tent as reservation_fk_id_tent,
+        reservation.FK_id_parasol as reservation_fk_id_parasol,
         client.name as client_name,
         client.lastname as client_lastname,
         client.email as client_email,
         client.tel as client_tel,
         parking.id as parking_id,
         parking.number as parking_number,
-        parking.price as parking_price,
-        beach_tent.number as beach_tent_number        
+        parking.price as parking_price        
     FROM `reservationxparking` 
     INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
-    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`
-    INNER JOIN `beach_tent` ON `reservation`.`FK_id_tent` = `beach_tent`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`    
     WHERE `reservationxparking`.`FK_id_reservation` = id;
 END$$
 
@@ -3008,8 +3006,9 @@ BEGIN
 	GROUP BY mobile_parasol.id;
 END$$
 
----------------------------- LOCKER ---------------------------
 
+
+---------------------------- LOCKER ---------------------------
 
 CREATE TABLE locker (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -3162,8 +3161,8 @@ BEGIN
 END$$
 
 
----------------------------- SERVICEXPARKING ---------------------------
 
+---------------------------- SERVICEXPARKING ---------------------------
 
 CREATE TABLE servicexparking (
     `FK_id_service` INT NOT NULL,
@@ -3217,6 +3216,7 @@ BEGIN
 	WHERE (servicexparking.FK_id_service = id_service)
 	GROUP BY parking.id;
 END$$
+
 
 
 ---------------------------- SERVICEXPARASOL ---------------------------
@@ -3432,7 +3432,7 @@ END$$
 
 ---------------------------- PARASOL ---------------------------
 
-INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`, ) VALUES (1, 100, 1, 1);
+INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (1, 100, 1, 1);
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (2, 100, 2, 1);
 INSERT INTO `parasol`(`parasol_number`, `price`, `position`, `FK_id_hall`) VALUES (3, 100, 3, 1);
 

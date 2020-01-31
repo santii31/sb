@@ -757,9 +757,9 @@
             $check = $this->checkDAO->getById($checkTemp);
             $check->setCharged("cobrado");
             if ($this->checkDAO->update($check)) {
-                $this->checkList(null,null);
+                $this->checkList(null, 'Cheque cobrado.');
             } else {
-                $this->checkList(null,null);
+                $this->checkList(DB_ERROR, null);
             }
         }
 
@@ -769,9 +769,9 @@
             $check = $this->checkDAO->getById($checkTemp);
             $check->setCharged("rechazado");
             if ($this->checkDAO->update($check)) {
-                $this->checkList(null,null);
+                $this->checkList(null, 'Cheque rebotado.');
             } else {
-                $this->checkList(null,null);
+                $this->checkList(DB_ERROR, null);
             }
         }
 

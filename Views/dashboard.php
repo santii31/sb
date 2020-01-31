@@ -132,7 +132,7 @@
                                                             <?php else: ?>
                                                             <li class="tab disabled col s6">                                                     
                                                                 <a href="#reser-<?= $tent->getId(); ?>">                                         
-                                                                        Futuras reservas                                                         
+                                                                    Futuras reservas                                                         
                                                                 </a>  
                                                             <?php endif; ?>                                                            
                                                             </li>                                                     
@@ -256,6 +256,10 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <!-- <a href="<?= FRONT_ROOT ?>additionalService/chose/<?= $rsv->getId(); ?>/yes" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Servicios
+                                                            </a> -->
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
