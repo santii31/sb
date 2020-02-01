@@ -334,12 +334,8 @@
 
             dateStart.value = f_day;            
             dateEnd.value = l_day; 
-        } else {
-
-            dateStart.value = 0;            
-            dateEnd.value = 0; 
-            
         }
+        
     });    
 
 </script>

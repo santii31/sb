@@ -162,8 +162,7 @@
             if ($admin = $this->adminController->isLogged()) {                       
                 $today = date("Y-m-d");
                 $title = "Contabilidad - Ventas diarias - " . date("d/m/Y" , strtotime($today));   
-                $this->reservationController = new ReservationController();
-                // $rsvList = $this->reservationController->getReservationsByDate($today);
+                $this->reservationController = new ReservationController();                
                 $rsvList = $this->reservationController->getReservationsByDateToBalance($today);                
                 $total = 0;                
 
@@ -224,8 +223,7 @@
                 if (!empty($date)) {
 
                     $title = "Contabilidad - Ventas del día - " . date("d/m/Y" , strtotime($date));   
-                    $this->reservationController = new ReservationController();
-                    // $rsvList = $this->reservationController->getReservationsByDate($date);
+                    $this->reservationController = new ReservationController();                    
                     $rsvList = $this->reservationController->getReservationsByDateToBalance($date);
                     $total = 0;                
 
@@ -252,8 +250,8 @@
 
                     $title = "Contabilidad - Ventas entre el " . date("d/m/Y" , strtotime($date_start)) . 
                              " y el " . date("d/m/Y" , strtotime($date_end));   
-                    $this->reservationController = new ReservationController();
-                    // $rsvList = $this->reservationController->getReservationsBetweenDates($date_start, $date_end);
+                    
+                    $this->reservationController = new ReservationController();                    
                     $rsvList = $this->reservationController->getReservationsBetweenDatesToBalance($date_start, $date_end);
                     $total = 0;                
 

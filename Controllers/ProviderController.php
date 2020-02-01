@@ -70,7 +70,7 @@
 				if ($this->providerDAO->getByDni($providerTemp) == null) {     
                     if ($this->providerDAO->getByEmail($providerTemp) == null) { 
                         if ($this->add($name, $lastName, $phone, $email, $dni, $billing, $cuil_number, $social_reason, $address, $item)) {            
-                            return $this->addProviderPath(null, PROVIDER_ADDED);
+                            return $this->addProviderPath(null, PROVIDER_ADDED, null);
                         } else {                        
                             return $this->addProviderPath(DB_ERROR, null, $inputs);        
                         }

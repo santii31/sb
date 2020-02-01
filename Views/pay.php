@@ -38,7 +38,7 @@
 
                             </div>
                             <div class="card-action">                                                                
-                                <a href="<?= FRONT_ROOT; ?>">Volver al inicio</a>
+                                <a href="<?= FRONT_ROOT ?>beachTent/showMap">Volver al inicio</a>
                             </div>
                         </div>
                     </div>

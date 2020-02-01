@@ -19,6 +19,7 @@
                                 <th>Email</th>
                                 <th>Telefono</th>
                                 <th>Nº Carpa</th>
+                                <th>Nº Sombrilla</th>
                                 <th>Estadia</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
@@ -34,7 +35,19 @@
                                 <td> <?= ucfirst( $rsv->getClient()->getAddress() ); ?> </td>                                
                                 <td> <?= $rsv->getClient()->getEmail(); ?> </td>
                                 <td> <?= $rsv->getClient()->getPhone(); ?> </td>
+                                
+                                <?php if ($rsv->getBeachTent() != null): ?>
                                 <td> <?= $rsv->getBeachTent()->getNumber(); ?> </td>
+                                <?php else: ?>
+                                <td> N/A </td>
+                                <?php endif; ?>
+
+                                <?php if ($rsv->getParasol() != null): ?>
+                                <td> <?= $rsv->getParasol()->getParasolNumber(); ?> </td>
+                                <?php else: ?>
+                                <td> N/A </td>
+                                <?php endif; ?>                                  
+
                                 <td> <?= ucfirst( str_replace('_', ' ', $rsv->getStay()) ); ?> </td>
                                 <td> <?= date("d-m-Y" , strtotime($rsv->getDateStart())); ?> </td>
                                 <td> <?= date("d-m-Y" , strtotime($rsv->getDateEnd())); ?> </td>                                

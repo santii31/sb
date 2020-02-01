@@ -5,6 +5,7 @@
 	use \Exception as Exception;
 	use Models\Admin as Admin;	
 	use Models\Client as Client;	
+	use Models\Parasol as Parasol;
 	use Models\BeachTent as BeachTent;
 	use Models\Reservation as Reservation;	
 	use DAO\QueryType as QueryType;
@@ -193,6 +194,55 @@
 					$beachTent->setNumber($row["tent_number"]);					
 
 					$reservation->setBeachTent($beachTent);					
+
+					array_push($clientsRsv, $reservation);
+				}
+				return $clientsRsv;
+			}
+			catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
+		public function getByParasolNumber(Parasol $parasol) {
+			try {
+				$clientsRsv = array();
+				$query = "CALL client_getByParasolNumber(?)";
+				$parameters ["number"] = $parasol->getParasolNumber();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);				
+				foreach ($results as $row) {	
+					
+					$reservation = new Reservation();				
+					$reservation->setId($row["reservation_id"]);	
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+                    $reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();				
+					$client->setId($row["client_id"]);			
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$client->setAddress($row["client_address"]);
+					$client->setCity($row["client_city"]);									
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);					
+					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
+					$client->setPaymentMethod($row["client_paymentMethod"]);
+					$client->setVehicleType($row["client_vehicleType"]);                    
+					$reservation->setClient($client);
+
+					$admin = new Admin();					
+					$admin->setName($row["admin_name"]);
+					$admin->setLastName($row["admin_lastName"]);
+
+					$parasol = new Parasol();					
+					$parasol->setParasolNumber($row["parasol_number"]);					
+
+					$reservation->setParasol($parasol);					
 
 					array_push($clientsRsv, $reservation);
 				}

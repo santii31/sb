@@ -4,6 +4,7 @@
     
     use Models\Admin as Admin;
     use Models\Client as Client;
+    use Models\Parasol as Parasol;    
     use Models\BeachTent as BeachTent;    
 	use DAO\ClientDAO as ClientDAO;
     use Controllers\AdminController as AdminController; 
@@ -146,8 +147,10 @@
                         return $this->searchByName($value);
                     } elseif ($option == 'tent') {                    
                         return $this->searchByTentNumber($value);
-                    }                
-                    return $this->searchPath('error inesperado');
+                    } elseif ($option == 'parasol') {
+                        return $this->searchByParasolNumber($value);
+                    }                 
+                    return $this->searchPath(DB_ERROR);
                 }
                 return $this->searchPath(EMPTY_FIELDS);
             } else {
@@ -180,6 +183,25 @@
                 $tentTemp = new BeachTent();
                 $tentTemp->setNumber( strtoupper($tent) );
                 $rsvClients = $this->clientDAO->getByTentNumber($tentTemp);
+                if (sizeof($rsvClients) > 0) {
+                    require_once(VIEWS_PATH . "head.php");
+                    require_once(VIEWS_PATH . "sidenav.php");
+                    require_once(VIEWS_PATH . "list-search-client.php");
+                    require_once(VIEWS_PATH . "footer.php");
+                } else {
+                    return $this->searchPath(SEARCH_EMPTY);
+                }                
+            } else {
+                return $this->adminController->userPath();
+            } 
+        }
+
+        private function searchByParasolNumber($parasol) {
+            if ($admin = $this->adminController->isLogged()) {     
+                $title = "Clientes - Buscar por Nº de sombrilla";
+                $parasolTemp = new Parasol();
+                $parasolTemp->setParasolNumber( strtoupper($parasol) );
+                $rsvClients = $this->clientDAO->getByParasolNumber($parasolTemp);
                 if (sizeof($rsvClients) > 0) {
                     require_once(VIEWS_PATH . "head.php");
                     require_once(VIEWS_PATH . "sidenav.php");

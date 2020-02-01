@@ -74,7 +74,7 @@
                     if ($this->add($name, $lastName, $position, $salary, $date_start, $date_end, $dni, 
                                    $address, $phone, $shirt_size, $pant_size)) {      
 
-                        return $this->addStaffPath(null, STAFF_ADDED);
+                        return $this->addStaffPath(null, STAFF_ADDED, null);
 
                     } else {                        
                         return $this->addStaffPath(DB_ERROR, null, $inputs);        

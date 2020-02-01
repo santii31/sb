@@ -23,8 +23,7 @@
         public function totalBalance() {
             if ($admin = $this->adminController->isLogged()) {                       
                 $title = "Contabilidad - Balance";         
-                $this->reservationController = new ReservationController();       
-                // $rsvList = $this->reservationController->getAllReservations();
+                $this->reservationController = new ReservationController();                       
                 $rsvList = $this->reservationController->getAllToBalanceReservations();    
                 $remainderTotal = 0;
                 foreach ($rsvList as $rsv) {                    
@@ -32,8 +31,7 @@
                     $partial = $this->balanceDAO->getSumPartialByClient($rsv->getClient());
                     $remainder = $total - $partial;
                     $remainderTotal += $remainder;
-                }
-                
+                }                
 
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
@@ -50,8 +48,7 @@
                 $title = "Cliente - Saldo";      
                 $this->reservationController = new ReservationController();
                 $flag = true;                                
-                
-                // $reservation = $this->reservationController->getById($id_reservation);
+                                
                 $reservation = $this->reservationController->getByIdToBalance($id_reservation);
 
                 $balances = $this->balanceDAO->getByReservationId($reservation);
@@ -90,11 +87,11 @@
                 $balance->setReservation($reservation);
 
                 if ($this->balanceDAO->add($balance)) {
-                    return $this->addBalancePath($id_reservation);
+                    return $this->addBalancePath($id_reservation, null, null);
                 }
-                return $this->addBalancePath($id_reservation);
+                return $this->addBalancePath($id_reservation, DB_ERROR, null);
             }            
-            return $this->addBalancePath($id_reservation);
+            return $this->addBalancePath($id_reservation, EMPTY_FIELDS, null);
         }
         
         private function isFormNotEmpty($id_reservation, $date, $concept, $number_r, $total, $partial) {

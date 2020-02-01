@@ -9,6 +9,17 @@
                 </div>
                 <div class="divider mb-divider"></div>
               
+                <?php if ($alert != null): ?>
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card-panel red lighten-4">
+                            <i class="material-icons left">error</i>
+                            <span class="card-text card-alert"> <?= $alert; ?> </span>                            
+                        </div>        
+                    </div>                    
+                </div>                
+                <?php endif; ?>
+
                 <div class="row">
                     <div class="col s12">
                         <ul class="collapsible ">

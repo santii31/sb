@@ -28,6 +28,7 @@
                                 <option value="" disabled selected>Seleccione su opcion</option>
                                 <option value="name">Nombre</option>
                                 <option value="tent">Numero de carpa</option>                            
+                                <option value="parasol">Numero de sombrilla</option>         
                             </select>
                             <label>Buscar clientes por:</label>
                         </div>                    

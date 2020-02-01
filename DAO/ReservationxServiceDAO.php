@@ -87,9 +87,7 @@
 					$parking->setNumber($row["parking_number"]);
 					$parking->setPrice($row["parking_price"]);
 					$parking->setIsActive($row["parking_isActive"]);
-					$reservation->setParking($parking);
-                    
-                    
+					$reservation->setParking($parking);                                        
 				}
 				return $reservation;
 			} catch (Exception $e) {
@@ -98,7 +96,7 @@
 		}
 
         public function getServiceByReservation($id) {
-			try {				
+			try {								
 				$query = "CALL reservationxservice_getServiceByReservation(?)";
 				$additionalService = null;
 				$parameters["id"] = $id;
@@ -109,6 +107,7 @@
                     $additionalService->setId($row["service_id"]);                    
                     $additionalService->setTotal($row["service_total"]);
 				}
+
 				return $additionalService;
 			} catch (Exception $e) {
 				return false;

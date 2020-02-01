@@ -62,7 +62,7 @@
                 
 				if ($this->clientPotentialDAO->getByEmail($clientTemp) == null) {                                                            
                     if ($this->add($name, $lastName, $address, $city, $email, $phone, $num_tent)) {            
-                        return $this->addPotentialClientPath(null, CLIENT_ADDED);
+                        return $this->addPotentialClientPath(null, CLIENT_ADDED, null);
                     } else {                        
                         return $this->addPotentialClientPath(DB_ERROR, null, $inputs);        
                     }
@@ -124,8 +124,7 @@
                         $startFrom = ($page - 1) * MAX_ITEMS_PAGE;                    
                         $clients = $this->clientPotentialDAO->getAllDisableWithLimit($startFrom);                    
                     }                                      
-                }                 
-              
+                }                               
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
                 require_once(VIEWS_PATH . "list-potential-client.php");

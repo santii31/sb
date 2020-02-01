@@ -106,6 +106,7 @@
 
             // Saves the inputs in case of validation error
             $inputs = array(
+                "stay" => $stay,
                 "start" => $start, 
                 "end" => $end,
                 "name" => $name,
@@ -117,10 +118,11 @@
                 "phone" => $phone,
                 "fam" => $fam,
                 "aux_phone" => $auxiliary_phone,
+                "vehicle" => $vehicle,
                 "tent" => $tent,
                 "price"=> $price
             );
-            
+
             if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {
                 
                 if ($this->checkInterval($start, $end, $tent) == 1) {                                 
@@ -131,10 +133,10 @@
                         return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
 
                     } else {                        
-                        return $this->addReservationPath(null, DB_ERROR, null, $inputs);        
+                        return $this->addReservationPath($tent, DB_ERROR, null, $inputs);        
                     }
                 }                             
-                return $this->addReservationPath(null, RESERVATION_ERROR, null, $inputs);
+                return $this->addReservationPath($tent, RESERVATION_ERROR, null, $inputs);
             }            
             return $this->addReservationPath($tent, EMPTY_FIELDS, null, $inputs);            
         }
@@ -442,6 +444,7 @@
 
             // Saves the inputs in case of validation error
             $inputs = array(
+                "stay" => $stay,
                 "start" => $start, 
                 "end" => $end,
                 "name" => $name,
@@ -467,12 +470,12 @@
                         return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
 
                     } else {                        
-                        return $this->addReservationPath(null, DB_ERROR, null, $inputs);        
+                        return $this->addReservationParasolPath($id_parasol, DB_ERROR, null, $inputs);        
                     }
                 }                             
-                return $this->addReservationPath(null, RESERVATION_ERROR, null, $inputs);
+                return $this->addReservationParasolPath($id_parasol, RESERVATION_ERROR, null, $inputs);
             }            
-            return $this->addReservationPath($id_parasol, EMPTY_FIELDS, null, $inputs);            
+            return $this->addReservationParasolPath($id_parasol, EMPTY_FIELDS, null, $inputs);            
         }
         
         public function checkIntervalParasol($date_start, $date_end, $id_parasol) {
@@ -539,14 +542,14 @@
                     $update_by = $this->adminController->isLogged();
 
                     if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
-                        return $this->updatePath($id_rsv, $id_parasol, null, RESERVATION_UPDATE);
+                        return $this->updateParasolPath($id_rsv, $id_parasol, null, RESERVATION_UPDATE);
                     } else {       
-                        return $this->updatePath($id_rsv, $id_parasol, DB_ERROR, null);        
+                        return $this->updateParasolPath($id_rsv, $id_parasol, DB_ERROR, null);        
                     }
                 }                
-                return $this->updatePath($id_rsv, $id_parasol, RESERVATION_ERROR, null);
+                return $this->updateParasolPath($id_rsv, $id_parasol, RESERVATION_ERROR, null);
             }                        
-            return $this->updatePath($id_rsv, $id_parasol, EMPTY_FIELDS, null);
+            return $this->updateParasolPath($id_rsv, $id_parasol, EMPTY_FIELDS, null);
         }
 
         private function isFormUpdateParasolNotEmpty($id_rsv, $id_parasol, $stay, $start, $end, $price) {

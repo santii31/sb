@@ -463,7 +463,7 @@ BEGIN
     INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
     INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
     INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
-	WHERE `client`.`name` LIKE CONCAT(`%`, name , `%`);
+	WHERE `client`.`name` LIKE CONCAT('%', name , '%');
 END$$
 
 
@@ -471,6 +471,7 @@ DROP procedure IF EXISTS `client_getByTentNumber`;
 DELIMITER $$
 CREATE PROCEDURE client_getByTentNumber (IN number VARCHAR(255))
 BEGIN
+    SET @number = number;
 	SELECT             
             reservation.id AS reservation_id,
             reservation.date_start AS reservation_dateStart,
@@ -495,7 +496,40 @@ BEGIN
     INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
     INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
     INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
-	WHERE `beach_tent`.`number` LIKE CONCAT(`%`, number , `%`);
+	WHERE `beach_tent`.`number` LIKE CONCAT('%', @number, '%');
+END$$
+
+
+DROP procedure IF EXISTS `client_getByParasolNumber`;
+DELIMITER $$
+CREATE PROCEDURE client_getByParasolNumber (IN number VARCHAR(255))
+BEGIN
+    SET @number = number;
+	SELECT             
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,                       
+            client.id AS client_id,
+            client.name AS client_name,
+            client.lastname AS client_lastName,
+            client.email AS client_email,
+            client.tel AS client_tel,
+            client.city AS client_city,
+            client.address AS client_address,
+            client.payment_method AS client_paymentMethod,
+            client.auxiliary_phone AS client_auxiliaryPhone,
+            client.vehicle_type AS client_vehicleType,
+            admin.name AS admin_name,
+            admin.lastname AS admin_lastName,            
+            parasol.parasol_number AS parasol_number            
+	FROM `client` 	
+    INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
+    INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
+    INNER JOIN `parasol` ON `parasol`.`id` = `reservation`.`FK_id_parasol`
+	WHERE `parasol`.`parasol_number` LIKE CONCAT('%', @number, '%');
 END$$
 
 
@@ -671,7 +705,7 @@ DELIMITER $$
 CREATE PROCEDURE client_potential_getByName (IN name VARCHAR(255))
 BEGIN
 	SELECT * FROM `client_potential` 
-    WHERE `client_potential`.`name` LIKE CONCAT(`%`, name , `%`);
+    WHERE `client_potential`.`name` LIKE CONCAT('%', name , '%');
 END$$
 
 
@@ -1242,7 +1276,8 @@ BEGIN
     FROM `reservation`
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
     INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`    
-    WHERE `reservation`.`date_register` = date;
+    WHERE `reservation`.`date_register` = date
+    ORDER BY client.name, client.lastname;
 END$$
 
 
@@ -1367,7 +1402,7 @@ BEGIN
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
     INNER JOIN admin ON reservation.register_by = admin.id    
-    ORDER BY date_start ASC;
+    ORDER BY client.name, client.lastname ASC;
 END$$
 
 
@@ -1739,7 +1774,9 @@ BEGIN
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN client ON reservation.FK_id_client = client.id            
     WHERE `reservation`.`is_active` = true
-    LIMIT start, max_items;
+    ORDER BY client.name, client.lastname
+    LIMIT start, max_items
+    ;
 END$$
 
 
@@ -1764,6 +1801,7 @@ BEGIN
     INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     INNER JOIN client ON reservation.FK_id_client = client.id     
     WHERE `reservation`.`is_active` = false
+    ORDER BY client.name, client.lastname
     LIMIT start, max_items;
 END$$
 
@@ -1810,6 +1848,7 @@ BEGIN
     INNER JOIN parasol ON reservation.FK_id_parasol = parasol.id
     INNER JOIN client ON reservation.FK_id_client = client.id            
     WHERE `reservation`.`is_active` = true
+    ORDER BY client.name, client.lastname
     LIMIT start, max_items;
 END$$
 
@@ -1835,6 +1874,7 @@ BEGIN
     INNER JOIN parasol ON reservation.FK_id_parasol = parasol.id
     INNER JOIN client ON reservation.FK_id_client = client.id     
     WHERE `reservation`.`is_active` = false
+    ORDER BY client.name, client.lastname
     LIMIT start, max_items;
 END$$
 
@@ -2192,6 +2232,31 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservationxparking_getByIdReserve_tent`;
+DELIMITER $$
+CREATE PROCEDURE reservationxparking_getByIdReserve_tent (IN id INT)
+BEGIN
+    SELECT 
+        reservation.id as reservation_id,
+        reservation.date_start as reservation_date_start,
+        reservation.date_end as reservation_date_end,
+        reservation.stay as reservation_stay,        
+        client.name as client_name,
+        client.lastname as client_lastname,
+        client.email as client_email,
+        client.tel as client_tel,
+        parking.id as parking_id,
+        parking.number as parking_number,
+        parking.price as parking_price,
+        beach_tent.number as beach_tent_number        
+    FROM `reservationxparking` 
+    INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
+    INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
+    INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`    
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    WHERE `reservationxparking`.`FK_id_reservation` = id;
+END$$
+
 
 ----------------------------- PROVIDER -----------------------------
 
@@ -2278,7 +2343,7 @@ BEGIN
         `admin`.`lastname` AS admin_lastname
     FROM `provider` 
     INNER JOIN `admin` ON `provider`.`register_by` = `admin`.`id`    
-    WHERE `provider`.`item` LIKE CONCAT(`%`, item , `%`);    
+    WHERE `provider`.`item` LIKE CONCAT('%', item , '%');    
 END$$
 
 
@@ -3000,8 +3065,7 @@ BEGIN
            mobile_parasol.mobileParasol_number AS mobileParasol_number,
            mobile_parasol.price AS mobileParasol_price
 	FROM servicexmobileParasol
-	INNER JOIN mobile_parasol ON servicexmobileParasol.FK_id_mobileParasol = mobile_parasol.id
-	
+	INNER JOIN mobile_parasol ON servicexmobileParasol.FK_id_mobileParasol = mobile_parasol.id	
 	WHERE (servicexmobileParasol.FK_id_service = id_service)
 	GROUP BY mobile_parasol.id;
 END$$
@@ -3585,7 +3649,7 @@ BEGIN
             `admin`.`lastname` AS admin_lastname 
     FROM `staff` 
     INNER JOIN `admin` ON `staff`.`register_by` = `admin`.`id`
-    WHERE `staff`.`name` LIKE CONCAT(`%`, name , `%`);
+    WHERE `staff`.`name` LIKE CONCAT('%', name, '%');
 END$$
 
 

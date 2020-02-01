@@ -1262,7 +1262,7 @@
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
                                                         </a>
-                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $parasol->getId(); ?>" 
+                                                        <a href="<?= FRONT_ROOT ?>reservation/disable/<?= $rsv->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Deshabilitar
                                                         </a>

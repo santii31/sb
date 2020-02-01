@@ -160,7 +160,6 @@
                     $reservation->setDateEnd($row["reservation_date_end"]);
                     $reservation->setStay($row["reservation_stay"]);
 
-
                     if ($row["reservation_fk_id_tent"] != null) {
                         
                         $this->tentDAO = new BeachTentDAO();                    
@@ -208,7 +207,7 @@
         public function getAllByReservationId(Reservation $reservation) {
             try {
                 $reservationxParkingList = array();
-                $query = "CALL reservationxparking_getByIdReserve(?)";
+                $query = "CALL reservationxparking_getByIdReserve_tent(?)";
                 $parameters["id"] = $reservation->getId();
                 $this->connection = Connection::GetInstance();
                 $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);
