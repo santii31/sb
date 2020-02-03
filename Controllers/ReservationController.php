@@ -8,13 +8,16 @@
     use Models\Parasol as Parasol;    
     use Models\BeachTent as BeachTent;
     use Models\Reservation as Reservation;
+    use Models\AdditionalService as AdditionalService;
+    use Models\ReservationxService as ReservationxService;
     use DAO\CheckDAO as CheckDAO;
     use DAO\ClientDAO as ClientDAO;        
     use DAO\ConfigDAO as ConfigDAO;    
     use DAO\ReservationDAO as ReservationDAO;    
     use DAO\ServicexLockerDAO as ServicexLockerDAO;
     use DAO\ServicexParasolDAO as ServicexParasolDAO;
-    use DAO\ServicexParkingDAO as ServicexParkingDAO;
+    use DAO\ServicexParkingDAO as ServicexParkingDAO;    
+    use DAO\AdditionalServiceDAO as AdditionalServiceDAO;
     use DAO\ReservationxServiceDAO as ReservationxServiceDAO;
     use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
     use DAO\ServicexMobileParasolDAO as ServicexMobileParasolDAO;
@@ -43,6 +46,7 @@
         public function __construct() {
             $this->reservationDAO = new ReservationDAO();                                    
             $this->adminController = new AdminController();
+            $this->additionalServiceDAO = new AdditionalServiceDAO();     
             $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
@@ -79,26 +83,45 @@
 
             $register_by = $this->adminController->isLogged();
 
-            if ($clientId = $this->clientController->addObj($client, $register_by)) {
+            // servicio adicional                   
+            $additionalService = new AdditionalService();                                             
+            $additionalService->setTotal(0);
 
-                $client->setId($clientId);
-                                
-                $reservation = new Reservation();
-                $reservation->setDateStart($start);
-                $reservation->setDateEnd($end);            
-                $reservation->setStay($stay);
-                $reservation->setPrice($price);
-                                
-                $reservation->setDiscount(0);
+            if ($lastIdService = $this->additionalServiceDAO->add($additionalService, $register_by)) {
                 
-                $tent = new BeachTent();
-                $tent->setId($id_tent);  
+                // cliente
+                if ($clientId = $this->clientController->addObj($client, $register_by)) {
 
-                $reservation->setBeachTent($tent);
-                $reservation->setClient($client);
+                    $client->setId($clientId);
+                                    
+                    $reservation = new Reservation();
+                    $reservation->setDateStart($start);
+                    $reservation->setDateEnd($end);            
+                    $reservation->setStay($stay);
+                    $reservation->setPrice($price);
+                                    
+                    $reservation->setDiscount(0);
+                    
+                    $tent = new BeachTent();
+                    $tent->setId($id_tent);  
 
-                return $this->reservationDAO->add($reservation, $register_by); 
-            }
+                    $reservation->setBeachTent($tent);
+                    $reservation->setClient($client);                
+
+                    // reserva
+                    if ($lastIdReserve = $this->reservationDAO->add($reservation, $register_by)) {                        
+                                                    
+                        // reserva x service
+                        $reservationxservice = new ReservationxService();
+                        $reservationxservice->setIdReservation($lastIdReserve);
+                        $reservationxservice->setIdService($lastIdService);                             
+                        
+                        if ($this->reservationxserviceDAO->add($reservationxservice)) {
+                            return $lastIdReserve;
+                        }                       
+                    }
+                }
+            }            
             return false;
         }
 
@@ -123,22 +146,26 @@
                 "price"=> $price
             );
 
-            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {
-                
-                if ($this->checkInterval($start, $end, $tent) == 1) {                                 
+            if (strtotime($start) <= strtotime($end)) {
 
-                    if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
-
-                        $this->parkingController = new ParkingController();                                         
-                        return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
-
-                    } else {                        
-                        return $this->addReservationPath($tent, DB_ERROR, null, $inputs);        
-                    }
-                }                             
-                return $this->addReservationPath($tent, RESERVATION_ERROR, null, $inputs);
-            }            
-            return $this->addReservationPath($tent, EMPTY_FIELDS, null, $inputs);            
+                if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {
+                    
+                    if ($this->checkInterval($start, $end, $tent) == 1) {                                 
+    
+                        if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
+    
+                            $this->parkingController = new ParkingController();                                         
+                            return $this->parkingController->parkingMap($lastId, null, $price, null);                                             
+    
+                        } else {                        
+                            return $this->addReservationPath($tent, DB_ERROR, null, $inputs);        
+                        }
+                    }                             
+                    return $this->addReservationPath($tent, RESERVATION_ERROR, null, $inputs);
+                }            
+                return $this->addReservationPath($tent, EMPTY_FIELDS, null, $inputs);            
+            }
+            return $this->addReservationPath($tent, 'Fecha de egreso menor a la fecha de ingreso', null, $inputs);   
         }
         
         public function checkInterval($date_start, $date_end, $id_tent) {
@@ -312,29 +339,32 @@
                         
             if ($this->isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end, $price)) {                                 
 
-				if ($this->checkIntervalToUpdate($start, $end, $id_tent, $id_rsv) == 1) {                                                         
+                if (strtotime($start) <= strtotime($end)) {
+                    if ($this->checkIntervalToUpdate($start, $end, $id_tent, $id_rsv) == 1) {                                                     
 
-                    $reservation = new Reservation();    
-                    $reservation->setId($id_rsv);                  
-                    $reservation->setStay($stay);
-                    $reservation->setDateStart($start);
-                    $reservation->setDateEnd($end);
-                    $reservation->setPrice($price);
+                        $reservation = new Reservation();    
+                        $reservation->setId($id_rsv);                  
+                        $reservation->setStay($stay);
+                        $reservation->setDateStart($start);
+                        $reservation->setDateEnd($end);
+                        $reservation->setPrice($price);
 
-                    $tent = new BeachTent();
-                    $tent->setId($id_tent);
+                        $tent = new BeachTent();
+                        $tent->setId($id_tent);
 
-                    $reservation->setBeachTent($tent);                    
-                    
-                    $update_by = $this->adminController->isLogged();
+                        $reservation->setBeachTent($tent);                    
+                        
+                        $update_by = $this->adminController->isLogged();
 
-                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
-                        return $this->updatePath($id_rsv, $id_tent, null, RESERVATION_UPDATE);
-                    } else {       
-                        return $this->updatePath($id_rsv, $id_tent, DB_ERROR, null);        
-                    }
-                }                
-                return $this->updatePath($id_rsv, $id_tent, RESERVATION_ERROR, null);
+                        if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
+                            return $this->updatePath($id_rsv, $id_tent, null, RESERVATION_UPDATE);
+                        } else {       
+                            return $this->updatePath($id_rsv, $id_tent, DB_ERROR, null);        
+                        }
+                    }                
+                    return $this->updatePath($id_rsv, $id_tent, RESERVATION_ERROR, null);
+                }
+                return $this->updatePath($id_rsv, $id_tent, 'Fecha de egreso menor a la fecha de ingreso', null);                
             }                        
             return $this->updatePath($id_rsv, $id_tent, EMPTY_FIELDS, null);
         }
@@ -417,26 +447,45 @@
 
             $register_by = $this->adminController->isLogged();
 
-            if ($clientId = $this->clientController->addObj($client, $register_by)) {
+            // servicio adicional                   
+            $additionalService = new AdditionalService();                                             
+            $additionalService->setTotal(0);
 
-                $client->setId($clientId);
-                                
-                $reservation = new Reservation();
-                $reservation->setDateStart($start);
-                $reservation->setDateEnd($end);            
-                $reservation->setStay($stay);
-                $reservation->setPrice($price);
-                                
-                $reservation->setDiscount(0);
+            if ($lastIdService = $this->additionalServiceDAO->add($additionalService, $register_by)) {
                 
-                $parasol = new Parasol();
-                $parasol->setId($id_parasol);  
+                // cliente
+                if ($clientId = $this->clientController->addObj($client, $register_by)) {
 
-                $reservation->setParasol($parasol);
-                $reservation->setClient($client);
+                    $client->setId($clientId);
+                                    
+                    $reservation = new Reservation();
+                    $reservation->setDateStart($start);
+                    $reservation->setDateEnd($end);            
+                    $reservation->setStay($stay);
+                    $reservation->setPrice($price);
+                                    
+                    $reservation->setDiscount(0);
+                    
+                    $parasol = new Parasol();
+                    $parasol->setId($id_parasol);  
+    
+                    $reservation->setParasol($parasol);
+                    $reservation->setClient($client);                
 
-                return $this->reservationDAO->addSecundary($reservation, $register_by); 
-            }
+                    // reserva
+                    if ($lastIdReserve = $this->reservationDAO->addSecundary($reservation, $register_by)) {                        
+                                                    
+                        // reserva x service
+                        $reservationxservice = new ReservationxService();
+                        $reservationxservice->setIdReservation($lastIdReserve);
+                        $reservationxservice->setIdService($lastIdService);                             
+                        
+                        if ($this->reservationxserviceDAO->add($reservationxservice)) {
+                            return $lastIdReserve;
+                        }                       
+                    }
+                }
+            }            
             return false;
         }
 
@@ -460,22 +509,26 @@
                 "price"=> $price
             );
             
-            if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price)) {
-                
-                if ($this->checkIntervalParasol($start, $end, $id_parasol) == 1) {                                 
+            if (strtotime($start) <= strtotime($end)) {
 
-                    if ($lastId = $this->addParasol($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price)) {                                                    
+                if ($this->isFormRegisterNotEmpty($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price)) {
+                    
+                    if ($this->checkIntervalParasol($start, $end, $id_parasol) == 1) {                                 
 
-                        $this->parkingController = new ParkingController();                                         
-                        return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
+                        if ($lastId = $this->addParasol($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price)) {                                                    
 
-                    } else {                        
-                        return $this->addReservationParasolPath($id_parasol, DB_ERROR, null, $inputs);        
-                    }
-                }                             
-                return $this->addReservationParasolPath($id_parasol, RESERVATION_ERROR, null, $inputs);
-            }            
-            return $this->addReservationParasolPath($id_parasol, EMPTY_FIELDS, null, $inputs);            
+                            $this->parkingController = new ParkingController();                                         
+                            return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
+
+                        } else {                        
+                            return $this->addReservationParasolPath($id_parasol, DB_ERROR, null, $inputs);        
+                        }
+                    }                             
+                    return $this->addReservationParasolPath($id_parasol, RESERVATION_ERROR, null, $inputs);
+                }            
+                return $this->addReservationParasolPath($id_parasol, EMPTY_FIELDS, null, $inputs);        
+            }    
+            return $this->addReservationParasolPath($id_parasol, 'Fecha de egreso menor a la fecha de ingreso', null, $inputs);   
         }
         
         public function checkIntervalParasol($date_start, $date_end, $id_parasol) {
@@ -525,29 +578,33 @@
                         
             if ($this->isFormUpdateParasolNotEmpty($id_rsv, $id_parasol, $stay, $start, $end, $price)) {                                 
 
-				if ($this->checkIntervalToUpdateParasol($start, $end, $id_parasol, $id_rsv) == 1) {                                               
+                if (strtotime($start) <= strtotime($end)) {
 
-                    $reservation = new Reservation();    
-                    $reservation->setId($id_rsv);                  
-                    $reservation->setStay($stay);
-                    $reservation->setDateStart($start);
-                    $reservation->setDateEnd($end);
-                    $reservation->setPrice($price);
+                    if ($this->checkIntervalToUpdateParasol($start, $end, $id_parasol, $id_rsv) == 1) {                                           
 
-                    $parasol = new Parasol();
-                    $parasol->setId($id_parasol);
+                        $reservation = new Reservation();    
+                        $reservation->setId($id_rsv);                  
+                        $reservation->setStay($stay);
+                        $reservation->setDateStart($start);
+                        $reservation->setDateEnd($end);
+                        $reservation->setPrice($price);
 
-                    $reservation->setParasol($parasol);                    
-                    
-                    $update_by = $this->adminController->isLogged();
+                        $parasol = new Parasol();
+                        $parasol->setId($id_parasol);
 
-                    if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
-                        return $this->updateParasolPath($id_rsv, $id_parasol, null, RESERVATION_UPDATE);
-                    } else {       
-                        return $this->updateParasolPath($id_rsv, $id_parasol, DB_ERROR, null);        
-                    }
-                }                
-                return $this->updateParasolPath($id_rsv, $id_parasol, RESERVATION_ERROR, null);
+                        $reservation->setParasol($parasol);                    
+                        
+                        $update_by = $this->adminController->isLogged();
+
+                        if ($this->reservationDAO->update($reservation, $update_by)) {                                                            
+                            return $this->updateParasolPath($id_rsv, $id_parasol, null, RESERVATION_UPDATE);
+                        } else {       
+                            return $this->updateParasolPath($id_rsv, $id_parasol, DB_ERROR, null);        
+                        }
+                    }                
+                    return $this->updateParasolPath($id_rsv, $id_parasol, RESERVATION_ERROR, null);
+                }
+                return $this->updateParasolPath($id_rsv, $id_parasol, 'Fecha de egreso menor a la fecha de ingreso', null);                
             }                        
             return $this->updateParasolPath($id_rsv, $id_parasol, EMPTY_FIELDS, null);
         }
@@ -566,7 +623,7 @@
                         
         private function checkIntervalToUpdateParasol($date_start, $date_end, $id_parasol, $id_rsv) {
 			$existance = $this->getByIdParasol($id_parasol);			
-			$flag = 1;
+            $flag = 1;
 			if ($existance != null) {
 				foreach ($existance as $reserve) {
                     if ($reserve->getId() != $id_rsv) {

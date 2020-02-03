@@ -33,7 +33,7 @@
 
                     <?php if (isset($id_reservation)): ?>
                     <div class="more-list">
-                        <a href="<?= FRONT_ROOT ?>additionalService/addServiceWithoutParking/<?= $id_reservation; ?>">              
+                        <a href="<?= FRONT_ROOT ?>additionalService/hasAdditionalService/<?= $id_reservation; ?>">              
                             <i class="material-icons left">arrow_forward</i>
                             <span>
                                 Dar de alta sin estacionamiento

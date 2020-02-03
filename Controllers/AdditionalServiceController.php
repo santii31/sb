@@ -265,8 +265,7 @@
                                             } else {
                                             
                                                 return $this->hasAdditionalService($id_reserve);                                        
-                                            }                                                        
-                                            
+                                            }                                                                                                    
                                         }
                                     }
                                 }
@@ -283,8 +282,7 @@
                                     } else {
                                     
                                         return $this->hasAdditionalService($id_reserve);                                        
-                                    }                                                        
-                                    
+                                    }                                                                                            
                                 }              
                             } 
                         }
@@ -388,7 +386,6 @@
                             array_push($mobileParasoles, $mobileParasol);
                         } 
                     }
-
                 } 
                 
                 $mobileParasolFinalList = array();
@@ -495,28 +492,6 @@
 			}
         }  
 
-        public function addServiceWithoutParking($id_reservation) {
-            if ($admin = $this->adminController->isLogged()) {    
-                $additionalService = new AdditionalService();
-                $reservationxservice = new ReservationxService();
-                $additionalService->setTotal(0);
-                $register_by = $this->adminController->isLogged();            
-
-                if ($lastId = $this->additionalServiceDAO->add($additionalService, $register_by)) {
-                    $reservationxservice->setIdReservation($id_reservation);
-                    $reservationxservice->setIdService($lastId);
-                    if ($this->reservationxserviceDAO->add($reservationxservice)) {
-                        $this->hasAdditionalService($id_reservation, null, null);    
-                    } else {
-                        $this->parkingController->parkingMap($reservation, null, null, DB_ERROR);
-                    }
-                } else {
-                    $this->parkingController->parkingMap($reservation, null, null, DB_ERROR);
-                }
-            } else {                
-                return $this->adminController->userPath();
-            }
-        }
     
     }
     

@@ -189,7 +189,7 @@
                             <div class="input-field col s2">
                                 <p>
                                     <label>
-                                        <input id="none" type="radio" name="none" class="with-gap" value="none">
+                                        <input id="none" type="radio" name="vehicle" class="with-gap" value="none">
                                         <span>Sin vehiculo</span>
                                     </label>
                                 </p>
