@@ -31,12 +31,31 @@
 						</div>
 					</div>               
 
+                    <?php if (!isset($fromList)): ?>
+                        <?php if (isset($id_reservation)): ?>
+                        <div class="more-list">
+                            <a href="<?= FRONT_ROOT ?>additionalService/hasAdditionalService/<?= $id_reservation; ?>">              
+                                <i class="material-icons left">arrow_forward</i>
+                                <span>
+                                    Dar de alta sin estacionamiento
+                                </span>    
+                            </a>
+                        </div>  
+                        <?php endif; ?>
+                    <?php endif; ?>
+
                     <?php if (isset($id_reservation)): ?>
                     <div class="more-list">
-                        <a href="<?= FRONT_ROOT ?>additionalService/hasAdditionalService/<?= $id_reservation; ?>">              
+                        
+                        <?php if (isset($fromList)): ?>
+                        <a href="<?= FRONT_ROOT ?>additionalService/addOpenParking/<?= $id_reservation; ?>/list">              
+                        <?php else: ?>
+                        <a href="<?= FRONT_ROOT ?>additionalService/addOpenParking/<?= $id_reservation; ?>">              
+                        <?php endif; ?>
+                        
                             <i class="material-icons left">arrow_forward</i>
                             <span>
-                                Dar de alta sin estacionamiento
+                                Dar de alta con estacionamiento descubierto
                             </span>    
                         </a>
                     </div>  

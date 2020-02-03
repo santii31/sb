@@ -1391,6 +1391,7 @@ BEGIN
            reservation.is_active AS reservation_is_active,
            reservation.FK_id_tent AS reservation_fk_id_tent,
            reservation.FK_id_parasol AS reservation_fk_id_parasol,
+           reservation.open_parking AS reservation_openParking,
            client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
@@ -2126,6 +2127,147 @@ BEGIN
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
     INNER JOIN `admin` ON `reservation`.`register_by` = `admin`.`id`
     WHERE `reservation`.`id` = id;
+END$$
+
+
+
+-- modified
+alter table reservation add `open_parking` INT DEFAULT NULL;
+
+
+DROP procedure IF EXISTS `reservation_updateOpenParking`;
+DELIMITER $$
+CREATE PROCEDURE reservation_updateOpenParking (
+                                    IN open_parking INT,
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `reservation` 
+    SET 
+        `reservation`.`open_parking` = open_parking  
+    WHERE 
+        `reservation`.`id` = id;	
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getOpenParkingById`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getOpenParkingById (IN id INT)
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.open_parking AS reservation_openParking
+    FROM `reservation`
+    WHERE `reservation`.`id` = id;
+END$$
+
+
+-- GET_ALL_ACTIVES_WITH_LIMITS DE CARPAS ACTUALIZADOS PARA QUE RETORNEN LA COCHERA DESCUBIERTA(PARA LISTADO DE RESERVAS)
+
+DROP procedure IF EXISTS `reservation_getAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,
+            reservation.open_parking AS reservation_openParking,                        
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            beach_tent.number AS tent_number 
+    FROM reservation         
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN client ON reservation.FK_id_client = client.id            
+    WHERE `reservation`.`is_active` = true
+    ORDER BY client.name, client.lastname
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,  
+            reservation.open_parking AS reservation_openParking,                      
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            beach_tent.number AS tent_number 
+    FROM reservation         
+    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    INNER JOIN client ON reservation.FK_id_client = client.id     
+    WHERE `reservation`.`is_active` = false
+    ORDER BY client.name, client.lastname
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getParasolAllActiveWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getParasolAllActiveWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,  
+            reservation.open_parking AS reservation_openParking,                      
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            parasol.parasol_number AS parasol_number 
+    FROM reservation         
+    INNER JOIN parasol ON reservation.FK_id_parasol = parasol.id
+    INNER JOIN client ON reservation.FK_id_client = client.id            
+    WHERE `reservation`.`is_active` = true
+    ORDER BY client.name, client.lastname
+    LIMIT start, max_items;
+END$$
+
+
+DROP procedure IF EXISTS `reservation_getParasolAllDisableWithLimit`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getParasolAllDisableWithLimit (
+                                                        IN start INT,
+                                                        IN max_items INT
+                                                    )
+BEGIN
+	SELECT 
+            reservation.id AS reservation_id,
+            reservation.date_start AS reservation_dateStart,
+            reservation.date_end AS reservation_dateEnd,
+            reservation.stay AS reservation_stay,
+            reservation.discount AS reservation_discount,
+            reservation.total_price AS reservation_totalPrice,  
+            reservation.open_parking AS reservation_openParking,                      
+            client.name AS client_name,
+            client.lastname AS client_lastName,                                                            
+            parasol.parasol_number AS parasol_number 
+    FROM reservation         
+    INNER JOIN parasol ON reservation.FK_id_parasol = parasol.id
+    INNER JOIN client ON reservation.FK_id_client = client.id     
+    WHERE `reservation`.`is_active` = false
+    ORDER BY client.name, client.lastname
+    LIMIT start, max_items;
 END$$
 
 

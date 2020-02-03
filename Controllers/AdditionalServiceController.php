@@ -492,7 +492,70 @@
 			}
         }  
 
+        public function addOpenParking($id_reservation, $fromList = null) {
+            if ($admin = $this->adminController->isLogged()) {    
+                            
+                if ($id_reservation != null) {
+
+                    $title = "Estacionamiento descubierto";
+                    $reservationTemp = new Reservation();
+                    $reservationTemp->setId($id_reservation);
+                    $reservation = $this->reservationDAO->getOpenParkingById($reservationTemp);
+
+                    if ($reservation->getOpenParking() == null) {
+                        $count = 0;
+                    } else {
+                        $count = $reservation->getOpenParking();
+                    }
+                    $count++;
+
+                    $reservation->setOpenParking($count);
+
+                    if ($this->reservationDAO->updateOpenParking($reservation, $admin)) {
+                        require_once(VIEWS_PATH . "head.php");
+                        require_once(VIEWS_PATH . "sidenav.php");
+                        require_once(VIEWS_PATH . "add-open-parking-price.php");
+                        require_once(VIEWS_PATH . "footer.php");
+                    } else {
+                        $this->parkingController->parkingMap($reservation, null, null, DB_ERROR);    
+                    }
+                    
+                } else {
+                    $this->parkingController->parkingMap($reservation, null, null, DB_ERROR);
+                } 
+
+            } else {                
+                return $this->adminController->userPath();
+            }
+        }
     
+        public function addOpenParkingPrice($price, $id_reservation, $fromList = null) {
+            if ($price != 0) {
+                $update_by = $this->adminController->isLogged(); 
+                $reservationTemp = new Reservation();
+                $reservationTemp->setId($id_reservation);
+                $reservation = $this->reservationDAO->getById($reservationTemp);
+
+                $reservation->setPrice($reservation->getPrice() + $price);
+
+                if ($this->reservationDAO->update($reservation,$update_by)) {
+                    if ($fromList != null) {                
+                        return $this->reservationController->listReservationPath(1, null, null, "Cochera descubierta añadida con exito");     
+                    } else {
+                        return $this->hasAdditionalService($id_reservation);                                        
+                    }
+                }
+
+            } else {
+                
+                if ($fromList != null) {                
+                    return $this->reservationController->listReservationPath(1, null, null, "Cochera descubierta añadida con exito");     
+                } else {
+                    return $this->hasAdditionalService($id_reservation);                                        
+                }
+
+            }
+        }
     }
     
 ?>

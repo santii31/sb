@@ -620,6 +620,7 @@
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
 					$reservation->setStay($row["reservation_stay"]);					
 					$reservation->setPrice($row["reservation_totalPrice"]);
+					$reservation->setOpenParking($row["reservation_openParking"]);
 					
 					$client = new Client();
 					$client->setId($row["client_id"]);
@@ -1049,80 +1050,6 @@
             }
         }
 
-        public function getAllActiveWithLimit($start) {
-            try {				
-                $list = array();
-                $query = "CALL reservation_getAllActiveWithLimit(?, ?)";
-                $parameters["start"] = $start;
-                $parameters["max_items"] = MAX_ITEMS_PAGE;
-                $this->connection = Connection::GetInstance();
-                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
-                foreach ($results as $row) {
-					$reservation = new Reservation();
-					$reservation->setId($row["reservation_id"]);
-					$reservation->setDateStart($row["reservation_dateStart"]);
-					$reservation->setDateEnd($row["reservation_dateEnd"]);
-					$reservation->setStay($row["reservation_stay"]);
-					$reservation->setDiscount($row["reservation_discount"]);
-					$reservation->setPrice($row["reservation_totalPrice"]);
-					
-					$client = new Client();					
-					$client->setName($row["client_name"]);
-					$client->setLastName($row["client_lastName"]);					
-					$reservation->setClient($client);
-
-					$beachTent = new BeachTent();					
-					$beachTent->setNumber($row["tent_number"]);
-					
-					$reservation->setBeachTent($beachTent);					
-                    
-					array_push($list, $reservation);
-				}
-                return $list;
-            }
-            catch (Exception $ex) {
-				return false;
-				// echo $ex;
-            }
-        }
-
-        public function getAllDisableWithLimit($start) {
-            try {				
-                $list = array();
-                $query = "CALL reservation_getAllDisableWithLimit(?, ?)";
-                $parameters["start"] = $start;
-                $parameters["max_items"] = MAX_ITEMS_PAGE;
-                $this->connection = Connection::GetInstance();
-                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
-                foreach ($results as $row) {
-					$reservation = new Reservation();
-					$reservation->setId($row["reservation_id"]);
-					$reservation->setDateStart($row["reservation_dateStart"]);
-					$reservation->setDateEnd($row["reservation_dateEnd"]);
-					$reservation->setStay($row["reservation_stay"]);
-					$reservation->setDiscount($row["reservation_discount"]);
-					$reservation->setPrice($row["reservation_totalPrice"]);
-					
-					$client = new Client();					
-					$client->setName($row["client_name"]);
-					$client->setLastName($row["client_lastName"]);					
-					$reservation->setClient($client);
-
-					$beachTent = new BeachTent();					
-					$beachTent->setNumber($row["tent_number"]);
-					
-					$reservation->setBeachTent($beachTent);					
-                    
-					array_push($list, $reservation);                          
-                }
-                return $list;
-            }
-            catch (Exception $ex) {
-                return false;
-            }
-		}
-		
-
 		public function getParasolActiveCount() {
             try {				
                 $query = "CALL reservation_getParasolActiveCount()";				
@@ -1150,79 +1077,6 @@
                 return false;                
             }
         }
-
-        public function getParasolAllActiveWithLimit($start) {
-            try {				
-                $list = array();
-                $query = "CALL reservation_getParasolAllActiveWithLimit(?, ?)";
-                $parameters["start"] = $start;
-                $parameters["max_items"] = MAX_ITEMS_PAGE;
-                $this->connection = Connection::GetInstance();
-                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
-                foreach ($results as $row) {
-					$reservation = new Reservation();
-					$reservation->setId($row["reservation_id"]);
-					$reservation->setDateStart($row["reservation_dateStart"]);
-					$reservation->setDateEnd($row["reservation_dateEnd"]);
-					$reservation->setStay($row["reservation_stay"]);
-					$reservation->setDiscount($row["reservation_discount"]);
-					$reservation->setPrice($row["reservation_totalPrice"]);
-					
-					$client = new Client();					
-					$client->setName($row["client_name"]);
-					$client->setLastName($row["client_lastName"]);					
-					$reservation->setClient($client);
-
-					$parasol = new Parasol();					
-					$parasol->setParasolNumber($row["parasol_number"]);
-					
-					$reservation->setParasol($parasol);					
-                    
-					array_push($list, $reservation);
-				}
-                return $list;
-            }
-            catch (Exception $ex) {
-				return false;
-				// echo $ex;
-            }
-        }
-
-        public function getParasolAllDisableWithLimit($start) {
-            try {				
-                $list = array();
-                $query = "CALL reservation_getParasolAllDisableWithLimit(?, ?)";
-                $parameters["start"] = $start;
-                $parameters["max_items"] = MAX_ITEMS_PAGE;
-                $this->connection = Connection::GetInstance();
-                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
-                foreach ($results as $row) {
-					$reservation = new Reservation();
-					$reservation->setId($row["reservation_id"]);
-					$reservation->setDateStart($row["reservation_dateStart"]);
-					$reservation->setDateEnd($row["reservation_dateEnd"]);
-					$reservation->setStay($row["reservation_stay"]);
-					$reservation->setDiscount($row["reservation_discount"]);
-					$reservation->setPrice($row["reservation_totalPrice"]);
-					
-					$client = new Client();					
-					$client->setName($row["client_name"]);
-					$client->setLastName($row["client_lastName"]);					
-					$reservation->setClient($client);
-
-					$parasol = new Parasol();					
-					$parasol->setParasolNumber($row["parasol_number"]);
-					
-					$reservation->setParasol($parasol);					
-                    
-					array_push($list, $reservation);                          
-                }
-                return $list;
-            }
-            catch (Exception $ex) {
-                return false;
-            }
-		}
 
 		public function getByIdParasol(Parasol $parasol) {
 			try {
@@ -1362,6 +1216,195 @@
 					$admin->setLastName($row["admin_lastName"]);
 
 					$reservationTemp->setRegisterBy($admin);				
+				}
+				return $reservationTemp;
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
+
+		// modified
+		public function updateOpenParking(Reservation $reservation) {
+			try {		
+				$query = "CALL reservation_updateOpenParking(?, ?)";		
+				$parameters["open_parking"] = $reservation->getOpenParking();				
+				$parameters["id"] = $reservation->getId();  				
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);	
+			} catch (Exception $e) {
+				return false;		
+				// echo $e;		
+			}
+		}
+
+		public function getAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					$reservation->setOpenParking($row["reservation_openParking"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$beachTent = new BeachTent();					
+					$beachTent->setNumber($row["tent_number"]);
+					
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($list, $reservation);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+				// return false;
+				echo $ex;
+            }
+        }
+
+        public function getAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					$reservation->setOpenParking($row["reservation_openParking"]);
+
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$beachTent = new BeachTent();					
+					$beachTent->setNumber($row["tent_number"]);
+					
+					$reservation->setBeachTent($beachTent);					
+                    
+					array_push($list, $reservation);                          
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+				return false;
+				// echo $ex;
+            }
+		}
+				
+        public function getParasolAllActiveWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getParasolAllActiveWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					$reservation->setOpenParking($row["reservation_openParking"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$parasol = new Parasol();					
+					$parasol->setParasolNumber($row["parasol_number"]);
+					
+					$reservation->setParasol($parasol);					
+                    
+					array_push($list, $reservation);
+				}
+                return $list;
+            }
+            catch (Exception $ex) {
+				return false;
+				// echo $ex;
+            }
+        }
+
+        public function getParasolAllDisableWithLimit($start) {
+            try {				
+                $list = array();
+                $query = "CALL reservation_getParasolAllDisableWithLimit(?, ?)";
+                $parameters["start"] = $start;
+                $parameters["max_items"] = MAX_ITEMS_PAGE;
+                $this->connection = Connection::GetInstance();
+                $results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								          
+                foreach ($results as $row) {
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);
+					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					$reservation->setOpenParking($row["reservation_openParking"]);
+					
+					$client = new Client();					
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);					
+					$reservation->setClient($client);
+
+					$parasol = new Parasol();					
+					$parasol->setParasolNumber($row["parasol_number"]);
+					
+					$reservation->setParasol($parasol);					
+                    
+					array_push($list, $reservation);                          
+                }
+                return $list;
+            }
+            catch (Exception $ex) {
+				return false;
+				// echo $ex;
+            }
+		}
+
+		public function getOpenParkingById(Reservation $reservation) {
+			try {				
+		
+				$reservationTemp = null;
+				$query = "CALL reservation_getOpenParkingById(?)";
+				$parameters["id"] = $reservation->getId();
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);		
+									
+				foreach ($results as $row) {
+					
+					$reservationTemp = new Reservation();
+					$reservationTemp->setId($row["reservation_id"]);	
+					$reservationTemp->setOpenParking($row["reservation_openParking"]);	
 				}
 				return $reservationTemp;
 			} catch (Exception $e) {

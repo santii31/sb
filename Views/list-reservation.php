@@ -155,6 +155,14 @@
                                                                 N/A
                                                             <?php endif; ?>
                                                         </li>
+                                                        <li>
+                                                            • Estacionamiento descubierto:  
+                                                            <?php if ($reservation->getOpenParking() != null): ?>                       
+                                                                <?= $reservation->getOpenParking(); ?>
+                                                            <?php else: ?>
+                                                                N/A
+                                                            <?php endif; ?>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </li>

@@ -22,6 +22,7 @@
         private $parking;
         private $is_reserved;
         private $is_active;
+        private $open_parking;
         
         public function getId() {
             return $this->id;
@@ -126,6 +127,15 @@
 
         public function setIsActive($is_active) {
             $this->is_active = $is_active;
+            return $this;
+        }
+
+        public function getOpenParking() {
+            return $this->open_parking;
+        }
+
+        public function setOpenParking($open_parking) {
+            $this->open_parking = $open_parking;
             return $this;
         }
 
