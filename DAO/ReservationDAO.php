@@ -74,60 +74,7 @@
 				// echo $e;				
 			}			
 		}	
-
-		/*
-		public function getById(Reservation $reservation) {
-			try {				
-				$reservationTemp = null;
-				$query = "CALL reservation_getById(?)";
-				$parameters["id"] = $reservation->getId();
-				$this->connection = Connection::GetInstance();
-				$results = $this->connection->Execute($query, $parameters, QueryType::StoredProcedure);								
-				foreach ($results as $row) {
-					
-					$reservationTemp = new Reservation();
-					$reservationTemp->setId($row["reservation_id"]);
-					$reservationTemp->setDateStart($row["reservation_dateStart"]);
-					$reservationTemp->setDateEnd($row["reservation_dateEnd"]);
-					$reservationTemp->setStay($row["reservation_stay"]);
-					$reservationTemp->setDiscount($row["reservation_discount"]);
-					$reservationTemp->setPrice($row["reservation_totalPrice"]);
-					
-					$client = new Client();
-					$client->setId($row["client_id"]);
-					$client->setName($row["client_name"]);
-					$client->setLastName($row["client_lastName"]);
-					$client->setEmail($row["client_email"]);
-					$client->setPhone($row["client_tel"]);
-					$client->setCity($row["client_city"]);
-					$client->setAddress($row["client_address"]);
-					$client->setPaymentMethod($row["client_paymentMethod"]);
-					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
-					$client->setVehicleType($row["client_vehicleType"]);
-
-					$reservationTemp->setClient($client);
-
-					$admin = new Admin();
-					$admin->setId($row["admin_id"]);
-					$admin->setName($row["admin_name"]);
-					$admin->setLastName($row["admin_lastName"]);
-
-					$beachTent = new BeachTent();
-					$beachTent->setId($row["tent_id"]);
-					$beachTent->setNumber($row["tent_number"]);
-					$beachTent->setPrice($row["tent_price"]);
-
-					$reservationTemp->setRegisterBy($admin);
-					$reservationTemp->setBeachTent($beachTent);					
-				}
-				return $reservationTemp;
-			} catch (Exception $e) {
-				// return false;
-				echo $e;
-			}
-		}
-		*/
-
+	
 		public function getById(Reservation $reservation) {
 			try {				
 
@@ -659,6 +606,54 @@
 				return false;
 			}
 		}		
+
+		public function getAllToPDF() {
+			try {
+				$reservList = array();
+				$query = "CALL reservation_getAllToPDF()";
+				$this->connection = Connection::GetInstance();
+				$results = $this->connection->Execute($query, array(), QueryType::StoredProcedure);
+				foreach ($results as $row) {
+                    $reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+					$reservation->setDateStart($row["reservation_dateStart"]);
+					$reservation->setDateEnd($row["reservation_dateEnd"]);
+					$reservation->setStay($row["reservation_stay"]);					
+					$reservation->setPrice($row["reservation_totalPrice"]);
+					
+					$client = new Client();
+					$client->setId($row["client_id"]);
+					$client->setName($row["client_name"]);
+					$client->setLastName($row["client_lastName"]);
+					$client->setEmail($row["client_email"]);
+					$client->setPhone($row["client_tel"]);
+					$reservation->setClient($client);
+
+					if ($row["reservation_fk_id_tent"] != null) {
+                        
+						$this->tentDAO = new BeachTentDAO();                    
+						$beachTent = new BeachTent();                        
+						$beachTent->setId($row["reservation_fk_id_tent"]);
+			
+						$reservation->setBeachTent( $this->tentDAO->getById($beachTent) );
+			
+					} elseif ($row["reservation_fk_id_parasol"] != null) {
+						
+						$this->parasolDAO = new ParasolDAO();                        
+						$parasol = new Parasol();                        
+						$parasol->setId($row["reservation_fk_id_parasol"]);
+			
+						$reservation->setParasol( $this->parasolDAO->getById($parasol) );
+					}									
+                    
+					array_push($reservList, $reservation);
+				}
+				return $reservList;	
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}	
 
 		public function getAllToBalance() {
 			try {

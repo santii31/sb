@@ -174,12 +174,13 @@
 		
 		public function update(Check $check) {
 			try {								
-				$query = "CALL checkC_update(?, ?, ?, ?, ?)";		
+				$query = "CALL checkC_update(?, ?, ?, ?, ?, ?)";		
 				$parameters["bank"] = $check->getBank();
 				$parameters["account_number"] = $check->getAccountNumber();
 				$parameters["check_number"] = $check->getCheckNumber();
 				$parameters["charged"] = $check->getCharged();
 				$parameters["payment_date"] = $check->getPaymentDate();
+				$parameters["id"] = $check->getId();
 				$this->connection = Connection::GetInstance();
 				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
 			} catch (Exception $e) {

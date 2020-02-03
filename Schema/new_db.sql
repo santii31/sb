@@ -1380,6 +1380,30 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservation_getAllToPDF`;
+DELIMITER $$
+CREATE PROCEDURE reservation_getAllToPDF ()
+BEGIN
+	SELECT reservation.id AS reservation_id,
+           reservation.date_start AS reservation_dateStart,
+           reservation.date_end AS reservation_dateEnd,
+           reservation.stay AS reservation_stay,           
+           reservation.total_price AS reservation_totalPrice,
+           reservation.is_active AS reservation_is_active,
+           reservation.FK_id_tent AS reservation_fk_id_tent,
+           reservation.FK_id_parasol AS reservation_fk_id_parasol,
+           client.id AS client_id,
+           client.name AS client_name,
+		   client.lastname AS client_lastName,
+		   client.email AS client_email,
+           client.tel AS client_tel
+    FROM `reservation`
+    INNER JOIN client ON reservation.FK_id_client = client.id        
+    WHERE reservation.is_active = true
+    ORDER BY client.name, client.lastname ASC;
+END$$
+
+
 DROP procedure IF EXISTS `reservation_getAllToBalance`;
 DELIMITER $$
 CREATE PROCEDURE reservation_getAllToBalance ()
@@ -2241,19 +2265,19 @@ BEGIN
         reservation.date_start as reservation_date_start,
         reservation.date_end as reservation_date_end,
         reservation.stay as reservation_stay,        
+        reservation.FK_id_tent AS reservation_fk_id_tent,
+        reservation.FK_id_parasol AS reservation_fk_id_parasol,
         client.name as client_name,
         client.lastname as client_lastname,
         client.email as client_email,
         client.tel as client_tel,
         parking.id as parking_id,
-        parking.number as parking_number,
-        parking.price as parking_price,
-        beach_tent.number as beach_tent_number        
+        parking.number as parking_number        
     FROM `reservationxparking` 
     INNER JOIN `reservation` ON `reservationxparking`.`FK_id_reservation` = `reservation`.`id`
     INNER JOIN `client` ON `reservation`.`FK_id_client` = `client`.`id`
     INNER JOIN `parking` ON `reservationxparking`.`FK_id_parking` = `parking`.`id`    
-    INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
+    -- INNER JOIN beach_tent ON reservation.FK_id_tent = beach_tent.id
     WHERE `reservationxparking`.`FK_id_reservation` = id;
 END$$
 
@@ -4032,7 +4056,8 @@ CREATE PROCEDURE checkC_update (
                                     IN account_number INT,
                                     IN check_number INT,
                                     IN charged VARCHAR(255),
-                                    IN payment_date DATE
+                                    IN payment_date DATE,
+                                    IN id INT
                                 )
 BEGIN
     UPDATE `checkC` 

@@ -676,7 +676,7 @@
         }        
 
         public function getAllReservations() {
-            return $this->reservationDAO->getAll();
+            return $this->reservationDAO->getAllToPDF();
         }
 
         public function getAllToBalanceReservations() {

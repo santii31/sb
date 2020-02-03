@@ -221,10 +221,22 @@
                     $reservation->setDateEnd($row["reservation_date_end"]);
                     $reservation->setStay($row["reservation_stay"]);
 
-                    $tent = new BeachTent();
-                    $tent->setNumber($row["beach_tent_number"]);
-
-                    $reservation->setBeachTent($tent);
+					if ($row["reservation_fk_id_tent"] != null) {
+                        
+						$this->tentDAO = new BeachTentDAO();                    
+						$beachTent = new BeachTent();                        
+						$beachTent->setId($row["reservation_fk_id_tent"]);
+			
+						$reservation->setBeachTent( $this->tentDAO->getById($beachTent) );
+			
+					} elseif ($row["reservation_fk_id_parasol"] != null) {
+						
+						$this->parasolDAO = new ParasolDAO();                        
+						$parasol = new Parasol();                        
+						$parasol->setId($row["reservation_fk_id_parasol"]);
+			
+						$reservation->setParasol( $this->parasolDAO->getById($parasol) );
+					}
 
                     $client = new Client();
                     $client->setName($row["client_name"]);
