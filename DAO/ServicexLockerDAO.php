@@ -3,8 +3,8 @@
     namespace DAO;
 
     use \Exception as Exception;
-    use Models\ServicexLocker as ServicexLocker;
-    use Models\AdditionalService as AdditionalService;
+	use Models\ServicexLocker as ServicexLocker;
+    use Models\AdditionalService as AdditionalService;	
     use Models\Locker as Locker;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
@@ -77,7 +77,18 @@
             }
 		}
 
-		
+		public function delete(AdditionalService $service) {
+            try {                
+                
+                $query = "CALL servicexlocker_delete(?)";
+                $parameters["id"] = $service->getId();
+                $this->connection = Connection::GetInstance();
+                return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);                
+            } catch (Exception $e) {
+                return false;
+                // echo $e;
+            }      
+        }
 
     }
 

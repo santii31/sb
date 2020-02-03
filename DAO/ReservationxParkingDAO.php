@@ -262,7 +262,20 @@
                 // echo $e;
             }        
         }    
-
+        
+        public function delete(Reservation $reservation) {
+            try {                
+                
+                $query = "CALL reservationxparking_delete(?)";
+                $parameters["id"] = $reservation->getId();
+                $this->connection = Connection::GetInstance();
+                return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);                
+            } catch (Exception $e) {
+                return false;
+                // echo $e;
+            }      
+        }
+        
     }
 
 ?>

@@ -36,6 +36,7 @@
         private $additionalServiceController;
         private $clientDAO;
         private $reservationxserviceDAO;
+        private $reservationxparkingDAO;
         private $servicexlockerDAO;
         private $servicexparasolDAO;      
         private $servicexparkingDAO;
@@ -47,7 +48,8 @@
             $this->reservationDAO = new ReservationDAO();                                    
             $this->adminController = new AdminController();
             $this->additionalServiceDAO = new AdditionalServiceDAO();     
-            $this->reservationxserviceDAO = new ReservationxServiceDAO();
+            $this->reservationxserviceDAO = new ReservationxServiceDAO();            
+            $this->reservationxparkingDAO = new ReservationxParkingDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
             $this->servicexparkingDAO = new ServicexParkingDAO();
@@ -308,17 +310,35 @@
 
         public function disable($id) {		
             if ($admin = $this->adminController->isLogged()) {
+				
                 $reservation = new Reservation();
                 $reservation->setId($id);
-                if ($this->reservationDAO->disableById($reservation, $admin)) {
-                    return $this->listReservationPath(1, true, null, RESERVATION_DISABLE);
-                } else {
-                    return $this->listReservationPath(1, null, DB_ERROR, null);
-                }              
+                $rsvService = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId());
+
+                if ($rsvService != null) {
+                    if ($this->reservationDAO->disableById($reservation, $admin)) {                        
+						
+						if($rxp = $this->reservationxparkingDAO->getAllByReservationId($reservation)){							
+							$this->reservationxparkingDAO->delete($reservation); 
+						}
+						if($sxl = $this->servicexlockerDAO->getLockerByService($rsvService->getId())){							
+							$this->servicexlockerDAO->delete($rsvService);
+						}
+						if($sxmp = $this->servicexmobileparasolDAO->getMobileParasolByService($rsvService->getId())){							
+							$this->servicexmobileparasolDAO->delete($rsvService);
+						}
+                        if($sxp = $this->servicexparkingDAO->getParkingByService($rsvService->getId())){							
+							$this->servicexparkingDAO->delete($rsvService);
+						}       
+                        return $this->listReservationPath(1, true, null, RESERVATION_DISABLE);                                                    
+                    }
+                    return $this->listReservationPath(1, null, DB_ERROR, null);            
+                }
+                return $this->listReservationPath(1, null, DB_ERROR, null);            
             } else {
                 return $this->adminController->userPath();
             }                
-        }       
+        }      
 
         public function updatePath($id_rsv, $id_tent, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {      

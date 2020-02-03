@@ -4,7 +4,7 @@
 
     use \Exception as Exception;
     use Models\ServicexParking as ServicexParking;
-    use Models\AdditionalService as AdditionalService;
+	use Models\AdditionalService as AdditionalService;	
     use Models\Parking as Parking;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
@@ -76,7 +76,17 @@
             }
 		}
 
-		
+		public function delete(AdditionalService $service) {
+            try {                                
+                $query = "CALL servicexparking_delete(?)";
+                $parameters["id"] = $service->getId();
+                $this->connection = Connection::GetInstance();
+                return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);                
+            } catch (Exception $e) {
+                return false;
+                // echo $e;
+            }      
+        }
 
     }
 

@@ -10,6 +10,8 @@
 	use Models\Reservation as Reservation;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	
+	use DAO\ParasolDAO as ParasolDAO;
+	use DAO\BeachTentDAO as BeachTentDAO;
 
     class ClientDAO {
 
@@ -120,8 +122,7 @@
 					$reservation->setId($row["reservation_id"]);
 					$reservation->setDateStart($row["reservation_dateStart"]);
 					$reservation->setDateEnd($row["reservation_dateEnd"]);
-					$reservation->setStay($row["reservation_stay"]);
-					$reservation->setDiscount($row["reservation_discount"]);
+					$reservation->setStay($row["reservation_stay"]);					
                     $reservation->setPrice($row["reservation_totalPrice"]);
 					
 					$client = new Client();			
@@ -141,10 +142,22 @@
 					$admin->setName($row["admin_name"]);
 					$admin->setLastName($row["admin_lastName"]);
 
-					$beachTent = new BeachTent();					
-					$beachTent->setNumber($row["tent_number"]);					
-
-					$reservation->setBeachTent($beachTent);					
+					if ($row["reservation_fk_id_tent"] != null) {
+                        
+						$this->tentDAO = new BeachTentDAO();                    
+						$tent = new BeachTent();                        
+						$tent->setId($row["reservation_fk_id_tent"]);
+			
+						$reservation->setBeachTent( $this->tentDAO->getById($tent) );
+			
+					} elseif ($row["reservation_fk_id_parasol"] != null) {
+						
+						$this->parasolDAO = new ParasolDAO();                        
+						$parasol = new Parasol();                        
+						$parasol->setId($row["reservation_fk_id_parasol"]);
+			
+						$reservation->setParasol( $this->parasolDAO->getById($parasol) );
+					}			
 
 					array_push($clientsList, $reservation);
 				}

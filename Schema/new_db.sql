@@ -443,9 +443,10 @@ BEGIN
             reservation.id AS reservation_id,
             reservation.date_start AS reservation_dateStart,
             reservation.date_end AS reservation_dateEnd,
-            reservation.stay AS reservation_stay,
-            reservation.discount AS reservation_discount,
+            reservation.stay AS reservation_stay,            
             reservation.total_price AS reservation_totalPrice, 
+            reservation.FK_id_parasol AS reservation_fk_id_parasol,
+            reservation.FK_id_tent AS reservation_fk_id_tent,
             client.id AS client_id,                      
             client.name AS client_name,
             client.lastname AS client_lastName,
@@ -457,12 +458,10 @@ BEGIN
             client.auxiliary_phone AS client_auxiliaryPhone,
             client.vehicle_type AS client_vehicleType,
             admin.name AS admin_name,
-            admin.lastname AS admin_lastName,            
-            beach_tent.number AS tent_number            
+            admin.lastname AS admin_lastName        
 	FROM `client` 	
     INNER JOIN `reservation` ON `client`.`id` = `reservation`.`FK_id_client`
-    INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`
-    INNER JOIN `beach_tent` ON `beach_tent`.`id` = `reservation`.`FK_id_tent`
+    INNER JOIN `admin` ON `admin`.`id` = `reservation`.`register_by`    
 	WHERE `client`.`name` LIKE CONCAT('%', name , '%');
 END$$
 
@@ -2282,6 +2281,17 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `reservationxparking_delete`;
+DELIMITER $$
+CREATE PROCEDURE reservationxparking_delete (IN id INT)
+BEGIN
+    DELETE 
+    FROM `reservationxparking`
+    WHERE `reservationxparking`.`FK_id_reservation` = id;
+END$$
+
+
+
 ----------------------------- PROVIDER -----------------------------
 
 CREATE TABLE provider (
@@ -3095,6 +3105,16 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `servicexmobileParasol_delete`;
+DELIMITER $$
+CREATE PROCEDURE servicexmobileParasol_delete (IN id INT)
+BEGIN
+    DELETE 
+    FROM `servicexmobileParasol`
+    WHERE `servicexmobileParasol`.`FK_id_service` = id;
+END$$
+
+
 
 ---------------------------- LOCKER ---------------------------
 
@@ -3306,6 +3326,16 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `servicexparking_delete`;
+DELIMITER $$
+CREATE PROCEDURE servicexparking_delete (IN id INT)
+BEGIN
+    DELETE 
+    FROM `servicexparking`
+    WHERE `servicexparking`.`FK_id_service` = id;
+END$$
+
+
 
 ---------------------------- SERVICEXPARASOL ---------------------------
 
@@ -3419,6 +3449,16 @@ BEGIN
 	
 	WHERE (servicexlocker.FK_id_service = id_service)
 	GROUP BY locker.id;
+END$$
+
+
+DROP procedure IF EXISTS `servicexlocker_delete`;
+DELIMITER $$
+CREATE PROCEDURE servicexlocker_delete (IN id INT)
+BEGIN
+    DELETE 
+    FROM `servicexlocker`
+    WHERE `servicexlocker`.`FK_id_service` = id;
 END$$
 
 
@@ -4123,3 +4163,4 @@ CREATE PROCEDURE diary_balance_getByDate (IN date DATE)
 BEGIN
 	SELECT * FROM `diary_balance` WHERE `diary_balance`.`date` = date;
 END$$
+
