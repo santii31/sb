@@ -869,6 +869,7 @@
 					$reservation->setStay($row["reservation_stay"]);				
 					
 					$client = new Client();					
+					$client->setId($row["client_id"]);
 					$client->setName($row["client_name"]);
 					$client->setLastName($row["client_lastName"]);
 					$client->setEmail($row["client_email"]);
@@ -878,6 +879,7 @@
 					$client->setPaymentMethod($row["client_paymentMethod"]);
 					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);
 					$client->setVehicleType($row["client_vehicleType"]);
+					$client->setFamilyGroup($row["client_family_group"]);
 					$reservation->setClient($client);
 
 					if ($row["reservation_fk_id_tent"] != null) {

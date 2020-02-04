@@ -89,6 +89,10 @@
                                         <i class="material-icons left">attach_money</i>
                                         Saldo
                                     </a>
+                                    <a href="<?= FRONT_ROOT ?>client/updatePath/<?= $reservation->getClient()->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
+                                        <i class="material-icons left">attach_money</i>
+                                        Modificar
+                                    </a>
                                 </td>                      
                             </tr>
                             <?php endforeach; ?>         

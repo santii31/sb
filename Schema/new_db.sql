@@ -632,6 +632,42 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS `client_updateFromList`;
+DELIMITER $$
+CREATE PROCEDURE client_updateFromList (
+                                    IN name VARCHAR(255),
+                                    IN lastname VARCHAR(255),                                    
+                                    IN address VARCHAR(255),
+                                    IN city VARCHAR(255),
+                                    IN cp INT,
+                                    IN email VARCHAR(255),
+                                    IN tel INT,
+                                    IN family_group VARCHAR(255),
+                                    IN auxiliary_phone INT,                                    
+                                    IN vehicle_type VARCHAR(255),                              
+                                    IN date_update DATE,
+                                    IN update_by INT,
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `client` 
+    SET 
+        `client`.`name` = name, 
+        `client`.`lastname` = lastname,        
+        `client`.`address` = address,
+        `client`.`city` = city,
+        `client`.`cp` = cp,
+        `client`.`email` = email,
+        `client`.`tel` = tel,
+        `client`.`family_group` = family_group,
+        `client`.`auxiliary_phone` = auxiliary_phone,        
+        `client`.`vehicle_type` = vehicle_type,
+        `client`.`date_update` = date_update,
+        `client`.`update_by` = update_by    
+    WHERE 
+        `client`.`id` = id;	
+END$$
+
 
 ----------------------------- CLIENT POTENTIAL -----------------------------
 
@@ -1562,6 +1598,7 @@ BEGIN
            reservation.stay AS reservation_stay,          
            reservation.FK_id_tent AS reservation_fk_id_tent,                       
            reservation.FK_id_parasol AS reservation_fk_id_parasol,
+           client.id AS client_id,
            client.name AS client_name,
 		   client.lastname AS client_lastName,
 		   client.email AS client_email,
@@ -1570,7 +1607,8 @@ BEGIN
            client.address AS client_address,         
            client.payment_method AS client_paymentMethod,
            client.auxiliary_phone AS client_auxiliaryPhone,
-           client.vehicle_type AS client_vehicleType               
+           client.vehicle_type AS client_vehicleType,
+           client.family_group AS client_family_group               
     FROM `reservation`
     INNER JOIN client ON reservation.FK_id_client = client.id
     INNER JOIN admin ON reservation.register_by = admin.id    

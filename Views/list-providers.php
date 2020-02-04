@@ -64,12 +64,11 @@
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
                             <tr>                                
-                                <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Nombre</th>    
+                                <th>Apellido</th>                            
                                 <th>Telefono</th>
                                 <th>Email</th>
-                                <th>Rubro</th>
-                                <th>Domicilio</th>
+                                <th>Rubro</th>                                
                                 <th>Mas información</th>
                                 <th>Acciones</th>
                             </tr>
@@ -82,8 +81,7 @@
                                 <td> <?= ucfirst( $provider->getLastName() ); ?> </td>
                                 <td> <?= $provider->getPhone(); ?> </td>
                                 <td> <?= $provider->getEmail(); ?> </td>
-                                <td> <?= ucfirst( $provider->getItem() ); ?> </td>
-                                <td> <?= ucfirst( $provider->getAddress() ); ?> </td>
+                                <td> <?= ucfirst( $provider->getItem() ); ?> </td>                                
                                 <td>
                                     <ul class="collapsible">
                                         <li>
@@ -92,6 +90,7 @@
                                             </div>
                                             <div class="collapsible-body">
                                                 <ul>
+                                                    <li>• Domicilio:  <?= ucfirst( $provider->getAddress() ); ?> </li>
                                                     <li>• DNI:  <?= $provider->getDni(); ?> </li>
                                                     <li>• Número de CUIL:  <?= $provider->getCuilNumber(); ?> </li>
                                                     <li>• Razón social:  <?= ucfirst( $provider->getSocialReason() ); ?> </li>
@@ -251,7 +250,7 @@
         tr = table.getElementsByTagName('tr');
         
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {

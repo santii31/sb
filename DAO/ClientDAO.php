@@ -364,6 +364,30 @@
 			}
 		}
 
+		public function updateFromList(Client $client, Admin $updateBy) {
+			try {								
+				$query = "CALL client_updateFromList(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";				
+				$parameters["name"] = $client->getName();
+				$parameters["lastname"] = $client->getLastName();				
+				$parameters["address"] = $client->getAddress();
+				$parameters["city"] = $client->getCity();
+				$parameters["cp"] = $client->getCp();
+				$parameters["email"] = $client->getEmail();
+				$parameters["tel"] = $client->getPhone();
+				$parameters["family_group"] = $client->getFamilyGroup();
+				$parameters["auxiliary_phone"] = $client->getAuxiliaryPhone();             				
+				$parameters["vehicle_type"] = $client->getVehicleType();
+				$parameters["date_update"] = date("Y-m-d");
+				$parameters["update_by"] = $updateBy->getId();	
+				$parameters["id"] = $client->getId();	
+				$this->connection = Connection::GetInstance();
+				return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);		
+			} catch (Exception $e) {
+				return false;
+				// echo $e;
+			}
+		}
+
 		public function getEmails() {
 			try {
 				$emails = array();

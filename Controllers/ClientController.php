@@ -21,86 +21,7 @@
             $this->adminController = new AdminController();
         }       
         
-        
-        private function add($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {
-
-            $name_s = filter_var($name, FILTER_SANITIZE_STRING);
-            $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
-            $stay_s = filter_var($stay, FILTER_SANITIZE_STRING);
-            $address_s = filter_var($address, FILTER_SANITIZE_STRING);
-            $city_s = filter_var($city, FILTER_SANITIZE_STRING);
-            $family_group_s = filter_var($family_group, FILTER_SANITIZE_STRING);
-            $stay_address_s = filter_var($stay_address, FILTER_SANITIZE_STRING);
-
-            $client = new Client();            
-            $client->setName( strtolower($name_s) );
-            $client->setLastName( strtolower($lastname_s) );
-            $client->setStay( strtolower($stay_s) );
-            $client->setAddress( strtolower($address_s) );
-            $client->setCity( strtolower($city_s) );
-            $client->setCp($cp);
-            $client->setEmail($email);
-            $client->setPhone($phone);
-            $client->setFamilyGroup( strtolower($family_group_s) );
-            $client->setStayAddress( strtolower($stay_address_s) );
-            $client->setPhoneStay($tel_stay);
-            
-            $register_by = $this->adminController->isLogged();
-
-            if ($this->clientDAO->add($client, $register_by)) {
-                return true;
-            } else {
-                return false;
-            }
-        }     
-
-        public function addClient($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {
-            if ($this->isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay)) {
-                
-                $clientTemp = new Client();
-                $clientTemp->setEmail($email);                
-                
-                if ($this->clientDAO->getByEmail($clientTemp) == null) {                                                            
-                    if ($this->add($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay)) {      
-                        return $this->addClientPath(null, CLIENT_ADDED);
-                    } else {                        
-                        return $this->addClientPath(DB_ERROR, null);        
-                    }
-                }                
-                return $this->addClientPath(CLIENT_ERROR, null);
-            }            
-            return $this->addClientPath(EMPTY_FIELDS, null);            
-        }
-
-        private function isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address,                                                $tel_stay) {         
-            if (empty($name) || 
-                empty($lastname) || 
-                empty($stay) || 
-                empty($address) || 
-                empty($city) || 
-                empty($cp) || 
-                empty($email) || 
-                empty($tel) || 
-                empty($family_group) || 
-                empty($stay_address) || 
-                empty($tel_stay)) {
-                    return false;
-            }
-            return true;
-        }
-        
-        public function addClientPath($alert = "", $success = "") {
-            if ($admin = $this->adminController->isLogged()) {                       
-                $title = "Clientes - Añadir";                
-                require_once(VIEWS_PATH . "head.php");
-                require_once(VIEWS_PATH . "sidenav.php");
-                require_once(VIEWS_PATH . "add-client.php");
-                require_once(VIEWS_PATH . "footer.php");                
-			} else {
-				return $this->adminController->userPath();
-			}
-        }
-                
+                            
         public function listClientPath($page = 1, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                 $title = "Clientes";                
@@ -258,47 +179,53 @@
             }           
         }
 
-        public function update($id, $name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address, $tel_stay) {      
+        private function isFormUpdateNotEmpty($name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle) {         
+            if (empty($name) || 
+                empty($l_name) || 
+                empty($addr) || 
+                empty($city) || 
+                empty($cp) || 
+                empty($email) || 
+                empty($phone) || 
+                empty($fam) || 
+                empty($auxiliary_phone) ||                  
+                empty($vehicle)) {
+                    return false;
+            }
+            return true;
+        }
+
+        public function update($id, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle) {      
             
-            if ($this->isFormRegisterNotEmpty($name, $lastname, $stay, $address, $city, $cp, $email, $tel, $family_group, $stay_address,                                            $tel_stay)) {    
+            if ($this->isFormUpdateNotEmpty($name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle)) {    
+                    
+                $name_s = filter_var($name, FILTER_SANITIZE_STRING);
+                $l_name_s = filter_var($l_name, FILTER_SANITIZE_STRING);
+                $addr_s = filter_var($addr, FILTER_SANITIZE_STRING);
+                $city_s = filter_var($city, FILTER_SANITIZE_STRING);
+                $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);     
+                $vehicle_s = filter_var($vehicle, FILTER_SANITIZE_STRING);      
+
+                $client = new Client();
+                $client->setId($id);
+                $client->setName( strtolower($name_s) );
+                $client->setLastName( strtolower($l_name_s) );
+                $client->setAddress( strtolower($addr_s) );            
+                $client->setCity( strtolower($city_s) );
+                $client->setCp($cp);
+                $client->setEmail($email_s);
+                $client->setPhone($phone);
+                $client->setFamilyGroup( strtolower($fam) );
+                $client->setAuxiliaryPhone($auxiliary_phone);
+                $client->setVehicleType( strtolower($vehicle_s) );   
                 
-                $clientTemp = new Client();
-                $clientTemp->setId($id);                
-                $clientTemp->setEmail($email);
+                $update_by = $this->adminController->isLogged();
 
-				if ($this->clientDAO->checkDni($clientTemp) == null) {               
-                    
-                    $name_s = filter_var($name, FILTER_SANITIZE_STRING);
-                    $lastname_s = filter_var($lastName, FILTER_SANITIZE_STRING);
-                    $stay_s = filter_var($stay, FILTER_SANITIZE_STRING);
-                    $address_s = filter_var($address, FILTER_SANITIZE_STRING);
-                    $city_s = filter_var($city, FILTER_SANITIZE_STRING);
-                    $family_group_s = filter_var($family_group, FILTER_SANITIZE_STRING);
-                    $stay_address_s = filter_var($stay_address, FILTER_SANITIZE_STRING);
-        
-                    $client = new Client();    
-                    $client->setId($Id);
-                    $client->setName( strtolower($name_s) );
-                    $client->setLastName( strtolower($lastname_s) );
-                    $client->setStay( strtolower($stay_s) );
-                    $client->setAddress( strtolower($address_s) );
-                    $client->setCity( strtolower($city_s) );
-                    $client->setCp($cp);
-                    $client->setEmail($email);
-                    $client->setPhone($phone);
-                    $client->setFamilyGroup( strtolower($family_group_s) );
-                    $client->setStayAddress( strtolower($stay_address_s) );
-                    $client->setPhoneStay($tel_stay);
-                    
-                    $update_by = $this->adminController->isLogged();
-
-                    if ($this->clientDAO->update($client, $update_by)) {                                                
-                        return $this->listClientPath(null, null, CLIENT_UPDATE);
-                    } else {                        
-                        return $this->listClientPath(null, DB_ERROR, null);        
-                    }
-                }                
-                return $this->updatePath($id, EMAIL_ERROR);
+                if ($this->clientDAO->updateFromList($client, $update_by)) {                                                                  
+                    return $this->listClientPath(1, null, "Cliente actualizado con éxito.");
+                } else {                        
+                    return $this->listClientPath(1, DB_ERROR, null);        
+                }
             }            
             return $this->updatePath($id, EMPTY_FIELDS);
         }        
