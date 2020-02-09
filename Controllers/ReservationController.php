@@ -75,11 +75,11 @@
             $client->setName( strtolower($name_s) );
             $client->setLastName( strtolower($l_name_s) );
             $client->setAddress( strtolower($addr_s) );            
-            $client->setCity( strtolower($city_s) );
+            $client->setCity( strtolower($city_s) );            
             $client->setCp($cp);
             $client->setEmail($email_s);
             $client->setPhone($phone);
-            $client->setFamilyGroup( strtolower($fam) );
+            $client->setFamilyGroup($fam);
             $client->setAuxiliaryPhone($auxiliary_phone);
             $client->setVehicleType( strtolower($vehicle_s) );       
 
@@ -461,7 +461,7 @@
             $client->setCp($cp);
             $client->setEmail($email_s);
             $client->setPhone($phone);
-            $client->setFamilyGroup( strtolower($fam) );
+            $client->setFamilyGroup($fam);
             $client->setAuxiliaryPhone($auxiliary_phone);
             $client->setVehicleType( strtolower($vehicle_s) );       
 

@@ -256,10 +256,11 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
-                                                            <!-- <a href="<?= FRONT_ROOT ?>additionalService/chose/<?= $rsv->getId(); ?>/yes" 
+                                                                          
+                                                            <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
-                                                                Servicios
-                                                            </a> -->
+                                                                Saldo
+                                                            </a>
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
@@ -490,6 +491,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -798,6 +803,10 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Saldo
+                                                            </a>
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
@@ -1029,6 +1038,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -1258,6 +1271,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -1565,6 +1582,10 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Saldo
+                                                            </a>
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
@@ -1796,6 +1817,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -2025,6 +2050,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -2333,6 +2362,10 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Saldo
+                                                            </a>
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
@@ -2564,6 +2597,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -2793,6 +2830,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -3101,6 +3142,10 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Saldo
+                                                            </a>
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
@@ -3332,6 +3377,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -3561,6 +3610,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -3869,6 +3922,10 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Saldo
+                                                            </a>
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
@@ -4100,6 +4157,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -4329,6 +4390,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationTodayParasol( $parasol->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updateParasolPath/<?= $rsv->getId(); ?>/<?= $parasol->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar
@@ -4569,6 +4634,10 @@
                                                             Reservar
                                                         </a>
                                                         <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                            <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                            class="modal-close waves-effect waves-green btn-flat ">
+                                                                Saldo
+                                                            </a>
                                                             <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                             class="modal-close waves-effect waves-green btn-flat ">
                                                                 Modificar
@@ -4799,6 +4868,10 @@
                                                         Reservar
                                                     </a>
                                                     <?php if ($rsv = $this->reservationToday( $tent->getId() )): ?>
+                                                        <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $rsv->getId(); ?>" 
+                                                        class="modal-close waves-effect waves-green btn-flat ">
+                                                            Saldo
+                                                        </a>
                                                         <a href="<?= FRONT_ROOT ?>reservation/updatePath/<?= $rsv->getId(); ?>/<?= $tent->getId(); ?>" 
                                                         class="modal-close waves-effect waves-green btn-flat ">
                                                             Modificar

@@ -105,6 +105,59 @@
             }
             return true;
         }
+
+        public function updatePath($id_balance, $alert = "", $success = "") {
+            if ($admin = $this->adminController->isLogged()) {                       
+                $title = "Balance - Modificar";         
+                $balanceTemp = new Balance();
+                $balanceTemp->setId($id_balance);
+                $balance = $this->balanceDAO->getById($balanceTemp);                
+                require_once(VIEWS_PATH . "head.php");
+                require_once(VIEWS_PATH . "sidenav.php");
+                require_once(VIEWS_PATH . "update-balance.php");
+                require_once(VIEWS_PATH . "footer.php");                
+			} else {
+				return $this->adminController->userPath();
+			}
+        }
+
+        private function isFormUpdateNotEmpty($date, $concept, $number_r, $total, $partial, $remainder) {
+            if (empty($date) ||                 
+                empty($concept) || 
+                empty($number_r) || 
+                empty($total) ||                 
+                empty($partial) || 
+                empty($remainder)) {
+                    return false;
+            }
+            return true;
+        }
+
+        public function update($id_balance, $date, $concept, $number_r, $total, $partial, $remainder) {
+            
+            if ($this->isFormUpdateNotEmpty($date, $concept, $number_r, $total, $partial, $remainder)) {     
+
+                $balance = new Balance();
+                $balance->setId($id_balance);
+                $balance->setDate($date);
+                $balance->setConcept($concept);
+                $balance->setNumberReceipt($number_r);
+                $balance->setTotal($total);
+                $balance->setPartial($partial);
+                $balance->setRemainder($remainder);
+            			                    
+                $update_by = $this->adminController->isLogged();
+
+                if ($this->balanceDAO->update($balance, $update_by)) {                                        
+                    return $this->updatePath($id_balance, null, 'Balance modificado con éxito.');
+                } else {                    
+                    return $this->updatePath($id_balance, DB_ERROR, null);
+                }                                        
+                return $this->updatePath($id_balance, REGISTER_ERROR, null);
+            }                        
+            return $this->updatePath($id_balance, EMPTY_FIELDS, null);
+        }
+
     }
     
 ?>

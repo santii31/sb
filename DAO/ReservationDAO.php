@@ -101,6 +101,8 @@
 					$client->setEmail($row["client_email"]);
 					$client->setPhone($row["client_tel"]);
 					$client->setCity($row["client_city"]);
+					$client->setCp($row["client_cp"]);
+					$client->setFamilyGroup($row["client_family_group"]);
 					$client->setAddress($row["client_address"]);
 					$client->setPaymentMethod($row["client_paymentMethod"]);
 					$client->setAuxiliaryPhone($row["client_auxiliaryPhone"]);

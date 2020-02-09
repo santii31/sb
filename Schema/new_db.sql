@@ -4,12 +4,6 @@ CREATE DATABASE southbeach;
 
 USE southbeach;
 
--- USUARIO
-CREATE USER `sb_admin`@`localhost` IDENTIFIED BY `sb_admin_30485934`;
-
-GRANT SELECT, INSERT, UPDATE ON southbeach2.* TO `sb_admin`@`localhost`;
-
-
 ----------------------------- CONFIG -----------------------------
 
 INSERT INTO config (date_start_season,date_end_season,price_tent_season,price_tent_january,price_tent_january_day,price_tent_january_fortnigh,price_tent_february,price_tent_february_day,price_tent_february_first_fortnigh,price_tent_february_second_fortnigh,price_parasol) VALUES ("2020-01-01" , "2020-03-01" , 50000.00 , 35000.00 , 2500.00 , 20000.00 , 25000.00 , 2000.00, 20000.00, 13000.00, 1800.00);
@@ -85,7 +79,7 @@ CREATE TABLE admin (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
     `lastname` VARCHAR(255) NOT NULL,
-    `dni` INT NOT NULL UNIQUE,
+    `dni` VARCHAR(255) NOT NULL UNIQUE,
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
@@ -142,7 +136,7 @@ END$$
 
 DROP procedure IF EXISTS `admin_getByDni`;
 DELIMITER $$
-CREATE PROCEDURE admin_getByDni (IN dni INT)
+CREATE PROCEDURE admin_getByDni (IN dni VARCHAR(255))
 BEGIN
 	SELECT * FROM `admin` WHERE `admin`.`dni` = dni;
 END$$
@@ -267,7 +261,7 @@ DROP procedure IF EXISTS `admin_checkDni`;
 DELIMITER $$
 CREATE PROCEDURE admin_checkDni (
                                         IN id INT,
-                                        IN dni INT
+                                        IN dni VARCHAR(255)
                                     )
 BEGIN
     SELECT `admin`.`id` FROM `admin` WHERE `admin`.`dni` = dni AND `admin`.`id` != id;	
@@ -279,7 +273,7 @@ DELIMITER $$
 CREATE PROCEDURE admin_update (
                                     IN name VARCHAR(255),
                                     IN lastname VARCHAR(255),
-                                    IN dni INT,
+                                    IN dni VARCHAR(255),
                                     IN email VARCHAR(255),                                    
                                     IN date_update DATE,
                                     IN update_by INT,
@@ -358,11 +352,11 @@ CREATE TABLE client (
     `lastname` VARCHAR(255) NOT NULL,        
     `address` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
-    `cp` INT NOT NULL,  
+    `cp` VARCHAR(255) NOT NULL,  
     `email` VARCHAR(255) NOT NULL,
-    `tel` INT NOT NULL,
+    `tel` VARCHAR(255) NOT NULL,
     `family_group` VARCHAR(255) NOT NULL,   
-    `auxiliary_phone` INT NOT NULL,
+    `auxiliary_phone` VARCHAR(255) NOT NULL,
     `payment_method` VARCHAR(255) NOT NULL,
     `vehicle_type` VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,    
@@ -388,11 +382,11 @@ CREATE PROCEDURE client_add(
                                 IN lastname VARCHAR(255),                                
                                 IN address VARCHAR(255),
                                 IN city VARCHAR(255),
-                                IN cp INT,
+                                IN cp VARCHAR(255),
                                 IN email VARCHAR(255),
-                                IN tel INT,
+                                IN tel VARCHAR(255),
                                 IN family_group VARCHAR(255),
-                                IN auxiliary_phone INT,
+                                IN auxiliary_phone VARCHAR(255),
                                 IN vehicle_type VARCHAR(255),                                
                                 IN date_register DATE,
                                 IN register_by INT,
@@ -600,11 +594,11 @@ CREATE PROCEDURE client_update (
                                     IN lastname VARCHAR(255),                                    
                                     IN address VARCHAR(255),
                                     IN city VARCHAR(255),
-                                    IN cp INT,
+                                    IN cp VARCHAR(255),
                                     IN email VARCHAR(255),
-                                    IN tel INT,
+                                    IN tel VARCHAR(255),
                                     IN family_group VARCHAR(255),
-                                    IN auxiliary_phone INT,
+                                    IN auxiliary_phone VARCHAR(255),
                                     IN payment_method VARCHAR(255),
                                     IN vehicle_type VARCHAR(255),                              
                                     IN date_update DATE,
@@ -639,11 +633,11 @@ CREATE PROCEDURE client_updateFromList (
                                     IN lastname VARCHAR(255),                                    
                                     IN address VARCHAR(255),
                                     IN city VARCHAR(255),
-                                    IN cp INT,
+                                    IN cp VARCHAR(255),
                                     IN email VARCHAR(255),
-                                    IN tel INT,
+                                    IN tel VARCHAR(255),
                                     IN family_group VARCHAR(255),
-                                    IN auxiliary_phone INT,                                    
+                                    IN auxiliary_phone VARCHAR(255),                                    
                                     IN vehicle_type VARCHAR(255),                              
                                     IN date_update DATE,
                                     IN update_by INT,
@@ -678,7 +672,7 @@ CREATE TABLE client_potential (
     `address` VARCHAR(255) NOT NULL,
     `city` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL UNIQUE,
-    `tel` INT NOT NULL,    
+    `tel` VARCHAR(255) NOT NULL,    
     `num_tent` VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
     
@@ -705,7 +699,7 @@ CREATE PROCEDURE client_potential_add (
                                         IN address VARCHAR(255),
                                         IN city VARCHAR(255),
                                         IN email VARCHAR(255),
-                                        IN tel INT,  
+                                        IN tel VARCHAR(255),  
                                         IN num_tent VARCHAR(255),                                                          
                                         IN date_register DATE,
                                         IN register_by INT
@@ -829,7 +823,7 @@ CREATE PROCEDURE client_potential_update (
                                             IN address VARCHAR(255),
                                             IN city VARCHAR(255),
                                             IN email VARCHAR(255),
-                                            IN tel INT, 
+                                            IN tel VARCHAR(255), 
                                             IN num_tent VARCHAR(255),                                                           
                                             IN date_update DATE,
                                             IN update_by INT,
@@ -1195,6 +1189,8 @@ BEGIN
            client.name AS client_name,
 		   client.lastname AS client_lastName,
 		   client.email AS client_email,
+           client.cp AS client_cp,
+           client.family_group AS client_family_group,
            client.tel AS client_tel,
            client.city AS client_city,
            client.address AS client_address,
@@ -2104,11 +2100,29 @@ BEGIN
 END$$
 
 
+DROP procedure IF EXISTS balance_getById;
+DELIMITER $$
+CREATE PROCEDURE balance_getById (IN id INT)
+BEGIN
+    SELECT        
+        balance.id AS balance_id,
+        balance.date AS balance_date,
+        balance.concept AS balance_concept,
+        balance.number_receipt AS balance_number_receipt,
+        balance.total AS balance_total,
+        balance.partial AS balance_partial,
+        balance.remainder AS balance_remainder     
+    FROM balance             
+    WHERE balance.id = id;    
+END$$
+
+
 DROP procedure IF EXISTS balance_getByReservationId;
 DELIMITER $$
 CREATE PROCEDURE balance_getByReservationId (IN id INT)
 BEGIN
     SELECT        
+        balance.id AS balance_id,
         balance.date AS balance_date,
         balance.concept AS balance_concept,
         balance.number_receipt AS balance_number_receipt,
@@ -2131,6 +2145,37 @@ BEGIN
     WHERE reservation.FK_id_client = id
     GROUP BY reservation.FK_id_client;    
 END$$
+
+
+DROP procedure IF EXISTS `balance_update`;
+DELIMITER $$
+CREATE PROCEDURE balance_update (
+                                    IN date DATE,                                    
+                                    IN concept VARCHAR(255),
+                                    IN number_receipt VARCHAR(255),
+                                    IN total FLOAT,
+                                    IN partial FLOAT,
+                                    IN remainder FLOAT,                                    
+                                    IN id INT
+                                )
+BEGIN
+    UPDATE `balance` 
+    SET 
+        `balance`.`date` = date, 
+        `balance`.`concept` = concept,
+        `balance`.`number_receipt` = number_receipt,
+        `balance`.`total` = total,        
+        `balance`.`partial` = partial,     
+        `balance`.`remainder` = remainder           
+    WHERE 
+        `balance`.`id` = id;	
+END$$
+
+
+---------------------------------------------------------------------------
+
+
+
 
 
 DROP procedure IF EXISTS `reservation_getByIdWithTentOrParasol`;
@@ -2478,11 +2523,11 @@ CREATE TABLE provider (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
     `lastname` VARCHAR(255) NOT NULL,
-    `tel` INT NOT NULL,
+    `tel` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL UNIQUE,
-    `dni` INT NOT NULL UNIQUE,
+    `dni` VARCHAR(255) NOT NULL UNIQUE,
     `address` VARCHAR(255) NOT NULL,
-    `cuil` INT NOT NULL,
+    `cuil` VARCHAR(255) NOT NULL,
     `social_reason` VARCHAR(255) NOT NULL,
     `type_billing` VARCHAR(255) NOT NULL,  
     `item` VARCHAR(255) NOT NULL, 
@@ -2509,11 +2554,11 @@ DELIMITER $$
 CREATE PROCEDURE provider_add (
                                 IN name VARCHAR(255),
                                 IN lastname VARCHAR(255),
-                                IN tel int,
+                                IN tel VARCHAR(255),
                                 IN email VARCHAR(255),
-                                IN dni int,
+                                IN dni VARCHAR(255),
                                 IN address VARCHAR(255),
-                                IN cuil int,
+                                IN cuil VARCHAR(255),
                                 IN social_reason VARCHAR(255),
                                 IN type_billing VARCHAR(255),
                                 IN item VARCHAR(255),
@@ -2563,7 +2608,7 @@ END$$
 
 DROP procedure IF EXISTS `provider_getByDni`;
 DELIMITER $$
-CREATE PROCEDURE provider_getByDni (IN dni INT)
+CREATE PROCEDURE provider_getByDni (IN dni VARCHAR(255))
 BEGIN
 	SELECT * FROM `provider` WHERE `provider`.`dni` = dni;
 END$$
@@ -2652,7 +2697,7 @@ END$$
 DROP procedure IF EXISTS `provider_checkDni`;
 DELIMITER $$
 CREATE PROCEDURE provider_checkDni (
-                                        IN dni INT,
+                                        IN dni VARCHAR(255),
                                         IN id INT
                                     )
 BEGIN
@@ -2665,11 +2710,11 @@ DELIMITER $$
 CREATE PROCEDURE provider_update (
                                     IN name VARCHAR(255),
                                     IN lastname VARCHAR(255),
-                                    IN tel INT,
+                                    IN tel VARCHAR(255),
                                     IN email VARCHAR(255),
-                                    IN dni INT,
+                                    IN dni VARCHAR(255),
                                     IN address VARCHAR(255),
-                                    IN cuil INT,
+                                    IN cuil VARCHAR(255),
                                     IN social_reason VARCHAR(255),
                                     IN type_billing VARCHAR(255),
                                     IN item VARCHAR(255),
@@ -3815,11 +3860,11 @@ CREATE TABLE staff (
     `salary` FLOAT NOT NULL,
     `date_start` DATE NOT NULL,
     `date_end` DATE NOT NULL,
-    `dni` INT NOT NULL,
+    `dni` VARCHAR(255) NOT NULL,
     `address` VARCHAR(255) NOT NULL,
-    `tel` INT NOT NULL,
-    `shirt_size` FLOAT NOT NULL,
-    `pant_size` FLOAT NOT NULL,
+    `tel` VARCHAR(255) NOT NULL,
+    `shirt_size` VARCHAR(255) NOT NULL,
+    `pant_size` VARCHAR(255) NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
 
     `date_register` DATE NOT NULL,
@@ -3847,11 +3892,11 @@ CREATE PROCEDURE staff_add (
                                 IN salary FLOAT,
                                 IN date_start DATE,
                                 IN date_end DATE,
-                                IN dni INT,
+                                IN dni VARCHAR(255),
                                 IN address VARCHAR(255),
-                                IN tel INT,
-                                IN shirt_size FLOAT,
-                                IN pant_size FLOAT,
+                                IN tel VARCHAR(255),
+                                IN shirt_size VARCHAR(255),
+                                IN pant_size VARCHAR(255),
                                 IN date_register DATE,
                                 IN register_by INT   
                             )                             
@@ -3899,7 +3944,7 @@ END$$
 
 DROP procedure IF EXISTS `staff_getByDni`;
 DELIMITER $$
-CREATE PROCEDURE staff_getByDni (IN dni INT)
+CREATE PROCEDURE staff_getByDni (IN dni VARCHAR(255))
 BEGIN
 	SELECT * FROM `staff` WHERE `staff`.`dni` = dni;
 END$$
@@ -3983,7 +4028,7 @@ END$$
 DROP procedure IF EXISTS `staff_checkDni`;
 DELIMITER $$
 CREATE PROCEDURE staff_checkDni (
-                                    IN dni INT,
+                                    IN dni VARCHAR(255),
                                     IN id INT
                                 )
 BEGIN
@@ -4000,11 +4045,11 @@ CREATE PROCEDURE staff_update (
                                     IN salary FLOAT,
                                     IN date_start DATE,
                                     IN date_end DATE,
-                                    IN dni INT,
+                                    IN dni VARCHAR(255),
                                     IN address VARCHAR(255),
-                                    IN tel INT,
-                                    IN shirt_size FLOAT,
-                                    IN pant_size FLOAT, 
+                                    IN tel VARCHAR(255),
+                                    IN shirt_size VARCHAR(255),
+                                    IN pant_size VARCHAR(255), 
                                     IN id INT,
                                     IN date_update DATE,
                                     IN update_by INT
@@ -4091,8 +4136,8 @@ END$$
 CREATE TABLE checkC (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `bank` VARCHAR(255) NOT NULL,
-    `account_number` INT NOT NULL,
-    `check_number` INT NOT NULL,
+    `account_number` VARCHAR(255) NOT NULL,
+    `check_number` VARCHAR(255) NOT NULL,
     `charged` VARCHAR(255) DEFAULT "entregado",
     `payment_date` DATE NOT NULL,
     `FK_id_client` INT NOT NULL,
@@ -4104,8 +4149,8 @@ DROP procedure IF EXISTS `checkC_add`;
 DELIMITER $$
 CREATE PROCEDURE checkC_add (
                                 IN bank VARCHAR(255),
-                                IN account_number INT,
-                                IN check_number INT,
+                                IN account_number VARCHAR(255),
+                                IN check_number VARCHAR(255),
                                 IN payment_date DATE,
                                 IN FK_id_client INT,
                                 OUT lastId INT  
@@ -4273,8 +4318,8 @@ DROP procedure IF EXISTS `checkC_update`;
 DELIMITER $$
 CREATE PROCEDURE checkC_update (
                                     IN bank VARCHAR(255),
-                                    IN account_number INT,
-                                    IN check_number INT,
+                                    IN account_number VARCHAR(255),
+                                    IN check_number VARCHAR(255),
                                     IN charged VARCHAR(255),
                                     IN payment_date DATE,
                                     IN id INT

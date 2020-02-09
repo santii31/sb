@@ -150,21 +150,28 @@
                                 <th>Nº Recibo</th>                                
                                 <th>Debe</th>
                                 <th>Haber</th>
-                                <th>Saldo</th>                                
+                                <th>Saldo</th>  
+                                <th>Acciones</th>                              
                             </tr>
                         </thead>
                                                
                         <tbody>
                             <?php foreach ($balances as $balance): ?>
-                            <tr>                                
-                                
+                            <tr>                                                                
                                 <td> <?= date("d-m-Y" , strtotime($balance->getDate())); ?> </td>
                                 <td> <?= ucfirst( $balance->getConcept() ); ?> </td>
                                 <td> <?= $balance->getNumberReceipt(); ?> </td>
                                 <td> $<?= number_format($balance->getTotal(), 2, ',', '.'); ?> </td>
                                 <td> $<?= number_format($balance->getPartial(), 2, ',', '.'); ?> </td>
                                 <td> $<?= number_format($balance->getRemainder(), 2, ',', '.'); ?> </td>
-
+                                <td>
+                                    <a href="<?= FRONT_ROOT ?>balance/updatePath/<?= $balance->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">                                        
+                                        Modificar
+                                    </a>
+                                    <a href="<?= FRONT_ROOT ?>balance/disable/<?= $balance->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">                                        
+                                        Deshabilitar
+                                    </a>
+                                </td>  
                             <?php endforeach; ?>         
                         </tbody>
                     </table>                                          
