@@ -4,7 +4,7 @@
 
 	use \Exception as Exception;
 	use Models\Admin as Admin;	
-	use Models\Client as Client;	
+	use Models\Client as Client;
 	use Models\Parasol as Parasol;
 	use Models\BeachTent as BeachTent;
 	use Models\Reservation as Reservation;	
@@ -23,7 +23,10 @@
 
 		
         public function add(Client $client, Admin $registerBy) {								
-			try {									
+			try {					
+			    
+			    echo $client->getPhone();
+			    
 				$query = "CALL client_add(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @lastId)";
 				$parameters["name"] = $client->getName();
 				$parameters["lastname"] = $client->getLastName();				
@@ -266,7 +269,7 @@
 				// echo $e;
 			}
 		}
-
+		
 		public function getAll() {
 			try {
 				$query = "CALL client_getAll()";
@@ -387,7 +390,7 @@
 				// echo $e;
 			}
 		}
-
+		
 		public function getEmails() {
 			try {
 				$emails = array();

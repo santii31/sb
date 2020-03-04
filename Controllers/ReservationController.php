@@ -48,7 +48,7 @@
             $this->reservationDAO = new ReservationDAO();                                    
             $this->adminController = new AdminController();
             $this->additionalServiceDAO = new AdditionalServiceDAO();     
-            $this->reservationxserviceDAO = new ReservationxServiceDAO();            
+            $this->reservationxserviceDAO = new ReservationxServiceDAO();
             $this->reservationxparkingDAO = new ReservationxParkingDAO();
             $this->servicexlockerDAO = new ServicexLockerDAO();
             $this->servicexparasolDAO = new ServicexParasolDAO();
@@ -57,7 +57,7 @@
             $this->clientDAO = new ClientDAO();
             $this->checkDAO = new CheckDAO();
             $this->servicexmobileparasolDAO = new ServicexMobileParasolDAO();
-        }               
+        }                 
 
         
         private function add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_tent, $price) {                        
@@ -75,11 +75,11 @@
             $client->setName( strtolower($name_s) );
             $client->setLastName( strtolower($l_name_s) );
             $client->setAddress( strtolower($addr_s) );            
-            $client->setCity( strtolower($city_s) );            
+            $client->setCity( strtolower($city_s) );
             $client->setCp($cp);
             $client->setEmail($email_s);
             $client->setPhone($phone);
-            $client->setFamilyGroup($fam);
+            $client->setFamilyGroup( strtolower($fam) );
             $client->setAuxiliaryPhone($auxiliary_phone);
             $client->setVehicleType( strtolower($vehicle_s) );       
 
@@ -157,7 +157,7 @@
                         if ($lastId = $this->add($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $tent, $price)) {                                                    
     
                             $this->parkingController = new ParkingController();                                         
-                            return $this->parkingController->parkingMap($lastId, null, $price, null);                                             
+                            return $this->parkingController->parkingMap($lastId, null, $price, null);                                                
     
                         } else {                        
                             return $this->addReservationPath($tent, DB_ERROR, null, $inputs);        
@@ -360,7 +360,7 @@
             if ($this->isFormUpdateNotEmpty($id_rsv, $id_tent, $stay, $start, $end, $price)) {                                 
 
                 if (strtotime($start) <= strtotime($end)) {
-                    if ($this->checkIntervalToUpdate($start, $end, $id_tent, $id_rsv) == 1) {                                                     
+                    if ($this->checkIntervalToUpdate($start, $end, $id_tent, $id_rsv) == 1) {                                                         
 
                         $reservation = new Reservation();    
                         $reservation->setId($id_rsv);                  
@@ -442,7 +442,7 @@
         }
 
         // parasol
-        private function addParasol($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price) {                        
+                private function addParasol($stay, $start, $end, $name, $l_name, $addr, $city, $cp, $email, $phone, $fam, $auxiliary_phone, $vehicle, $id_parasol, $price) {                        
 
             $this->clientController = new ClientController();                              
             
@@ -461,7 +461,7 @@
             $client->setCp($cp);
             $client->setEmail($email_s);
             $client->setPhone($phone);
-            $client->setFamilyGroup($fam);
+            $client->setFamilyGroup( strtolower($fam) );
             $client->setAuxiliaryPhone($auxiliary_phone);
             $client->setVehicleType( strtolower($vehicle_s) );       
 
@@ -616,7 +616,7 @@
                         
                         $update_by = $this->adminController->isLogged();
 
-                        if ($this->reservationDAO->update($reservation, $update_by)) {                                                            
+                        if ($this->reservationDAO->update($reservation, $update_by)) {                                                                
                             return $this->updateParasolPath($id_rsv, $id_parasol, null, RESERVATION_UPDATE);
                         } else {       
                             return $this->updateParasolPath($id_rsv, $id_parasol, DB_ERROR, null);        
@@ -624,7 +624,7 @@
                     }                
                     return $this->updateParasolPath($id_rsv, $id_parasol, RESERVATION_ERROR, null);
                 }
-                return $this->updateParasolPath($id_rsv, $id_parasol, 'Fecha de egreso menor a la fecha de ingreso', null);                
+                return $this->updateParasolPath($id_rsv, $id_parasol, 'Fecha de egreso menor a la fecha de ingreso', null);
             }                        
             return $this->updateParasolPath($id_rsv, $id_parasol, EMPTY_FIELDS, null);
         }
@@ -643,7 +643,7 @@
                         
         private function checkIntervalToUpdateParasol($date_start, $date_end, $id_parasol, $id_rsv) {
 			$existance = $this->getByIdParasol($id_parasol);			
-            $flag = 1;
+			$flag = 1;
 			if ($existance != null) {
 				foreach ($existance as $reserve) {
                     if ($reserve->getId() != $id_rsv) {

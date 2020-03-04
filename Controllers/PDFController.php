@@ -2,8 +2,8 @@
 
     namespace Controllers;    
 
-    require('libs/FPDF/fpdf.php');
-    use libs\FPDF\FPDF as FPDF;
+    require LIBS_PATH . 'FPDF/fpdf.php';
+    use Libs\FPDF\FPDF as FPDF;
 
     use DAO\ReservationxParkingDAO as ReservationxParkingDAO;
     use Controllers\ReservationController as ReservationController;  
@@ -54,11 +54,11 @@
                 $numbers = $controller->getNumberParkingByReservation($rsv);
                 
                 if ($rsv->getBeachTent() != null) {
-                    $this->Cell(50, 10, 'Carpa - ' . $rsv->getBeachTent()->getNumber(), 1, 0, 'C');
+                    $this->Cell(50, 10, 'Carpa - ' . $rsv->getBeachTent()->getNumber(), 1, 0, 'L');
                 } elseif ($rsv->getParasol() != null) {
-                    $this->Cell(50, 10, 'Sombrilla - ' . $rsv->getParasol()->getParasolNumber(), 1, 0, 'C');
+                    $this->Cell(50, 10, 'Sombrilla - ' . $rsv->getParasol()->getParasolNumber(), 1, 0, 'L');
                 }
-                $this->Cell(60, 10, $client, 1, 0, 'C');
+                $this->Cell(60, 10, $client, 1, 0, 'L');
                 $this->Cell(50, 10, $stay, 1, 0, 'C');
                 $this->Cell(40, 10, $quantity, 1, 0, 'C');
                 $this->Cell(40, 10, $numbers, 1, 0, 'C');                           

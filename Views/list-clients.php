@@ -86,11 +86,11 @@
                                 <td> <?= date("d-m-Y" , strtotime($reservation->getDateEnd())); ?> </td>          
                                 <td>
                                     <a href="<?= FRONT_ROOT ?>balance/addBalancePath/<?= $reservation->getId(); ?>" class="waves-effect waves-light btn-small">
-                                        <i class="material-icons left">attach_money</i>
+                                        <!--<i class="material-icons left">attach_money</i>-->
                                         Saldo
                                     </a>
                                     <a href="<?= FRONT_ROOT ?>client/updatePath/<?= $reservation->getClient()->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">
-                                        <i class="material-icons left">attach_money</i>
+                                        <!--<i class="material-icons left">attach_money</i>-->
                                         Modificar
                                     </a>
                                 </td>                      
@@ -172,7 +172,7 @@
         tr = table.getElementsByTagName('tr');
         
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {

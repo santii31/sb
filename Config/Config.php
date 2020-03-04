@@ -1,16 +1,17 @@
 <?php
 
     namespace Config;
-    
-    define("ROOT", dirname(__DIR__) . "/");
-	define("FRONT_ROOT", "/SouthBeach/");	
-	// define("FRONT_ROOT", "http://localhost/sb/");
+	
+	define("ROOT", dirname(__DIR__) . "/");
+	// define("FRONT_ROOT", "https://southbeachmdp.com/");
+	define("FRONT_ROOT", "http://localhost/SouthBeach/");
     define("VIEWS_PATH", "Views/");
 	define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/css/");
 	define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "assets/js/");	
 	define("IMG_PATH", FRONT_ROOT . VIEWS_PATH . "assets/img/");	
+	define("LIBS_PATH", "Libs/");	
 	define("MAX_ITEMS_PAGE", 6);
-	
+
 	// EMAIL
 	define("SB_EMAIL", "southbeachmdp@gmail.com");
 	define("SB_EMAIL_PASS", "bal4950hoz");

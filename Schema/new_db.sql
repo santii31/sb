@@ -2111,8 +2111,10 @@ BEGIN
         balance.number_receipt AS balance_number_receipt,
         balance.total AS balance_total,
         balance.partial AS balance_partial,
-        balance.remainder AS balance_remainder     
+        balance.remainder AS balance_remainder,
+        reservation.id AS reservation_id     
     FROM balance             
+    INNER JOIN reservation ON balance.FK_id_reservation = reservation.id
     WHERE balance.id = id;    
 END$$
 
@@ -2170,6 +2172,17 @@ BEGIN
     WHERE 
         `balance`.`id` = id;	
 END$$
+
+
+DROP procedure IF EXISTS `balance_delete`;
+DELIMITER $$
+CREATE PROCEDURE balance_delete (IN id INT)
+BEGIN
+    DELETE 
+    FROM `balance`
+    WHERE `balance`.`id` = id;
+END$$
+
 
 
 ---------------------------------------------------------------------------

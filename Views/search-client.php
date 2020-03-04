@@ -27,8 +27,8 @@
                             <select name="option" required>
                                 <option value="" disabled selected>Seleccione su opcion</option>
                                 <option value="name">Nombre</option>
-                                <option value="tent">Numero de carpa</option>                            
-                                <option value="parasol">Numero de sombrilla</option>         
+                                <option value="tent">Numero de carpa</option>   
+                                <option value="parasol">Numero de sombrilla</option>     
                             </select>
                             <label>Buscar clientes por:</label>
                         </div>                    
@@ -38,7 +38,7 @@
                         <nav class="search-container">                
                             <div class="nav-wrapper s-color">  
                                 <div class="input-field col s12">
-                                    <input id="search" type="search" name="value" placeholder="Ingrese nombre del cliente..." required>
+                                    <input id="search" type="search" name="value" placeholder="Ingrese su opcion..." required>
                                     <label class="label-icon" for="search">
                                         <i class="material-icons" >search</i>
                                     </label>                            

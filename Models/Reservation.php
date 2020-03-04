@@ -129,7 +129,7 @@
             $this->is_active = $is_active;
             return $this;
         }
-
+        
         public function getOpenParking() {
             return $this->open_parking;
         }

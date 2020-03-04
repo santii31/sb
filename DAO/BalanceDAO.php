@@ -50,7 +50,12 @@
 					$balance->setNumberReceipt($row["balance_number_receipt"]);
 					$balance->setTotal($row["balance_total"]);
 					$balance->setPartial($row["balance_partial"]);
-					$balance->setRemainder($row["balance_remainder"]);					                    
+					$balance->setRemainder($row["balance_remainder"]);			
+					
+					$reservation = new Reservation();
+					$reservation->setId($row["reservation_id"]);
+
+					$balance->setReservation($reservation);					
 				}
 				return $balance;
 
@@ -118,6 +123,18 @@
 			}
 		}
 
+		public function delete(Balance $balance) {
+            try {                                
+                $query = "CALL balance_delete(?)";
+                $parameters["id"] = $balance->getId();
+                $this->connection = Connection::GetInstance();
+                return $this->connection->ExecuteNonQuery($query, $parameters, QueryType::StoredProcedure);                
+            } catch (Exception $e) {
+                return false;
+                // echo $e;
+            }      
+		}
+		
     }
 
  ?>

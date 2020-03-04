@@ -371,8 +371,7 @@
             catch (Exception $ex) {
                 return false;
             }
-        }
-			
+        }			
 
     }
 

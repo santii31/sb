@@ -9,9 +9,9 @@
     use PHPMailer\PHPMailer\Exception as MailerException;
     use PHPMailer\PHPMailer\SMTP as SMTP;
 
-    require 'libs/Exception.php';
-    require 'libs/PHPMailer.php';
-    require 'libs/SMTP.php';
+    require LIBS_PATH . 'Exception.php';
+    require LIBS_PATH . 'PHPMailer.php';
+    require LIBS_PATH . 'SMTP.php';
 
     
     class EmailController {

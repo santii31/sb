@@ -265,7 +265,8 @@
                                             } else {
                                             
                                                 return $this->hasAdditionalService($id_reserve);                                        
-                                            }                                                                                                    
+                                            }                                                        
+                                            
                                         }
                                     }
                                 }
@@ -282,7 +283,8 @@
                                     } else {
                                     
                                         return $this->hasAdditionalService($id_reserve);                                        
-                                    }                                                                                            
+                                    }                                                        
+                                    
                                 }              
                             } 
                         }
@@ -295,12 +297,14 @@
         public function addLockerPath($id_reservation = "", $fromList = null, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {
                                                        
-                $title = "Seleccione numero de locker";                
+                $title = "Seleccione numero de locker";
+                
                 $reserveTemp = new Reservation();
                 $reserveTemp->setId($id_reservation);
                 $reserve = $this->reservationDAO->getById($reserveTemp);
                 $reservations = $this->reservationDAO->getAllAux();
-                $listLockers = $this->lockerDAO->getAll();                
+                $listLockers = $this->lockerDAO->getAll();
+                
                 $lockers = array();
                 
                 foreach ($reservations as $reservation) {
@@ -308,15 +312,16 @@
                     $service = $this->reservationxserviceDAO->getServiceByReservation($reservation->getId());
 
                     $flag = 1;
+                    
                     $lockerServ = $this->servicexlockerDAO->getLockerByService($service->getId());
 
                     if($lockerServ == false){
                         $flag = 0;
                     }
 
-                    if (($this->checkDatesToServices($reservation, $reserve) == 0) && ($flag == 1)) {
-                        foreach ($lockerServ as $lock) {
-                            array_push($lockers, $lock);
+                    if(($this->checkDatesToServices($reservation,$reserve) == 0) && ($flag == 1)){
+                        foreach ($lockerServ as $locker) {
+                            array_push($lockers, $locker);
                         }
                     }
 
@@ -327,14 +332,13 @@
                 $exist = false;
                 
                 foreach ($listLockers as $locker) {
-                    
                     foreach ($lockers as $locker2) {
                         
-                        if ($locker->getId() == $locker2->getId()) {                            
+                        if ($locker->getId() == $locker2->getId()) {
+                            
                             $exist=true;
                         }
                     }
-
                     if (($exist == false) && ($locker->getSex() == "mujer") ) {
                         array_push($lockerWomanList, $locker);
                     }
@@ -359,12 +363,12 @@
         }
         
         public function addMobileParasolPath($id_reservation = "", $fromList = null, $alert = "", $success = "") {
-            if ($admin = $this->adminController->isLogged()) {                
+            if ($admin = $this->adminController->isLogged()) {
                 
-                $title = "Seleccione numero de sombrilla movil";                
+                $title = "Seleccione numero de sombrilla movil";
                 $reserveTemp = new Reservation();
                 $reserveTemp->setId($id_reservation);
-                $reserve = $this->reservationDAO->getById($reserveTemp);                
+                $reserve = $this->reservationDAO->getById($reserveTemp);
                 $reservations = $this->reservationDAO->getAllAux();
                 $listMobileParasoles = $this->mobileParasolDAO->getAll();
                 
@@ -373,7 +377,7 @@
                 foreach ($reservations as $reservation) {
                     
                     $service = $this->reservationxserviceDAO->getServiceByReservation( $reservation->getId() );
-                                        
+
                     $flag = 1;
                     $mobileParasolServ = $this->servicexmobileParasolDAO->getMobileParasolByService( $service->getId() );
 
@@ -381,11 +385,12 @@
                         $flag = 0;
                     }
                     
-                    if (($this->checkDatesToServices($reservation, $reserve) == 0) && ($flag == 1)) {                        
-                        foreach ($mobileParasolServ as $mobileParasol) {                                                    
+                    if(($this->checkDatesToServices($reservation,$reserve) == 0) && ($flag == 1)){
+                        foreach ($mobileParasolServ as $mobileParasol) {
                             array_push($mobileParasoles, $mobileParasol);
-                        } 
+                        }
                     }
+
                 } 
                 
                 $mobileParasolFinalList = array();
@@ -415,21 +420,21 @@
                 return $this->adminController->userPath();
 			}
         }
-
-        private function checkDatesToServices($reserveFromList, $reserve) {
+        
+        private function checkDatesToServices($reserveFromList, $reserve){
             $flag = 1;
-            if ( ($reserve->getDateEnd() < $reserveFromList->getDateStart()) xor ($reserve->getDateStart() > $reserveFromList->getDateEnd())) {
-                $flag *= 1;	
-            } else {
-                $flag *= 0;
-            }                    
-
+            if(($reserve->getDateEnd()<$reserveFromList->getDateStart()) xor ($reserve->getDateStart()>$reserveFromList->getDateEnd())){
+                $flag*=1;
+            }else{
+                $flag*=0;
+            }
             return $flag;
         }
+        
 
         public function hasAdditionalService($id_reservation, $alert = "", $success = "") {
             if ($admin = $this->adminController->isLogged()) {                                       
-                if (!empty($id_reservation)) { 
+                if (!empty($id_reservation)){ 
                     $title = "¿Desea agregar un servicio adicional a la reserva?";
                     require_once(VIEWS_PATH . "head.php");
                     require_once(VIEWS_PATH . "sidenav.php");
@@ -466,7 +471,7 @@
         }
              
         public function addSelectServicePath($id_reservation = "", $alert = "", $success = "") {
-            if ($admin = $this->adminController->isLogged()) {                                                       
+            if ($admin = $this->adminController->isLogged()) {                                       
                 $title = "Seleccione servicio adicional";
                 require_once(VIEWS_PATH . "head.php");
                 require_once(VIEWS_PATH . "sidenav.php");
@@ -556,6 +561,7 @@
 
             }
         }
+    
     }
     
 ?>

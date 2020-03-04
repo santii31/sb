@@ -3,8 +3,8 @@
     namespace DAO;
 
     use \Exception as Exception;
-	use Models\ServicexLocker as ServicexLocker;
-    use Models\AdditionalService as AdditionalService;	
+    use Models\ServicexLocker as ServicexLocker;
+    use Models\AdditionalService as AdditionalService;
     use Models\Locker as Locker;	
 	use DAO\QueryType as QueryType;
 	use DAO\Connection as Connection;	

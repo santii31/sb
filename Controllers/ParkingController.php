@@ -100,6 +100,9 @@
             $parking = new Parking();            
             $parking->setNumber($id_parking);
             $reserveList = $this->reservationxParkingDAO->getAllByParkingNumber($parking);               
+            // $parking->setId($id_parking);
+            // $reserveList = $this->reservationxParkingDAO->getAllByParkingId($parking);   
+
             if ($reserveList != null) {
                 return sizeof($reserveList);
             }
@@ -111,7 +114,10 @@
             $this->reservationController = new ReservationController();
             $parking = new Parking();
             $parking->setNumber($id_parking);
-            $reserveList = $this->reservationxParkingDAO->getAllByParkingNumber($parking);                       
+            $reserveList = $this->reservationxParkingDAO->getAllByParkingNumber($parking);   
+            // $parking->setId($id_parking);
+            // $reserveList = $this->reservationxParkingDAO->getAllByParkingId($parking);           
+
             if ($reserveList != null) {
                 foreach ($reserveList as $reserve) {
                     if ($reservation = $this->reservationController->checkIsDateReserved($reserve->getReservation())) {                    
@@ -142,7 +148,7 @@
 
             return $futureReserve;
         }
-        
+
         public function reserve($price, $reservation, $id_parking, $fromList = null) {                            
             
             if ($serv = $this->reservationxserviceDAO->getServiceByReservation($reservation)) {            
@@ -285,6 +291,7 @@
             }                               
             return $this->parkingMap($reservation, $fromList = null, $price, DB_ERROR);            
         }
+
         
     }
     

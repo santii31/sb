@@ -64,8 +64,8 @@
                     <table class="responsive-table striped centered" id="table-filter">
                         <thead>                            
                             <tr>                                
-                                <th>Nombre</th>    
-                                <th>Apellido</th>                            
+                                <th>Nombre</th>       
+                                <th>Apellido</th>   
                                 <th>Telefono</th>
                                 <th>Email</th>
                                 <th>Rubro</th>                                

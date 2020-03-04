@@ -67,7 +67,7 @@
 
             // Saves the inputs in case of validation error
             $inputs = array(
-                "cateogry" => $id_category,
+                "category" => $id_category,
                 "provider" => $id_provider,
                 "name"=> $name, 
                 "price"=> $price,

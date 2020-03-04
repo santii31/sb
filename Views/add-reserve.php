@@ -189,7 +189,7 @@
                             <div class="input-field col s2">
                                 <p>
                                     <label>
-                                        <input id="none" type="radio" name="vehicle" class="with-gap" value="none">
+                                        <input id="vehicle" type="radio" name="vehicle" class="with-gap" value="no_vehicle">
                                         <span>Sin vehiculo</span>
                                     </label>
                                 </p>
@@ -335,7 +335,6 @@
             dateStart.value = f_day;            
             dateEnd.value = l_day; 
         }
-        
     });    
 
 </script>

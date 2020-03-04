@@ -160,6 +160,7 @@
                     $reservation->setDateEnd($row["reservation_date_end"]);
                     $reservation->setStay($row["reservation_stay"]);
 
+
                     if ($row["reservation_fk_id_tent"] != null) {
                         
                         $this->tentDAO = new BeachTentDAO();                    
@@ -261,8 +262,8 @@
                 return false;
                 // echo $e;
             }        
-        }    
-        
+        }  
+
         public function delete(Reservation $reservation) {
             try {                
                 

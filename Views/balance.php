@@ -9,6 +9,17 @@
                 </div>
                 <div class="divider mb-divider"></div>
               
+                <?php if ($success != null): ?>
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card-panel green lighten-4">
+                            <i class="material-icons left">check</i>                            
+                            <span class="card-text card-success"> <?= $success; ?> </span>
+                        </div>        
+                    </div>                    
+                </div>    
+                <?php endif; ?>   
+                                
                 <?php if ($alert != null): ?>
                 <div class="row">
                     <div class="col s6">
@@ -168,10 +179,11 @@
                                     <a href="<?= FRONT_ROOT ?>balance/updatePath/<?= $balance->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">                                        
                                         Modificar
                                     </a>
-                                    <a href="<?= FRONT_ROOT ?>balance/disable/<?= $balance->getId(); ?>" class="waves-effect waves-light btn-small btn-safe">                                        
-                                        Deshabilitar
+                                    <a href="<?= FRONT_ROOT ?>balance/delete/<?= $balance->getId(); ?>/<?= $id_reservation ?>" class="waves-effect waves-light btn-small btn-danger">                                        
+                                        Eliminar
                                     </a>
                                 </td>  
+                            </tr>
                             <?php endforeach; ?>         
                         </tbody>
                     </table>                                          

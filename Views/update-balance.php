@@ -53,7 +53,7 @@
 
                         <div class="row">                                            
                             <div class="input-field col s4">                                    
-                                <input id="total" type="number" name="total" min="0" class="validate" value="<?= $balance->getTotal(); ?>"required>                                    
+                                <input id="total" type="number" name="total" min="0" class="validate" value="<?= $balance->getTotal(); ?>" required>                                    
                                 <label for="total">Debe</label>
                             </div>            
                             <div class="input-field col s4">
@@ -65,6 +65,7 @@
                                 <label for="remainder">Saldo</label>
                             </div>            
                         </div>
+                        <input type="hidden" name="id_reservation" value="<?= $balance->getReservation()->getId(); ?>">
 
                         <div class="row">
                             <div class="col s12 center-align">
@@ -78,4 +79,4 @@
             </div>
         </div>
     </div>
-</div>    
+</div>

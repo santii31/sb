@@ -162,8 +162,7 @@
 			} catch (Exception $e) {
 				return false;				
 			}
-		}
-				
+		}				
 
     }
 
